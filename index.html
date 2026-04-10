@@ -9,8 +9,8 @@
     <meta property="og:title" content="VoltGroup | Энергия решений — Электрика и автоматизация в СПб">
     <meta property="og:description" content="Профессиональный электромонтаж, умный дом и автоматизация. Договор, гарантия 12 мес., чек НПД.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://voltgroup-spb.ru">
-    <link rel="icon" href="image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+    <meta property="og:url" content="https://username.github.io/voltgroup-site/">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 
     <style>
         :root {
@@ -245,7 +245,7 @@
                 <div class="form-group"><label for="service">Тип задачи</label><select id="service" name="service" class="form-control"><option value="Точечный монтаж">Точечный монтаж</option><option value="Замена проводки">Замена проводки</option><option value="Сборка щита">Сборка щита</option><option value="Умный дом">Умный дом / автоматизация</option><option value="Диагностика">Диагностика / авария</option><option value="Другое">Другое</option></select></div>
                 <div class="form-group"><label for="comment">Комментарий</label><textarea id="comment" name="comment" class="form-control" rows="4" placeholder="Район, тип помещения, срочность..."></textarea></div>
                 <button type="submit" class="btn btn-primary" style="width: 100%;">Получить расчёт за 30 минут</button>
-                <p style="margin-top: 12px; font-size: 0.8rem; color: var(--text-muted); text-align: center;">🔒 Нажимая кнопку, вы соглашаетесь с <a href="privacy.html">Политикой конфиденциальности</a> и обработкой данных.</p>
+                <p style="margin-top: 12px; font-size: 0.8rem; color: var(--text-muted); text-align: center;">🔒 Нажимая кнопку, вы соглашаетесь с <a href="./privacy.html">Политикой конфиденциальности</a> и обработкой данных.</p>
                 <p id="formStatus" style="margin-top: 10px; text-align: center; display: none;"></p>
             </form>
         </div>
@@ -263,14 +263,12 @@
     </div>
 </footer>
 
-<div id="cookieBanner">🍪 Мы используем cookie для аналитики. <a href="cookies.html">Подробнее</a>.<button onclick="localStorage.setItem('cookies','ok');document.getElementById('cookieBanner').style.display='none'">Согласен</button></div>
+<div id="cookieBanner">🍪 Мы используем cookie для аналитики. <a href="./cookies.html">Подробнее</a>.<button onclick="localStorage.setItem('cookies','ok');document.getElementById('cookieBanner').style.display='none'">Согласен</button></div>
 
 <script>
-    // Mobile Menu
     document.querySelector('.mobile-menu-btn').addEventListener('click', () => document.querySelector('.nav-links').classList.toggle('open'));
     document.querySelectorAll('.nav-links a').forEach(link => link.addEventListener('click', () => document.querySelector('.nav-links').classList.remove('open')));
 
-    // FAQ Accordion
     document.querySelectorAll('.accordion-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             btn.classList.toggle('active');
@@ -279,13 +277,11 @@
         });
     });
 
-    // Phone Mask
     document.getElementById('phone').addEventListener('input', e => {
         let x = e.target.value.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
         e.target.value = !x[2] ? (x[1] ? '+7 (' : '') : '+7 (' + x[2] + (x[3] ? ') ' + x[3] : '') + (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : '');
     });
 
-    // Form Submission
     document.getElementById('leadForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         const btn = this.querySelector('button'); const status = document.getElementById('formStatus');
@@ -299,11 +295,10 @@
         finally { btn.disabled = false; btn.textContent = 'Получить расчёт за 30 минут'; }
     });
 
-    // Gallery
     let galleryItems = [], currentIndex = 0, itemsPerView = 3;
     async function loadGallery() {
         try {
-            const res = await fetch('gallery/gallery-config.json');
+            const res = await fetch('./gallery/gallery-config.json');
             if (!res.ok) throw new Error();
             galleryItems = await res.json(); renderCarousel();
         } catch { document.querySelector('.carousel-track').innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:40px;grid-column:1/-1;">📷 Галерея скоро появится</p>'; }
@@ -333,7 +328,6 @@
     trackEl.addEventListener('touchstart', e => tx = e.changedTouches[0].screenX);
     trackEl.addEventListener('touchend', e => { const d = e.changedTouches[0].screenX; if(tx-d>50) nextSlide(); if(d-tx>50) prevSlide(); });
 
-    // Cookie Banner
     if(!localStorage.getItem('cookies')) document.getElementById('cookieBanner').style.display = 'block';
     document.addEventListener('DOMContentLoaded', () => { updateItemsPerView(); loadGallery(); });
 </script>
