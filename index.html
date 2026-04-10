@@ -4,56 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VoltGroup | Энергия решений — Электрика и автоматизация в СПб</title>
-    <meta name="description" content="Профессиональный электромонтаж, умный дом и автоматизация в Санкт-Петербурге. Договор, гарантия 12 мес., чек НПД. Работаем с 2021 года.">
-    <meta name="keywords" content="электрик спб, электромонтаж, умный дом, сборка щита, замена проводки, самозанятый электрик, voltgroup">
-    <meta name="author" content="VoltGroup">
+    <meta name="description" content="Профессиональный электромонтаж, умный дом и автоматизация в Санкт-Петербурге. Договор, гарантия 12 мес., чек НПД.">
     <meta name="robots" content="index, follow">
-
-    <!-- Open Graph -->
     <meta property="og:title" content="VoltGroup | Энергия решений — Электрика и автоматизация в СПб">
     <meta property="og:description" content="Профессиональный электромонтаж, умный дом и автоматизация. Договор, гарантия 12 мес., чек НПД.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://voltgroup-spb.ru">
-    <meta property="og:image" content="https://voltgroup-spb.ru/og-image.jpg">
-    <meta property="og:locale" content="ru_RU">
-
-    <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
-
-    <!-- Schema.org LocalBusiness -->
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "Electrician",
-            "name": "VoltGroup",
-            "description": "Профессиональный электромонтаж, умный дом и автоматизация в Санкт-Петербурге",
-            "url": "https://voltgroup-spb.ru",
-            "telephone": "+7-XXX-XXX-XX-XX",
-            "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Санкт-Петербург",
-                "addressCountry": "RU"
-            },
-            "priceRange": "₽₽",
-            "openingHours": "Mo-Sa 09:00-21:00"
-        }
-    </script>
+    <link rel="icon" href="image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 
     <style>
         :root {
-            --bg: #0B1120;
-            --surface: #111827;
-            --surface-hover: #1F2937;
-            --primary: #00E5FF;
-            --primary-hover: #00B8D4;
-            --text: #F8FAFC;
-            --text-muted: #94A3B8;
-            --border: #1E293B;
-            --success: #10B981;
-            --warning: #F59E0B;
-            --radius: 8px;
-            --shadow: 0 4px 12px rgba(0,0,0,0.4);
-            --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --bg: #0B1120; --surface: #111827; --primary: #00E5FF; --primary-hover: #00B8D4;
+            --text: #F8FAFC; --text-muted: #94A3B8; --border: #1E293B; --radius: 8px;
+            --shadow: 0 4px 12px rgba(0,0,0,0.4); --font: system-ui, -apple-system, sans-serif;
             --transition: all 0.2s ease;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -77,7 +40,7 @@
         .card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--primary); }
         .card h3 { color: var(--primary); margin-bottom: 10px; font-size: 1.3rem; }
         .card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 8px; }
-        .price { color: var(--success); font-weight: 700; font-size: 1.1rem; }
+        .price { color: #10B981; font-weight: 700; font-size: 1.1rem; }
         .badge { display: inline-block; background: var(--surface); border: 1px solid var(--border); padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; color: var(--text-muted); margin-right: 8px; margin-bottom: 8px; }
         .trust-bar { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 25px; color: var(--text-muted); font-size: 0.9rem; }
         .trust-bar span { display: flex; align-items: center; gap: 6px; }
@@ -111,7 +74,7 @@
         .footer a { color: var(--text-muted); font-size: 0.9rem; }
         .footer a:hover { color: var(--primary); }
 
-        /* Gallery Carousel */
+        /* Gallery */
         .carousel-wrapper { position: relative; max-width: 900px; margin: 0 auto; }
         .carousel-track { display: flex; gap: 20px; transition: transform 0.5s ease; }
         .carousel-card { flex: 0 0 calc(33.333% - 14px); background: var(--bg); border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); transition: transform 0.3s; }
@@ -166,7 +129,6 @@
 </header>
 
 <main>
-    <!-- Hero Section -->
     <section class="hero">
         <div class="container">
             <h1>Профессиональный электромонтаж<br>и автоматизация в СПб</h1>
@@ -185,7 +147,6 @@
         </div>
     </section>
 
-    <!-- Services Section -->
     <section id="services" class="section">
         <div class="container">
             <h2 class="section-title">Наши услуги</h2>
@@ -194,227 +155,120 @@
                     <h3>🏠 Для дома</h3>
                     <p>Розетки, выключатели, замена проводки, сборка щитов, диагностика</p>
                     <p class="price">от 450 ₽/точка</p>
-                    <div style="margin-top:10px">
-                        <span class="badge">ПУЭ/ГОСТ</span>
-                        <span class="badge">Маркировка</span>
-                    </div>
+                    <div style="margin-top:10px"><span class="badge">ПУЭ/ГОСТ</span><span class="badge">Маркировка</span></div>
                 </div>
                 <div class="card">
                     <h3>🏡 Умный дом</h3>
                     <p>Сценарии света, климат-контроль, датчики безопасности, интеграция</p>
                     <p class="price">от 15 000 ₽/комната</p>
-                    <div style="margin-top:10px">
-                        <span class="badge">Я.Алиса</span>
-                        <span class="badge">HomeKit</span>
-                    </div>
+                    <div style="margin-top:10px"><span class="badge">Я.Алиса</span><span class="badge">HomeKit</span></div>
                 </div>
                 <div class="card">
                     <h3>🏭 Для бизнеса</h3>
                     <p>Промышленные щиты, ПЛК, диспетчеризация, энергоаудит</p>
                     <p class="price">По ТЗ</p>
-                    <div style="margin-top:10px">
-                        <span class="badge">Siemens</span>
-                        <span class="badge">ОВЕН</span>
-                    </div>
+                    <div style="margin-top:10px"><span class="badge">Siemens</span><span class="badge">ОВЕН</span></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Gallery Section -->
     <section id="gallery" class="section" style="background: var(--surface);">
         <div class="container">
             <h2 class="section-title">Примеры работ</h2>
             <p style="text-align: center; color: var(--text-muted); margin-bottom: 30px; max-width: 700px; margin-left: auto; margin-right: auto;">
                 Реальные объекты в Санкт-Петербурге. Фото «до/после», щиты, проводка, автоматизация.
             </p>
-
             <div class="carousel-wrapper">
                 <div class="carousel-track"></div>
                 <button class="carousel-btn prev">‹</button>
                 <button class="carousel-btn next">›</button>
                 <div class="carousel-dots"></div>
             </div>
-
             <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 20px;">
                 💡 <strong>Больше фото в Telegram:</strong> <a href="https://t.me/voltgroup_spb">@voltgroup_spb</a>
             </p>
         </div>
     </section>
 
-    <!-- Why Us Section -->
     <section id="why" class="section">
         <div class="container">
             <h2 class="section-title">Почему выбирают VoltGroup</h2>
-            <div class="grid grid-2">
-                <div class="card">
-                    <h3>🔹 Промышленный подход</h3>
-                    <p>Начинал с металлорежущих станков и цеховых щитов. Знаю, что такое перегрузки, селективность и запас прочности. В квартире это значит: щит не греется, автоматы не выбивают от чайника, проводка служит 20+ лет.</p>
-                </div>
+            <div class="grid grid-3">
                 <div class="card">
                     <h3>🔹 Прозрачная смета</h3>
-                    <p>Цена фиксируется ДО начала работ. Никаких «доплат за сложный бетон» или «расходники подорожали». Если вскроем стену и найдём алюминий 1980-х — согласуем изменения заранее.</p>
+                    <p>Цена фиксируется ДО начала работ. Никаких «доплат за сложный бетон». Если вскроем стену и найдём старые коммуникации — согласуем изменения заранее.</p>
                 </div>
                 <div class="card">
                     <h3>🔹 Чистота и аккуратность</h3>
-                    <p>Штроборез с пылесосом, лазерный уровень, защитные плёнки. Убираю за собой. Ваш ремонт останется в том же состоянии, в каком был до моего прихода.</p>
+                    <p>Штроборез с пылесосом, лазерный уровень, защитные плёнки. Убираю за собой. Ваш ремонт останется в том же состоянии.</p>
                 </div>
                 <div class="card">
                     <h3>🔹 Официально и безопасно</h3>
-                    <p>Договор подряда, акт приёмки, чек из приложения ФНС «Мой налог». Гарантия 12 месяцев на работы. Работаю в рамках закона, без серых схем.</p>
+                    <p>Договор подряда, акт приёмки, чек из приложения ФНС «Мой налог». Гарантия 12 месяцев на работы. Работаю в рамках закона.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Process Section -->
     <section id="process" class="section" style="background: var(--surface);">
         <div class="container">
             <h2 class="section-title">Как мы работаем</h2>
             <div class="grid grid-3">
-                <div class="card" style="text-align:center">
-                    <div style="font-size:2rem; margin-bottom:10px">1️⃣</div>
-                    <strong>Заявка</strong>
-                    <p style="margin-top:8px">Пишете в TG или оставляете форму. Отвечаю в течение часа.</p>
-                </div>
-                <div class="card" style="text-align:center">
-                    <div style="font-size:2rem; margin-bottom:10px">2️⃣</div>
-                    <strong>Выезд</strong>
-                    <p style="margin-top:8px">Осмотр, замеры, консультация. Бесплатно в пределах КАД при заказе от 4 000 ₽.</p>
-                </div>
-                <div class="card" style="text-align:center">
-                    <div style="font-size:2rem; margin-bottom:10px">3️⃣</div>
-                    <strong>Смета</strong>
-                    <p style="margin-top:8px">Фиксируем объём, материалы, сроки. Цена не меняется без вашего согласия.</p>
-                </div>
-                <div class="card" style="text-align:center">
-                    <div style="font-size:2rem; margin-bottom:10px">4️⃣</div>
-                    <strong>Работа</strong>
-                    <p style="margin-top:8px">Монтаж по ПУЭ, фотоотчёт, уборка. Сдаю объект в срок.</p>
-                </div>
-                <div class="card" style="text-align:center">
-                    <div style="font-size:2rem; margin-bottom:10px">5️⃣</div>
-                    <strong>Приёмка</strong>
-                    <p style="margin-top:8px">Подписываем акт, формирую чек НПД. Гарантия 12 месяцев.</p>
-                </div>
+                <div class="card" style="text-align:center"><div style="font-size:2rem; margin-bottom:10px">1️⃣</div><strong>Заявка</strong><p style="margin-top:8px">Пишете в TG или оставляете форму. Отвечаю в течение часа.</p></div>
+                <div class="card" style="text-align:center"><div style="font-size:2rem; margin-bottom:10px">2️⃣</div><strong>Выезд</strong><p style="margin-top:8px">Осмотр, замеры, консультация. Бесплатно в пределах КАД при заказе от 4 000 ₽.</p></div>
+                <div class="card" style="text-align:center"><div style="font-size:2rem; margin-bottom:10px">3️⃣</div><strong>Смета</strong><p style="margin-top:8px">Фиксируем объём, материалы, сроки. Цена не меняется без вашего согласия.</p></div>
+                <div class="card" style="text-align:center"><div style="font-size:2rem; margin-bottom:10px">4️⃣</div><strong>Работа</strong><p style="margin-top:8px">Монтаж по ПУЭ, фотоотчёт, уборка. Сдаю объект в срок.</p></div>
+                <div class="card" style="text-align:center"><div style="font-size:2rem; margin-bottom:10px">5️⃣</div><strong>Приёмка</strong><p style="margin-top:8px">Подписываем акт, формирую чек НПД. Гарантия 12 месяцев.</p></div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ Section -->
     <section id="faq" class="section">
         <div class="container">
             <h2 class="section-title">Частые вопросы</h2>
             <div class="accordion">
-                <div class="accordion-item">
-                    <button class="accordion-btn">Работаете ли вы официально?</button>
-                    <div class="accordion-content">
-                        <p>Да. Я зарегистрирован как плательщик НПД (самозанятый). Заключаю договор подряда, выдаю акт выполненных работ и чек из приложения ФНС «Мой налог». Все операции прозрачны и защищены законом.</p>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <button class="accordion-btn">Что входит в гарантию 12 месяцев?</button>
-                    <div class="accordion-content">
-                        <p>Бесплатное устранение дефектов монтажа, возникших по моей вине: плохой контакт, ошибка в схеме, несоблюдение ПУЭ. На материалы гарантия от производителя (если закупал я) или от поставщика (если закупали вы).</p>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <button class="accordion-btn">Как рассчитывается стоимость?</button>
-                    <div class="accordion-content">
-                        <p>Базовые работы — по фиксированному прайсу. Сложные/нестандартные — после осмотра. Смета составляется в Excel, согласовывается до старта. Предоплата только за материалы (50%), работы оплачиваются после приёмки.</p>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <button class="accordion-btn">Делаете ли вы умный дом «под ключ»?</button>
-                    <div class="accordion-content">
-                        <p>Да. Проектирую схемы, подбираю оборудование (Aqara, Xiaomi, Sonoff, KNX-совместимое), монтирую, настраиваю сценарии, обучаю пользованию. Интегрирую с Я.Алисой, HomeKit, локальными контроллерами.</p>
-                    </div>
-                </div>
+                <div class="accordion-item"><button class="accordion-btn">Работаете ли вы официально?</button><div class="accordion-content"><p>Да. Я зарегистрирован как плательщик НПД (самозанятый). Заключаю договор подряда, выдаю акт выполненных работ и чек из приложения ФНС «Мой налог».</p></div></div>
+                <div class="accordion-item"><button class="accordion-btn">Что входит в гарантию 12 месяцев?</button><div class="accordion-content"><p>Бесплатное устранение дефектов монтажа по моей вине: плохой контакт, ошибка в схеме, несоблюдение ПУЭ. На материалы гарантия от производителя.</p></div></div>
+                <div class="accordion-item"><button class="accordion-btn">Как рассчитывается стоимость?</button><div class="accordion-content"><p>Базовые работы — по фиксированному прайсу. Сложные — после осмотра. Смета согласовывается до старта. Предоплата только за материалы (50%), работы — после приёмки.</p></div></div>
+                <div class="accordion-item"><button class="accordion-btn">Делаете ли вы умный дом «под ключ»?</button><div class="accordion-content"><p>Да. Проектирую схемы, подбираю оборудование, монтирую, настраиваю сценарии, обучаю пользованию. Интегрирую с Я.Алисой, HomeKit, локальными контроллерами.</p></div></div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Form Section -->
     <section id="contact" class="section" style="background: var(--surface);">
         <div class="container">
             <h2 class="section-title">Оставьте заявку</h2>
             <form id="leadForm" style="max-width: 600px; margin: 0 auto; background: var(--bg); padding: 30px; border-radius: var(--radius); border: 1px solid var(--border);">
-                <div class="form-group">
-                    <label for="name">Имя *</label>
-                    <input type="text" id="name" name="name" class="form-control" required placeholder="Как к вам обращаться?">
-                    <div class="form-error">Пожалуйста, введите имя</div>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Телефон *</label>
-                    <input type="tel" id="phone" name="phone" class="form-control" required placeholder="+7 (___) ___-__-__">
-                    <div class="form-error">Введите корректный номер телефона</div>
-                </div>
-                <div class="form-group">
-                    <label for="service">Тип задачи</label>
-                    <select id="service" name="service" class="form-control">
-                        <option value="Точечный монтаж">Точечный монтаж (розетки, свет)</option>
-                        <option value="Замена проводки">Замена проводки / черновой монтаж</option>
-                        <option value="Сборка щита">Сборка/модернизация электрощита</option>
-                        <option value="Умный дом">Умный дом / автоматизация</option>
-                        <option value="Диагностика">Диагностика / аварийный выезд</option>
-                        <option value="Другое">Другое</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="comment">Комментарий</label>
-                    <textarea id="comment" name="comment" class="form-control" rows="4" placeholder="Район, тип помещения, срочность, особые пожелания..."></textarea>
-                </div>
+                <div class="form-group"><label for="name">Имя *</label><input type="text" id="name" name="name" class="form-control" required placeholder="Как к вам обращаться?"><div class="form-error">Пожалуйста, введите имя</div></div>
+                <div class="form-group"><label for="phone">Телефон *</label><input type="tel" id="phone" name="phone" class="form-control" required placeholder="+7 (___) ___-__-__"><div class="form-error">Введите корректный номер телефона</div></div>
+                <div class="form-group"><label for="service">Тип задачи</label><select id="service" name="service" class="form-control"><option value="Точечный монтаж">Точечный монтаж</option><option value="Замена проводки">Замена проводки</option><option value="Сборка щита">Сборка щита</option><option value="Умный дом">Умный дом / автоматизация</option><option value="Диагностика">Диагностика / авария</option><option value="Другое">Другое</option></select></div>
+                <div class="form-group"><label for="comment">Комментарий</label><textarea id="comment" name="comment" class="form-control" rows="4" placeholder="Район, тип помещения, срочность..."></textarea></div>
                 <button type="submit" class="btn btn-primary" style="width: 100%;">Получить расчёт за 30 минут</button>
-                <p style="margin-top: 12px; font-size: 0.8rem; color: var(--text-muted); text-align: center;">
-                    🔒 Нажимая кнопку, вы соглашаетесь с <a href="/privacy">Политикой конфиденциальности</a> и обработкой персональных данных.
-                </p>
+                <p style="margin-top: 12px; font-size: 0.8rem; color: var(--text-muted); text-align: center;">🔒 Нажимая кнопку, вы соглашаетесь с <a href="privacy.html">Политикой конфиденциальности</a> и обработкой данных.</p>
                 <p id="formStatus" style="margin-top: 10px; text-align: center; display: none;"></p>
             </form>
         </div>
     </section>
 </main>
 
-<!-- Footer -->
 <footer class="footer">
     <div class="container">
         <div class="footer-grid">
-            <div>
-                <h4>⚡ VoltGroup</h4>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">Энергия решений.<br>Электрика и автоматизация в Санкт-Петербурге.</p>
-            </div>
-            <div>
-                <h4>Контакты</h4>
-                <p>📞 <a href="tel:+79990000000">+7 (999) 000-00-00</a></p>
-                <p>💬 <a href="https://t.me/voltgroup_spb">@voltgroup_spb</a></p>
-                <p>🕒 Пн–Сб: 9:00–21:00</p>
-            </div>
-            <div>
-                <h4>Документы</h4>
-                <p><a href="/privacy">Политика конфиденциальности</a></p>
-                <p><a href="/offer">Публичная оферта</a></p>
-                <p><a href="/cookies">Политика cookies</a></p>
-            </div>
+            <div><h4>⚡ VoltGroup</h4><p style="color: var(--text-muted); font-size: 0.9rem;">Энергия решений.<br>Электрика и автоматизация в СПб.</p></div>
+            <div><h4>Контакты</h4><p>📞 <a href="tel:+79990000000">+7 (999) 000-00-00</a></p><p>💬 <a href="https://t.me/voltgroup_spb">@voltgroup_spb</a></p><p>🕒 Пн–Сб: 9:00–21:00</p></div>
+            <div><h4>Документы</h4><p><a href="privacy.html">Политика конфиденциальности</a></p><p><a href="offer.html">Публичная оферта</a></p><p><a href="cookies.html">Политика cookies</a></p></div>
         </div>
-
-        <div class="npd-block">
-            Исполнитель: [Фамилия Имя Отчество], плательщик НПД (самозанятый)<br>
-            ИНН: [Ваш ИНН] | Чек формируется в приложении ФНС «Мой налог»<br>
-            © 2026 VoltGroup. Все права защищены.
-        </div>
+        <div class="npd-block">Исполнитель: [Фамилия Имя Отчество], плательщик НПД (самозанятый)<br>ИНН: [Ваш ИНН] | Чек формируется в приложении ФНС «Мой налог»<br>© 2026 VoltGroup. Все права защищены.</div>
     </div>
 </footer>
 
-<!-- Cookie Banner -->
-<div id="cookieBanner">
-    🍪 Мы используем cookie для аналитики. <a href="/cookies">Подробнее</a>.
-    <button onclick="localStorage.setItem('cookies','ok');document.getElementById('cookieBanner').style.display='none'">Согласен</button>
-</div>
+<div id="cookieBanner">🍪 Мы используем cookie для аналитики. <a href="cookies.html">Подробнее</a>.<button onclick="localStorage.setItem('cookies','ok');document.getElementById('cookieBanner').style.display='none'">Согласен</button></div>
 
 <script>
     // Mobile Menu
-    document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
-        document.querySelector('.nav-links').classList.toggle('open');
-    });
+    document.querySelector('.mobile-menu-btn').addEventListener('click', () => document.querySelector('.nav-links').classList.toggle('open'));
+    document.querySelectorAll('.nav-links a').forEach(link => link.addEventListener('click', () => document.querySelector('.nav-links').classList.remove('open')));
 
     // FAQ Accordion
     document.querySelectorAll('.accordion-btn').forEach(btn => {
@@ -426,8 +280,7 @@
     });
 
     // Phone Mask
-    const phoneInput = document.getElementById('phone');
-    phoneInput.addEventListener('input', e => {
+    document.getElementById('phone').addEventListener('input', e => {
         let x = e.target.value.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
         e.target.value = !x[2] ? (x[1] ? '+7 (' : '') : '+7 (' + x[2] + (x[3] ? ') ' + x[3] : '') + (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : '');
     });
@@ -435,146 +288,54 @@
     // Form Submission
     document.getElementById('leadForm').addEventListener('submit', async function(e) {
         e.preventDefault();
-        const btn = this.querySelector('button');
-        const status = document.getElementById('formStatus');
-        btn.disabled = true;
-        btn.textContent = 'Отправка...';
-        status.style.display = 'block';
-        status.textContent = '⏳ Отправляем заявку...';
-        status.style.color = 'var(--text-muted)';
-
+        const btn = this.querySelector('button'); const status = document.getElementById('formStatus');
+        btn.disabled = true; btn.textContent = 'Отправка...'; status.style.display = 'block'; status.style.color = 'var(--text-muted)'; status.textContent = '⏳ Отправляем заявку...';
         const endpoint = 'https://formspree.io/f/ВАШ_ID';
-
         try {
-            const res = await fetch(endpoint, {
-                method: 'POST',
-                body: new FormData(this),
-                headers: { 'Accept': 'application/json' }
-            });
-            if (res.ok) {
-                status.textContent = '✅ Заявка отправлена! Перезвоню в течение 30 минут.';
-                status.style.color = 'var(--success)';
-                this.reset();
-            } else {
-                throw new Error('Ошибка отправки');
-            }
-        } catch (err) {
-            status.textContent = '❌ Ошибка отправки. Напишите напрямую в @voltgroup_spb';
-            status.style.color = '#EF4444';
-        } finally {
-            btn.disabled = false;
-            btn.textContent = 'Получить расчёт за 30 минут';
-        }
+            const res = await fetch(endpoint, { method: 'POST', body: new FormData(this), headers: { 'Accept': 'application/json' } });
+            if (res.ok) { status.textContent = '✅ Заявка отправлена! Перезвоню в течение 30 минут.'; status.style.color = '#10B981'; this.reset(); }
+            else throw new Error('Ошибка');
+        } catch { status.textContent = '❌ Ошибка. Напишите в @voltgroup_spb'; status.style.color = '#EF4444'; }
+        finally { btn.disabled = false; btn.textContent = 'Получить расчёт за 30 минут'; }
     });
 
-    // Gallery Carousel
-    let galleryItems = [];
-    let currentIndex = 0;
-    let itemsPerView = 3;
-
+    // Gallery
+    let galleryItems = [], currentIndex = 0, itemsPerView = 3;
     async function loadGallery() {
         try {
-            const response = await fetch('gallery/gallery-config.json');
-            if (!response.ok) throw new Error('Config not found');
-            galleryItems = await response.json();
-            renderCarousel();
-        } catch (err) {
-            console.error('Ошибка загрузки галереи:', err);
-            document.querySelector('.carousel-track').innerHTML =
-            '<p style="text-align:center;color:var(--text-muted);padding:40px;grid-column:1/-1;">📷 Галерея загружается...</p>';
-        }
+            const res = await fetch('gallery/gallery-config.json');
+            if (!res.ok) throw new Error();
+            galleryItems = await res.json(); renderCarousel();
+        } catch { document.querySelector('.carousel-track').innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:40px;grid-column:1/-1;">📷 Галерея скоро появится</p>'; }
     }
-
     function renderCarousel() {
-        const track = document.querySelector('.carousel-track');
-        const dotsContainer = document.querySelector('.carousel-dots');
-        track.innerHTML = '';
-        dotsContainer.innerHTML = '';
-
-        galleryItems.forEach((item, index) => {
-            const card = document.createElement('div');
-            card.className = 'carousel-card';
-            card.innerHTML = `
-          <img src="${item.image}" alt="${item.title}" loading="lazy">
-          <div class="carousel-content">
-            <h3>${item.title}</h3>
-            <p>${item.description}</p>
-            ${item.badges ? item.badges.map(b => `<span class="badge">${b}</span>`).join('') : ''}
-          </div>
-        `;
-            track.appendChild(card);
-
-            const dot = document.createElement('div');
-            dot.className = 'dot' + (index === 0 ? ' active' : '');
-            dot.addEventListener('click', () => goToSlide(index));
-            dotsContainer.appendChild(dot);
+        const track = document.querySelector('.carousel-track'), dotsContainer = document.querySelector('.carousel-dots');
+        track.innerHTML = ''; dotsContainer.innerHTML = '';
+        galleryItems.forEach((item, i) => {
+            track.innerHTML += `<div class="carousel-card"><img src="${item.image}" alt="${item.title}" loading="lazy"><div class="carousel-content"><h3>${item.title}</h3><p>${item.description}</p>${item.badges ? item.badges.map(b=>`<span class="badge">${b}</span>`).join('') : ''}</div></div>`;
+            dotsContainer.innerHTML += `<div class="dot ${i===0?'active':''}" onclick="goToSlide(${i})"></div>`;
         });
-
         updateCarousel();
     }
-
     function updateCarousel() {
-        const track = document.querySelector('.carousel-track');
-        const maxIndex = Math.max(0, galleryItems.length - itemsPerView);
-        const offset = -currentIndex * (100 / itemsPerView);
-        track.style.transform = `translateX(${offset}%)`;
-
-        document.querySelectorAll('.dot').forEach((dot, i) => {
-            dot.classList.toggle('active', i === currentIndex);
-        });
+        const max = Math.max(0, galleryItems.length - itemsPerView);
+        document.querySelector('.carousel-track').style.transform = `translateX(-${currentIndex * (100 / itemsPerView)}%)`;
+        document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === currentIndex));
     }
-
-    function goToSlide(index) {
-        const maxIndex = Math.max(0, galleryItems.length - itemsPerView);
-        currentIndex = Math.max(0, Math.min(index, maxIndex));
-        updateCarousel();
-    }
-
-    function nextSlide() {
-        const maxIndex = Math.max(0, galleryItems.length - itemsPerView);
-        currentIndex = currentIndex >= maxIndex ? 0 : currentIndex + 1;
-        updateCarousel();
-    }
-
-    function prevSlide() {
-        const maxIndex = Math.max(0, galleryItems.length - itemsPerView);
-        currentIndex = currentIndex <= 0 ? maxIndex : currentIndex - 1;
-        updateCarousel();
-    }
-
+    function goToSlide(i) { currentIndex = Math.max(0, Math.min(i, Math.max(0, galleryItems.length - itemsPerView))); updateCarousel(); }
+    function nextSlide() { const m = Math.max(0, galleryItems.length - itemsPerView); currentIndex = currentIndex >= m ? 0 : currentIndex + 1; updateCarousel(); }
+    function prevSlide() { const m = Math.max(0, galleryItems.length - itemsPerView); currentIndex = currentIndex <= 0 ? m : currentIndex - 1; updateCarousel(); }
     document.querySelector('.carousel-btn.prev').addEventListener('click', prevSlide);
     document.querySelector('.carousel-btn.next').addEventListener('click', nextSlide);
-
-    function updateItemsPerView() {
-        if (window.innerWidth <= 640) itemsPerView = 1;
-        else if (window.innerWidth <= 900) itemsPerView = 2;
-        else itemsPerView = 3;
-        updateCarousel();
-    }
-
+    function updateItemsPerView() { itemsPerView = window.innerWidth <= 640 ? 1 : window.innerWidth <= 900 ? 2 : 3; updateCarousel(); }
     window.addEventListener('resize', updateItemsPerView);
-
-    let touchStartX = 0;
-    let touchEndX = 0;
-    const track = document.querySelector('.carousel-track');
-
-    track.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
-    track.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
-        if (touchStartX - touchEndX > 50) nextSlide();
-        if (touchEndX - touchStartX > 50) prevSlide();
-    });
+    let tx=0; const trackEl = document.querySelector('.carousel-track');
+    trackEl.addEventListener('touchstart', e => tx = e.changedTouches[0].screenX);
+    trackEl.addEventListener('touchend', e => { const d = e.changedTouches[0].screenX; if(tx-d>50) nextSlide(); if(d-tx>50) prevSlide(); });
 
     // Cookie Banner
-    if (!localStorage.getItem('cookies')) {
-        document.getElementById('cookieBanner').style.display = 'block';
-    }
-
-    // Init
-    document.addEventListener('DOMContentLoaded', () => {
-        updateItemsPerView();
-        loadGallery();
-    });
+    if(!localStorage.getItem('cookies')) document.getElementById('cookieBanner').style.display = 'block';
+    document.addEventListener('DOMContentLoaded', () => { updateItemsPerView(); loadGallery(); });
 </script>
 </body>
 </html>
