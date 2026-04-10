@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoltGroup | Энергия решений — Электрика и автоматизация в СПб</title>
+    <meta name="description" content="Профессиональный электромонтаж, умный дом и автоматизация в Санкт-Петербурге. Договор, гарантия 12 мес., чек НПД. Работаем с 2021 года.">
+    <meta name="keywords" content="электрик спб, электромонтаж, умный дом, сборка щита, замена проводки, самозанятый электрик, voltgroup">
+    <meta name="author" content="VoltGroup">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="VoltGroup | Энергия решений — Электрика и автоматизация в СПб">
+    <meta property="og:description" content="Профессиональный электромонтаж, умный дом и автоматизация. Договор, гарантия 12 мес., чек НПД.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://voltgroup-spb.ru">
+    <meta property="og:image" content="https://voltgroup-spb.ru/og-image.jpg">
+    <meta property="og:locale" content="ru_RU">
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+
+    <!-- Schema.org LocalBusiness -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Electrician",
+            "name": "VoltGroup",
+            "description": "Профессиональный электромонтаж, умный дом и автоматизация в Санкт-Петербурге",
+            "url": "https://voltgroup-spb.ru",
+            "telephone": "+7-XXX-XXX-XX-XX",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Санкт-Петербург",
+                "addressCountry": "RU"
+            },
+            "priceRange": "₽₽",
+            "openingHours": "Mo-Sa 09:00-21:00"
+        }
+    </script>
+
+    <style>
+        :root {
+            --bg: #0B1120;
+            --surface: #111827;
+            --surface-hover: #1F2937;
+            --primary: #00E5FF;
+            --primary-hover: #00B8D4;
+            --text: #F8FAFC;
+            --text-muted: #94A3B8;
+            --border: #1E293B;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --radius: 8px;
+            --shadow: 0 4px 12px rgba(0,0,0,0.4);
+            --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --transition: all 0.2s ease;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background: var(--bg); color: var(--text); font-family: var(--font); line-height: 1.6; }
+        a { color: var(--primary); text-decoration: none; transition: var(--transition); }
+        a:hover { color: var(--primary-hover); }
+        img { max-width: 100%; height: auto; display: block; }
+        .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 12px 24px; border-radius: var(--radius); font-weight: 600; font-size: 1rem; cursor: pointer; border: none; transition: var(--transition); text-align: center; }
+        .btn-primary { background: var(--primary); color: var(--bg); }
+        .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: var(--shadow); }
+        .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+        .btn-outline:hover { background: var(--primary); color: var(--bg); }
+        .section { padding: 60px 0; }
+        .section-title { font-size: clamp(1.8rem, 4vw, 2.5rem); text-align: center; margin-bottom: 40px; font-weight: 700; }
+        .grid { display: grid; gap: 20px; }
+        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+        .card { background: var(--surface); padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); transition: var(--transition); }
+        .card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--primary); }
+        .card h3 { color: var(--primary); margin-bottom: 10px; font-size: 1.3rem; }
+        .card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 8px; }
+        .price { color: var(--success); font-weight: 700; font-size: 1.1rem; }
+        .badge { display: inline-block; background: var(--surface); border: 1px solid var(--border); padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; color: var(--text-muted); margin-right: 8px; margin-bottom: 8px; }
+        .trust-bar { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 25px; color: var(--text-muted); font-size: 0.9rem; }
+        .trust-bar span { display: flex; align-items: center; gap: 6px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 6px; color: var(--text-muted); font-size: 0.9rem; }
+        .form-control { width: 100%; padding: 12px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg); color: var(--text); font-family: inherit; font-size: 1rem; transition: var(--transition); }
+        .form-control:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,229,255,0.2); }
+        .form-error { color: #EF4444; font-size: 0.85rem; margin-top: 5px; display: none; }
+        .accordion-item { border-bottom: 1px solid var(--border); }
+        .accordion-btn { width: 100%; text-align: left; background: none; border: none; color: var(--text); padding: 18px 0; font-size: 1.05rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .accordion-btn::after { content: "+"; font-size: 1.5rem; color: var(--primary); transition: transform 0.3s; }
+        .accordion-btn.active::after { transform: rotate(45deg); }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .accordion-content p { padding: 0 0 18px; color: var(--text-muted); line-height: 1.7; }
+        .header { position: sticky; top: 0; background: rgba(11, 17, 32, 0.95); backdrop-filter: blur(8px); z-index: 100; border-bottom: 1px solid var(--border); padding: 15px 0; }
+        .nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .logo { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.5px; }
+        .logo span { color: var(--primary); }
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a { color: var(--text-muted); font-size: 0.95rem; }
+        .nav-links a:hover { color: var(--text); }
+        .mobile-menu-btn { display: none; background: none; border: none; color: var(--text); font-size: 1.5rem; cursor: pointer; }
+        .hero { text-align: center; padding: 80px 0 60px; }
+        .hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 15px; line-height: 1.2; }
+        .hero p { color: var(--text-muted); font-size: 1.15rem; margin-bottom: 25px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .hero-actions { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .npd-block { background: var(--surface); border: 1px dashed var(--border); padding: 15px; border-radius: var(--radius); margin: 20px auto; max-width: 800px; font-size: 0.9rem; color: var(--text-muted); text-align: center; }
+        .footer { padding: 40px 0 20px; text-align: center; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--border); }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; text-align: left; margin-bottom: 30px; }
+        .footer h4 { color: var(--text); margin-bottom: 12px; font-size: 1.1rem; }
+        .footer a { color: var(--text-muted); font-size: 0.9rem; }
+        .footer a:hover { color: var(--primary); }
+
+        /* Gallery Carousel */
+        .carousel-wrapper { position: relative; max-width: 900px; margin: 0 auto; }
+        .carousel-track { display: flex; gap: 20px; transition: transform 0.5s ease; }
+        .carousel-card { flex: 0 0 calc(33.333% - 14px); background: var(--bg); border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); transition: transform 0.3s; }
+        .carousel-card:hover { transform: translateY(-4px); }
+        .carousel-card img { width: 100%; height: 250px; object-fit: cover; display: block; background: #1a2b3c; }
+        .carousel-content { padding: 15px; }
+        .carousel-content h3 { color: var(--primary); font-size: 1.1rem; margin-bottom: 8px; }
+        .carousel-content p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; margin-bottom: 10px; }
+        .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: var(--primary); border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--bg); z-index: 10; }
+        .carousel-btn.prev { left: -50px; }
+        .carousel-btn.next { right: -50px; }
+        .carousel-btn:hover { background: var(--primary-hover); }
+        .carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 20px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); cursor: pointer; transition: background 0.3s; }
+        .dot.active { background: var(--primary); }
+
+        /* Cookie Banner */
+        #cookieBanner { position: fixed; bottom: 20px; left: 20px; right: 20px; max-width: 500px; background: var(--surface); border: 1px solid var(--border); padding: 15px; border-radius: var(--radius); display: none; z-index: 999; font-size: 0.9rem; color: var(--text-muted); }
+        #cookieBanner button { margin-left: 10px; padding: 6px 12px; background: var(--primary); color: var(--bg); border: none; border-radius: 4px; cursor: pointer; font-weight: 600; }
+
+        @media (max-width: 900px) {
+            .carousel-card { flex: 0 0 calc(50% - 10px); }
+            .carousel-btn.prev { left: 10px; }
+            .carousel-btn.next { right: 10px; }
+        }
+        @media (max-width: 640px) {
+            .carousel-card { flex: 0 0 100%; }
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 60px; left: 0; right: 0; background: var(--bg); padding: 20px; border-bottom: 1px solid var(--border); }
+            .nav-links.open { display: flex; }
+            .mobile-menu-btn { display: block; }
+            .hero { padding: 60px 0 40px; }
+            .section { padding: 40px 0; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container nav">
+        <a href="#" class="logo">⚡ Volt<span>Group</span></a>
+        <button class="mobile-menu-btn" aria-label="Открыть меню">☰</button>
+        <nav class="nav-links">
+            <a href="#services">Услуги</a>
+            <a href="#gallery">Работы</a>
+            <a href="#why">Почему мы</a>
+            <a href="#process">Как работаем</a>
+            <a href="#faq">FAQ</a>
+            <a href="#contact">Контакты</a>
+            <a href="tel:+79990000000" class="btn btn-primary">📞 Позвонить</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Профессиональный электромонтаж<br>и автоматизация в СПб</h1>
+            <p>Энергия решений — от розетки до умного дома. Промышленный опыт, честные цены, гарантия 12 месяцев.</p>
+            <div class="hero-actions">
+                <a href="#contact" class="btn btn-primary">Рассчитать смету</a>
+                <a href="https://t.me/voltgroup_spb" class="btn btn-outline">💬 Написать в Telegram</a>
+            </div>
+            <div class="trust-bar">
+                <span>✅ Договор и акт приёмки</span>
+                <span>📄 Чек НПД (ФНС)</span>
+                <span>🛠 Опыт с 2021 г.</span>
+                <span>🧹 Штроборез с пылесосом</span>
+                <span>📸 Фотоотчёт «до/после»</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section">
+        <div class="container">
+            <h2 class="section-title">Наши услуги</h2>
+            <div class="grid grid-3">
+                <div class="card">
+                    <h3>🏠 Для дома</h3>
+                    <p>Розетки, выключатели, замена проводки, сборка щитов, диагностика</p>
+                    <p class="price">от 450 ₽/точка</p>
+                    <div style="margin-top:10px">
+                        <span class="badge">ПУЭ/ГОСТ</span>
+                        <span class="badge">Маркировка</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>🏡 Умный дом</h3>
+                    <p>Сценарии света, климат-контроль, датчики безопасности, интеграция</p>
+                    <p class="price">от 15 000 ₽/комната</p>
+                    <div style="margin-top:10px">
+                        <span class="badge">Я.Алиса</span>
+                        <span class="badge">HomeKit</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>🏭 Для бизнеса</h3>
+                    <p>Промышленные щиты, ПЛК, диспетчеризация, энергоаудит</p>
+                    <p class="price">По ТЗ</p>
+                    <div style="margin-top:10px">
+                        <span class="badge">Siemens</span>
+                        <span class="badge">ОВЕН</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="section" style="background: var(--surface);">
+        <div class="container">
+            <h2 class="section-title">Примеры работ</h2>
+            <p style="text-align: center; color: var(--text-muted); margin-bottom: 30px; max-width: 700px; margin-left: auto; margin-right: auto;">
+                Реальные объекты в Санкт-Петербурге. Фото «до/после», щиты, проводка, автоматизация.
+            </p>
+
+            <div class="carousel-wrapper">
+                <div class="carousel-track"></div>
+                <button class="carousel-btn prev">‹</button>
+                <button class="carousel-btn next">›</button>
+                <div class="carousel-dots"></div>
+            </div>
+
+            <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 20px;">
+                💡 <strong>Больше фото в Telegram:</strong> <a href="https://t.me/voltgroup_spb">@voltgroup_spb</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- Why Us Section -->
+    <section id="why" class="section">
+        <div class="container">
+            <h2 class="section-title">Почему выбирают VoltGroup</h2>
+            <div class="grid grid-2">
+                <div class="card">
+                    <h3>🔹 Промышленный подход</h3>
+                    <p>Начинал с металлорежущих станков и цеховых щитов. Знаю, что такое перегрузки, селективность и запас прочности. В квартире это значит: щит не греется, автоматы не выбивают от чайника, проводка служит 20+ лет.</p>
+                </div>
+                <div class="card">
+                    <h3>🔹 Прозрачная смета</h3>
+                    <p>Цена фиксируется ДО начала работ. Никаких «доплат за сложный бетон» или «расходники подорожали». Если вскроем стену и найдём алюминий 1980-х — согласуем изменения заранее.</p>
+                </div>
+                <div class="card">
+                    <h3>🔹 Чистота и аккуратность</h3>
+                    <p>Штроборез с пылесосом, лазерный уровень, защитные плёнки. Убираю за собой. Ваш ремонт останется в том же состоянии, в каком был до моего прихода.</p>
+                </div>
+                <div class="card">
+                    <h3>🔹 Официально и безопасно</h3>
+                    <p>Договор подряда, акт приёмки, чек из приложения ФНС «Мой налог». Гарантия 12 месяцев на работы. Работаю в рамках закона, без серых схем.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="process" class="section" style="background: var(--surface);">
+        <div class="container">
+            <h2 class="section-title">Как мы работаем</h2>
+            <div class="grid grid-3">
+                <div class="card" style="text-align:center">
+                    <div style="font-size:2rem; margin-bottom:10px">1️⃣</div>
+                    <strong>Заявка</strong>
+                    <p style="margin-top:8px">Пишете в TG или оставляете форму. Отвечаю в течение часа.</p>
+                </div>
+                <div class="card" style="text-align:center">
+                    <div style="font-size:2rem; margin-bottom:10px">2️⃣</div>
+                    <strong>Выезд</strong>
+                    <p style="margin-top:8px">Осмотр, замеры, консультация. Бесплатно в пределах КАД при заказе от 4 000 ₽.</p>
+                </div>
+                <div class="card" style="text-align:center">
+                    <div style="font-size:2rem; margin-bottom:10px">3️⃣</div>
+                    <strong>Смета</strong>
+                    <p style="margin-top:8px">Фиксируем объём, материалы, сроки. Цена не меняется без вашего согласия.</p>
+                </div>
+                <div class="card" style="text-align:center">
+                    <div style="font-size:2rem; margin-bottom:10px">4️⃣</div>
+                    <strong>Работа</strong>
+                    <p style="margin-top:8px">Монтаж по ПУЭ, фотоотчёт, уборка. Сдаю объект в срок.</p>
+                </div>
+                <div class="card" style="text-align:center">
+                    <div style="font-size:2rem; margin-bottom:10px">5️⃣</div>
+                    <strong>Приёмка</strong>
+                    <p style="margin-top:8px">Подписываем акт, формирую чек НПД. Гарантия 12 месяцев.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="section">
+        <div class="container">
+            <h2 class="section-title">Частые вопросы</h2>
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-btn">Работаете ли вы официально?</button>
+                    <div class="accordion-content">
+                        <p>Да. Я зарегистрирован как плательщик НПД (самозанятый). Заключаю договор подряда, выдаю акт выполненных работ и чек из приложения ФНС «Мой налог». Все операции прозрачны и защищены законом.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-btn">Что входит в гарантию 12 месяцев?</button>
+                    <div class="accordion-content">
+                        <p>Бесплатное устранение дефектов монтажа, возникших по моей вине: плохой контакт, ошибка в схеме, несоблюдение ПУЭ. На материалы гарантия от производителя (если закупал я) или от поставщика (если закупали вы).</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-btn">Как рассчитывается стоимость?</button>
+                    <div class="accordion-content">
+                        <p>Базовые работы — по фиксированному прайсу. Сложные/нестандартные — после осмотра. Смета составляется в Excel, согласовывается до старта. Предоплата только за материалы (50%), работы оплачиваются после приёмки.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-btn">Делаете ли вы умный дом «под ключ»?</button>
+                    <div class="accordion-content">
+                        <p>Да. Проектирую схемы, подбираю оборудование (Aqara, Xiaomi, Sonoff, KNX-совместимое), монтирую, настраиваю сценарии, обучаю пользованию. Интегрирую с Я.Алисой, HomeKit, локальными контроллерами.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section id="contact" class="section" style="background: var(--surface);">
+        <div class="container">
+            <h2 class="section-title">Оставьте заявку</h2>
+            <form id="leadForm" style="max-width: 600px; margin: 0 auto; background: var(--bg); padding: 30px; border-radius: var(--radius); border: 1px solid var(--border);">
+                <div class="form-group">
+                    <label for="name">Имя *</label>
+                    <input type="text" id="name" name="name" class="form-control" required placeholder="Как к вам обращаться?">
+                    <div class="form-error">Пожалуйста, введите имя</div>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Телефон *</label>
+                    <input type="tel" id="phone" name="phone" class="form-control" required placeholder="+7 (___) ___-__-__">
+                    <div class="form-error">Введите корректный номер телефона</div>
+                </div>
+                <div class="form-group">
+                    <label for="service">Тип задачи</label>
+                    <select id="service" name="service" class="form-control">
+                        <option value="Точечный монтаж">Точечный монтаж (розетки, свет)</option>
+                        <option value="Замена проводки">Замена проводки / черновой монтаж</option>
+                        <option value="Сборка щита">Сборка/модернизация электрощита</option>
+                        <option value="Умный дом">Умный дом / автоматизация</option>
+                        <option value="Диагностика">Диагностика / аварийный выезд</option>
+                        <option value="Другое">Другое</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="comment">Комментарий</label>
+                    <textarea id="comment" name="comment" class="form-control" rows="4" placeholder="Район, тип помещения, срочность, особые пожелания..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Получить расчёт за 30 минут</button>
+                <p style="margin-top: 12px; font-size: 0.8rem; color: var(--text-muted); text-align: center;">
+                    🔒 Нажимая кнопку, вы соглашаетесь с <a href="/privacy">Политикой конфиденциальности</a> и обработкой персональных данных.
+                </p>
+                <p id="formStatus" style="margin-top: 10px; text-align: center; display: none;"></p>
+            </form>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <h4>⚡ VoltGroup</h4>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Энергия решений.<br>Электрика и автоматизация в Санкт-Петербурге.</p>
+            </div>
+            <div>
+                <h4>Контакты</h4>
+                <p>📞 <a href="tel:+79990000000">+7 (999) 000-00-00</a></p>
+                <p>💬 <a href="https://t.me/voltgroup_spb">@voltgroup_spb</a></p>
+                <p>🕒 Пн–Сб: 9:00–21:00</p>
+            </div>
+            <div>
+                <h4>Документы</h4>
+                <p><a href="/privacy">Политика конфиденциальности</a></p>
+                <p><a href="/offer">Публичная оферта</a></p>
+                <p><a href="/cookies">Политика cookies</a></p>
+            </div>
+        </div>
+
+        <div class="npd-block">
+            Исполнитель: [Фамилия Имя Отчество], плательщик НПД (самозанятый)<br>
+            ИНН: [Ваш ИНН] | Чек формируется в приложении ФНС «Мой налог»<br>
+            © 2026 VoltGroup. Все права защищены.
+        </div>
+    </div>
+</footer>
+
+<!-- Cookie Banner -->
+<div id="cookieBanner">
+    🍪 Мы используем cookie для аналитики. <a href="/cookies">Подробнее</a>.
+    <button onclick="localStorage.setItem('cookies','ok');document.getElementById('cookieBanner').style.display='none'">Согласен</button>
+</div>
+
+<script>
+    // Mobile Menu
+    document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
+        document.querySelector('.nav-links').classList.toggle('open');
+    });
+
+    // FAQ Accordion
+    document.querySelectorAll('.accordion-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            btn.classList.toggle('active');
+            const content = btn.nextElementSibling;
+            content.style.maxHeight = content.style.maxHeight ? null : content.scrollHeight + 'px';
+        });
+    });
+
+    // Phone Mask
+    const phoneInput = document.getElementById('phone');
+    phoneInput.addEventListener('input', e => {
+        let x = e.target.value.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
+        e.target.value = !x[2] ? (x[1] ? '+7 (' : '') : '+7 (' + x[2] + (x[3] ? ') ' + x[3] : '') + (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : '');
+    });
+
+    // Form Submission
+    document.getElementById('leadForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const btn = this.querySelector('button');
+        const status = document.getElementById('formStatus');
+        btn.disabled = true;
+        btn.textContent = 'Отправка...';
+        status.style.display = 'block';
+        status.textContent = '⏳ Отправляем заявку...';
+        status.style.color = 'var(--text-muted)';
+
+        const endpoint = 'https://formspree.io/f/ВАШ_ID';
+
+        try {
+            const res = await fetch(endpoint, {
+                method: 'POST',
+                body: new FormData(this),
+                headers: { 'Accept': 'application/json' }
+            });
+            if (res.ok) {
+                status.textContent = '✅ Заявка отправлена! Перезвоню в течение 30 минут.';
+                status.style.color = 'var(--success)';
+                this.reset();
+            } else {
+                throw new Error('Ошибка отправки');
+            }
+        } catch (err) {
+            status.textContent = '❌ Ошибка отправки. Напишите напрямую в @voltgroup_spb';
+            status.style.color = '#EF4444';
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Получить расчёт за 30 минут';
+        }
+    });
+
+    // Gallery Carousel
+    let galleryItems = [];
+    let currentIndex = 0;
+    let itemsPerView = 3;
+
+    async function loadGallery() {
+        try {
+            const response = await fetch('gallery/gallery-config.json');
+            if (!response.ok) throw new Error('Config not found');
+            galleryItems = await response.json();
+            renderCarousel();
+        } catch (err) {
+            console.error('Ошибка загрузки галереи:', err);
+            document.querySelector('.carousel-track').innerHTML =
+            '<p style="text-align:center;color:var(--text-muted);padding:40px;grid-column:1/-1;">📷 Галерея загружается...</p>';
+        }
+    }
+
+    function renderCarousel() {
+        const track = document.querySelector('.carousel-track');
+        const dotsContainer = document.querySelector('.carousel-dots');
+        track.innerHTML = '';
+        dotsContainer.innerHTML = '';
+
+        galleryItems.forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = 'carousel-card';
+            card.innerHTML = `
+          <img src="${item.image}" alt="${item.title}" loading="lazy">
+          <div class="carousel-content">
+            <h3>${item.title}</h3>
+            <p>${item.description}</p>
+            ${item.badges ? item.badges.map(b => `<span class="badge">${b}</span>`).join('') : ''}
+          </div>
+        `;
+            track.appendChild(card);
+
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (index === 0 ? ' active' : '');
+            dot.addEventListener('click', () => goToSlide(index));
+            dotsContainer.appendChild(dot);
+        });
+
+        updateCarousel();
+    }
+
+    function updateCarousel() {
+        const track = document.querySelector('.carousel-track');
+        const maxIndex = Math.max(0, galleryItems.length - itemsPerView);
+        const offset = -currentIndex * (100 / itemsPerView);
+        track.style.transform = `translateX(${offset}%)`;
+
+        document.querySelectorAll('.dot').forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentIndex);
+        });
+    }
+
+    function goToSlide(index) {
+        const maxIndex = Math.max(0, galleryItems.length - itemsPerView);
+        currentIndex = Math.max(0, Math.min(index, maxIndex));
+        updateCarousel();
+    }
+
+    function nextSlide() {
+        const maxIndex = Math.max(0, galleryItems.length - itemsPerView);
+        currentIndex = currentIndex >= maxIndex ? 0 : currentIndex + 1;
+        updateCarousel();
+    }
+
+    function prevSlide() {
+        const maxIndex = Math.max(0, galleryItems.length - itemsPerView);
+        currentIndex = currentIndex <= 0 ? maxIndex : currentIndex - 1;
+        updateCarousel();
+    }
+
+    document.querySelector('.carousel-btn.prev').addEventListener('click', prevSlide);
+    document.querySelector('.carousel-btn.next').addEventListener('click', nextSlide);
+
+    function updateItemsPerView() {
+        if (window.innerWidth <= 640) itemsPerView = 1;
+        else if (window.innerWidth <= 900) itemsPerView = 2;
+        else itemsPerView = 3;
+        updateCarousel();
+    }
+
+    window.addEventListener('resize', updateItemsPerView);
+
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const track = document.querySelector('.carousel-track');
+
+    track.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
+    track.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        if (touchStartX - touchEndX > 50) nextSlide();
+        if (touchEndX - touchStartX > 50) prevSlide();
+    });
+
+    // Cookie Banner
+    if (!localStorage.getItem('cookies')) {
+        document.getElementById('cookieBanner').style.display = 'block';
+    }
+
+    // Init
+    document.addEventListener('DOMContentLoaded', () => {
+        updateItemsPerView();
+        loadGallery();
+    });
+</script>
+</body>
+</html>
