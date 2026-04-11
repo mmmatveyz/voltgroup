@@ -75,9 +75,7 @@
         <thead>
           <tr><th>Наименование работ</th><th>Ед.</th><th>Цена</th><th>Кол-во</th><th>Сумма</th></tr>
         </thead>
-        <tbody id="services-body">
-          <!-- Услуги будут здесь -->
-        </tbody>
+        <tbody id="services-body"></tbody>
       </table>
     </div>
 
@@ -218,93 +216,9 @@
 
     // Генерация PDF
     function generatePDF() {
-      console.log('Начало генерации PDF');
-      
       const totalText = document.getElementById('grand-total').textContent;
       if (totalText === '0 ₽') {
         alert('Добавьте хотя бы одну позицию с количеством больше 0');
-        return;
-      }
-
-      // Проверяем, загрузилась ли библиотека
-      if (typeof html2pdf === 'undefined') {
-        alert('Ошибка: библиотека html2pdf не загрузилась. Проверьте интернет-соединение.');
-        return;
-      }
-      console.log('Библиотека html2pdf загружена');
-
-      // Заполняем данные
-      document.getElementById('pdf-num').textContent = Date.now().toString().slice(-6);
-      document.getElementById('pdf-client').textContent = document.getElementById('client-name').value || '—';
-      document.getElementById('pdf-addr').textContent = document.getElementById('client-address').value || '—';
-      document.getElementById('pdf-date').textContent = document.getElementById('estimate-date').value || new Date().toLocaleDateString('ru-RU');
-
-      const pdfBody = document.getElementById('pdf-body');
-      pdfBody.innerHTML = '';
-      let rowIdx = 1;
-      let hasData = false;
-
-      // Услуги
-      servicesData.forEach((s, index) => {
-        const qtyInput = document.getElementById(`qty-${index}`);
-        const qty = parseFloat(qtyInput.value) || 0;
-        if (qty > 0) {
-          hasData = true;
-          const sum = qty * s.price;
-          pdfBody.innerHTML += `<tr><td>${rowIdx++}</td><td>${s.name}</td><td>${s.unit}</td><td>${qty}</td><td>${s.price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
-          console.log(`Добавлена услуга: ${s.name}, кол-во: ${qty}`);
-        }
-      });
-
-      // Материалы
-      const matRows = document.querySelectorAll('#materials-body tr');
-      matRows.forEach(r => {
-        const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
-        const price = parseFloat(r.querySelector('.mat-price').value) || 0;
-        if (qty > 0 || price > 0) {
-          hasData = true;
-          const name = r.querySelector('.mat-name').value || 'Материал';
-          const unit = r.querySelector('.mat-unit').value || 'шт.';
-          const sum = price * qty;
-          pdfBody.innerHTML += `<tr><td>—</td><td>${name}</td><td>${unit}</td><td>${qty}</td><td>${price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
-          console.log(`Добавлен материал: ${name}, кол-во: ${qty}`);
-        }
-      });
-
-      if (!hasData) {
-        alert('Нет данных для экспорта. Добавьте позиции.');
-        return;
-      }
-
-      document.getElementById('pdf-total').textContent = document.getElementById('grand-total').textContent;
-      console.log('PDF контент заполнен');
-
-      // Показываем элемент для генерации
-      const el = document.getElementById('pdf-content');
-      el.style.display = 'block';
-      el.style.position = 'fixed';
-      el.style.left = '-10000px';
-      el.style.top = '0';
-      el.style.width = '210mm'; // A4 width
-      
-      console.log('Элемент показан, начинаю генерацию...');
-      console.log('Содержимое pdf-body:', pdfBody.innerHTML.substring(0, 100) + '...');
-
-      const dateStr = document.getElementById('estimate-date').value || 'smeta';
-      const filename = `Смета_VoltGroup_${dateStr}.pdf`;
-      
-    // Генерация PDF
-    function generatePDF() {
-      console.log('Начало генерации PDF');
-      
-      const totalText = document.getElementById('grand-total').textContent;
-      if (totalText === '0 ₽') {
-        alert('Добавьте хотя бы одну позицию с количеством больше 0');
-        return;
-      }
-
-      if (typeof html2pdf === 'undefined') {
-        alert('Ошибка: библиотека html2pdf не загрузилась.');
         return;
       }
 
@@ -352,67 +266,32 @@
       }
 
       document.getElementById('pdf-total').textContent = document.getElementById('grand-total').textContent;
-      console.log('PDF контент заполнен');
 
-      // Создаем НОВОЕ окно для генерации
-      const printWindow = window.open('', '_blank');
-      const pdfContent = document.getElementById('pdf-content').cloneNode(true);
-      pdfContent.style.display = 'block';
+      // Показываем элемент для генерации
+      const el = document.getElementById('pdf-content');
+      const originalDisplay = el.style.display;
+      el.style.display = 'block';
+      el.style.position = 'absolute';
+      el.style.left = '-9999px';
+      el.style.top = '0';
       
-      printWindow.document.write(`
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <title>Смета VoltGroup</title>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"><\/script>
-          <style>
-            body { font-family: Arial, sans-serif; padding: 30px; color: #000; }
-            table { width: 100%; border-collapse: collapse; margin: 15px 0; }
-            th, td { border: 1px solid #ccc; padding: 6px 8px; text-align: left; }
-            th { background: #f5f5f5; }
-            h2 { text-align: center; margin-bottom: 15px; }
-            .pdf-header { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 2px solid #00E5FF; padding-bottom: 10px; }
-            .pdf-total { text-align: right; font-size: 14px; font-weight: bold; margin: 10px 0 20px; border-top: 2px solid #000; padding-top: 8px; }
-            .pdf-sign { margin-top: 40px; display: flex; justify-content: space-between; }
-            .pdf-footer { margin-top: 20px; font-size: 9px; color: #666; text-align: center; border-top: 1px solid #eee; padding-top: 10px; }
-          </style>
-        </head>
-        <body>
-          ${pdfContent.innerHTML}
-        </body>
-        </html>
-      `);
-      printWindow.document.close();
-
-      // Ждём загрузки и генерируем
-      printWindow.onload = function() {
-        setTimeout(() => {
-          const element = printWindow.document.body;
-          const dateStr = document.getElementById('estimate-date').value || 'smeta';
-          const filename = `Смета_VoltGroup_${dateStr}.pdf`;
-          
-          console.log('Начинаю генерацию из нового окна...');
-          
-          html2pdf().set({
-            margin: 10,
-            filename: filename,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-          })
-          .from(element)
-          .save()
-          .then(() => {
-            printWindow.close();
-            console.log('PDF создан успешно');
-          })
-          .catch(err => {
-            console.error('Ошибка:', err);
-            alert('Ошибка при создании PDF');
-            printWindow.close();
-          });
-        }, 500);
-      };
+      const dateStr = document.getElementById('estimate-date').value || 'smeta';
+      
+      html2pdf().set({
+        margin: 10,
+        filename: `Смета_VoltGroup_${dateStr}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      }).from(el).save().then(() => {
+        el.style.display = 'none';
+        el.style.position = 'static';
+      }).catch(err => {
+        console.error('Ошибка генерации PDF:', err);
+        alert('Ошибка при создании PDF. Попробуйте еще раз.');
+        el.style.display = 'none';
+        el.style.position = 'static';
+      });
     }
 
     // Установка текущей даты
