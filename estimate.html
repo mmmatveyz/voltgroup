@@ -217,14 +217,23 @@
     }
 
     // Генерация PDF
-       // Генерация PDF
     function generatePDF() {
+      console.log('Начало генерации PDF');
+      
       const totalText = document.getElementById('grand-total').textContent;
       if (totalText === '0 ₽') {
         alert('Добавьте хотя бы одну позицию с количеством больше 0');
         return;
       }
 
+      // Проверяем, загрузилась ли библиотека
+      if (typeof html2pdf === 'undefined') {
+        alert('Ошибка: библиотека html2pdf не загрузилась. Проверьте интернет-соединение.');
+        return;
+      }
+      console.log('Библиотека html2pdf загружена');
+
+      // Заполняем данные
       document.getElementById('pdf-num').textContent = Date.now().toString().slice(-6);
       document.getElementById('pdf-client').textContent = document.getElementById('client-name').value || '—';
       document.getElementById('pdf-addr').textContent = document.getElementById('client-address').value || '—';
@@ -233,65 +242,84 @@
       const pdfBody = document.getElementById('pdf-body');
       pdfBody.innerHTML = '';
       let rowIdx = 1;
+      let hasData = false;
 
       // Услуги
       servicesData.forEach((s, index) => {
         const qtyInput = document.getElementById(`qty-${index}`);
         const qty = parseFloat(qtyInput.value) || 0;
         if (qty > 0) {
+          hasData = true;
           const sum = qty * s.price;
           pdfBody.innerHTML += `<tr><td>${rowIdx++}</td><td>${s.name}</td><td>${s.unit}</td><td>${qty}</td><td>${s.price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
+          console.log(`Добавлена услуга: ${s.name}, кол-во: ${qty}`);
         }
       });
 
       // Материалы
       const matRows = document.querySelectorAll('#materials-body tr');
-      let hasMaterials = false;
       matRows.forEach(r => {
         const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
         const price = parseFloat(r.querySelector('.mat-price').value) || 0;
-        if (qty > 0 || price > 0) hasMaterials = true;
-      });
-
-      if (hasMaterials) {
-        pdfBody.innerHTML += `<tr><td colspan="6" style="background:#f0f0f0; font-weight:bold; text-align:center; padding:8px;">МАТЕРИАЛЫ</td></tr>`;
-        matRows.forEach(r => {
+        if (qty > 0 || price > 0) {
+          hasData = true;
           const name = r.querySelector('.mat-name').value || 'Материал';
           const unit = r.querySelector('.mat-unit').value || 'шт.';
-          const price = parseFloat(r.querySelector('.mat-price').value) || 0;
-          const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
-          if (qty > 0 || price > 0) {
-            const sum = price * qty;
-            pdfBody.innerHTML += `<tr><td>—</td><td>${name}</td><td>${unit}</td><td>${qty}</td><td>${price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
-          }
-        });
+          const sum = price * qty;
+          pdfBody.innerHTML += `<tr><td>—</td><td>${name}</td><td>${unit}</td><td>${qty}</td><td>${price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
+          console.log(`Добавлен материал: ${name}, кол-во: ${qty}`);
+        }
+      });
+
+      if (!hasData) {
+        alert('Нет данных для экспорта. Добавьте позиции.');
+        return;
       }
 
       document.getElementById('pdf-total').textContent = document.getElementById('grand-total').textContent;
+      console.log('PDF контент заполнен');
 
-      // ПОКАЗЫВАЕМ элемент перед генерацией
+      // Показываем элемент для генерации
       const el = document.getElementById('pdf-content');
-      const originalDisplay = el.style.display;
       el.style.display = 'block';
-      el.style.position = 'absolute';
-      el.style.left = '-9999px';
+      el.style.position = 'fixed';
+      el.style.left = '-10000px';
       el.style.top = '0';
+      el.style.width = '210mm'; // A4 width
       
+      console.log('Элемент показан, начинаю генерацию...');
+      console.log('Содержимое pdf-body:', pdfBody.innerHTML.substring(0, 100) + '...');
+
       const dateStr = document.getElementById('estimate-date').value || 'smeta';
+      const filename = `Смета_VoltGroup_${dateStr}.pdf`;
       
+      // Генерируем PDF
       html2pdf().set({
         margin: 10,
-        filename: `Смета_VoltGroup_${dateStr}.pdf`,
+        filename: filename,
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      }).from(el).save().then(() => {
-        // СКРЫВАЕМ обратно после генерации
+        html2canvas: { 
+          scale: 2, 
+          useCORS: true,
+          logging: true
+        },
+        jsPDF: { 
+          unit: 'mm', 
+          format: 'a4', 
+          orientation: 'portrait',
+          compress: true
+        }
+      })
+      .from(el)
+      .save()
+      .then(() => {
+        console.log('PDF успешно создан');
         el.style.display = 'none';
         el.style.position = 'static';
-      }).catch(err => {
+      })
+      .catch(err => {
         console.error('Ошибка генерации PDF:', err);
-        alert('Ошибка при создании PDF. Попробуйте еще раз.');
+        alert('Ошибка при создании PDF: ' + err.message);
         el.style.display = 'none';
         el.style.position = 'static';
       });
