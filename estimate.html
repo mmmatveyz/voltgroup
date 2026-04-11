@@ -1,289 +1,290 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Калькулятор сметы | VoltGroup</title>
-    <style>
-        :root {
-            --bg: #0B1120; --surface: #111827; --primary: #00E5FF; --primary-hover: #00B8D4;
-            --text: #F8FAFC; --text-muted: #94A3B8; --border: #1E293B; --radius: 8px;
-            --font: system-ui, -apple-system, sans-serif;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font); }
-        body { background: var(--bg); color: var(--text); line-height: 1.6; padding-bottom: 40px; }
-        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
-        h1 { text-align: center; margin: 30px 0 10px; font-size: 2rem; }
-        .subtitle { text-align: center; color: var(--text-muted); margin-bottom: 30px; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Калькулятор сметы | VoltGroup</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    :root {
+      --bg: #0B1120; --surface: #111827; --primary: #00E5FF; --primary-hover: #00B8D4;
+      --text: #F8FAFC; --text-muted: #94A3B8; --border: #1E293B; --radius: 8px;
+      --font: system-ui, -apple-system, sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font); }
+    body { background: var(--bg); color: var(--text); line-height: 1.6; padding-bottom: 40px; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+    h1 { text-align: center; margin: 30px 0 10px; font-size: 2rem; }
+    .subtitle { text-align: center; color: var(--text-muted); margin-bottom: 30px; }
+    
+    .client-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px; background: var(--surface); padding: 20px; border-radius: var(--radius); }
+    .client-info input { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+    
+    .table-wrapper { overflow-x: auto; margin-bottom: 15px; background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); }
+    table { width: 100%; border-collapse: collapse; min-width: 600px; }
+    th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
+    th { background: #0d1524; color: var(--primary); font-weight: 600; white-space: nowrap; }
+    .qty-input { width: 70px; padding: 8px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); color: var(--text); text-align: center; }
+    
+    .summary { background: var(--surface); padding: 20px; border-radius: var(--radius); margin: 20px 0; border: 1px solid var(--border); }
+    .summary-row { display: flex; justify-content: space-between; margin-bottom: 8px; color: var(--text-muted); }
+    .summary-total { display: flex; justify-content: space-between; font-size: 1.5rem; font-weight: 700; border-top: 1px solid var(--border); padding-top: 12px; color: var(--primary); }
 
-        .client-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px; background: var(--surface); padding: 20px; border-radius: var(--radius); }
-        .client-info input { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+    .actions { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+    .btn { padding: 12px 24px; border-radius: var(--radius); font-weight: 600; cursor: pointer; border: none; font-size: 1rem; transition: 0.2s; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
+    .btn-primary { background: var(--primary); color: var(--bg); }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+    .btn-outline:hover { background: var(--primary); color: var(--bg); }
+    .btn-nav { position: absolute; top: 20px; left: 20px; text-decoration: none; color: var(--text-muted); display: flex; align-items: center; gap: 5px; font-size: 0.9rem; }
+    .btn-nav:hover { color: var(--primary); }
+    .btn-remove { background: transparent; border: none; color: #EF4444; cursor: pointer; font-size: 1.2rem; padding: 4px; }
+    .btn-remove:hover { color: #fca5a5; }
 
-        .table-wrapper { overflow-x: auto; margin-bottom: 15px; background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); }
-        table { width: 100%; border-collapse: collapse; min-width: 600px; }
-        th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
-        th { background: #0d1524; color: var(--primary); font-weight: 600; white-space: nowrap; }
-        .input-cell input { width: 100%; padding: 8px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); color: var(--text); text-align: center; }
-        .input-text { text-align: left !important; }
+    #pdf-content { display: none; background: #fff; color: #000; padding: 30px; font-size: 11px; line-height: 1.4; }
+    #pdf-content h2 { text-align: center; margin-bottom: 15px; color: #111; }
+    #pdf-content .pdf-header { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 2px solid #00E5FF; padding-bottom: 10px; font-size: 12px; }
+    #pdf-content table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+    #pdf-content th, #pdf-content td { border: 1px solid #ccc; padding: 6px 8px; text-align: left; color: #000; }
+    #pdf-content th { background: #f5f5f5; }
+    #pdf-content .pdf-total { text-align: right; font-size: 14px; font-weight: bold; margin: 10px 0 20px; border-top: 2px solid #000; padding-top: 8px; }
+    #pdf-content .pdf-sign { margin-top: 40px; display: flex; justify-content: space-between; font-size: 11px; }
+    #pdf-content .pdf-footer { margin-top: 20px; font-size: 9px; color: #666; text-align: center; border-top: 1px solid #eee; padding-top: 10px; }
 
-        .summary { background: var(--surface); padding: 20px; border-radius: var(--radius); margin: 20px 0; border: 1px solid var(--border); }
-        .summary-row { display: flex; justify-content: space-between; margin-bottom: 8px; color: var(--text-muted); }
-        .summary-total { display: flex; justify-content: space-between; font-size: 1.5rem; font-weight: 700; border-top: 1px solid var(--border); padding-top: 12px; color: var(--primary); }
-
-        .actions { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
-        .btn { padding: 12px 24px; border-radius: var(--radius); font-weight: 600; cursor: pointer; border: none; font-size: 1rem; transition: 0.2s; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
-        .btn-primary { background: var(--primary); color: var(--bg); }
-        .btn-primary:hover { background: var(--primary-hover); }
-        .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
-        .btn-outline:hover { background: var(--primary); color: var(--bg); }
-        .btn-nav { position: absolute; top: 20px; left: 20px; text-decoration: none; color: var(--text-muted); display: flex; align-items: center; gap: 5px; font-size: 0.9rem; }
-        .btn-nav:hover { color: var(--primary); }
-        .btn-remove { background: transparent; border: none; color: #EF4444; cursor: pointer; font-size: 1.2rem; padding: 4px; }
-        .btn-remove:hover { color: #fca5a5; }
-
-        /* Скрытый блок для PDF */
-        #pdf-content { display: none; background: #fff; color: #000; padding: 30px; font-size: 11px; line-height: 1.4; }
-        #pdf-content h2 { text-align: center; margin-bottom: 15px; color: #111; }
-        #pdf-content .pdf-header { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 2px solid #00E5FF; padding-bottom: 10px; font-size: 12px; }
-        #pdf-content table { width: 100%; border-collapse: collapse; margin: 15px 0; }
-        #pdf-content th, #pdf-content td { border: 1px solid #ccc; padding: 6px 8px; text-align: left; color: #000; }
-        #pdf-content th { background: #f5f5f5; }
-        #pdf-content .pdf-total { text-align: right; font-size: 14px; font-weight: bold; margin: 10px 0 20px; border-top: 2px solid #000; padding-top: 8px; }
-        #pdf-content .pdf-sign { margin-top: 40px; display: flex; justify-content: space-between; font-size: 11px; }
-        #pdf-content .pdf-footer { margin-top: 20px; font-size: 9px; color: #666; text-align: center; border-top: 1px solid #eee; padding-top: 10px; }
-
-        @media (max-width: 600px) {
-            .client-info { grid-template-columns: 1fr; }
-            h1 { font-size: 1.5rem; margin-top: 50px; }
-        }
-    </style>
+    @media (max-width: 600px) {
+      .client-info { grid-template-columns: 1fr; }
+      h1 { font-size: 1.5rem; margin-top: 50px; }
+    }
+  </style>
 </head>
 <body>
 
-<a href="./index.html" class="btn-nav">← На главную</a>
-<div class="container">
+  <a href="./index.html" class="btn-nav">← На главную</a>
+  <div class="container">
     <h1>⚡ Калькулятор сметы</h1>
-    <p class="subtitle">Услуги + Материалы (свободная форма) → Экспорт в PDF</p>
+    <p class="subtitle">Услуги + Материалы → Экспорт в PDF</p>
 
     <div class="client-info">
-        <input type="text" id="client-name" placeholder="Имя заказчика">
-        <input type="text" id="client-address" placeholder="Адрес объекта">
-        <input type="date" id="estimate-date">
+      <input type="text" id="client-name" placeholder="Имя заказчика">
+      <input type="text" id="client-address" placeholder="Адрес объекта">
+      <input type="date" id="estimate-date">
     </div>
 
     <div class="table-wrapper">
-        <table id="services-table">
-            <thead>
-            <tr><th>Наименование работ</th><th style="width:60px">Ед.</th><th style="width:70px">Цена</th><th style="width:70px">Кол-во</th><th style="width:70px">Сумма</th></tr>
-            </thead>
-            <tbody id="services-body"></tbody>
-        </table>
+      <table>
+        <thead>
+          <tr><th>Наименование работ</th><th>Ед.</th><th>Цена</th><th>Кол-во</th><th>Сумма</th></tr>
+        </thead>
+        <tbody id="services-body">
+          <!-- Услуги будут здесь -->
+        </tbody>
+      </table>
     </div>
 
     <div class="table-wrapper" style="margin-top: 20px;">
-        <h3 style="padding: 12px 15px; margin: 0; background: #0d1524; color: var(--primary); font-size: 1rem; border-bottom: 1px solid var(--border);">📦 Материалы (свободная форма)</h3>
-        <table id="materials-table">
-            <thead>
-            <tr><th>Наименование</th><th style="width:50px">Ед.</th><th style="width:70px">Цена</th><th style="width:60px">Кол-во</th><th style="width:70px">Сумма</th><th style="width:30px"></th></tr>
-            </thead>
-            <tbody id="materials-body"></tbody>
-        </table>
-        <div style="padding: 15px; text-align: center;">
-            <button class="btn btn-outline" onclick="addMaterialRow()" style="padding: 8px 16px; font-size: 0.9rem;">➕ Добавить материал</button>
-        </div>
+      <h3 style="padding: 12px 15px; margin: 0; background: #0d1524; color: var(--primary); font-size: 1rem; border-bottom: 1px solid var(--border);">📦 Материалы (свободная форма)</h3>
+      <table>
+        <thead>
+          <tr><th>Наименование</th><th>Ед.</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th></th></tr>
+        </thead>
+        <tbody id="materials-body"></tbody>
+      </table>
+      <div style="padding: 15px; text-align: center;">
+        <button class="btn btn-outline" onclick="addMaterialRow()" style="padding: 8px 16px; font-size: 0.9rem;">➕ Добавить материал</button>
+      </div>
     </div>
 
     <div class="summary">
-        <div class="summary-row"><span>Работы:</span><span id="services-total-display">0 ₽</span></div>
-        <div class="summary-row"><span>Материалы:</span><span id="materials-total-display">0 ₽</span></div>
-        <div class="summary-total"><span>ИТОГО:</span><span id="grand-total">0 ₽</span></div>
+      <div class="summary-row"><span>Работы:</span><span id="services-total-display">0 ₽</span></div>
+      <div class="summary-row"><span>Материалы:</span><span id="materials-total-display">0 ₽</span></div>
+      <div class="summary-total"><span>ИТОГО:</span><span id="grand-total">0 ₽</span></div>
     </div>
 
     <div class="actions">
-        <button class="btn btn-primary" onclick="generatePDF()">📄 Скачать смету (PDF)</button>
-        <button class="btn btn-outline" onclick="clearForm()">🗑 Очистить форму</button>
+      <button class="btn btn-primary" onclick="generatePDF()">📄 Скачать смету (PDF)</button>
+      <button class="btn btn-outline" onclick="clearForm()">🗑 Очистить форму</button>
     </div>
-</div>
+  </div>
 
-<!-- Скрытый шаблон для PDF -->
-<div id="pdf-content">
+  <div id="pdf-content">
     <h2>СМЕТА № <span id="pdf-num"></span></h2>
     <div class="pdf-header">
-        <div><strong>Заказчик:</strong> <span id="pdf-client">—</span><br><strong>Адрес:</strong> <span id="pdf-addr">—</span></div>
-        <div><strong>Дата:</strong> <span id="pdf-date">—</span><br><strong>Исполнитель:</strong> VoltGroup</div>
+      <div><strong>Заказчик:</strong> <span id="pdf-client">—</span><br><strong>Адрес:</strong> <span id="pdf-addr">—</span></div>
+      <div><strong>Дата:</strong> <span id="pdf-date">—</span><br><strong>Исполнитель:</strong> VoltGroup</div>
     </div>
     <table>
-        <thead><tr><th>№</th><th>Наименование</th><th>Ед.</th><th>Кол-во</th><th>Цена</th><th>Сумма</th></tr></thead>
-        <tbody id="pdf-body"></tbody>
+      <thead><tr><th>№</th><th>Наименование</th><th>Ед.</th><th>Кол-во</th><th>Цена</th><th>Сумма</th></tr></thead>
+      <tbody id="pdf-body"></tbody>
     </table>
     <div class="pdf-total">ИТОГО К ОПЛАТЕ: <span id="pdf-total">0 ₽</span></div>
     <div class="pdf-sign">
-        <div>Заказчик: _______________ / _______________ /</div>
-        <div>Исполнитель: _______________ / Матвей [Фамилия] /</div>
+      <div>Заказчик: _______________ / _______________ /</div>
+      <div>Исполнитель: _______________ / Матвей [Фамилия] /</div>
     </div>
     <div class="pdf-footer">
-        ⚡ VoltGroup | Энергия решений | Самозанятый (НПД) | Чек формируется в приложении ФНС<br>
-        Гарантия на работы: 12 месяцев. Цены на работы зафиксированы в момент согласования.
+      ⚡ VoltGroup | Энергия решений | Самозанятый (НПД) | Чек формируется в приложении ФНС<br>
+      Гарантия на работы: 12 месяцев.
     </div>
-</div>
+  </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<script>
-    // 1. ПРАЙС-ЛИСТ УСЛУГ
-    const services = [
-        { id: 's1', name: 'Установка розетки / выключателя (механизм)', unit: 'шт.', price: 450 },
-        { id: 's2', name: 'Розетка «под ключ» (с подрозетником)', unit: 'шт.', price: 850 },
-        { id: 's3', name: 'Прокладка кабеля 1,5–2,5 мм² (в гофре)', unit: 'м.п.', price: 140 },
-        { id: 's4', name: 'Прокладка кабеля 4–6 мм²', unit: 'м.п.', price: 180 },
-        { id: 's5', name: 'Штробление 20×20 мм: газобетон', unit: 'м.п.', price: 380 },
-        { id: 's6', name: 'Штробление 20×20 мм: кирпич', unit: 'м.п.', price: 480 },
-        { id: 's7', name: 'Штробление 20×20 мм: бетон', unit: 'м.п.', price: 580 },
-        { id: 's8', name: 'Отверстие под подрозетник (бетон)', unit: 'шт.', price: 720 },
-        { id: 's9', name: 'Монтаж подрозетника (вмазка)', unit: 'шт.', price: 220 },
-        { id: 's10', name: 'Сборка электрощита (за модуль)', unit: 'мод.', price: 580 },
-        { id: 's11', name: 'Установка автомата 1Р/2Р/3Р', unit: 'шт.', price: 450 },
-        { id: 's12', name: 'Установка УЗО / дифавтомата', unit: 'шт.', price: 650 },
-        { id: 's13', name: 'Монтаж светильника / люстры (до 5 кг)', unit: 'шт.', price: 900 },
-        { id: 's14', name: 'Подключение варочной панели / бойлера', unit: 'шт.', price: 1600 },
-        { id: 's15', name: 'Диагностика / аварийный выезд', unit: 'выезд', price: 1100 }
+  <script>
+    // ПРАЙС-ЛИСТ
+    const servicesData = [
+      { name: 'Установка розетки / выключателя (механизм)', unit: 'шт.', price: 450 },
+      { name: 'Розетка «под ключ» (с подрозетником)', unit: 'шт.', price: 850 },
+      { name: 'Прокладка кабеля 1,5–2,5 мм² (в гофре)', unit: 'м.п.', price: 140 },
+      { name: 'Прокладка кабеля 4–6 мм²', unit: 'м.п.', price: 180 },
+      { name: 'Штробление 20×20 мм: газобетон', unit: 'м.п.', price: 380 },
+      { name: 'Штробление 20×20 мм: кирпич', unit: 'м.п.', price: 480 },
+      { name: 'Штробление 20×20 мм: бетон', unit: 'м.п.', price: 580 },
+      { name: 'Отверстие под подрозетник (бетон)', unit: 'шт.', price: 720 },
+      { name: 'Монтаж подрозетника (вмазка)', unit: 'шт.', price: 220 },
+      { name: 'Сборка электрощита (за модуль)', unit: 'мод.', price: 580 },
+      { name: 'Установка автомата 1Р/2Р/3Р', unit: 'шт.', price: 450 },
+      { name: 'Установка УЗО / дифавтомата', unit: 'шт.', price: 650 },
+      { name: 'Монтаж светильника / люстры (до 5 кг)', unit: 'шт.', price: 900 },
+      { name: 'Подключение варочной панели / бойлера', unit: 'шт.', price: 1600 },
+      { name: 'Диагностика / аварийный выезд', unit: 'выезд', price: 1100 }
     ];
 
-    // 2. Рендер услуг (ИСПРАВЛЕНИЕ: добавлен class="qty-input")
+    // Рендер услуг
     const tbody = document.getElementById('services-body');
-    services.forEach(s => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
+    servicesData.forEach((s, index) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
         <td>${s.name}</td>
         <td>${s.unit}</td>
         <td>${s.price.toLocaleString('ru-RU')} ₽</td>
-        <td class="input-cell"><input type="number" class="qty-input" min="0" step="0.5" data-id="${s.id}" placeholder="0" oninput="updateTotals()"></td>
-        <td class="sub-row" data-id="${s.id}" style="text-align:center; font-weight:600;">0 ₽</td>
+        <td><input type="number" class="qty-input" id="qty-${index}" min="0" step="0.5" placeholder="0" onchange="calculateTotals()"></td>
+        <td id="sum-${index}" style="text-align:center; font-weight:600;">0 ₽</td>
       `;
-        tbody.appendChild(tr);
+      tbody.appendChild(tr);
     });
 
-    // 3. Материалы (свободная форма)
+    // Добавление материала
     function addMaterialRow() {
-        const tbody = document.getElementById('materials-body');
-        const row = document.createElement('tr');
-        row.innerHTML = `
-        <td class="input-cell"><input type="text" class="mat-name" placeholder="Например: Кабель ВВГ 3x2.5" style="text-align:left;"></td>
-        <td class="input-cell"><input type="text" class="mat-unit" placeholder="м.п." value="шт." style="text-align:center;"></td>
-        <td class="input-cell"><input type="number" class="mat-price" placeholder="0" min="0" step="10" oninput="updateTotals()"></td>
-        <td class="input-cell"><input type="number" class="mat-qty" placeholder="0" min="0" step="0.5" oninput="updateTotals()"></td>
-        <td class="mat-subtotal" style="text-align:center; font-weight:600;">0 ₽</td>
-        <td style="text-align:center;"><button class="btn-remove" onclick="removeMaterialRow(this)">✕</button></td>
+      const tbody = document.getElementById('materials-body');
+      const row = document.createElement('tr');
+      const id = Date.now();
+      row.innerHTML = `
+        <td><input type="text" class="mat-name" placeholder="Например: Кабель ВВГ 3x2.5" style="width:100%; padding:6px; border-radius:4px; border:1px solid var(--border); background:var(--bg); color:var(--text);"></td>
+        <td><input type="text" class="mat-unit" value="шт." style="width:50px; padding:6px; border-radius:4px; border:1px solid var(--border); background:var(--bg); color:var(--text); text-align:center;"></td>
+        <td><input type="number" class="mat-price" placeholder="0" min="0" onchange="calculateTotals()" style="width:70px; padding:6px; border-radius:4px; border:1px solid var(--border); background:var(--bg); color:var(--text); text-align:center;"></td>
+        <td><input type="number" class="mat-qty" placeholder="0" min="0" onchange="calculateTotals()" style="width:60px; padding:6px; border-radius:4px; border:1px solid var(--border); background:var(--bg); color:var(--text); text-align:center;"></td>
+        <td id="mat-sum-${id}" style="text-align:center; font-weight:600;">0 ₽</td>
+        <td style="text-align:center;"><button class="btn-remove" onclick="this.closest('tr').remove(); calculateTotals()">✕</button></td>
       `;
-        tbody.appendChild(row);
-        row.querySelector('.mat-name').focus();
+      tbody.appendChild(row);
     }
 
-    function removeMaterialRow(btn) {
-        btn.closest('tr').remove();
-        updateTotals();
+    // Подсчёт
+    function calculateTotals() {
+      let servicesTotal = 0;
+      servicesData.forEach((s, index) => {
+        const qtyInput = document.getElementById(`qty-${index}`);
+        const sumCell = document.getElementById(`sum-${index}`);
+        const qty = parseFloat(qtyInput.value) || 0;
+        const sum = qty * s.price;
+        sumCell.textContent = sum.toLocaleString('ru-RU') + ' ₽';
+        servicesTotal += sum;
+      });
+
+      let materialsTotal = 0;
+      document.querySelectorAll('#materials-body tr').forEach(row => {
+        const priceInput = row.querySelector('.mat-price');
+        const qtyInput = row.querySelector('.mat-qty');
+        const sumCell = row.querySelector('td[id^="mat-sum-"]');
+        const price = parseFloat(priceInput.value) || 0;
+        const qty = parseFloat(qtyInput.value) || 0;
+        const sum = price * qty;
+        sumCell.textContent = sum.toLocaleString('ru-RU') + ' ₽';
+        materialsTotal += sum;
+      });
+
+      document.getElementById('services-total-display').textContent = servicesTotal.toLocaleString('ru-RU') + ' ₽';
+      document.getElementById('materials-total-display').textContent = materialsTotal.toLocaleString('ru-RU') + ' ₽';
+      document.getElementById('grand-total').textContent = (servicesTotal + materialsTotal).toLocaleString('ru-RU') + ' ₽';
     }
 
-    // 4. Пересчёт всего
-    function updateTotals() {
-        let servicesTotal = 0;
-        services.forEach(s => {
-            // Теперь селектор найдет элемент благодаря class="qty-input"
-            const inp = document.querySelector(`.qty-input[data-id="${s.id}"]`);
-            const qty = parseFloat(inp.value) || 0;
-            const sub = qty * s.price;
-            document.querySelector(`.sub-row[data-id="${s.id}"]`).textContent = sub.toLocaleString('ru-RU') + ' ₽';
-            servicesTotal += sub;
-        });
-
-        let materialsTotal = 0;
-        document.querySelectorAll('#materials-body tr').forEach(row => {
-            const price = parseFloat(row.querySelector('.mat-price').value) || 0;
-            const qty = parseFloat(row.querySelector('.mat-qty').value) || 0;
-            const sub = price * qty;
-            row.querySelector('.mat-subtotal').textContent = sub.toLocaleString('ru-RU') + ' ₽';
-            materialsTotal += sub;
-        });
-
-        document.getElementById('services-total-display').textContent = servicesTotal.toLocaleString('ru-RU') + ' ₽';
-        document.getElementById('materials-total-display').textContent = materialsTotal.toLocaleString('ru-RU') + ' ₽';
-        document.getElementById('grand-total').textContent = (servicesTotal + materialsTotal).toLocaleString('ru-RU') + ' ₽';
-    }
-
-    // 5. Очистка
+    // Очистка
     function clearForm() {
-        document.querySelectorAll('.qty-input, .mat-price, .mat-qty').forEach(i => i.value = '');
-        document.querySelectorAll('.sub-row, .mat-subtotal').forEach(r => r.textContent = '0 ₽');
-        document.getElementById('materials-body').innerHTML = '';
-        updateTotals();
-        document.getElementById('client-name').value = '';
-        document.getElementById('client-address').value = '';
-        document.getElementById('estimate-date').valueAsDate = new Date();
+      document.querySelectorAll('.qty-input').forEach(i => i.value = '');
+      document.getElementById('materials-body').innerHTML = '';
+      calculateTotals();
+      document.getElementById('client-name').value = '';
+      document.getElementById('client-address').value = '';
+      document.getElementById('estimate-date').valueAsDate = new Date();
     }
 
-    // 6. Генерация PDF
+    // Генерация PDF
     function generatePDF() {
-        const totalText = document.getElementById('grand-total').textContent;
-        if (totalText === '0 ₽') return alert('Добавьте хотя бы одну позицию');
+      const totalText = document.getElementById('grand-total').textContent;
+      if (totalText === '0 ₽') {
+        alert('Добавьте хотя бы одну позицию с количеством больше 0');
+        return;
+      }
 
-        document.getElementById('pdf-num').textContent = Date.now().toString().slice(-6);
-        document.getElementById('pdf-client').textContent = document.getElementById('client-name').value || '—';
-        document.getElementById('pdf-addr').textContent = document.getElementById('client-address').value || '—';
-        document.getElementById('pdf-date').textContent = document.getElementById('estimate-date').value || new Date().toLocaleDateString('ru-RU');
+      document.getElementById('pdf-num').textContent = Date.now().toString().slice(-6);
+      document.getElementById('pdf-client').textContent = document.getElementById('client-name').value || '—';
+      document.getElementById('pdf-addr').textContent = document.getElementById('client-address').value || '—';
+      document.getElementById('pdf-date').textContent = document.getElementById('estimate-date').value || new Date().toLocaleDateString('ru-RU');
 
-        const pdfBody = document.getElementById('pdf-body');
-        pdfBody.innerHTML = '';
-        let rowIdx = 1;
+      const pdfBody = document.getElementById('pdf-body');
+      pdfBody.innerHTML = '';
+      let rowIdx = 1;
 
-        // Услуги
-        services.forEach(s => {
-            const qty = parseFloat(document.querySelector(`.qty-input[data-id="${s.id}"]`).value) || 0;
-            if (qty > 0) {
-                const sub = qty * s.price;
-                pdfBody.innerHTML += `<tr><td>${rowIdx++}</td><td>${s.name}</td><td>${s.unit}</td><td>${qty}</td><td>${s.price} ₽</td><td>${sub.toLocaleString('ru-RU')} ₽</td></tr>`;
-            }
-        });
-
-        // Материалы
-        const matRows = document.querySelectorAll('#materials-body tr');
-        if (matRows.length > 0) {
-            let hasData = false;
-            matRows.forEach(r => {
-                const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
-                const price = parseFloat(r.querySelector('.mat-price').value) || 0;
-                if (qty > 0 || price > 0) hasData = true;
-            });
-
-            if (hasData) {
-                pdfBody.innerHTML += `<tr><td colspan="6" style="background:#f8f8f8; font-weight:bold; text-align:center; padding:8px;">МАТЕРИАЛЫ</td></tr>`;
-                matRows.forEach(r => {
-                    const name = r.querySelector('.mat-name').value || 'Материал';
-                    const unit = r.querySelector('.mat-unit').value || 'шт.';
-                    const price = parseFloat(r.querySelector('.mat-price').value) || 0;
-                    const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
-                    if (qty > 0 || price > 0) {
-                        const sub = price * qty;
-                        pdfBody.innerHTML += `<tr><td>—</td><td>${name}</td><td>${unit}</td><td>${qty}</td><td>${price} ₽</td><td>${sub.toLocaleString('ru-RU')} ₽</td></tr>`;
-                    }
-                });
-            }
+      // Услуги
+      servicesData.forEach((s, index) => {
+        const qtyInput = document.getElementById(`qty-${index}`);
+        const qty = parseFloat(qtyInput.value) || 0;
+        if (qty > 0) {
+          const sum = qty * s.price;
+          pdfBody.innerHTML += `<tr><td>${rowIdx++}</td><td>${s.name}</td><td>${s.unit}</td><td>${qty}</td><td>${s.price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
         }
+      });
 
-        document.getElementById('pdf-total').textContent = document.getElementById('grand-total').textContent;
+      // Материалы
+      const matRows = document.querySelectorAll('#materials-body tr');
+      let hasMaterials = false;
+      matRows.forEach(r => {
+        const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
+        const price = parseFloat(r.querySelector('.mat-price').value) || 0;
+        if (qty > 0 || price > 0) hasMaterials = true;
+      });
 
-        const el = document.getElementById('pdf-content');
-        el.style.display = 'block';
-        const dateStr = document.getElementById('estimate-date').value || 'smeta';
+      if (hasMaterials) {
+        pdfBody.innerHTML += `<tr><td colspan="6" style="background:#f0f0f0; font-weight:bold; text-align:center; padding:8px;">МАТЕРИАЛЫ</td></tr>`;
+        matRows.forEach(r => {
+          const name = r.querySelector('.mat-name').value || 'Материал';
+          const unit = r.querySelector('.mat-unit').value || 'шт.';
+          const price = parseFloat(r.querySelector('.mat-price').value) || 0;
+          const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
+          if (qty > 0 || price > 0) {
+            const sum = price * qty;
+            pdfBody.innerHTML += `<tr><td>—</td><td>${name}</td><td>${unit}</td><td>${qty}</td><td>${price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
+          }
+        });
+      }
 
-        html2pdf().set({
-            margin: 10,
-            filename: `Смета_VoltGroup_${dateStr}.pdf`,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        }).from(el).save().then(() => el.style.display = 'none');
+      document.getElementById('pdf-total').textContent = document.getElementById('grand-total').textContent;
+
+      const el = document.getElementById('pdf-content');
+      el.style.display = 'block';
+      const dateStr = document.getElementById('estimate-date').value || 'smeta';
+      
+      html2pdf().set({
+        margin: 10,
+        filename: `Смета_VoltGroup_${dateStr}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      }).from(el).save().then(() => {
+        el.style.display = 'none';
+      });
     }
 
+    // Установка текущей даты
     document.getElementById('estimate-date').valueAsDate = new Date();
-</script>
+  </script>
 </body>
 </html>
