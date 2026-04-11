@@ -214,7 +214,7 @@
       document.getElementById('estimate-date').valueAsDate = new Date();
     }
 
-    // Генерация PDF
+        // Генерация PDF
     function generatePDF() {
       const totalText = document.getElementById('grand-total').textContent;
       if (totalText === '0 ₽') {
@@ -267,30 +267,48 @@
 
       document.getElementById('pdf-total').textContent = document.getElementById('grand-total').textContent;
 
-      // Показываем элемент для генерации
-      const el = document.getElementById('pdf-content');
-      const originalDisplay = el.style.display;
-      el.style.display = 'block';
-      el.style.position = 'absolute';
-      el.style.left = '-9999px';
-      el.style.top = '0';
+      // Создаем временный контейнер ВНЕ экрана
+      const tempContainer = document.createElement('div');
+      tempContainer.style.position = 'absolute';
+      tempContainer.style.left = '-10000px';
+      tempContainer.style.top = '0';
+      tempContainer.style.width = '210mm'; // A4 width
+      tempContainer.style.background = 'white';
+      tempContainer.style.color = 'black';
+      tempContainer.style.padding = '20px';
+      tempContainer.style.fontFamily = 'Arial, sans-serif';
+      tempContainer.style.fontSize = '11px';
+      
+      // Копируем содержимое
+      const pdfContent = document.getElementById('pdf-content');
+      tempContainer.innerHTML = pdfContent.innerHTML;
+      tempContainer.style.display = 'block';
+      
+      // Добавляем на страницу
+      document.body.appendChild(tempContainer);
       
       const dateStr = document.getElementById('estimate-date').value || 'smeta';
       
+      // Генерируем PDF
       html2pdf().set({
         margin: 10,
         filename: `Смета_VoltGroup_${dateStr}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
+        html2canvas: { scale: 2, useCORS: true, logging: false },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      }).from(el).save().then(() => {
-        el.style.display = 'none';
-        el.style.position = 'static';
-      }).catch(err => {
-        console.error('Ошибка генерации PDF:', err);
-        alert('Ошибка при создании PDF. Попробуйте еще раз.');
-        el.style.display = 'none';
-        el.style.position = 'static';
+      })
+      .from(tempContainer)
+      .save()
+      .then(() => {
+        // Удаляем временный элемент
+        document.body.removeChild(tempContainer);
+      })
+      .catch(err => {
+        console.error('Ошибка:', err);
+        alert('Ошибка при создании PDF');
+        if (tempContainer.parentNode) {
+          document.body.removeChild(tempContainer);
+        }
       });
     }
 
