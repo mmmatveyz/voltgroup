@@ -148,7 +148,7 @@
         { id: 's15', name: 'Диагностика / аварийный выезд', unit: 'выезд', price: 1100 }
     ];
 
-    // 2. Рендер услуг
+    // 2. Рендер услуг (ИСПРАВЛЕНИЕ: добавлен class="qty-input")
     const tbody = document.getElementById('services-body');
     services.forEach(s => {
         const tr = document.createElement('tr');
@@ -156,7 +156,7 @@
         <td>${s.name}</td>
         <td>${s.unit}</td>
         <td>${s.price.toLocaleString('ru-RU')} ₽</td>
-        <td class="input-cell"><input type="number" min="0" step="0.5" data-id="${s.id}" placeholder="0" oninput="updateTotals()"></td>
+        <td class="input-cell"><input type="number" class="qty-input" min="0" step="0.5" data-id="${s.id}" placeholder="0" oninput="updateTotals()"></td>
         <td class="sub-row" data-id="${s.id}" style="text-align:center; font-weight:600;">0 ₽</td>
       `;
         tbody.appendChild(tr);
@@ -187,6 +187,7 @@
     function updateTotals() {
         let servicesTotal = 0;
         services.forEach(s => {
+            // Теперь селектор найдет элемент благодаря class="qty-input"
             const inp = document.querySelector(`.qty-input[data-id="${s.id}"]`);
             const qty = parseFloat(inp.value) || 0;
             const sub = qty * s.price;
