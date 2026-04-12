@@ -12,23 +12,19 @@
     <meta property="og:url" content="https://username.github.io/voltgroup-site/">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 
-    
-<!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-    (function(m,e,t,r,i,k,a){
-        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108492681', 'ym');
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108492681', 'ym');
 
-    ym(108492681, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/108492681" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
-
-
-
+        ym(108492681, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/108492681" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
 
     <style>
         :root {
@@ -38,12 +34,12 @@
             --transition: all 0.2s ease;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; font-size: 16px; }
         body { background: var(--bg); color: var(--text); font-family: var(--font); line-height: 1.6; }
         a { color: var(--primary); text-decoration: none; transition: var(--transition); }
         a:hover { color: var(--primary-hover); }
         img { max-width: 100%; height: auto; display: block; }
-        .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         .btn { display: inline-flex; align-items: center; justify-content: center; padding: 12px 24px; border-radius: var(--radius); font-weight: 600; font-size: 1rem; cursor: pointer; border: none; transition: var(--transition); text-align: center; }
         .btn-primary { background: var(--primary); color: var(--bg); }
         .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: var(--shadow); }
@@ -52,7 +48,7 @@
         .section { padding: 60px 0; }
         .section-title { font-size: clamp(1.8rem, 4vw, 2.5rem); text-align: center; margin-bottom: 40px; font-weight: 700; }
         .grid { display: grid; gap: 20px; }
-        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
         .card { background: var(--surface); padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); transition: var(--transition); }
         .card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--primary); }
         .card h3 { color: var(--primary); margin-bottom: 10px; font-size: 1.3rem; }
@@ -91,15 +87,50 @@
         .footer a { color: var(--text-muted); font-size: 0.9rem; }
         .footer a:hover { color: var(--primary); }
 
-        .carousel-wrapper { position: relative; max-width: 900px; margin: 0 auto; }
-        .carousel-track { display: flex; gap: 20px; transition: transform 0.5s ease; }
-        .carousel-card { flex: 0 0 calc(33.333% - 14px); background: var(--bg); border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); transition: transform 0.3s; }
+        /* === ГАЛЕРЕЯ === */
+        .carousel-wrapper {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        .carousel-track {
+            display: flex;
+            gap: 20px;
+            transition: transform 0.5s ease;
+        }
+        .carousel-card {
+            flex: 0 0 calc(33.333% - 14px);
+            min-width: 320px;
+            max-width: 380px;
+            background: var(--bg);
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: transform 0.3s;
+        }
         .carousel-card:hover { transform: translateY(-4px); }
-        .carousel-card img { width: 100%; height: 250px; object-fit: cover; display: block; background: #1a2b3c; }
-        .carousel-content { padding: 15px; }
-        .carousel-content h3 { color: var(--primary); font-size: 1.1rem; margin-bottom: 8px; }
-        .carousel-content p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; margin-bottom: 10px; }
-        .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: var(--primary); border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--bg); z-index: 10; }
+        .carousel-card img { width: 100%; height: 220px; object-fit: cover; display: block; background: #1a2b3c; }
+        .carousel-content { padding: 18px; }
+        .carousel-content h3 { color: var(--primary); font-size: 1.05rem; margin-bottom: 10px; line-height: 1.3; min-height: 45px; }
+        .carousel-content p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; margin-bottom: 12px; }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--bg);
+            z-index: 10;
+        }
         .carousel-btn.prev { left: -50px; }
         .carousel-btn.next { right: -50px; }
         .carousel-btn:hover { background: var(--primary-hover); }
@@ -110,18 +141,95 @@
         #cookieBanner { position: fixed; bottom: 20px; left: 20px; right: 20px; max-width: 500px; background: var(--surface); border: 1px solid var(--border); padding: 15px; border-radius: var(--radius); display: none; z-index: 999; font-size: 0.9rem; color: var(--text-muted); }
         #cookieBanner button { margin-left: 10px; padding: 6px 12px; background: var(--primary); color: var(--bg); border: none; border-radius: 4px; cursor: pointer; font-weight: 600; }
 
-        @media (max-width: 900px) {
-            .carousel-card { flex: 0 0 calc(50% - 10px); }
+        /* === ПЛАНШЕТЫ === */
+        @media (max-width: 1024px) {
+            .carousel-card {
+                flex: 0 0 calc(50% - 10px);
+                min-width: 280px;
+                max-width: none;
+            }
+            .container { max-width: 900px; }
+        }
+
+        /* === МОБИЛЬНЫЕ === */
+        @media (max-width: 768px) {
+            html { font-size: 16px; }
+
+            h1 { font-size: 1.8rem !important; }
+            h2 { font-size: 1.5rem !important; }
+
+            .carousel-card {
+                flex: 0 0 85% !important;
+                min-width: 280px;
+                margin: 0 5px;
+            }
+            .carousel-content h3 { font-size: 1rem !important; min-height: auto; }
+            .carousel-content p { font-size: 0.85rem; }
+
             .carousel-btn.prev { left: 10px; }
             .carousel-btn.next { right: 10px; }
-        }
-        @media (max-width: 640px) {
-            .carousel-card { flex: 0 0 100%; }
-            .nav-links { display: none; flex-direction: column; position: absolute; top: 60px; left: 0; right: 0; background: var(--bg); padding: 20px; border-bottom: 1px solid var(--border); }
+
+            .card { padding: 18px; }
+            .card h3 { font-size: 1.15rem; }
+            .card p { font-size: 0.9rem; }
+
+            .btn {
+                width: 100%;
+                padding: 14px 20px;
+                font-size: 1rem;
+            }
+            .hero-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .trust-bar {
+                flex-direction: column;
+                gap: 8px;
+                font-size: 0.85rem;
+            }
+
+            .section { padding: 40px 0; }
+            .container { padding: 0 15px; }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: var(--bg);
+                padding: 20px;
+                border-bottom: 1px solid var(--border);
+                gap: 12px;
+            }
             .nav-links.open { display: flex; }
             .mobile-menu-btn { display: block; }
-            .hero { padding: 60px 0 40px; }
-            .section { padding: 40px 0; }
+
+            .hero { padding: 50px 0 30px; }
+            .hero p { font-size: 1rem; }
+
+            .grid-3 { grid-template-columns: 1fr; }
+
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+        }
+
+        /* === ОЧЕНЬ МАЛЕНЬКИЕ ЭКРАНЫ === */
+        @media (max-width: 480px) {
+            h1 { font-size: 1.5rem !important; }
+            h2 { font-size: 1.3rem !important; }
+
+            .section-title { font-size: 1.4rem !important; }
+
+            .hero p { font-size: 0.95rem; }
+
+            .card h3 { font-size: 1.1rem; }
+            .price { font-size: 1rem; }
+
+            .carousel-card { flex: 0 0 90% !important; }
+
+            .btn { font-size: 0.95rem; padding: 12px 16px; }
         }
     </style>
 </head>
@@ -295,7 +403,12 @@
     function prevSlide() { const m = Math.max(0, galleryItems.length - itemsPerView); currentIndex = currentIndex <= 0 ? m : currentIndex - 1; updateCarousel(); }
     document.querySelector('.carousel-btn.prev').addEventListener('click', prevSlide);
     document.querySelector('.carousel-btn.next').addEventListener('click', nextSlide);
-    function updateItemsPerView() { itemsPerView = window.innerWidth <= 640 ? 1 : window.innerWidth <= 900 ? 2 : 3; updateCarousel(); }
+    function updateItemsPerView() {
+        if (window.innerWidth <= 640) itemsPerView = 1;
+        else if (window.innerWidth <= 1024) itemsPerView = 2;
+        else itemsPerView = 3;
+        updateCarousel();
+    }
     window.addEventListener('resize', updateItemsPerView);
     let tx=0; const trackEl = document.querySelector('.carousel-track'); trackEl.addEventListener('touchstart', e => tx = e.changedTouches[0].screenX); trackEl.addEventListener('touchend', e => { const d = e.changedTouches[0].screenX; if(tx-d>50) nextSlide(); if(d-tx>50) prevSlide(); });
     if(!localStorage.getItem('cookies')) document.getElementById('cookieBanner').style.display = 'block';
