@@ -43,6 +43,43 @@
             .nav-links.open { display: flex; }
             .mobile-menu-btn { display: block; }
         }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+        .footer h4 {
+            color: var(--text);
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+        .footer a {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .footer a:hover {
+            color: var(--primary);
+        }
+        .npd-block {
+            background: var(--surface);
+            border: 1px dashed var(--border);
+            padding: 15px;
+            border-radius: var(--radius);
+            margin: 20px auto;
+            max-width: 800px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -78,11 +115,31 @@
 <footer class="footer">
     <div class="container">
         <div class="footer-grid">
-            <div><h4>⚡ VoltGroup</h4><p style="color: var(--text-muted); font-size: 0.9rem;">Энергия решений.<br>Электрика и автоматизация в СПб.</p></div>
-            <div><h4>Контакты</h4><p>📞 <a href="tel:+79990000000">+7 (999) 000-00-00</a></p><p>💬 <a href="https://t.me/voltgroup_spb">@voltgroup_spb</a></p><p>🕒 Пн–Сб: 9:00–21:00</p></div>
-            <div><h4>Документы</h4><p><a href="./privacy.html">Политика конфиденциальности</a></p><p><a href="./offer.html">Публичная оферта</a></p><p><a href="./cookies.html">Политика cookies</a></p></div>
+            <div>
+                <h4>⚡ VoltGroup</h4>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">
+                    Энергия решений.<br>
+                    Электрика и автоматизация в СПб.
+                </p>
+            </div>
+            <div>
+                <h4>Контакты</h4>
+                <p>📞 <a href="tel:+79990000000">+7 (999) 000-00-00</a></p>
+                <p>💬 <a href="https://t.me/voltgroup_spb">@voltgroup_spb</a></p>
+                <p>🕒 Пн–Сб: 9:00–21:00</p>
+            </div>
+            <div>
+                <h4>Документы</h4>
+                <p><a href="./privacy.html">Политика конфиденциальности</a></p>
+                <p><a href="./offer.html">Публичная оферта</a></p>
+                <p><a href="./cookies.html">Политика cookies</a></p>
+            </div>
         </div>
-        <div class="npd-block">Исполнитель: Зрячих Матвей, плательщик НПД (самозанятый)<br>ИНН: [Ваш ИНН] | Чек формируется в приложении ФНС «Мой налог»<br>© 2026 VoltGroup. Все права защищены.</div>
+        <div class="npd-block">
+            Исполнитель: Зрячих Матвей, плательщик НПД (самозанятый)<br>
+            ИНН: [Ваш ИНН] | Чек формируется в приложении ФНС «Мой налог»<br>
+            © 2026 VoltGroup. Все права защищены.
+        </div>
     </div>
 </footer>
 <script>
