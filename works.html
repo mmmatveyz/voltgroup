@@ -3,109 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Примеры работ | VoltGroup — Электромонтаж в СПб</title>
-    <meta name="description" content="Портфолио выполненных работ: электрощиты, освещение, умный дом, промышленный монтаж. Реальные фото с объектов.">
+    <title>Примеры работ | VoltGroup</title>
     <style>
-        :root {
-            --bg: #0B1120; --surface: #111827; --primary: #00E5FF; --primary-hover: #00B8D4;
-            --text: #F8FAFC; --text-muted: #94A3B8; --border: #1E293B; --radius: 8px;
-            --font: system-ui, -apple-system, sans-serif;
-        }
+        :root { --bg: #0B1120; --surface: #111827; --primary: #00E5FF; --primary-hover: #00B8D4; --text: #F8FAFC; --text-muted: #94A3B8; --border: #1E293B; --radius: 8px; --font: system-ui, -apple-system, sans-serif; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: var(--bg); color: var(--text); font-family: var(--font); line-height: 1.6; }
-        a { color: var(--primary); text-decoration: none; }
-        a:hover { color: var(--primary-hover); }
+        a { color: var(--primary); text-decoration: none; } a:hover { color: var(--primary-hover); }
         img { max-width: 100%; height: auto; display: block; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
         .header { position: sticky; top: 0; background: rgba(11, 17, 32, 0.95); backdrop-filter: blur(8px); z-index: 100; border-bottom: 1px solid var(--border); padding: 15px 0; }
         .nav { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.4rem; font-weight: 800; }
-        .logo span { color: var(--primary); }
+        .logo { font-size: 1.4rem; font-weight: 800; } .logo span { color: var(--primary); }
         .nav-links { display: flex; gap: 20px; align-items: center; }
-        .nav-links a { color: var(--text-muted); font-size: 0.95rem; }
-        .nav-links a:hover { color: var(--text); }
+        .nav-links a { color: var(--text-muted); font-size: 0.95rem; } .nav-links a:hover { color: var(--text); }
         .btn { display: inline-flex; align-items: center; justify-content: center; padding: 12px 24px; border-radius: var(--radius); font-weight: 600; border: none; cursor: pointer; transition: all 0.2s; }
-        .btn-primary { background: var(--primary); color: var(--bg); }
-        .btn-primary:hover { background: var(--primary-hover); }
-
+        .btn-primary { background: var(--primary); color: var(--bg); } .btn-primary:hover { background: var(--primary-hover); }
+        .mobile-menu-btn { display: none; background: none; border: none; color: var(--text); font-size: 1.5rem; cursor: pointer; }
         .page-header { padding: 60px 0 40px; text-align: center; }
         .page-header h1 { font-size: 2.5rem; margin-bottom: 15px; }
         .page-header p { color: var(--text-muted); font-size: 1.1rem; max-width: 700px; margin: 0 auto; }
-
-        .works-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 25px;
-            padding: 40px 0;
-        }
-
-        .work-card {
-            background: var(--surface);
-            border-radius: var(--radius);
-            overflow: hidden;
-            border: 1px solid var(--border);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .work-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-            border-color: var(--primary);
-        }
-
-        .work-card img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            cursor: zoom-in;
-        }
-
+        .works-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 25px; padding: 40px 0; }
+        .work-card { background: var(--surface); border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); transition: transform 0.3s, box-shadow 0.3s; }
+        .work-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); border-color: var(--primary); }
+        .work-card img { width: 100%; height: 250px; object-fit: cover; cursor: zoom-in; }
         .work-content { padding: 20px; }
         .work-content h3 { color: var(--primary); font-size: 1.2rem; margin-bottom: 10px; }
         .work-content p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px; }
-
         .badges { display: flex; flex-wrap: wrap; gap: 8px; }
-        .badge {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
+        .badge { background: var(--bg); border: 1px solid var(--border); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; color: var(--text-muted); }
         .footer { padding: 40px 0 20px; text-align: center; color: var(--text-muted); border-top: 1px solid var(--border); margin-top: 40px; }
-
-        /* Lightbox */
-        .lightbox {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+        .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
         .lightbox.active { display: flex; }
         .lightbox img { max-width: 100%; max-height: 90vh; object-fit: contain; border-radius: 8px; }
-        .lightbox-close {
-            position: absolute;
-            top: 20px; right: 30px;
-            font-size: 3rem;
-            color: var(--primary);
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
-        .lightbox-close:hover { color: var(--primary-hover); }
-
+        .lightbox-close { position: absolute; top: 20px; right: 30px; font-size: 3rem; color: var(--primary); cursor: pointer; background: none; border: none; }
         @media (max-width: 768px) {
             .works-grid { grid-template-columns: 1fr; }
             .page-header h1 { font-size: 1.8rem; }
-            .nav-links { display: none; }
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 60px; left: 0; right: 0; background: var(--bg); padding: 20px; border-bottom: 1px solid var(--border); gap: 12px; }
+            .nav-links.open { display: flex; }
+            .mobile-menu-btn { display: block; }
         }
     </style>
 </head>
@@ -113,47 +49,42 @@
 <header class="header">
     <div class="container nav">
         <a href="./index.html" class="logo">⚡ Volt<span>Group</span></a>
+        <button class="mobile-menu-btn">☰</button>
         <nav class="nav-links">
             <a href="./index.html#services">Услуги</a>
             <a href="./estimate.html">Калькулятор</a>
             <a href="./works.html" style="color: var(--text);">Работы</a>
             <a href="./index.html#why">Почему мы</a>
+            <a href="./index.html#faq">FAQ</a>
             <a href="./index.html#contact">Контакты</a>
             <a href="tel:+79990000000" class="btn btn-primary">📞 Позвонить</a>
         </nav>
     </div>
 </header>
-
 <div class="page-header">
     <div class="container">
-        <h1>Примеры наших работ</h1>
-        <p>Реальные объекты с фотографиями и описанием. От квартир до промышленных объектов.</p>
+        <h1>Все наши работы</h1>
+        <p>Полное портфолио выполненных объектов</p>
     </div>
 </div>
-
 <main class="container">
     <div class="works-grid" id="worksGrid"></div>
 </main>
-
 <div class="lightbox" id="lightbox">
     <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
-    <img src="" alt="Увеличенное фото" id="lightbox-img">
+    <img src="" id="lightbox-img">
 </div>
-
 <footer class="footer">
-    <div class="container">
-        <p>⚡ VoltGroup | Энергия решений | Самозанятый (НПД) | Гарантия 12 месяцев</p>
-    </div>
+    <div class="container"><p>⚡ VoltGroup | Энергия решений</p></div>
 </footer>
-
 <script>
-    // Загружаем работы из того же файла конфигурации
+    document.querySelector('.mobile-menu-btn').addEventListener('click', () => document.querySelector('.nav-links').classList.toggle('open'));
+    document.querySelectorAll('.nav-links a').forEach(link => link.addEventListener('click', () => document.querySelector('.nav-links').classList.remove('open')));
     async function loadWorks() {
         try {
             const res = await fetch('./gallery/gallery-config.json');
             if (!res.ok) throw new Error();
             const items = await res.json();
-
             const grid = document.getElementById('worksGrid');
             grid.innerHTML = items.map(item => `
                     <div class="work-card">
@@ -161,36 +92,17 @@
                         <div class="work-content">
                             <h3>${item.title}</h3>
                             <p>${item.description}</p>
-                            <div class="badges">
-                                ${item.badges ? item.badges.map(b => `<span class="badge">${b}</span>`).join('') : ''}
-                            </div>
+                            <div class="badges">${item.badges ? item.badges.map(b => `<span class="badge">${b}</span>`).join('') : ''}</div>
                         </div>
-                    </div>
-                `).join('');
+                    </div>`).join('');
         } catch {
             document.getElementById('worksGrid').innerHTML = '<p style="text-align:center;color:var(--text-muted);grid-column:1/-1;">📷 Галерея скоро появится</p>';
         }
     }
-
-    function openLightbox(src) {
-        document.getElementById('lightbox-img').src = src;
-        document.getElementById('lightbox').classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeLightbox() {
-        document.getElementById('lightbox').classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    document.getElementById('lightbox').addEventListener('click', (e) => {
-        if (e.target.id === 'lightbox') closeLightbox();
-    });
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeLightbox();
-    });
-
+    function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').classList.add('active'); document.body.style.overflow = 'hidden'; }
+    function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); document.body.style.overflow = ''; }
+    document.getElementById('lightbox').addEventListener('click', (e) => { if (e.target.id === 'lightbox') closeLightbox(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
     loadWorks();
 </script>
 </body>
