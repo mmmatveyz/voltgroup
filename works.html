@@ -55,6 +55,7 @@
             <a href="./estimate.html">Калькулятор</a>
             <a href="./works.html" style="color: var(--text);">Работы</a>
             <a href="./index.html#why">Почему мы</a>
+            <a href="./index.html#process">Как работаем</a>
             <a href="./index.html#faq">FAQ</a>
             <a href="./index.html#contact">Контакты</a>
             <a href="tel:+79990000000" class="btn btn-primary">📞 Позвонить</a>
@@ -72,10 +73,17 @@
 </main>
 <div class="lightbox" id="lightbox">
     <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
-    <img src="" id="lightbox-img">
+    <img src="" id="lightbox-img" alt="">
 </div>
 <footer class="footer">
-    <div class="container"><p>⚡ VoltGroup | Энергия решений</p></div>
+    <div class="container">
+        <div class="footer-grid">
+            <div><h4>⚡ VoltGroup</h4><p style="color: var(--text-muted); font-size: 0.9rem;">Энергия решений.<br>Электрика и автоматизация в СПб.</p></div>
+            <div><h4>Контакты</h4><p>📞 <a href="tel:+79990000000">+7 (999) 000-00-00</a></p><p>💬 <a href="https://t.me/voltgroup_spb">@voltgroup_spb</a></p><p>🕒 Пн–Сб: 9:00–21:00</p></div>
+            <div><h4>Документы</h4><p><a href="./privacy.html">Политика конфиденциальности</a></p><p><a href="./offer.html">Публичная оферта</a></p><p><a href="./cookies.html">Политика cookies</a></p></div>
+        </div>
+        <div class="npd-block">Исполнитель: Зрячих Матвей, плательщик НПД (самозанятый)<br>ИНН: [Ваш ИНН] | Чек формируется в приложении ФНС «Мой налог»<br>© 2026 VoltGroup. Все права защищены.</div>
+    </div>
 </footer>
 <script>
     document.querySelector('.mobile-menu-btn').addEventListener('click', () => document.querySelector('.nav-links').classList.toggle('open'));
@@ -104,6 +112,13 @@
     document.getElementById('lightbox').addEventListener('click', (e) => { if (e.target.id === 'lightbox') closeLightbox(); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
     loadWorks();
+    function openLightbox(src) {
+        const img = document.getElementById('lightbox-img');
+        img.src = src;
+        img.alt = 'Работа VoltGroup'; // Или можно передавать title как параметр
+        document.getElementById('lightbox').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
 </script>
 </body>
 </html>
