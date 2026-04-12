@@ -159,11 +159,7 @@
             flex-grow: 1 !important;
         }
 
-        /* Стрелки ВЫНЕСТИ за пределы карусели */
         .carousel-btn {
-            position: absolute !important;
-            top: 50% !important;
-            transform: translateY(-50%) !important;
             background: var(--primary) !important;
             border: none !important;
             width: 50px !important;
@@ -173,7 +169,7 @@
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
-            font-size: 1.8rem !important;
+            font-size: 2rem !important;
             color: var(--bg) !important;
             z-index: 100 !important;
             transition: all 0.2s !important;
@@ -185,35 +181,15 @@
             transform: translateY(-50%) scale(1.1) !important;
         }
 
-        /* Стрелки СНАРУЖИ карусели */
-        .carousel-btn.prev {
-            left: -70px !important;
-            margin-left: 0 !important;
-        }
-
-        .carousel-btn.next {
-            right: -70px !important;
-            margin-right: 0 !important;
-        }
-
-        .carousel-dots {
-            display: flex !important;
-            justify-content: center !important;
-            gap: 8px !important;
-            margin-top: 20px !important;
-        }
-
-        .dot {
-            width: 10px !important;
-            height: 10px !important;
-            border-radius: 50% !important;
-            background: var(--border) !important;
-            cursor: pointer !important;
-            transition: background 0.3s !important;
-        }
-
-        .dot.active {
-            background: var(--primary) !important;
+        /* Для мобильных - показываем кнопки внутри */
+        @media (max-width: 768px) {
+            .carousel-btn {
+                width: 40px !important;
+                height: 40px !important;
+                font-size: 1.5rem !important;
+                left: 10px !important;
+                right: 10px !important;
+            }
         }
 
         /* Lightbox */
@@ -417,12 +393,18 @@
     <section id="gallery" class="section" style="background: var(--surface);">
         <div class="container">
             <h2 class="section-title">Примеры работ</h2>
-            <div class="carousel-wrapper">
+
+            <!-- Кнопка НАЗАД слева -->
+            <button class="carousel-btn prev" onclick="prevSlide()" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); z-index: 100;">‹</button>
+
+            <!-- Карусель по центру -->
+            <div class="carousel-wrapper" style="position: relative; max-width: 1000px; margin: 0 auto;">
                 <div class="carousel-track"></div>
-                <button class="carousel-btn prev">‹</button>
-                <button class="carousel-btn next">›</button>
                 <div class="carousel-dots"></div>
             </div>
+
+            <!-- Кнопка ВПЕРЁД справа -->
+            <button class="carousel-btn next" onclick="nextSlide()" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); z-index: 100;">›</button>
         </div>
     </section>
 
