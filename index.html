@@ -87,238 +87,65 @@
         .footer a { color: var(--text-muted); font-size: 0.9rem; }
         .footer a:hover { color: var(--primary); }
 
-        /* === ГАЛЕРЕЯ === */
-        #gallery {
-            overflow: visible !important;
-        }
-
-        #gallery .container {
-            max-width: 1200px !important;
-            position: relative !important;
-        }
-
-        .carousel-wrapper {
-            position: relative !important;
-            max-width: 1000px !important;
-            margin: 0 auto !important;
-            /* УБРАЛИ padding */
-        }
-
-        .carousel-track {
-            display: flex !important;
-            gap: 20px !important;
-            transition: transform 0.5s ease !important;
-            width: 100% !important;
-        }
-
-        .carousel-card {
-            flex: 0 0 33.333% !important; /* Ровно 3 карточки */
-            min-width: 300px !important;
-            max-width: 340px !important;
-            background: var(--bg) !important;
-            border-radius: var(--radius) !important;
-            overflow: hidden !important;
-            border: 1px solid var(--border) !important;
-            transition: transform 0.3s !important;
-            display: flex !important;
-            flex-direction: column !important;
-        }
-
-        .carousel-card:hover { transform: translateY(-4px); }
-
-        .carousel-card img {
-            width: 100% !important;
-            height: 220px !important;
-            object-fit: cover !important;
-            display: block !important;
-            background: #1a2b3c !important;
-            cursor: zoom-in !important;
-            flex-shrink: 0 !important;
-        }
-
-        .carousel-content {
-            padding: 18px !important;
-            flex-grow: 1 !important;
-            display: flex !important;
-            flex-direction: column !important;
-        }
-
-        .carousel-content h3 {
-            color: var(--primary) !important;
-            font-size: 1.05rem !important;
-            margin-bottom: 10px !important;
-            line-height: 1.3 !important;
-            min-height: 45px !important;
-        }
-
-        .carousel-content p {
-            color: var(--text-muted) !important;
-            font-size: 0.9rem !important;
-            line-height: 1.5 !important;
-            margin-bottom: 12px !important;
-            flex-grow: 1 !important;
-        }
-
-        .carousel-btn {
-            background: var(--primary) !important;
-            border: none !important;
-            width: 50px !important;
-            height: 50px !important;
-            border-radius: 50% !important;
-            cursor: pointer !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            font-size: 2rem !important;
-            color: var(--bg) !important;
-            z-index: 100 !important;
-            transition: all 0.2s !important;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
-        }
-
-        .carousel-btn:hover {
-            background: var(--primary-hover) !important;
-            transform: translateY(-50%) scale(1.1) !important;
-        }
-
-        /* Для мобильных - показываем кнопки внутри */
-        @media (max-width: 768px) {
-            .carousel-btn {
-                width: 40px !important;
-                height: 40px !important;
-                font-size: 1.5rem !important;
-                left: 10px !important;
-                right: 10px !important;
-            }
-        }
-
-        /* Lightbox */
-        .lightbox {
-            display: none !important;
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100% !important;
-            height: 100% !important;
-            background: rgba(0,0,0,0.95) !important;
-            z-index: 1000 !important;
-            justify-content: center !important;
-            align-items: center !important;
-            padding: 20px !important;
-        }
-        .lightbox.active { display: flex !important; }
-        .lightbox img {
-            max-width: 100% !important;
-            max-height: 90vh !important;
-            object-fit: contain !important;
-            border-radius: 8px !important;
-        }
-        .lightbox-close {
-            position: absolute !important;
-            top: 20px !important;
-            right: 30px !important;
-            font-size: 3rem !important;
-            color: var(--primary) !important;
-            cursor: pointer !important;
-            background: none !important;
-            border: none !important;
-            line-height: 1 !important;
-        }
-        .lightbox-close:hover { color: var(--primary-hover) !important; }
-
         #cookieBanner { position: fixed; bottom: 20px; left: 20px; right: 20px; max-width: 500px; background: var(--surface); border: 1px solid var(--border); padding: 15px; border-radius: var(--radius); display: none; z-index: 999; font-size: 0.9rem; color: var(--text-muted); }
         #cookieBanner button { margin-left: 10px; padding: 6px 12px; background: var(--primary); color: var(--bg); border: none; border-radius: 4px; cursor: pointer; font-weight: 600; }
 
         /* Планшеты */
         @media (max-width: 1024px) {
-            .carousel-card {
-                flex: 0 0 calc(50% - 10px) !important;
-                min-width: 280px !important;
-                max-width: none !important;
-            }
-            .carousel-btn.prev { left: 10px !important; }
-            .carousel-btn.next { right: 10px !important; }
+            .container { max-width: 900px; }
         }
 
         /* Мобильные */
         @media (max-width: 768px) {
             html { font-size: 16px !important; }
 
-            .carousel-wrapper {
-                padding: 0 50px !important;
-            }
-
             h1 { font-size: 1.8rem !important; }
             h2 { font-size: 1.5rem !important; }
 
-            .carousel-card {
-                flex: 0 0 100% !important;
-                min-width: 280px !important;
-                max-width: none !important;
-                margin: 0 auto !important;
-            }
-
-            .carousel-content { padding: 15px !important; }
-            .carousel-content h3 {
-                font-size: 1rem !important;
-                min-height: auto !important;
-                word-wrap: break-word !important;
-            }
-            .carousel-content p { font-size: 0.85rem !important; }
-
-            .carousel-btn {
-                width: 40px !important;
-                height: 40px !important;
-                font-size: 1.2rem !important;
-            }
-
-            .carousel-btn.prev { left: 5px !important; }
-            .carousel-btn.next { right: 5px !important; }
-
-            .card { padding: 18px !important; }
-            .card h3 { font-size: 1.15rem !important; }
-            .card p { font-size: 0.9rem !important; }
+            .card { padding: 18px; }
+            .card h3 { font-size: 1.15rem; }
+            .card p { font-size: 0.9rem; }
 
             .btn {
-                width: 100% !important;
-                padding: 14px 20px !important;
-                font-size: 1rem !important;
+                width: 100%;
+                padding: 14px 20px;
+                font-size: 1rem;
             }
             .hero-actions {
-                flex-direction: column !important;
-                width: 100% !important;
+                flex-direction: column;
+                width: 100%;
             }
 
             .trust-bar {
-                flex-direction: column !important;
-                gap: 8px !important;
-                font-size: 0.85rem !important;
+                flex-direction: column;
+                gap: 8px;
+                font-size: 0.85rem;
             }
 
-            .section { padding: 40px 0 !important; }
-            .container { padding: 0 15px !important; }
+            .section { padding: 40px 0; }
+            .container { padding: 0 15px; }
 
             .nav-links {
-                display: none !important;
-                flex-direction: column !important;
-                position: absolute !important;
-                top: 60px !important;
-                left: 0 !important;
-                right: 0 !important;
-                background: var(--bg) !important;
-                padding: 20px !important;
-                border-bottom: 1px solid var(--border) !important;
-                gap: 12px !important;
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: var(--bg);
+                padding: 20px;
+                border-bottom: 1px solid var(--border);
+                gap: 12px;
             }
-            .nav-links.open { display: flex !important; }
-            .mobile-menu-btn { display: block !important; }
+            .nav-links.open { display: flex; }
+            .mobile-menu-btn { display: block; }
 
-            .hero { padding: 50px 0 30px !important; }
-            .hero p { font-size: 1rem !important; }
+            .hero { padding: 50px 0 30px; }
+            .hero p { font-size: 1rem; }
 
-            .grid-3 { grid-template-columns: 1fr !important; }
+            .grid-3 { grid-template-columns: 1fr; }
 
-            .footer-grid { grid-template-columns: 1fr !important; text-align: center !important; }
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
         }
 
         /* Очень маленькие экраны */
@@ -328,16 +155,12 @@
 
             .section-title { font-size: 1.4rem !important; }
 
-            .hero p { font-size: 0.95rem !important; }
+            .hero p { font-size: 0.95rem; }
 
-            .card h3 { font-size: 1.1rem !important; }
-            .price { font-size: 1rem !important; }
+            .card h3 { font-size: 1.1rem; }
+            .price { font-size: 1rem; }
 
-            .carousel-wrapper { padding: 0 45px !important; }
-            .carousel-card { flex: 0 0 100% !important; min-width: 260px !important; }
-            .carousel-content h3 { font-size: 0.95rem !important; }
-
-            .btn { font-size: 0.95rem !important; padding: 12px 16px !important; }
+            .btn { font-size: 0.95rem; padding: 12px 16px; }
         }
     </style>
 </head>
@@ -350,7 +173,7 @@
         <nav class="nav-links">
             <a href="#services">Услуги</a>
             <a href="./estimate.html">Калькулятор</a>
-            <a href="#gallery">Работы</a>
+            <a href="./works.html">Работы</a>
             <a href="#why">Почему мы</a>
             <a href="#process">Как работаем</a>
             <a href="#faq">FAQ</a>
@@ -390,21 +213,15 @@
         </div>
     </section>
 
-    <section id="gallery" class="section" style="background: var(--surface);">
+    <section id="gallery" class="section" style="background: var(--surface); text-align: center;">
         <div class="container">
             <h2 class="section-title">Примеры работ</h2>
-
-            <!-- Кнопка НАЗАД слева -->
-            <button class="carousel-btn prev" onclick="prevSlide()" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); z-index: 100;">‹</button>
-
-            <!-- Карусель по центру -->
-            <div class="carousel-wrapper" style="position: relative; max-width: 1000px; margin: 0 auto;">
-                <div class="carousel-track"></div>
-                <div class="carousel-dots"></div>
-            </div>
-
-            <!-- Кнопка ВПЕРЁД справа -->
-            <button class="carousel-btn next" onclick="nextSlide()" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); z-index: 100;">›</button>
+            <p style="color: var(--text-muted); margin-bottom: 30px; max-width: 700px; margin-left: auto; margin-right: auto;">
+                Более 50 выполненных объектов: от квартир до промышленных щитов. Смотрите портфолио с подробными описаниями.
+            </p>
+            <a href="./works.html" class="btn btn-primary" style="font-size: 1.1rem; padding: 15px 30px;">
+                📸 Смотреть все работы
+            </a>
         </div>
     </section>
 
@@ -486,12 +303,6 @@
             </form>
         </div>
     </section>
-
-    <!-- Lightbox для увеличения фото -->
-    <div class="lightbox" id="lightbox">
-        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
-        <img src="" alt="Увеличенное фото" id="lightbox-img">
-    </div>
 </main>
 
 <footer class="footer">
@@ -514,58 +325,7 @@
     document.getElementById('phone').addEventListener('input', e => { let x = e.target.value.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/); e.target.value = !x[2] ? (x[1] ? '+7 (' : '') : '+7 (' + x[2] + (x[3] ? ') ' + x[3] : '') + (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : ''); });
     document.getElementById('leadForm').addEventListener('submit', async function(e) { e.preventDefault(); const btn = this.querySelector('button'); const status = document.getElementById('formStatus'); btn.disabled = true; btn.textContent = 'Отправка...'; status.style.display = 'block'; status.style.color = 'var(--text-muted)'; status.textContent = '⏳ Отправляем заявку...'; const endpoint = 'https://formspree.io/f/xgopglbn'; try { const res = await fetch(endpoint, { method: 'POST', body: new FormData(this), headers: { 'Accept': 'application/json' } }); if (res.ok) { status.textContent = '✅ Заявка отправлена!'; status.style.color = '#10B981'; this.reset(); } else throw new Error('Ошибка'); } catch { status.textContent = '❌ Ошибка. Напишите в TG'; status.style.color = '#EF4444'; } finally { btn.disabled = false; btn.textContent = 'Получить расчёт за 30 минут'; } });
 
-    let galleryItems = [], currentIndex = 0, itemsPerView = 3;
-    async function loadGallery() { try { const res = await fetch('./gallery/gallery-config.json'); if (!res.ok) throw new Error(); galleryItems = await res.json(); renderCarousel(); } catch { document.querySelector('.carousel-track').innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:40px;grid-column:1/-1;">📷 Галерея скоро появится</p>'; } }
-    function renderCarousel() { const track = document.querySelector('.carousel-track'), dotsContainer = document.querySelector('.carousel-dots'); track.innerHTML = ''; dotsContainer.innerHTML = ''; galleryItems.forEach((item, i) => { track.innerHTML += `<div class="carousel-card"><img src="${item.image}" alt="${item.title}" loading="lazy"><div class="carousel-content"><h3>${item.title}</h3><p>${item.description}</p>${item.badges ? item.badges.map(b=>`<span class="badge">${b}</span>`).join('') : ''}</div></div>`; dotsContainer.innerHTML += `<div class="dot ${i===0?'active':''}" onclick="goToSlide(${i})"></div>`; }); updateCarousel(); }
-    function updateCarousel() { const max = Math.max(0, galleryItems.length - itemsPerView); document.querySelector('.carousel-track').style.transform = `translateX(-${currentIndex * (100 / itemsPerView)}%)`; document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === currentIndex)); }
-    function goToSlide(i) { currentIndex = Math.max(0, Math.min(i, Math.max(0, galleryItems.length - itemsPerView))); updateCarousel(); }
-    function nextSlide() { const m = Math.max(0, galleryItems.length - itemsPerView); currentIndex = currentIndex >= m ? 0 : currentIndex + 1; updateCarousel(); }
-    function prevSlide() { const m = Math.max(0, galleryItems.length - itemsPerView); currentIndex = currentIndex <= 0 ? m : currentIndex - 1; updateCarousel(); }
-    document.querySelector('.carousel-btn.prev').addEventListener('click', prevSlide);
-    document.querySelector('.carousel-btn.next').addEventListener('click', nextSlide);
-    function updateItemsPerView() {
-        if (window.innerWidth <= 640) itemsPerView = 1;
-        else if (window.innerWidth <= 1024) itemsPerView = 2;
-        else itemsPerView = 3;
-        updateCarousel();
-    }
-    window.addEventListener('resize', updateItemsPerView);
-    let tx=0; const trackEl = document.querySelector('.carousel-track'); trackEl.addEventListener('touchstart', e => tx = e.changedTouches[0].screenX); trackEl.addEventListener('touchend', e => { const d = e.changedTouches[0].screenX; if(tx-d>50) nextSlide(); if(d-tx>50) prevSlide(); });
     if(!localStorage.getItem('cookies')) document.getElementById('cookieBanner').style.display = 'block';
-
-    // Lightbox для увеличения фото
-    function openLightbox(imgSrc) {
-        document.getElementById('lightbox-img').src = imgSrc;
-        document.getElementById('lightbox').classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeLightbox() {
-        document.getElementById('lightbox').classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    // Добавляем клик по всем фото в галерее
-    document.addEventListener('DOMContentLoaded', () => {
-        updateItemsPerView();
-        loadGallery();
-
-        setTimeout(() => {
-            document.querySelectorAll('.carousel-card img').forEach(img => {
-                img.addEventListener('click', () => openLightbox(img.src));
-            });
-        }, 500);
-    });
-
-    // Закрытие по клику вне фото
-    document.getElementById('lightbox').addEventListener('click', (e) => {
-        if (e.target.id === 'lightbox') closeLightbox();
-    });
-
-    // Закрытие по Escape
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeLightbox();
-    });
 </script>
 </body>
 </html>
