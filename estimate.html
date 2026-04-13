@@ -41,16 +41,6 @@
     .btn-remove { background: transparent; border: none; color: #EF4444; cursor: pointer; font-size: 1.2rem; padding: 4px; }
     .btn-remove:hover { color: #fca5a5; }
 
-    #pdf-content { display: none; background: #fff; color: #000; padding: 30px; font-size: 11px; line-height: 1.4; }
-    #pdf-content h2 { text-align: center; margin-bottom: 15px; color: #111; }
-    #pdf-content .pdf-header { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 2px solid #00E5FF; padding-bottom: 10px; font-size: 12px; }
-    #pdf-content table { width: 100%; border-collapse: collapse; margin: 15px 0; }
-    #pdf-content th, #pdf-content td { border: 1px solid #ccc; padding: 6px 8px; text-align: left; color: #000; }
-    #pdf-content th { background: #f5f5f5; }
-    #pdf-content .pdf-total { text-align: right; font-size: 14px; font-weight: bold; margin: 10px 0 20px; border-top: 2px solid #000; padding-top: 8px; }
-    #pdf-content .pdf-sign { margin-top: 40px; display: flex; justify-content: space-between; font-size: 11px; }
-    #pdf-content .pdf-footer { margin-top: 20px; font-size: 9px; color: #666; text-align: center; border-top: 1px solid #eee; padding-top: 10px; }
-
     @media (max-width: 600px) {
       .client-info { grid-template-columns: 1fr; }
       h1 { font-size: 1.5rem; margin-top: 50px; }
@@ -104,27 +94,6 @@
     <div class="actions">
       <button class="btn btn-primary" onclick="generatePDF()">📄 Скачать смету (PDF)</button>
       <button class="btn btn-outline" onclick="clearForm()">🗑 Очистить форму</button>
-    </div>
-  </div>
-
-  <div id="pdf-content">
-    <h2>СМЕТА № <span id="pdf-num"></span></h2>
-    <div class="pdf-header">
-      <div><strong>Заказчик:</strong> <span id="pdf-client">—</span><br><strong>Адрес:</strong> <span id="pdf-addr">—</span></div>
-      <div><strong>Дата:</strong> <span id="pdf-date">—</span><br><strong>Исполнитель:</strong> VoltGroup</div>
-    </div>
-    <table>
-      <thead><tr><th>№</th><th>Наименование</th><th>Ед.</th><th>Кол-во</th><th>Цена</th><th>Сумма</th></tr></thead>
-      <tbody id="pdf-body"></tbody>
-    </table>
-    <div class="pdf-total">ИТОГО К ОПЛАТЕ: <span id="pdf-total">0 ₽</span></div>
-    <div class="pdf-sign">
-      <div>Заказчик: _______________ / _______________ /</div>
-      <div>Исполнитель: _______________ / Матвей [Фамилия] /</div>
-    </div>
-    <div class="pdf-footer">
-      ⚡ VoltGroup | Энергия решений | Самозанятый (НПД) | Чек формируется в приложении ФНС<br>
-      Гарантия на работы: 12 месяцев.
     </div>
   </div>
 
@@ -212,7 +181,6 @@
 
       // 2. Считаем добавленные вручную работы
       document.querySelectorAll('.custom-work-row').forEach(row => {
-        const nameInput = row.querySelector('.name-input'); // Для PDF
         const priceInput = row.querySelector('.mat-price');
         const qtyInput = row.querySelector('.mat-qty');
         const sumCell = row.querySelector('td[id^="mat-sum-"]');
@@ -269,7 +237,7 @@
       document.getElementById('estimate-date').valueAsDate = new Date();
     }
 
-    // Генерация PDF
+    // === ГЕНЕРАЦИЯ PDF ЧЕРЕЗ ПЕЧАТЬ (НАДЁЖНЫЙ СПОСОБ) ===
     function generatePDF() {
       const totalText = document.getElementById('grand-total').textContent;
       if (totalText === '0 ₽') {
@@ -277,39 +245,43 @@
         return;
       }
 
-      // Заполняем шапку
-      document.getElementById('pdf-num').textContent = Date.now().toString().slice(-6);
-      document.getElementById('pdf-client').textContent = document.getElementById('client-name').value || '—';
-      document.getElementById('pdf-addr').textContent = document.getElementById('client-address').value || '—';
-      document.getElementById('pdf-date').textContent = document.getElementById('estimate-date').value || new Date().toLocaleDateString('ru-RU');
+      // 1️⃣ Сквозная нумерация года
+      let counter = parseInt(localStorage.getItem('vg_estimate_counter') || '0') + 1;
+      localStorage.setItem('vg_estimate_counter', counter);
+      const pdfNum = `${new Date().getFullYear()}-${String(counter).padStart(3, '0')}`;
 
-      const pdfBody = document.getElementById('pdf-body');
-      pdfBody.innerHTML = '';
+      const clientName = document.getElementById('client-name').value || '—';
+      const clientAddr = document.getElementById('client-address').value || '—';
+      const pdfDate = document.getElementById('estimate-date').value || new Date().toLocaleDateString('ru-RU');
+      const executor = 'Матвей [Фамилия] | VoltGroup (Самозанятый)'; // ⚠️ Замени [Фамилия] на свою
+
+      // Собираем тело таблицы
+      let pdfBodyHTML = '';
       let rowIdx = 1;
 
-      // 1. Стандартные услуги
+      // Стандартные услуги
       servicesData.forEach((s, index) => {
         const qtyInput = document.getElementById(`qty-${index}`);
         const qty = parseFloat(qtyInput.value) || 0;
         if (qty > 0) {
           const sum = qty * s.price;
-          pdfBody.innerHTML += `<tr><td>${rowIdx++}</td><td>${s.name}</td><td>${s.unit}</td><td>${qty}</td><td>${s.price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
+          pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${s.name}</td><td>${s.unit}</td><td>${qty}</td><td>${s.price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
         }
       });
 
-      // 2. Вручную добавленные работы
+      // Вручную добавленные работы
       document.querySelectorAll('.custom-work-row').forEach(row => {
         const name = row.querySelector('.name-input').value || 'Доп. работа';
         const unit = row.querySelector('.mat-unit').value || 'шт.';
         const price = parseFloat(row.querySelector('.mat-price').value) || 0;
         const qty = parseFloat(row.querySelector('.mat-qty').value) || 0;
         if (qty > 0 || price > 0) {
-            const sum = price * qty;
-            pdfBody.innerHTML += `<tr><td>${rowIdx++}</td><td>${name}</td><td>${unit}</td><td>${qty}</td><td>${price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
+          const sum = price * qty;
+          pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${name}</td><td>${unit}</td><td>${qty}</td><td>${price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
         }
       });
 
-      // 3. Материалы
+      // Материалы
       const matRows = document.querySelectorAll('#materials-body tr');
       let hasMaterials = false;
       matRows.forEach(r => {
@@ -319,7 +291,7 @@
       });
 
       if (hasMaterials) {
-        pdfBody.innerHTML += `<tr><td colspan="6" style="background:#f0f0f0; font-weight:bold; text-align:center; padding:8px;">МАТЕРИАЛЫ</td></tr>`;
+        pdfBodyHTML += `<tr><td colspan="6" style="background:#f0f0f0; font-weight:bold; text-align:center; padding:8px;">МАТЕРИАЛЫ</td></tr>`;
         matRows.forEach(r => {
           const name = r.querySelector('.mat-name').value || 'Материал';
           const unit = r.querySelector('.mat-unit').value || 'шт.';
@@ -327,43 +299,81 @@
           const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
           if (qty > 0 || price > 0) {
             const sum = price * qty;
-            pdfBody.innerHTML += `<tr><td>${rowIdx++}</td><td>${name}</td><td>${unit}</td><td>${qty}</td><td>${price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
+            pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${name}</td><td>${unit}</td><td>${qty}</td><td>${price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
           }
         });
       }
 
-      document.getElementById('pdf-total').textContent = document.getElementById('grand-total').textContent;
+      const grandTotal = document.getElementById('grand-total').textContent;
 
-      // Печать
-      const el = document.getElementById('pdf-content');
-      const originalDisplay = el.style.display;
-      el.style.display = 'block';
-      el.style.position = 'absolute';
-      el.style.left = '-9999px';
+      // Формируем HTML для печати
+      const printHTML = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Смета №${pdfNum} | VoltGroup</title>
+          <style>
+            @media print {
+              @page { margin: 12mm; size: A4; }
+              body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+              .no-print { display: none; }
+            }
+            body { font-family: Arial, sans-serif; padding: 0; color: #000; max-width: 190mm; margin: 0 auto; font-size: 12px; }
+            h2 { text-align: center; margin: 0 0 15px 0; font-size: 18px; }
+            .header { display: flex; justify-content: space-between; margin-bottom: 12px; border-bottom: 2px solid #00E5FF; padding-bottom: 8px; }
+            table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+            th, td { border: 1px solid #444; padding: 5px 6px; text-align: left; }
+            th { background: #f8f8f8; font-weight: bold; }
+            .total { text-align: right; font-size: 15px; font-weight: bold; margin: 12px 0 25px; border-top: 2px solid #000; padding-top: 6px; }
+            .signature { margin-top: 30px; display: flex; justify-content: space-between; font-size: 11px; }
+            .footer { margin-top: 25px; font-size: 9px; color: #555; text-align: center; border-top: 1px solid #ddd; padding-top: 8px; }
+            .btn { padding: 10px 20px; margin: 10px 5px; background: #00E5FF; color: #000; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; }
+            .btn:hover { background: #00B8D4; }
+            .controls { text-align: center; margin-bottom: 15px; padding: 10px; background: #f9f9f9; border-radius: 6px; }
+          </style>
+        </head>
+        <body>
+          <div class="controls no-print">
+            <button class="btn" onclick="window.print()">📄 Сохранить как PDF</button>
+            <button class="btn" onclick="window.close()" style="background:#ccc;">Закрыть</button>
+            <p style="margin-top:8px;color:#666;font-size:12px;">💡 В окне печати выберите <b>«Сохранить как PDF»</b> и уберите галочки «Колонтитулы»</p>
+          </div>
+          
+          <h2>⚡ СМЕТА № ${pdfNum}</h2>
+          <div class="header">
+            <div><strong>Заказчик:</strong> ${clientName}<br><strong>Адрес:</strong> ${clientAddr}</div>
+            <div style="text-align:right;"><strong>Дата:</strong> ${pdfDate}<br><strong>Исполнитель:</strong> ${executor}</div>
+          </div>
+          
+          <table>
+            <thead><tr><th style="width:30px">№</th><th>Наименование</th><th style="width:50px">Ед.</th><th style="width:50px">Кол-во</th><th style="width:70px">Цена</th><th style="width:80px">Сумма</th></tr></thead>
+            <tbody>${pdfBodyHTML}</tbody>
+          </table>
+          
+          <div class="total">ИТОГО К ОПЛАТЕ: ${grandTotal}</div>
+          
+          <div class="signature">
+            <div>Заказчик: _______________ / _______________ /</div>
+            <div>Исполнитель: _______________ / Матвей [Фамилия] /</div>
+          </div>
+          
+          <div class="footer">
+            ⚡ VoltGroup | Энергия решений | Самозанятый (НПД) | Чек формируется в приложении ФНС<br>
+            Гарантия на работы: 12 месяцев. Цены на материалы могут корректироваться в день закупки.
+          </div>
+        </body>
+        </html>
+      `;
+
+      const printWindow = window.open('', '_blank', 'width=850,height=900');
+      printWindow.document.write(printHTML);
+      printWindow.document.close();
       
-      const dateStr = document.getElementById('estimate-date').value || 'smeta';
-      
-      html2pdf().set({
-        margin: 10,
-        filename: `Смета_VoltGroup_${dateStr}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      }).from(el).save().then(() => {
-        el.style.display = 'none';
-        el.style.position = 'static';
-      }).catch(err => {
-        console.error('Ошибка генерации PDF:', err);
-        alert('Ошибка при создании PDF. Попробуйте еще раз.');
-        el.style.display = 'none';
-        el.style.position = 'static';
-      });
+      setTimeout(() => printWindow.print(), 400);
     }
 
     // Установка текущей даты
     document.getElementById('estimate-date').valueAsDate = new Date();
   </script>
-  <!-- Подключаем библиотеку html2pdf -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </body>
 </html>
