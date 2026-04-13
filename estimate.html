@@ -58,6 +58,8 @@
       <input type="text" id="client-name" placeholder="Имя заказчика">
       <input type="text" id="client-address" placeholder="Адрес объекта">
       <input type="date" id="estimate-date">
+      <!-- НОВОЕ ПОЛЕ: Номер сметы -->
+      <input type="text" id="invoice-number" placeholder="№ сметы (авто)" style="max-width: 120px;">
     </div>
 
     <div class="table-wrapper">
@@ -165,11 +167,11 @@
       tbody.appendChild(row);
     }
 
-    // Подсчёт (УЛУЧШЕННЫЙ)
+    // Подсчёт
     function calculateTotals() {
       let servicesTotal = 0;
       
-      // 1. Считаем стандартные услуги
+      // Стандартные услуги
       servicesData.forEach((s, index) => {
         const qtyInput = document.getElementById(`qty-${index}`);
         const sumCell = document.getElementById(`sum-${index}`);
@@ -179,12 +181,11 @@
         servicesTotal += sum;
       });
 
-      // 2. Считаем добавленные вручную работы
+      // Вручную добавленные работы
       document.querySelectorAll('.custom-work-row').forEach(row => {
         const priceInput = row.querySelector('.mat-price');
         const qtyInput = row.querySelector('.mat-qty');
         const sumCell = row.querySelector('td[id^="mat-sum-"]');
-        
         const price = parseFloat(priceInput.value) || 0;
         const qty = parseFloat(qtyInput.value) || 0;
         const sum = price * qty;
@@ -192,7 +193,7 @@
         servicesTotal += sum;
       });
 
-      // 3. Материалы
+      // Материалы
       let materialsTotal = 0;
       document.querySelectorAll('#materials-body tr').forEach(row => {
         const priceInput = row.querySelector('.mat-price');
@@ -216,7 +217,6 @@
       document.querySelectorAll('.mat-price, .mat-qty').forEach(i => i.value = '');
       document.getElementById('services-body').innerHTML = ''; 
       
-      // Перерисовываем стандартные
       servicesData.forEach((s, index) => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -235,9 +235,10 @@
       document.getElementById('client-name').value = '';
       document.getElementById('client-address').value = '';
       document.getElementById('estimate-date').valueAsDate = new Date();
+      document.getElementById('invoice-number').value = ''; // Очищаем номер сметы
     }
 
-    // === ГЕНЕРАЦИЯ PDF ЧЕРЕЗ ПЕЧАТЬ (НАДЁЖНЫЙ СПОСОБ) ===
+    // === ГЕНЕРАЦИЯ PDF ЧЕРЕЗ ПЕЧАТЬ ===
     function generatePDF() {
       const totalText = document.getElementById('grand-total').textContent;
       if (totalText === '0 ₽') {
@@ -245,15 +246,23 @@
         return;
       }
 
-      // 1️⃣ Сквозная нумерация года
-      let counter = parseInt(localStorage.getItem('vg_estimate_counter') || '0') + 1;
-      localStorage.setItem('vg_estimate_counter', counter);
-      const pdfNum = `${new Date().getFullYear()}-${String(counter).padStart(3, '0')}`;
+      // 🎯 ЛОГИКА НОМЕРА СМЕТЫ:
+      let invoiceNum = document.getElementById('invoice-number').value.trim();
+      
+      if (!invoiceNum) {
+        // Если поле пустое — генерируем авто-номер
+        let counter = parseInt(localStorage.getItem('vg_estimate_counter') || '0') + 1;
+        localStorage.setItem('vg_estimate_counter', counter);
+        invoiceNum = `${new Date().getFullYear()}-${String(counter).padStart(3, '0')}`;
+        // Показываем сгенерированный номер в поле (для наглядности)
+        document.getElementById('invoice-number').value = invoiceNum;
+      }
+      // Если пользователь ввёл свой номер — используем его
 
       const clientName = document.getElementById('client-name').value || '—';
       const clientAddr = document.getElementById('client-address').value || '—';
       const pdfDate = document.getElementById('estimate-date').value || new Date().toLocaleDateString('ru-RU');
-      const executor = 'Матвей [Фамилия] | VoltGroup (Самозанятый)'; // ⚠️ Замени [Фамилия] на свою
+      const executor = 'Матвей [Фамилия] | VoltGroup (Самозанятый)';
 
       // Собираем тело таблицы
       let pdfBodyHTML = '';
@@ -311,7 +320,7 @@
         <!DOCTYPE html>
         <html>
         <head>
-          <title>Смета №${pdfNum} | VoltGroup</title>
+          <title>Смета №${invoiceNum} | VoltGroup</title>
           <style>
             @media print {
               @page { margin: 12mm; size: A4; }
@@ -339,7 +348,7 @@
             <p style="margin-top:8px;color:#666;font-size:12px;">💡 В окне печати выберите <b>«Сохранить как PDF»</b> и уберите галочки «Колонтитулы»</p>
           </div>
           
-          <h2>⚡ СМЕТА № ${pdfNum}</h2>
+          <h2>⚡ СМЕТА № ${invoiceNum}</h2>
           <div class="header">
             <div><strong>Заказчик:</strong> ${clientName}<br><strong>Адрес:</strong> ${clientAddr}</div>
             <div style="text-align:right;"><strong>Дата:</strong> ${pdfDate}<br><strong>Исполнитель:</strong> ${executor}</div>
@@ -372,8 +381,10 @@
       setTimeout(() => printWindow.print(), 400);
     }
 
-    // Установка текущей даты
-    document.getElementById('estimate-date').valueAsDate = new Date();
+    // Установка текущей даты при загрузке
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('estimate-date').valueAsDate = new Date();
+    });
   </script>
 </body>
 </html>
