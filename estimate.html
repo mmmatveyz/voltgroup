@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Калькулятор сметы | VoltGroup</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
     :root {
       --bg: #0B1120; --surface: #111827; --primary: #00E5FF; --primary-hover: #00B8D4;
@@ -25,6 +24,7 @@
     th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
     th { background: #0d1524; color: var(--primary); font-weight: 600; white-space: nowrap; }
     .qty-input { width: 70px; padding: 8px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); color: var(--text); text-align: center; }
+    .name-input { width: 100%; padding: 8px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); color: var(--text); }
     
     .summary { background: var(--surface); padding: 20px; border-radius: var(--radius); margin: 20px 0; border: 1px solid var(--border); }
     .summary-row { display: flex; justify-content: space-between; margin-bottom: 8px; color: var(--text-muted); }
@@ -73,10 +73,13 @@
     <div class="table-wrapper">
       <table>
         <thead>
-          <tr><th>Наименование работ</th><th>Ед.</th><th>Цена</th><th>Кол-во</th><th>Сумма</th></tr>
+          <tr><th>Наименование работ</th><th>Ед.</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th></th></tr>
         </thead>
         <tbody id="services-body"></tbody>
       </table>
+      <div style="padding: 15px; text-align: center;">
+        <button class="btn btn-outline" onclick="addCustomWorkRow()" style="padding: 8px 16px; font-size: 0.9rem;">➕ Добавить свою работу</button>
+      </div>
     </div>
 
     <div class="table-wrapper" style="margin-top: 20px;">
@@ -145,7 +148,7 @@
       { name: 'Диагностика / аварийный выезд', unit: 'выезд', price: 1100 }
     ];
 
-    // Рендер услуг
+    // Рендер стандартных услуг
     const tbody = document.getElementById('services-body');
     servicesData.forEach((s, index) => {
       const tr = document.createElement('tr');
@@ -155,9 +158,27 @@
         <td>${s.price.toLocaleString('ru-RU')} ₽</td>
         <td><input type="number" class="qty-input" id="qty-${index}" min="0" step="0.5" placeholder="0" onchange="calculateTotals()"></td>
         <td id="sum-${index}" style="text-align:center; font-weight:600;">0 ₽</td>
+        <td></td>
       `;
       tbody.appendChild(tr);
     });
+
+    // --- ФУНКЦИЯ ДОБАВЛЕНИЯ СВОЕЙ РАБОТЫ ---
+    function addCustomWorkRow() {
+      const tbody = document.getElementById('services-body');
+      const row = document.createElement('tr');
+      const id = Date.now();
+      row.classList.add('custom-work-row');
+      row.innerHTML = `
+        <td><input type="text" class="name-input" placeholder="Название работы" style="width:100%;"></td>
+        <td><input type="text" class="mat-unit" value="шт." style="width:50px;"></td>
+        <td><input type="number" class="mat-price" placeholder="0" min="0" onchange="calculateTotals()" style="width:70px;"></td>
+        <td><input type="number" class="mat-qty" placeholder="0" min="0" onchange="calculateTotals()" style="width:60px;"></td>
+        <td id="mat-sum-${id}" style="text-align:center; font-weight:600;">0 ₽</td>
+        <td style="text-align:center;"><button class="btn-remove" onclick="this.closest('tr').remove(); calculateTotals()">✕</button></td>
+      `;
+      tbody.appendChild(row);
+    }
 
     // Добавление материала
     function addMaterialRow() {
@@ -165,19 +186,21 @@
       const row = document.createElement('tr');
       const id = Date.now();
       row.innerHTML = `
-        <td><input type="text" class="mat-name" placeholder="Например: Кабель ВВГ 3x2.5" style="width:100%; padding:6px; border-radius:4px; border:1px solid var(--border); background:var(--bg); color:var(--text);"></td>
-        <td><input type="text" class="mat-unit" value="шт." style="width:50px; padding:6px; border-radius:4px; border:1px solid var(--border); background:var(--bg); color:var(--text); text-align:center;"></td>
-        <td><input type="number" class="mat-price" placeholder="0" min="0" onchange="calculateTotals()" style="width:70px; padding:6px; border-radius:4px; border:1px solid var(--border); background:var(--bg); color:var(--text); text-align:center;"></td>
-        <td><input type="number" class="mat-qty" placeholder="0" min="0" onchange="calculateTotals()" style="width:60px; padding:6px; border-radius:4px; border:1px solid var(--border); background:var(--bg); color:var(--text); text-align:center;"></td>
+        <td><input type="text" class="mat-name" placeholder="Например: Кабель ВВГ 3x2.5" style="width:100%;"></td>
+        <td><input type="text" class="mat-unit" value="шт." style="width:50px;"></td>
+        <td><input type="number" class="mat-price" placeholder="0" min="0" onchange="calculateTotals()" style="width:70px;"></td>
+        <td><input type="number" class="mat-qty" placeholder="0" min="0" onchange="calculateTotals()" style="width:60px;"></td>
         <td id="mat-sum-${id}" style="text-align:center; font-weight:600;">0 ₽</td>
         <td style="text-align:center;"><button class="btn-remove" onclick="this.closest('tr').remove(); calculateTotals()">✕</button></td>
       `;
       tbody.appendChild(row);
     }
 
-    // Подсчёт
+    // Подсчёт (УЛУЧШЕННЫЙ)
     function calculateTotals() {
       let servicesTotal = 0;
+      
+      // 1. Считаем стандартные услуги
       servicesData.forEach((s, index) => {
         const qtyInput = document.getElementById(`qty-${index}`);
         const sumCell = document.getElementById(`sum-${index}`);
@@ -187,6 +210,21 @@
         servicesTotal += sum;
       });
 
+      // 2. Считаем добавленные вручную работы
+      document.querySelectorAll('.custom-work-row').forEach(row => {
+        const nameInput = row.querySelector('.name-input'); // Для PDF
+        const priceInput = row.querySelector('.mat-price');
+        const qtyInput = row.querySelector('.mat-qty');
+        const sumCell = row.querySelector('td[id^="mat-sum-"]');
+        
+        const price = parseFloat(priceInput.value) || 0;
+        const qty = parseFloat(qtyInput.value) || 0;
+        const sum = price * qty;
+        sumCell.textContent = sum.toLocaleString('ru-RU') + ' ₽';
+        servicesTotal += sum;
+      });
+
+      // 3. Материалы
       let materialsTotal = 0;
       document.querySelectorAll('#materials-body tr').forEach(row => {
         const priceInput = row.querySelector('.mat-price');
@@ -207,6 +245,23 @@
     // Очистка
     function clearForm() {
       document.querySelectorAll('.qty-input').forEach(i => i.value = '');
+      document.querySelectorAll('.mat-price, .mat-qty').forEach(i => i.value = '');
+      document.getElementById('services-body').innerHTML = ''; 
+      
+      // Перерисовываем стандартные
+      servicesData.forEach((s, index) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${s.name}</td>
+          <td>${s.unit}</td>
+          <td>${s.price.toLocaleString('ru-RU')} ₽</td>
+          <td><input type="number" class="qty-input" id="qty-${index}" min="0" step="0.5" placeholder="0" onchange="calculateTotals()"></td>
+          <td id="sum-${index}" style="text-align:center; font-weight:600;">0 ₽</td>
+          <td></td>
+        `;
+        tbody.appendChild(tr);
+      });
+
       document.getElementById('materials-body').innerHTML = '';
       calculateTotals();
       document.getElementById('client-name').value = '';
@@ -214,30 +269,25 @@
       document.getElementById('estimate-date').valueAsDate = new Date();
     }
 
-            // Генерация PDF через печать
-        function generatePDF() {
+    // Генерация PDF
+    function generatePDF() {
       const totalText = document.getElementById('grand-total').textContent;
       if (totalText === '0 ₽') {
         alert('Добавьте хотя бы одну позицию с количеством больше 0');
         return;
       }
 
-      // 1️⃣ Сквозная нумерация года (сохраняется в браузере)
-      let counter = parseInt(localStorage.getItem('vg_estimate_counter') || '0') + 1;
-      localStorage.setItem('vg_estimate_counter', counter);
-      const pdfNum = `${new Date().getFullYear()}-${String(counter).padStart(3, '0')}`;
-
-      // Заполняем данные
-      const clientName = document.getElementById('client-name').value || '—';
-      const clientAddr = document.getElementById('client-address').value || '—';
-      const pdfDate = document.getElementById('estimate-date').value || new Date().toLocaleDateString('ru-RU');
-      const executor = 'Матвей [Фамилия] | VoltGroup (Самозанятый)'; // ⚠️ Замени [Фамилия] на свою
+      // Заполняем шапку
+      document.getElementById('pdf-num').textContent = Date.now().toString().slice(-6);
+      document.getElementById('pdf-client').textContent = document.getElementById('client-name').value || '—';
+      document.getElementById('pdf-addr').textContent = document.getElementById('client-address').value || '—';
+      document.getElementById('pdf-date').textContent = document.getElementById('estimate-date').value || new Date().toLocaleDateString('ru-RU');
 
       const pdfBody = document.getElementById('pdf-body');
       pdfBody.innerHTML = '';
-      let rowIdx = 1; // Сквозная нумерация
+      let rowIdx = 1;
 
-      // Услуги
+      // 1. Стандартные услуги
       servicesData.forEach((s, index) => {
         const qtyInput = document.getElementById(`qty-${index}`);
         const qty = parseFloat(qtyInput.value) || 0;
@@ -247,7 +297,19 @@
         }
       });
 
-      // Материалы
+      // 2. Вручную добавленные работы
+      document.querySelectorAll('.custom-work-row').forEach(row => {
+        const name = row.querySelector('.name-input').value || 'Доп. работа';
+        const unit = row.querySelector('.mat-unit').value || 'шт.';
+        const price = parseFloat(row.querySelector('.mat-price').value) || 0;
+        const qty = parseFloat(row.querySelector('.mat-qty').value) || 0;
+        if (qty > 0 || price > 0) {
+            const sum = price * qty;
+            pdfBody.innerHTML += `<tr><td>${rowIdx++}</td><td>${name}</td><td>${unit}</td><td>${qty}</td><td>${price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
+        }
+      });
+
+      // 3. Материалы
       const matRows = document.querySelectorAll('#materials-body tr');
       let hasMaterials = false;
       matRows.forEach(r => {
@@ -265,82 +327,43 @@
           const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
           if (qty > 0 || price > 0) {
             const sum = price * qty;
-            // ✅ Материалы теперь нумеруются сквозным порядком
             pdfBody.innerHTML += `<tr><td>${rowIdx++}</td><td>${name}</td><td>${unit}</td><td>${qty}</td><td>${price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
           }
         });
       }
 
-      const grandTotal = document.getElementById('grand-total').textContent;
+      document.getElementById('pdf-total').textContent = document.getElementById('grand-total').textContent;
 
-      // Формируем HTML для печати
-      const printHTML = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <title>Смета №${pdfNum} | VoltGroup</title>
-          <style>
-            @media print {
-              @page { margin: 12mm; size: A4; }
-              body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-              .no-print { display: none; }
-            }
-            body { font-family: Arial, sans-serif; padding: 0; color: #000; max-width: 190mm; margin: 0 auto; font-size: 12px; }
-            h2 { text-align: center; margin: 0 0 15px 0; font-size: 18px; }
-            .header { display: flex; justify-content: space-between; margin-bottom: 12px; border-bottom: 2px solid #00E5FF; padding-bottom: 8px; }
-            table { width: 100%; border-collapse: collapse; margin: 10px 0; }
-            th, td { border: 1px solid #444; padding: 5px 6px; text-align: left; }
-            th { background: #f8f8f8; font-weight: bold; }
-            .total { text-align: right; font-size: 15px; font-weight: bold; margin: 12px 0 25px; border-top: 2px solid #000; padding-top: 6px; }
-            .signature { margin-top: 30px; display: flex; justify-content: space-between; font-size: 11px; }
-            .footer { margin-top: 25px; font-size: 9px; color: #555; text-align: center; border-top: 1px solid #ddd; padding-top: 8px; }
-            .btn { padding: 10px 20px; margin: 10px 5px; background: #00E5FF; color: #000; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; }
-            .btn:hover { background: #00B8D4; }
-            .controls { text-align: center; margin-bottom: 15px; padding: 10px; background: #f9f9f9; border-radius: 6px; }
-          </style>
-        </head>
-        <body>
-          <div class="controls no-print">
-            <button class="btn" onclick="window.print()">📄 Сохранить как PDF</button>
-            <button class="btn" onclick="window.close()" style="background:#ccc;">Закрыть</button>
-            <p style="margin-top:8px;color:#666;font-size:12px;">💡 В окне печати выберите <b>«Сохранить как PDF»</b> и уберите галочки «Колонтитулы»</p>
-          </div>
-          
-          <h2>⚡ СМЕТА № ${pdfNum}</h2>
-          <div class="header">
-            <div><strong>Заказчик:</strong> ${clientName}<br><strong>Адрес:</strong> ${clientAddr}</div>
-            <div style="text-align:right;"><strong>Дата:</strong> ${pdfDate}<br><strong>Исполнитель:</strong> ${executor}</div>
-          </div>
-          
-          <table>
-            <thead><tr><th style="width:30px">№</th><th>Наименование</th><th style="width:50px">Ед.</th><th style="width:50px">Кол-во</th><th style="width:70px">Цена</th><th style="width:80px">Сумма</th></tr></thead>
-            <tbody>${pdfBody.innerHTML}</tbody>
-          </table>
-          
-          <div class="total">ИТОГО К ОПЛАТЕ: ${grandTotal}</div>
-          
-          <div class="signature">
-            <div>Заказчик: _______________ / _______________ /</div>
-            <div>Исполнитель: _______________ / Матвей [Фамилия] /</div>
-          </div>
-          
-          <div class="footer">
-            ⚡ VoltGroup | Энергия решений | Самозанятый (НПД) | Чек формируется в приложении ФНС<br>
-            Гарантия на работы: 12 месяцев. Цены на материалы могут корректироваться в день закупки.
-          </div>
-        </body>
-        </html>
-      `;
-
-      const printWindow = window.open('', '_blank', 'width=850,height=900');
-      printWindow.document.write(printHTML);
-      printWindow.document.close();
+      // Печать
+      const el = document.getElementById('pdf-content');
+      const originalDisplay = el.style.display;
+      el.style.display = 'block';
+      el.style.position = 'absolute';
+      el.style.left = '-9999px';
       
-      setTimeout(() => printWindow.print(), 400);
+      const dateStr = document.getElementById('estimate-date').value || 'smeta';
+      
+      html2pdf().set({
+        margin: 10,
+        filename: `Смета_VoltGroup_${dateStr}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      }).from(el).save().then(() => {
+        el.style.display = 'none';
+        el.style.position = 'static';
+      }).catch(err => {
+        console.error('Ошибка генерации PDF:', err);
+        alert('Ошибка при создании PDF. Попробуйте еще раз.');
+        el.style.display = 'none';
+        el.style.position = 'static';
+      });
     }
 
     // Установка текущей даты
     document.getElementById('estimate-date').valueAsDate = new Date();
   </script>
+  <!-- Подключаем библиотеку html2pdf -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </body>
 </html>
