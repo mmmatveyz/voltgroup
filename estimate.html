@@ -28,6 +28,7 @@
     
     .summary { background: var(--surface); padding: 20px; border-radius: var(--radius); margin: 20px 0; border: 1px solid var(--border); }
     .summary-row { display: flex; justify-content: space-between; margin-bottom: 8px; color: var(--text-muted); }
+    .summary-discount { display: flex; justify-content: space-between; margin-bottom: 8px; color: #EF4444; font-weight: 600; }
     .summary-total { display: flex; justify-content: space-between; font-size: 1.5rem; font-weight: 700; border-top: 1px solid var(--border); padding-top: 12px; color: var(--primary); }
 
     .actions { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
@@ -58,7 +59,6 @@
       <input type="text" id="client-name" placeholder="Имя заказчика">
       <input type="text" id="client-address" placeholder="Адрес объекта">
       <input type="date" id="estimate-date">
-      <!-- НОВОЕ ПОЛЕ: Номер сметы -->
       <input type="text" id="invoice-number" placeholder="№ сметы (авто)" style="max-width: 120px;">
     </div>
 
@@ -90,7 +90,16 @@
     <div class="summary">
       <div class="summary-row"><span>Работы:</span><span id="services-total-display">0 ₽</span></div>
       <div class="summary-row"><span>Материалы:</span><span id="materials-total-display">0 ₽</span></div>
-      <div class="summary-total"><span>ИТОГО:</span><span id="grand-total">0 ₽</span></div>
+      <div class="summary-row" style="font-weight: bold; color: var(--text);"><span>ИТОГО:</span><span id="subtotal-display">0 ₽</span></div>
+      
+      <!-- БЛОК СКИДКИ -->
+      <div style="display: flex; gap: 10px; align-items: center; margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--border);">
+        <label for="discount-input" style="color: var(--text-muted); font-size: 0.9rem;">Скидка:</label>
+        <input type="text" id="discount-input" placeholder="0 ₽ или %" style="width: 100px; padding: 8px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); color: var(--text);" oninput="calculateTotals()">
+        <span id="discount-value-display" style="color: #EF4444; font-weight: 600; margin-left: auto;">-0 ₽</span>
+      </div>
+
+      <div class="summary-total"><span>К ОПЛАТЕ:</span><span id="grand-total">0 ₽</span></div>
     </div>
 
     <div class="actions">
@@ -134,7 +143,6 @@
       tbody.appendChild(tr);
     });
 
-    // --- ФУНКЦИЯ ДОБАВЛЕНИЯ СВОЕЙ РАБОТЫ ---
     function addCustomWorkRow() {
       const tbody = document.getElementById('services-body');
       const row = document.createElement('tr');
@@ -151,7 +159,6 @@
       tbody.appendChild(row);
     }
 
-    // Добавление материала
     function addMaterialRow() {
       const tbody = document.getElementById('materials-body');
       const row = document.createElement('tr');
@@ -167,11 +174,10 @@
       tbody.appendChild(row);
     }
 
-    // Подсчёт
+    // Подсчёт с учетом скидки
     function calculateTotals() {
       let servicesTotal = 0;
       
-      // Стандартные услуги
       servicesData.forEach((s, index) => {
         const qtyInput = document.getElementById(`qty-${index}`);
         const sumCell = document.getElementById(`sum-${index}`);
@@ -181,7 +187,6 @@
         servicesTotal += sum;
       });
 
-      // Вручную добавленные работы
       document.querySelectorAll('.custom-work-row').forEach(row => {
         const priceInput = row.querySelector('.mat-price');
         const qtyInput = row.querySelector('.mat-qty');
@@ -193,7 +198,6 @@
         servicesTotal += sum;
       });
 
-      // Материалы
       let materialsTotal = 0;
       document.querySelectorAll('#materials-body tr').forEach(row => {
         const priceInput = row.querySelector('.mat-price');
@@ -206,12 +210,35 @@
         materialsTotal += sum;
       });
 
+      const subtotal = servicesTotal + materialsTotal;
+      
+      // Расчет скидки
+      const discountInput = document.getElementById('discount-input').value.trim();
+      let discountAmount = 0;
+      
+      if (discountInput) {
+        if (discountInput.includes('%')) {
+          const percent = parseFloat(discountInput.replace('%', '')) || 0;
+          discountAmount = subtotal * (percent / 100);
+        } else {
+          discountAmount = parseFloat(discountInput) || 0;
+        }
+      }
+      
+      // Округляем скидку до целых
+      discountAmount = Math.round(discountAmount);
+      
+      const finalTotal = Math.max(0, subtotal - discountAmount);
+
       document.getElementById('services-total-display').textContent = servicesTotal.toLocaleString('ru-RU') + ' ₽';
       document.getElementById('materials-total-display').textContent = materialsTotal.toLocaleString('ru-RU') + ' ₽';
-      document.getElementById('grand-total').textContent = (servicesTotal + materialsTotal).toLocaleString('ru-RU') + ' ₽';
+      document.getElementById('subtotal-display').textContent = subtotal.toLocaleString('ru-RU') + ' ₽';
+      document.getElementById('discount-value-display').textContent = '-' + discountAmount.toLocaleString('ru-RU') + ' ₽';
+      document.getElementById('grand-total').textContent = finalTotal.toLocaleString('ru-RU') + ' ₽';
+      
+      return { subtotal, discountAmount, finalTotal };
     }
 
-    // Очистка
     function clearForm() {
       document.querySelectorAll('.qty-input').forEach(i => i.value = '');
       document.querySelectorAll('.mat-price, .mat-qty').forEach(i => i.value = '');
@@ -231,44 +258,37 @@
       });
 
       document.getElementById('materials-body').innerHTML = '';
+      document.getElementById('discount-input').value = '';
       calculateTotals();
       document.getElementById('client-name').value = '';
       document.getElementById('client-address').value = '';
       document.getElementById('estimate-date').valueAsDate = new Date();
-      document.getElementById('invoice-number').value = ''; // Очищаем номер сметы
+      document.getElementById('invoice-number').value = '';
     }
 
-    // === ГЕНЕРАЦИЯ PDF ЧЕРЕЗ ПЕЧАТЬ ===
     function generatePDF() {
-      const totalText = document.getElementById('grand-total').textContent;
-      if (totalText === '0 ₽') {
+      const totals = calculateTotals();
+      if (totals.finalTotal === 0) {
         alert('Добавьте хотя бы одну позицию с количеством больше 0');
         return;
       }
 
-      // 🎯 ЛОГИКА НОМЕРА СМЕТЫ:
       let invoiceNum = document.getElementById('invoice-number').value.trim();
-      
       if (!invoiceNum) {
-        // Если поле пустое — генерируем авто-номер
         let counter = parseInt(localStorage.getItem('vg_estimate_counter') || '0') + 1;
         localStorage.setItem('vg_estimate_counter', counter);
         invoiceNum = `${new Date().getFullYear()}-${String(counter).padStart(3, '0')}`;
-        // Показываем сгенерированный номер в поле (для наглядности)
         document.getElementById('invoice-number').value = invoiceNum;
       }
-      // Если пользователь ввёл свой номер — используем его
 
       const clientName = document.getElementById('client-name').value || '—';
       const clientAddr = document.getElementById('client-address').value || '—';
       const pdfDate = document.getElementById('estimate-date').value || new Date().toLocaleDateString('ru-RU');
       const executor = 'Матвей [Фамилия] | VoltGroup (Самозанятый)';
 
-      // Собираем тело таблицы
       let pdfBodyHTML = '';
       let rowIdx = 1;
 
-      // Стандартные услуги
       servicesData.forEach((s, index) => {
         const qtyInput = document.getElementById(`qty-${index}`);
         const qty = parseFloat(qtyInput.value) || 0;
@@ -278,7 +298,6 @@
         }
       });
 
-      // Вручную добавленные работы
       document.querySelectorAll('.custom-work-row').forEach(row => {
         const name = row.querySelector('.name-input').value || 'Доп. работа';
         const unit = row.querySelector('.mat-unit').value || 'шт.';
@@ -290,7 +309,6 @@
         }
       });
 
-      // Материалы
       const matRows = document.querySelectorAll('#materials-body tr');
       let hasMaterials = false;
       matRows.forEach(r => {
@@ -313,8 +331,6 @@
         });
       }
 
-      const grandTotal = document.getElementById('grand-total').textContent;
-
       // Формируем HTML для печати
       const printHTML = `
         <!DOCTYPE html>
@@ -333,7 +349,9 @@
             table { width: 100%; border-collapse: collapse; margin: 10px 0; }
             th, td { border: 1px solid #444; padding: 5px 6px; text-align: left; }
             th { background: #f8f8f8; font-weight: bold; }
-            .total { text-align: right; font-size: 15px; font-weight: bold; margin: 12px 0 25px; border-top: 2px solid #000; padding-top: 6px; }
+            .total-block { margin: 12px 0 25px; border-top: 2px solid #000; padding-top: 6px; text-align: right; }
+            .total-row { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 13px; }
+            .total-final { font-size: 16px; font-weight: bold; margin-top: 8px; }
             .signature { margin-top: 30px; display: flex; justify-content: space-between; font-size: 11px; }
             .footer { margin-top: 25px; font-size: 9px; color: #555; text-align: center; border-top: 1px solid #ddd; padding-top: 8px; }
             .btn { padding: 10px 20px; margin: 10px 5px; background: #00E5FF; color: #000; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; }
@@ -359,7 +377,11 @@
             <tbody>${pdfBodyHTML}</tbody>
           </table>
           
-          <div class="total">ИТОГО К ОПЛАТЕ: ${grandTotal}</div>
+          <div class="total-block">
+            <div class="total-row"><span>Итого:</span><span>${totals.subtotal.toLocaleString('ru-RU')} ₽</span></div>
+            ${totals.discountAmount > 0 ? `<div class="total-row" style="color:#d32f2f;"><span>Скидка:</span><span>-${totals.discountAmount.toLocaleString('ru-RU')} ₽</span></div>` : ''}
+            <div class="total-final"><span>К ОПЛАТЕ:</span><span>${totals.finalTotal.toLocaleString('ru-RU')} ₽</span></div>
+          </div>
           
           <div class="signature">
             <div>Заказчик: _______________ / _______________ /</div>
@@ -381,7 +403,6 @@
       setTimeout(() => printWindow.print(), 400);
     }
 
-    // Установка текущей даты при загрузке
     document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('estimate-date').valueAsDate = new Date();
     });
