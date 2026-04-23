@@ -237,29 +237,34 @@
 </div>
 
 <script>
-  // --- ДАННЫЕ ---
+  // --- ДАННЫЕ (ОБНОВЛЕННЫЙ ПРАЙС) ---
   const servicesData = [
     { name: 'Штробление: газобетон/пеноблок', unit: 'м.п.', price: 380 },
     { name: 'Штробление: кирпич', unit: 'м.п.', price: 480 },
     { name: 'Штробление: бетон', unit: 'м.п.', price: 580 },
     { name: 'Прокладка кабеля до 6 мм² (в гофре)', unit: 'м.п.', price: 140 },
+    { name: 'Прокладка кабеля до 6 мм² (без гофры)', unit: 'м.п.', price: 110 },
     { name: 'Прокладка кабеля от 10 мм² (силовой)', unit: 'м.п.', price: 220 },
-    { name: 'Отверстие под подрозетник: бетон', unit: 'шт.', price: 720 },
+    { name: 'Отверстие под подрозетник (любое основание)', unit: 'шт.', price: 600 }, // Усредненная цена
     { name: 'Монтаж подрозетника (вмазка)', unit: 'шт.', price: 220 },
     { name: 'Установка механизма розетки/выключателя', unit: 'шт.', price: 450 },
     { name: 'Розетка/выключатель «под ключ»', unit: 'шт.', price: 850 },
+    { name: 'Монтаж светильника (до 5 кг)', unit: 'шт.', price: 900 },
     { name: 'Сборка электрощита (за модуль)', unit: 'мод.', price: 580 },
-    { name: 'Установка автомата 1P/2P/3P', unit: 'шт.', price: 450 },
-    { name: 'Монтаж светильника точечного', unit: 'шт.', price: 550 },
-    { name: 'Подключение варочной панели', unit: 'шт.', price: 1600 },
+    { name: 'Установка и подключение автомата 1P/2P/3P', unit: 'шт.', price: 450 },
+    { name: 'Подключение варочной панели / духовки', unit: 'шт.', price: 1600 },
+    { name: 'Подключение бойлера / стиральной машины', unit: 'шт.', price: 1200 },
     { name: 'Диагностика / Аварийный выезд', unit: 'выезд', price: 1100 }
   ];
 
-  // Правила авто-добавления материалов (Коэффициент расхода)
+  // Правила авто-добавления материалов
   const materialRules = {
     'Прокладка кабеля до 6 мм² (в гофре)': [
       { name: 'Гофра ПВХ 20мм', unit: 'м.п.', price: 15, coef: 1.0 },
       { name: 'Клипса для гофры 20мм', unit: 'шт.', price: 5, coef: 2.0 }
+    ],
+    'Прокладка кабеля до 6 мм² (без гофры)': [
+      { name: 'Дюбель-хомут для кабеля', unit: 'шт.', price: 3, coef: 2.0 }
     ],
     'Прокладка кабеля от 10 мм² (силовой)': [
       { name: 'Гофра ПВХ 25мм', unit: 'м.п.', price: 25, coef: 1.0 },
@@ -282,7 +287,8 @@
     ],
     'Сборка электрощита (за модуль)': [
       { name: 'Шина нулевая/земляная', unit: 'шт.', price: 150, coef: 0.1 },
-      { name: 'Гребенка соединительная', unit: 'шт.', price: 400, coef: 0.1 }
+      { name: 'Гребенка соединительная', unit: 'шт.', price: 400, coef: 0.1 },
+      { name: 'Заглушка для щита', unit: 'шт.', price: 20, coef: 0.5 }
     ]
   };
 
@@ -308,7 +314,6 @@
 
   // --- ЛОГИКА ---
 
-  // Обработка изменения количества работы (авто-добавление материалов)
   function handleServiceChange(index, qty) {
     calculateTotals();
 
@@ -335,7 +340,6 @@
         if (existingRow) {
           const qtyInput = existingRow.querySelector('.mat-qty');
           const currentVal = parseFloat(qtyInput.value) || 0;
-          // Обновляем только если текущее значение меньше требуемого (чтобы не стирать ручной ввод, если его больше)
           if (currentVal < requiredQty) {
             qtyInput.value = requiredQty;
           }
@@ -378,7 +382,6 @@
   function calculateTotals() {
     let servicesTotal = 0;
 
-    // Стандартные работы
     servicesData.forEach((s, index) => {
       const qtyInput = document.getElementById(`qty-${index}`);
       const sumCell = document.getElementById(`sum-${index}`);
@@ -388,7 +391,6 @@
       servicesTotal += sum;
     });
 
-    // Кастомные работы
     document.querySelectorAll('.custom-work-row').forEach(row => {
       const priceInput = row.querySelector('.mat-price');
       const qtyInput = row.querySelector('.mat-qty');
@@ -403,10 +405,12 @@
     // Скидка
     const discountInput = document.getElementById('discount-input').value.trim();
     let discountAmount = 0;
+    let discountPercent = 0;
+
     if (discountInput) {
       if (discountInput.includes('%')) {
-        const percent = parseFloat(discountInput.replace('%', '')) || 0;
-        discountAmount = servicesTotal * (percent / 100);
+        discountPercent = parseFloat(discountInput.replace('%', '')) || 0;
+        discountAmount = servicesTotal * (discountPercent / 100);
       } else {
         discountAmount = parseFloat(discountInput) || 0;
       }
@@ -433,7 +437,14 @@
 
     // Обновление UI
     document.getElementById('services-total-display').textContent = servicesTotal.toLocaleString('ru-RU') + ' ₽';
-    document.getElementById('discount-value-display').textContent = '-' + discountAmount.toLocaleString('ru-RU') + ' ₽';
+
+    // Отображение скидки с процентом, если он был введен
+    let discountText = `-${discountAmount.toLocaleString('ru-RU')} ₽`;
+    if (discountPercent > 0) {
+      discountText = `${discountPercent}% (${discountText})`;
+    }
+    document.getElementById('discount-value-display').textContent = discountText;
+
     document.getElementById('works-subtotal-display').textContent = worksFinal.toLocaleString('ru-RU') + ' ₽';
     document.getElementById('materials-total-display').textContent = materialsTotal.toLocaleString('ru-RU') + ' ₽';
     document.getElementById('grand-total').textContent = grandTotal.toLocaleString('ru-RU') + ' ₽';
@@ -447,10 +458,10 @@
       matRow.style.textDecoration = 'none';
     }
 
-    return { servicesTotal, discountAmount, worksFinal, materialsTotal, materialsToPay, grandTotal };
+    return { servicesTotal, discountAmount, discountPercent, worksFinal, materialsTotal, materialsToPay, grandTotal };
   }
 
-  // --- ЧЕРНОВИКИ (LocalStorage) ---
+  // --- ЧЕРНОВИКИ ---
   function saveDraft() {
     const name = document.getElementById('draft-name').value.trim();
     if (!name) { alert('Введите название черновика'); return; }
@@ -557,10 +568,10 @@
     calculateTotals();
   }
 
-  // --- ГЕНЕРАЦИЯ PDF (Печать) ---
+  // --- ГЕНЕРАЦИЯ PDF ---
   function generatePDF() {
     const totals = calculateTotals();
-    if (totals.grandTotal === 0) {
+    if (totals.grandTotal === 0 && totals.materialsTotal === 0) {
       alert('Добавьте хотя бы одну позицию');
       return;
     }
@@ -602,29 +613,31 @@
       }
     });
 
-    // Материалы
-    if (masterBuys) {
-      const matRows = document.querySelectorAll('#materials-body tr');
-      let hasMaterials = false;
-      matRows.forEach(r => {
-        const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
-        const price = parseFloat(r.querySelector('.mat-price').value) || 0;
-        if (qty > 0 || price > 0) hasMaterials = true;
-      });
+    // Материалы (ВСЕГДА выводим список, но меняем заголовок и влияние на сумму)
+    const matRows = document.querySelectorAll('#materials-body tr');
+    let hasMaterials = false;
+    matRows.forEach(r => {
+      const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
+      const price = parseFloat(r.querySelector('.mat-price').value) || 0;
+      if (qty > 0 || price > 0) hasMaterials = true;
+    });
 
-      if (hasMaterials) {
-        pdfBodyHTML += `<tr><td colspan="6" style="background:#f0f0f0; font-weight:bold; text-align:center; padding:8px; border:1px solid #ccc;">МАТЕРИАЛЫ</td></tr>`;
-        matRows.forEach(r => {
-          const name = r.querySelector('.mat-name').value || 'Материал';
-          const unit = r.querySelector('.mat-unit').value || 'шт.';
-          const price = parseFloat(r.querySelector('.mat-price').value) || 0;
-          const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
-          if (qty > 0 || price > 0) {
-            const sum = price * qty;
-            pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${name}</td><td>${unit}</td><td>${qty}</td><td>${price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
-          }
-        });
-      }
+    if (hasMaterials) {
+      const matHeaderTitle = masterBuys ? "МАТЕРИАЛЫ (Закупка Исполнителя)" : "СПЕЦИФИКАЦИЯ МАТЕРИАЛОВ (Закупка Заказчика)";
+      pdfBodyHTML += `<tr><td colspan="6" style="background:#f0f0f0; font-weight:bold; text-align:center; padding:8px; border:1px solid #ccc;">${matHeaderTitle}</td></tr>`;
+
+      matRows.forEach(r => {
+        const name = r.querySelector('.mat-name').value || 'Материал';
+        const unit = r.querySelector('.mat-unit').value || 'шт.';
+        const price = parseFloat(r.querySelector('.mat-price').value) || 0;
+        const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
+        if (qty > 0 || price > 0) {
+          const sum = price * qty;
+          // Если закупает заказчик, цену и сумму можно скрыть или показать как справочно.
+          // Для прозрачности покажем цену, но в итог она не пойдет (это уже учтено в логике выше).
+          pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${name}</td><td>${unit}</td><td>${qty}</td><td>${price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
+        }
+      });
     }
 
     const printHTML = `
@@ -670,8 +683,8 @@
 
           <div class="total-block">
             <div class="total-row"><span>Итого работы:</span><span>${totals.worksFinal.toLocaleString('ru-RU')} ₽</span></div>
+            ${totals.discountAmount > 0 ? `<div class="total-row" style="color:#d32f2f;"><span>Скидка ${totals.discountPercent > 0 ? '(' + totals.discountPercent + '%)' : ''}:</span><span>-${totals.discountAmount.toLocaleString('ru-RU')} ₽</span></div>` : ''}
             ${masterBuys ? `<div class="total-row"><span>Материалы:</span><span>${totals.materialsTotal.toLocaleString('ru-RU')} ₽</span></div>` : ''}
-            ${totals.discountAmount > 0 ? `<div class="total-row" style="color:#d32f2f;"><span>Скидка:</span><span>-${totals.discountAmount.toLocaleString('ru-RU')} ₽</span></div>` : ''}
             <div class="total-final"><span>ИТОГО К ОПЛАТЕ:</span><span>${totals.grandTotal.toLocaleString('ru-RU')} ₽</span></div>
           </div>
 
