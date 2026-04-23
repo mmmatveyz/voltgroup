@@ -4,36 +4,190 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Политика конфиденциальности | VoltGroup</title>
+    <meta name="description" content="Политика обработки персональных данных на сайте VoltGroup. Соответствие 152-ФЗ.">
+
     <style>
-        body { font-family: system-ui, -apple-system, sans-serif; background: #0B1120; color: #F8FAFC; padding: 40px 20px; max-width: 800px; margin: 0 auto; line-height: 1.7; }
-        a { color: #00E5FF; }
-        h1, h2 { color: #00E5FF; margin-top: 30px; }
-        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
-        th, td { border: 1px solid #1E293B; padding: 10px; text-align: left; }
-        th { background: #111827; }
-        .back { display: inline-block; margin-top: 30px; padding: 10px 20px; background: #00E5FF; color: #0B1120; border-radius: 6px; text-decoration: none; font-weight: 600; }
+        :root {
+            --bg: #0B1120;
+            --surface: #111827;
+            --primary: #00E5FF;
+            --text: #F8FAFC;
+            --text-muted: #94A3B8;
+            --radius: 8px;
+            --font: system-ui, -apple-system, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font);
+            line-height: 1.7;
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 15px;
+        }
+
+        h2 {
+            color: var(--text);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 24px;
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+            color: var(--text-muted);
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        strong {
+            color: var(--text);
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: var(--surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        th, td {
+            border: 1px solid var(--border);
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background: rgba(255,255,255,0.05);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 24px;
+            background: var(--primary);
+            color: var(--bg);
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:hover {
+            background: #00B8D4;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,229,255,0.2);
+        }
     </style>
 </head>
 <body>
 <h1>Политика конфиденциальности</h1>
-<p>Настоящая Политика определяет порядок обработки персональных данных на сайте <strong>voltgroup-spb.ru</strong> (далее — Сайт).</p>
+<p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 30px;">в отношении обработки персональных данных</p>
 
-<h2>1. Оператор</h2>
-<p>Исполнитель: [Фамилия Имя Отчество], плательщик НПД, ИНН: [Ваш ИНН]. Контакт: @voltgroup_spb</p>
+<h2>1. Общие положения</h2>
+<p>Настоящая Политика конфиденциальности (далее — «Политика») определяет порядок обработки и защиты персональных данных пользователей сайта <strong>voltgroup-spb.ru</strong> (далее — «Сайт»), принадлежащего <strong>Зрячих Матвею</strong>, применяющему специальный налоговый режим «Налог на профессиональный доход» (НПД).</p>
+<p>Используя Сайт, вы соглашаетесь с условиями данной Политики.</p>
 
-<h2>2. Обрабатываемые данные</h2>
+<h2>2. Оператор персональных данных</h2>
+<p><strong>Оператор:</strong> Зрячих Матвей<br>
+    <strong>Статус:</strong> Плательщик НПД (самозанятый)<br>
+    <strong>Контакты:</strong> <a href="https://t.me/voltgroup_spb">@voltgroup_spb</a></p>
+
+<h2>3. Какие данные мы собираем</h2>
+<p>Мы собираем только те данные, которые необходимы для оказания услуг и связи с вами:</p>
 <table>
-    <tr><th>Тип</th><th>Цель</th><th>Срок хранения</th></tr>
-    <tr><td>Имя, телефон, комментарий</td><td>Обработка заявок, связь, оказание услуг</td><td>До отзыва согласия или 3 лет после последнего взаимодействия</td></tr>
-    <tr><td>IP, User-Agent, cookies</td><td>Аналитика, улучшение работы сайта</td><td>13 месяцев (Яндекс.Метрика)</td></tr>
+    <thead>
+    <tr>
+        <th>Тип данных</th>
+        <th>Цель обработки</th>
+        <th>Срок хранения</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Имя, номер телефона, email (если указан)</td>
+        <td>Обработка заявок, консультация, заключение договора, выполнение работ</td>
+        <td>До отзыва согласия или в течение 3 лет после последнего взаимодействия (для налоговой отчётности)</td>
+    </tr>
+    <tr>
+        <td>Технические данные (IP-адрес, cookies, User-Agent)</td>
+        <td>Аналитика посещаемости (Яндекс.Метрика), улучшение работы Сайта</td>
+        <td>13 месяцев (согласно настройкам Яндекс.Метрики)</td>
+    </tr>
+    </tbody>
 </table>
 
-<h2>3. Ваши права</h2>
-<p>Вы можете запросить удаление данных, уточнение или ограничение обработки, написав на @voltgroup_spb. Ответ в течение 10 рабочих дней.</p>
+<h2>4. Как мы используем данные</h2>
+<ul>
+    <li>Для связи с вами по оставленной заявке.</li>
+    <li>Для расчёта стоимости работ и составления сметы.</li>
+    <li>Для выполнения электромонтажных работ и оформления документов (договор, акт, чек).</li>
+    <li>Для улучшения качества обслуживания и анализа статистики посещений.</li>
+</ul>
+<p>Мы <strong>не передаём</strong> ваши персональные данные третьим лицам, за исключением случаев, предусмотренных законодательством РФ (например, по запросу правоохранительных органов).</p>
 
-<h2>4. Согласие</h2>
-<p>Отправляя форму на Сайте, вы даёте согласие на обработку персональных данных в соответствии с 152-ФЗ.</p>
+<h2>5. Ваши права</h2>
+<p>Вы имеете право:</p>
+<ul>
+    <li>Запросить информацию о том, какие ваши данные мы храним.</li>
+    <li>Потребовать исправления неточных данных.</li>
+    <li>Отозвать согласие на обработку персональных данных, написав нам в Telegram <a href="https://t.me/voltgroup_spb">@voltgroup_spb</a>.</li>
+</ul>
+<p>Запрос обрабатывается в течение 10 рабочих дней.</p>
 
-<a href="./index.html" class="back">← Вернуться на главную</a>
+<h2>6. Защита данных</h2>
+<p>Мы принимаем необходимые организационные и технические меры для защиты ваших данных от несанкционированного доступа, изменения или уничтожения.</p>
+
+<h2>7. Изменения в Политике</h2>
+<p>Мы можем обновлять данную Политику. Актуальная версия всегда доступна на этой странице.</p>
+
+<a href="./index.html" class="back-btn">← Вернуться на главную</a>
 </body>
 </html>

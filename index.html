@@ -4,13 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VoltGroup | Энергия решений — Электрика и автоматизация в СПб</title>
-    <meta name="description" content="Профессиональный электромонтаж, умный дом и автоматизация в Санкт-Петербурге. Договор, гарантия 12 мес., чек НПД.">
+    <meta name="description" content="Профессиональный электромонтаж, умный дом и автоматизация в Санкт-Петербурге. Договор, гарантия 12 мес., чек НПД. Работаем официально.">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="VoltGroup | Энергия решений — Электрика и автоматизация в СПб">
-    <meta property="og:description" content="Профессиональный электромонтаж, умный дом и автоматизация. Договор, гарантия 12 мес., чек НПД.">
+
+    <!-- Open Graph / Facebook / Telegram -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://username.github.io/voltgroup-site/">
-    <link rel="icon" href="image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+    <meta property="og:title" content="VoltGroup | Электрика и автоматизация в СПб">
+    <meta property="og:description" content="Промышленный опыт в вашей квартире. Щиты, проводка, умный дом. Гарантия 12 месяцев.">
+    <meta property="og:image" content="https://username.github.io/voltgroup-site/og-image.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
@@ -26,11 +31,49 @@
     <noscript><div><img src="https://mc.yandex.ru/watch/108492681" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrika counter -->
 
+    <!-- JSON-LD Schema for Local Business -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Electrician",
+            "name": "VoltGroup",
+            "image": "https://username.github.io/voltgroup-site/og-image.jpg",
+            "url": "https://username.github.io/voltgroup-site/",
+            "telephone": "+79990000000",
+            "priceRange": "₽₽",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Санкт-Петербург",
+                "addressRegion": "СПб",
+                "addressCountry": "RU"
+            },
+            "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 59.9343,
+                "longitude": 30.3351
+            },
+            "openingHoursSpecification": {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+                "opens": "09:00",
+                "closes": "21:00"
+            },
+            "sameAs": ["https://t.me/voltgroup_spb"]
+        }
+    </script>
+
     <style>
         :root {
-            --bg: #0B1120; --surface: #111827; --primary: #00E5FF; --primary-hover: #00B8D4;
-            --text: #F8FAFC; --text-muted: #94A3B8; --border: #1E293B; --radius: 8px;
-            --shadow: 0 4px 12px rgba(0,0,0,0.4); --font: system-ui, -apple-system, sans-serif;
+            --bg: #0B1120;
+            --surface: #111827;
+            --primary: #00E5FF;
+            --primary-hover: #00B8D4;
+            --text: #F8FAFC;
+            --text-muted: #94A3B8;
+            --border: #1E293B;
+            --radius: 8px;
+            --shadow: 0 4px 12px rgba(0,0,0,0.4);
+            --font: system-ui, -apple-system, sans-serif;
             --transition: all 0.2s ease;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -39,58 +82,80 @@
         a { color: var(--primary); text-decoration: none; transition: var(--transition); }
         a:hover { color: var(--primary-hover); }
         img { max-width: 100%; height: auto; display: block; }
+
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* Buttons */
         .btn { display: inline-flex; align-items: center; justify-content: center; padding: 12px 24px; border-radius: var(--radius); font-weight: 600; font-size: 1rem; cursor: pointer; border: none; transition: var(--transition); text-align: center; }
         .btn-primary { background: var(--primary); color: var(--bg); }
         .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: var(--shadow); }
         .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
         .btn-outline:hover { background: var(--primary); color: var(--bg); }
+
+        /* Layout */
         .section { padding: 60px 0; }
         .section-title { font-size: clamp(1.8rem, 4vw, 2.5rem); text-align: center; margin-bottom: 40px; font-weight: 700; }
         .grid { display: grid; gap: 20px; }
         .grid-3 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+
+        /* Cards */
         .card { background: var(--surface); padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); transition: var(--transition); }
         .card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--primary); }
         .card h3 { color: var(--primary); margin-bottom: 10px; font-size: 1.3rem; }
         .card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 8px; }
         .price { color: #10B981; font-weight: 700; font-size: 1.1rem; }
         .badge { display: inline-block; background: var(--surface); border: 1px solid var(--border); padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; color: var(--text-muted); margin-right: 8px; margin-bottom: 8px; }
+
+        /* Trust Bar */
         .trust-bar { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 25px; color: var(--text-muted); font-size: 0.9rem; }
         .trust-bar span { display: flex; align-items: center; gap: 6px; }
+
+        /* Forms */
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; margin-bottom: 6px; color: var(--text-muted); font-size: 0.9rem; }
         .form-control { width: 100%; padding: 12px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg); color: var(--text); font-family: inherit; font-size: 1rem; transition: var(--transition); }
-        .form-control:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,229,255,0.2); }
+        .form-control:focus-visible { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,229,255,0.2); }
         .form-error { color: #EF4444; font-size: 0.85rem; margin-top: 5px; display: none; }
+
+        /* Accordion */
         .accordion-item { border-bottom: 1px solid var(--border); }
         .accordion-btn { width: 100%; text-align: left; background: none; border: none; color: var(--text); padding: 18px 0; font-size: 1.05rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
         .accordion-btn::after { content: "+"; font-size: 1.5rem; color: var(--primary); transition: transform 0.3s; }
         .accordion-btn.active::after { transform: rotate(45deg); }
         .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
         .accordion-content p { padding: 0 0 18px; color: var(--text-muted); line-height: 1.7; }
+
+        /* Header & Nav */
         .header { position: sticky; top: 0; background: rgba(11, 17, 32, 0.95); backdrop-filter: blur(8px); z-index: 100; border-bottom: 1px solid var(--border); padding: 15px 0; }
-        .nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; position: relative; } /* Added position: relative */
         .logo { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.5px; }
         .logo span { color: var(--primary); }
         .nav-links { display: flex; gap: 20px; align-items: center; }
         .nav-links a { color: var(--text-muted); font-size: 0.95rem; }
         .nav-links a:hover { color: var(--text); }
         .mobile-menu-btn { display: none; background: none; border: none; color: var(--text); font-size: 1.5rem; cursor: pointer; }
+
+        /* Hero */
         .hero { text-align: center; padding: 80px 0 60px; }
         .hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 15px; line-height: 1.2; }
         .hero p { color: var(--text-muted); font-size: 1.15rem; margin-bottom: 25px; max-width: 700px; margin-left: auto; margin-right: auto; }
         .hero-actions { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+
+        /* NPD Block */
         .npd-block { background: var(--surface); border: 1px dashed var(--border); padding: 15px; border-radius: var(--radius); margin: 20px auto; max-width: 800px; font-size: 0.9rem; color: var(--text-muted); text-align: center; }
+
+        /* Footer */
         .footer { padding: 40px 0 20px; text-align: center; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--border); }
         .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; text-align: left; margin-bottom: 30px; }
         .footer h4 { color: var(--text); margin-bottom: 12px; font-size: 1.1rem; }
         .footer a { color: var(--text-muted); font-size: 0.9rem; }
         .footer a:hover { color: var(--primary); }
 
+        /* Cookie Banner */
         #cookieBanner { position: fixed; bottom: 20px; left: 20px; right: 20px; max-width: 500px; background: var(--surface); border: 1px solid var(--border); padding: 15px; border-radius: var(--radius); display: none; z-index: 999; font-size: 0.9rem; color: var(--text-muted); }
         #cookieBanner button { margin-left: 10px; padding: 6px 12px; background: var(--primary); color: var(--bg); border: none; border-radius: 4px; cursor: pointer; font-weight: 600; }
 
-        /* Стили для карточек работ на главной */
+        /* Work Cards */
         .work-card {
             background: var(--surface);
             border-radius: var(--radius);
@@ -98,83 +163,63 @@
             border: 1px solid var(--border);
             transition: var(--transition);
             height: 100%;
+            display: flex;
+            flex-direction: column;
         }
         .work-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--primary); }
         .work-card img { width: 100%; height: 220px; object-fit: cover; }
-        .work-card-content { padding: 20px; }
+        .work-card-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
         .work-card-content h3 { color: var(--primary); font-size: 1.1rem; margin-bottom: 8px; }
-        .work-card-content p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px; line-height: 1.5; }
+        .work-card-content p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px; line-height: 1.5; flex-grow: 1; }
 
-        /* Планшеты */
+        /* Responsive */
         @media (max-width: 1024px) {
             .container { max-width: 900px; }
         }
 
-        /* Мобильные */
         @media (max-width: 768px) {
             html { font-size: 16px !important; }
-
             h1 { font-size: 1.8rem !important; }
             h2 { font-size: 1.5rem !important; }
-
             .card { padding: 18px; }
             .card h3 { font-size: 1.15rem; }
             .card p { font-size: 0.9rem; }
-
-            .btn {
-                width: 100%;
-                padding: 14px 20px;
-                font-size: 1rem;
-            }
-            .hero-actions {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .trust-bar {
-                flex-direction: column;
-                gap: 8px;
-                font-size: 0.85rem;
-            }
-
+            .btn { width: 100%; padding: 14px 20px; font-size: 1rem; }
+            .hero-actions { flex-direction: column; width: 100%; }
+            .trust-bar { flex-direction: column; gap: 8px; font-size: 0.85rem; }
             .section { padding: 40px 0; }
             .container { padding: 0 15px; }
 
+            /* Mobile Menu Fix */
             .nav-links {
                 display: none;
                 flex-direction: column;
                 position: absolute;
-                top: 60px;
+                top: 100%; /* Stick to bottom of header */
                 left: 0;
                 right: 0;
                 background: var(--bg);
                 padding: 20px;
                 border-bottom: 1px solid var(--border);
                 gap: 12px;
+                box-shadow: var(--shadow);
             }
             .nav-links.open { display: flex; }
             .mobile-menu-btn { display: block; }
 
             .hero { padding: 50px 0 30px; }
             .hero p { font-size: 1rem; }
-
             .grid-3 { grid-template-columns: 1fr; }
-
             .footer-grid { grid-template-columns: 1fr; text-align: center; }
         }
 
-        /* Очень маленькие экраны */
         @media (max-width: 480px) {
             h1 { font-size: 1.5rem !important; }
             h2 { font-size: 1.3rem !important; }
-
             .section-title { font-size: 1.4rem !important; }
-
             .hero p { font-size: 0.95rem; }
-
             .card h3 { font-size: 1.1rem; }
             .price { font-size: 1rem; }
-
             .btn { font-size: 0.95rem; padding: 12px 16px; }
         }
     </style>
@@ -228,12 +273,13 @@
         </div>
     </section>
 
-    <!-- СЕКЦИЯ РАБОТ: Здесь появятся 3 фото + кнопка -->
+    <!-- СЕКЦИЯ РАБОТ -->
     <section id="gallery" class="section" style="background: var(--surface);">
         <div class="container">
             <h2 class="section-title">Примеры работ</h2>
-            <!-- Сюда JS вставит 3 карточки -->
-            <div class="grid grid-3" id="featuredWorks"></div>
+            <div class="grid grid-3" id="featuredWorks">
+                <!-- JS вставит карточки здесь -->
+            </div>
 
             <div style="text-align: center; margin-top: 40px;">
                 <a href="./works.html" class="btn btn-outline" style="font-size: 1.1rem; padding: 15px 30px;">
@@ -308,7 +354,10 @@
                 <div class="form-group"><label for="service">Тип задачи</label><select id="service" name="service" class="form-control"><option value="Точечный монтаж">Точечный монтаж</option><option value="Замена проводки">Замена проводки</option><option value="Сборка щита">Сборка щита</option><option value="Умный дом">Умный дом / автоматизация</option><option value="Диагностика">Диагностика / авария</option><option value="Другое">Другое</option></select></div>
                 <div class="form-group"><label for="comment">Комментарий</label><textarea id="comment" name="comment" class="form-control" rows="4" placeholder="Район, тип помещения, срочность..."></textarea></div>
 
-                <!-- Галочка согласия 152-ФЗ -->
+                <!-- Honeypot for Spam Protection -->
+                <input type="text" name="_gotcha" style="display:none !important;" tabindex="-1" autocomplete="off">
+
+                <!-- Consent Checkbox -->
                 <div class="form-group">
                     <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:0.85rem; color:var(--text-muted);">
                         <input type="checkbox" name="consent" required style="margin-top:4px; accent-color: var(--primary);">
@@ -327,7 +376,7 @@
     <div class="container">
         <div class="footer-grid">
             <div><h4>⚡ VoltGroup</h4><p style="color: var(--text-muted); font-size: 0.9rem;">Энергия решений.<br>Электрика и автоматизация в СПб.</p></div>
-            <div><h4>Контакты</h4><p>📞 <a href="tel:+79990000000">+7 (999) 000-00-00</a></p><p>💬 <a href="https://t.me/voltgroup_spb">@voltgroup_spb</a></p><p>🕒 Пн–Сб: 9:00–21:00</p></div>
+            <div><h4>Контакты</h4><p>📞 <a href="tel:+79990000000">+7 (999) 000-00-00</a></p><p>💬 <a href="https://vk.com/club237900859">@voltgroup_spb</a></p><p>🕒 Пн–Сб: 9:00–21:00</p></div>
             <div><h4>Документы</h4><p><a href="./privacy.html">Политика конфиденциальности</a></p><p><a href="./offer.html">Публичная оферта</a></p><p><a href="./cookies.html">Политика cookies</a></p></div>
         </div>
         <div class="npd-block">Исполнитель: Зрячих Матвей, плательщик НПД (самозанятый)<br>ИНН: [Ваш ИНН] | Чек формируется в приложении ФНС «Мой налог»<br>© 2026 VoltGroup. Все права защищены.</div>
@@ -337,46 +386,131 @@
 <div id="cookieBanner">🍪 Мы используем cookie для аналитики. <a href="./cookies.html">Подробнее</a>.<button onclick="localStorage.setItem('cookies','ok');document.getElementById('cookieBanner').style.display='none'">Согласен</button></div>
 
 <script>
-    // Мобильное меню
-    document.querySelector('.mobile-menu-btn').addEventListener('click', () => document.querySelector('.nav-links').classList.toggle('open'));
-    document.querySelectorAll('.nav-links a').forEach(link => link.addEventListener('click', () => document.querySelector('.nav-links').classList.remove('open')));
-    document.querySelectorAll('.accordion-btn').forEach(btn => { btn.addEventListener('click', () => { btn.classList.toggle('active'); const content = btn.nextElementSibling; content.style.maxHeight = content.style.maxHeight ? null : content.scrollHeight + 'px'; }); });
-    document.getElementById('phone').addEventListener('input', e => { let x = e.target.value.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/); e.target.value = !x[2] ? (x[1] ? '+7 (' : '') : '+7 (' + x[2] + (x[3] ? ') ' + x[3] : '') + (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : ''); });
-    document.getElementById('leadForm').addEventListener('submit', async function(e) { e.preventDefault(); const btn = this.querySelector('button'); const status = document.getElementById('formStatus'); btn.disabled = true; btn.textContent = 'Отправка...'; status.style.display = 'block'; status.style.color = 'var(--text-muted)'; status.textContent = '⏳ Отправляем заявку...'; const endpoint = 'https://formspree.io/f/xgopglbn'; try { const res = await fetch(endpoint, { method: 'POST', body: new FormData(this), headers: { 'Accept': 'application/json' } }); if (res.ok) { status.textContent = '✅ Заявка отправлена!'; status.style.color = '#10B981'; this.reset(); } else throw new Error('Ошибка'); } catch { status.textContent = '❌ Ошибка. Напишите в TG'; status.style.color = '#EF4444'; } finally { btn.disabled = false; btn.textContent = 'Получить расчёт за 30 минут'; } });
-    if(!localStorage.getItem('cookies')) document.getElementById('cookieBanner').style.display = 'block';
+    // Mobile Menu Toggle
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
 
-    // === ЗАГРУЗКА ТОП-3 РАБОТ ===
+    if(menuBtn && navLinks) {
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+            const isExpanded = navLinks.classList.contains('open');
+            menuBtn.setAttribute('aria-expanded', isExpanded);
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+            });
+        });
+    }
+
+    // Accordion Logic
+    document.querySelectorAll('.accordion-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            btn.classList.toggle('active');
+            const content = btn.nextElementSibling;
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + 'px';
+            }
+        });
+    });
+
+    // Phone Mask
+    const phoneInput = document.getElementById('phone');
+    if(phoneInput) {
+        phoneInput.addEventListener('input', e => {
+            let x = e.target.value.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
+            if (!x) return;
+            e.target.value = !x[2] ? (x[1] ? '+7 (' : '') : '+7 (' + x[2] + (x[3] ? ') ' + x[3] : '') + (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : '');
+        });
+    }
+
+    // Form Submission
+    const leadForm = document.getElementById('leadForm');
+    if(leadForm) {
+        leadForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button');
+            const status = document.getElementById('formStatus');
+
+            btn.disabled = true;
+            btn.textContent = 'Отправка...';
+            status.style.display = 'block';
+            status.style.color = 'var(--text-muted)';
+            status.textContent = '⏳ Отправляем заявку...';
+
+            const endpoint = 'https://formspree.io/f/xgopglbn'; // Замените на ваш ID, если другой
+
+            try {
+                const res = await fetch(endpoint, {
+                    method: 'POST',
+                    body: new FormData(this),
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (res.ok) {
+                    status.textContent = '✅ Заявка отправлена! Я свяжусь с вами в ближайшее время.';
+                    status.style.color = '#10B981';
+                    this.reset();
+                } else {
+                    throw new Error('Ошибка сервера');
+                }
+            } catch (error) {
+                console.error(error);
+                status.textContent = '❌ Ошибка отправки. Пожалуйста, напишите мне в Telegram.';
+                status.style.color = '#EF4444';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Получить расчёт за 30 минут';
+            }
+        });
+    }
+
+    // Cookie Banner
+    if(!localStorage.getItem('cookies')) {
+        document.getElementById('cookieBanner').style.display = 'block';
+    }
+
+    // Load Featured Works from JSON
     async function loadFeaturedWorks() {
+        const container = document.getElementById('featuredWorks');
+        if (!container) return;
+
         try {
             const res = await fetch('./gallery/gallery-config.json');
-            if (!res.ok) throw new Error();
+            if (!res.ok) throw new Error('Файл конфигурации не найден');
+
             const items = await res.json();
+            const featured = items.slice(0, 3); // Берем первые 3
 
-            // Берем первые 3 элемента
-            const featured = items.slice(0, 3);
-            const container = document.getElementById('featuredWorks');
+            if (featured.length === 0) {
+                container.innerHTML = '<p style="color:var(--text-muted); text-align:center; grid-column:1/-1;">Примеры работ скоро появятся</p>';
+                return;
+            }
 
-            featured.forEach(item => {
-                container.innerHTML += `
-                    <div class="work-card">
-                        <img src="${item.image}" alt="${item.title}">
-                        <div class="work-card-content">
-                            <h3>${item.title}</h3>
-                            <p>${item.description}</p>
-                            <div style="display:flex; flex-wrap:wrap; gap:6px;">
-                                ${item.badges ? item.badges.map(b => `<span class="badge">${b}</span>`).join('') : ''}
-                            </div>
+            container.innerHTML = featured.map(item => `
+                <div class="work-card">
+                    <img src="${item.image}" alt="${item.title}" loading="lazy">
+                    <div class="work-card-content">
+                        <h3>${item.title}</h3>
+                        <p>${item.description}</p>
+                        <div style="display:flex; flex-wrap:wrap; gap:6px;">
+                            ${item.badges ? item.badges.map(b => `<span class="badge">${b}</span>`).join('') : ''}
                         </div>
                     </div>
-                `;
-            });
+                </div>
+            `).join('');
+
         } catch (e) {
-            console.error("Не удалось загрузить работы", e);
-            document.getElementById('featuredWorks').innerHTML = '<p>Загрузка примеров...</p>';
+            console.warn("Не удалось загрузить работы:", e);
+            container.innerHTML = '<p style="color:var(--text-muted); text-align:center; grid-column:1/-1;">Загрузка примеров...</p>';
         }
     }
 
-    // Запускаем при загрузке страницы
+    // Init
     document.addEventListener('DOMContentLoaded', loadFeaturedWorks);
 </script>
 </body>

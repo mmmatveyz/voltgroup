@@ -4,188 +4,296 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Калькулятор сметы | VoltGroup</title>
+  <meta name="description" content="Рассчитайте предварительную стоимость электромонтажных работ онлайн. VoltGroup СПб.">
+
   <style>
     :root {
       --bg: #0B1120; --surface: #111827; --primary: #00E5FF; --primary-hover: #00B8D4;
       --text: #F8FAFC; --text-muted: #94A3B8; --border: #1E293B; --radius: 8px;
       --font: system-ui, -apple-system, sans-serif;
+      --danger: #EF4444;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font); }
-    body { background: var(--bg); color: var(--text); line-height: 1.6; padding-bottom: 40px; }
+    body { background: var(--bg); color: var(--text); line-height: 1.6; padding-bottom: 60px; }
+
     .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
-    h1 { text-align: center; margin: 30px 0 10px; font-size: 2rem; }
-    .subtitle { text-align: center; color: var(--text-muted); margin-bottom: 30px; }
-    
-    .client-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px; background: var(--surface); padding: 20px; border-radius: var(--radius); }
-    .client-info input { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text); }
-    
-    .table-wrapper { overflow-x: auto; margin-bottom: 15px; background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); }
+
+    /* Header & Nav */
+    .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding-top: 10px; }
+    .btn-nav { text-decoration: none; color: var(--text-muted); display: flex; align-items: center; gap: 5px; font-size: 0.9rem; transition: 0.2s; }
+    .btn-nav:hover { color: var(--primary); }
+    h1 { font-size: clamp(1.5rem, 4vw, 2rem); color: var(--text); }
+    .subtitle { color: var(--text-muted); font-size: 0.95rem; margin-top: 5px; }
+
+    /* Client Info Card */
+    .client-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+      background: var(--surface);
+      padding: 20px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+    .input-group label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px; }
+    .client-info input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 1rem;
+    }
+    .client-info input:focus { outline: none; border-color: var(--primary); }
+
+    /* Tables */
+    .table-wrapper {
+      overflow-x: auto;
+      margin-bottom: 20px;
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
     table { width: 100%; border-collapse: collapse; min-width: 600px; }
     th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
-    th { background: #0d1524; color: var(--primary); font-weight: 600; white-space: nowrap; }
+    th { background: rgba(255,255,255,0.03); color: var(--primary); font-weight: 600; white-space: nowrap; }
+
     .qty-input { width: 70px; padding: 8px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); color: var(--text); text-align: center; }
     .name-input { width: 100%; padding: 8px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); color: var(--text); }
-    
-    .summary { background: var(--surface); padding: 20px; border-radius: var(--radius); margin: 20px 0; border: 1px solid var(--border); }
-    .summary-row { display: flex; justify-content: space-between; margin-bottom: 8px; color: var(--text-muted); }
-    .summary-total { display: flex; justify-content: space-between; font-size: 1.5rem; font-weight: 700; border-top: 1px solid var(--border); padding-top: 12px; color: var(--primary); }
 
+    /* Summary Block */
+    .summary {
+      background: var(--surface);
+      padding: 25px;
+      border-radius: var(--radius);
+      margin: 30px 0;
+      border: 1px solid var(--border);
+    }
+    .summary-row { display: flex; justify-content: space-between; margin-bottom: 10px; color: var(--text-muted); font-size: 1.1rem; }
+    .summary-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.6rem;
+      font-weight: 700;
+      border-top: 2px solid var(--border);
+      padding-top: 15px;
+      color: var(--primary);
+      margin-top: 15px;
+    }
+
+    /* Discount Input */
+    .discount-block {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin: 15px 0;
+      padding: 10px;
+      background: rgba(239, 68, 68, 0.1);
+      border-radius: var(--radius);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+    .discount-block input { width: 100px; padding: 8px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+
+    /* Buttons */
     .actions { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
-    .btn { padding: 12px 24px; border-radius: var(--radius); font-weight: 600; cursor: pointer; border: none; font-size: 1rem; transition: 0.2s; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
+    .btn {
+      padding: 12px 24px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      font-size: 1rem;
+      transition: 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
     .btn-primary { background: var(--primary); color: var(--bg); }
-    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); }
     .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
     .btn-outline:hover { background: var(--primary); color: var(--bg); }
-    .btn-nav { position: absolute; top: 20px; left: 20px; text-decoration: none; color: var(--text-muted); display: flex; align-items: center; gap: 5px; font-size: 0.9rem; }
-    .btn-nav:hover { color: var(--primary); }
-    .btn-remove { background: transparent; border: none; color: #EF4444; cursor: pointer; font-size: 1.2rem; padding: 4px; }
-    .btn-remove:hover { color: #fca5a5; }
-    
-    .purchase-toggle { display: flex; align-items: center; gap: 10px; margin: 15px 0; padding: 10px; background: rgba(0, 229, 255, 0.1); border-radius: var(--radius); border: 1px solid var(--primary); }
-    .purchase-toggle label { cursor: pointer; color: var(--text); font-weight: 600; }
-    .purchase-toggle input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer; }
+    .btn-remove { background: transparent; border: none; color: var(--danger); cursor: pointer; font-size: 1.2rem; padding: 4px; opacity: 0.7; }
+    .btn-remove:hover { opacity: 1; }
+
+    /* Toggle Switch */
+    .purchase-toggle {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 20px 0;
+      padding: 12px;
+      background: rgba(0, 229, 255, 0.05);
+      border-radius: var(--radius);
+      border: 1px solid rgba(0, 229, 255, 0.2);
+    }
+    .purchase-toggle label { cursor: pointer; color: var(--text); font-weight: 600; user-select: none; }
+    .purchase-toggle input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; }
 
     @media (max-width: 600px) {
       .client-info { grid-template-columns: 1fr; }
-      h1 { font-size: 1.5rem; margin-top: 50px; }
+      .actions { flex-direction: column; }
+      .btn { width: 100%; }
     }
   </style>
 </head>
 <body>
 
-  <a href="./index.html" class="btn-nav">← На главную</a>
-  <div class="container">
-    <h1>⚡ Калькулятор сметы</h1>
-    <p class="subtitle">Услуги + Материалы → Экспорт в PDF</p>
+<div class="container">
+  <div class="top-bar">
+    <a href="./index.html" class="btn-nav">← На главную</a>
+    <div style="font-weight: 700; color: var(--primary);">VoltGroup</div>
+  </div>
 
-    <div class="client-info">
-      <input type="text" id="client-name" placeholder="Имя заказчика">
-      <input type="text" id="client-address" placeholder="Адрес объекта">
+  <h1>⚡ Калькулятор сметы</h1>
+  <p class="subtitle">Предварительный расчёт стоимости работ и материалов</p>
+
+  <!-- Данные заказчика -->
+  <div class="client-info">
+    <div class="input-group">
+      <label>Имя заказчика</label>
+      <input type="text" id="client-name" placeholder="Иванов И.И.">
+    </div>
+    <div class="input-group">
+      <label>Адрес объекта</label>
+      <input type="text" id="client-address" placeholder="СПб, ул. Ленина...">
+    </div>
+    <div class="input-group">
+      <label>Дата</label>
       <input type="date" id="estimate-date">
-      <input type="text" id="invoice-number" placeholder="№ сметы (авто)" style="max-width: 120px;">
     </div>
-
-    <!-- Блок управления черновиками -->
-    <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
-      <input type="text" id="draft-name" placeholder="Название черновика (напр. Иванов)" style="padding: 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text); flex-grow: 1;">
-      <button class="btn btn-outline" onclick="saveDraft()" style="padding: 10px 15px;">💾 Сохранить</button>
-      <select id="draft-select" onchange="loadDraft()" style="padding: 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text);">
-        <option value="">📂 Загрузить черновик...</option>
-      </select>
-      <button class="btn btn-outline" onclick="deleteDraft()" style="padding: 10px 15px; color: #EF4444; border-color: #EF4444;">🗑 Удалить</button>
-    </div>
-
-    <div class="table-wrapper">
-      <table>
-        <thead>
-          <tr><th>Наименование работ</th><th>Ед.</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th></th></tr>
-        </thead>
-        <tbody id="services-body"></tbody>
-      </table>
-      <div style="padding: 15px; text-align: center;">
-        <button class="btn btn-outline" onclick="addCustomWorkRow()" style="padding: 8px 16px; font-size: 0.9rem;">➕ Добавить свою работу</button>
-      </div>
-    </div>
-
-    <!-- Переключатель закупки материалов -->
-    <div class="purchase-toggle">
-      <input type="checkbox" id="master-buys-materials" checked onchange="calculateTotals()">
-      <label for="master-buys-materials">Материалы закупает Мастер (входят в смету)</label>
-    </div>
-
-    <div class="table-wrapper" style="margin-top: 20px;">
-      <h3 style="padding: 12px 15px; margin: 0; background: #0d1524; color: var(--primary); font-size: 1rem; border-bottom: 1px solid var(--border);">📦 Материалы (Авто-подбор включен)</h3>
-      <table>
-        <thead>
-          <tr><th>Наименование</th><th>Ед.</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th></th></tr>
-        </thead>
-        <tbody id="materials-body"></tbody>
-      </table>
-      <div style="padding: 15px; text-align: center;">
-        <button class="btn btn-outline" onclick="addMaterialRow()" style="padding: 8px 16px; font-size: 0.9rem;">➕ Добавить вручную</button>
-      </div>
-    </div>
-
-    <div class="summary">
-      <div class="summary-row"><span>Работы:</span><span id="services-total-display">0 ₽</span></div>
-      
-      <div style="display: flex; gap: 10px; align-items: center; margin: 10px 0; padding: 10px; background: rgba(239, 68, 68, 0.1); border-radius: var(--radius);">
-        <label for="discount-input" style="color: var(--text-muted); font-size: 0.9rem;">Скидка на работы:</label>
-        <input type="text" id="discount-input" placeholder="0 ₽ или %" style="width: 100px; padding: 8px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); color: var(--text);" oninput="calculateTotals()">
-        <span id="discount-value-display" style="color: #EF4444; font-weight: 600; margin-left: auto;">-0 ₽</span>
-      </div>
-
-      <div class="summary-row" style="font-weight: bold; color: var(--text);"><span>Итого за работы:</span><span id="works-subtotal-display">0 ₽</span></div>
-      
-      <div class="summary-row" id="materials-summary-row"><span>Материалы:</span><span id="materials-total-display">0 ₽</span></div>
-      
-      <div class="summary-total"><span>К ОПЛАТЕ:</span><span id="grand-total">0 ₽</span></div>
-    </div>
-
-    <div class="actions">
-      <button class="btn btn-primary" onclick="generatePDF()">📄 Скачать смету (PDF)</button>
-      <button class="btn btn-outline" onclick="clearForm()">🗑 Очистить форму</button>
+    <div class="input-group">
+      <label>№ Сметы</label>
+      <input type="text" id="invoice-number" placeholder="Авто" readonly style="background: rgba(255,255,255,0.05);">
     </div>
   </div>
 
-  <script>
-    // 🛠 ПРАЙС-ЛИСТ РАБОТ
-    const servicesData = [
-      { name: 'Штробление: газобетон/пеноблок', unit: 'м.п.', price: 380 },
-      { name: 'Штробление: кирпич', unit: 'м.п.', price: 480 },
-      { name: 'Штробление: бетон', unit: 'м.п.', price: 580 },
-      { name: 'Прокладка кабеля до 6 мм² (в гофре)', unit: 'м.п.', price: 140 },
-      { name: 'Прокладка кабеля от 10 мм² (силовой)', unit: 'м.п.', price: 220 },
-      { name: 'Отверстие под подрозетник: бетон', unit: 'шт.', price: 720 },
-      { name: 'Монтаж подрозетника (вмазка)', unit: 'шт.', price: 220 },
-      { name: 'Установка механизма розетки/выключателя', unit: 'шт.', price: 450 },
-      { name: 'Розетка/выключатель «под ключ»', unit: 'шт.', price: 850 },
-      { name: 'Сборка электрощита (за модуль)', unit: 'мод.', price: 580 },
-      { name: 'Установка автомата 1P/2P/3P', unit: 'шт.', price: 450 },
-      { name: 'Монтаж светильника точечного', unit: 'шт.', price: 550 },
-      { name: 'Подключение варочной панели', unit: 'шт.', price: 1600 },
-      { name: 'Диагностика / Аварийный выезд', unit: 'выезд', price: 1100 }
-    ];
+  <!-- Управление черновиками -->
+  <div style="display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; align-items: center;">
+    <input type="text" id="draft-name" placeholder="Название (напр. Квартира на Невском)" style="padding: 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text); flex-grow: 1;">
+    <button class="btn btn-outline" onclick="saveDraft()" style="padding: 10px 15px; font-size: 0.9rem;">💾 Сохранить</button>
+    <select id="draft-select" onchange="loadDraft()" style="padding: 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text);">
+      <option value="">📂 Загрузить...</option>
+    </select>
+    <button class="btn btn-outline" onclick="deleteDraft()" style="padding: 10px 15px; font-size: 0.9rem; color: var(--danger); border-color: var(--danger);">🗑</button>
+  </div>
 
-    // 🧠 УМНЫЕ СВЯЗИ (Работа -> Материалы)
-    // Коэффициент: сколько материала нужно на 1 единицу работы
-    const materialRules = {
-      'Прокладка кабеля до 6 мм² (в гофре)': [
-        { name: 'Гофра ПВХ 20мм', unit: 'м.п.', price: 15, coef: 1.0 },
-        { name: 'Клипса для гофры 20мм', unit: 'шт.', price: 5, coef: 2.0 } // 2 клипсы на метр
-      ],
-      'Прокладка кабеля от 10 мм² (силовой)': [
-        { name: 'Гофра ПВХ 25мм', unit: 'м.п.', price: 25, coef: 1.0 },
-        { name: 'Клипса для гофры 25мм', unit: 'шт.', price: 7, coef: 2.0 }
-      ],
-      'Штробление: газобетон/пеноблок': [
-        { name: 'Смесь для заделки штроб (алебастр)', unit: 'кг', price: 50, coef: 0.5 }
-      ],
-      'Штробление: кирпич': [
-        { name: 'Смесь для заделки штроб (алебастр)', unit: 'кг', price: 50, coef: 0.5 }
-      ],
-      'Штробление: бетон': [
-        { name: 'Смесь для заделки штроб (алебастр)', unit: 'кг', price: 50, coef: 0.5 }
-      ],
-      'Монтаж подрозетника (вмазка)': [
-        { name: 'Подрозетник универсальный', unit: 'шт.', price: 30, coef: 1.0 }
-      ],
-      'Розетка/выключатель «под ключ»': [
-        { name: 'Подрозетник универсальный', unit: 'шт.', price: 30, coef: 1.0 }
-      ],
-      'Сборка электрощита (за модуль)': [
-        { name: 'Шина нулевая/земляная', unit: 'шт.', price: 150, coef: 0.1 }, // 1 шина на 10 модулей
-        { name: 'Гребенка соединительная', unit: 'шт.', price: 400, coef: 0.1 }
-      ]
-    };
+  <!-- Таблица Работ -->
+  <div class="table-wrapper">
+    <table>
+      <thead>
+      <tr><th>Наименование работ</th><th>Ед.</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th></th></tr>
+      </thead>
+      <tbody id="services-body"></tbody>
+    </table>
+    <div style="padding: 15px; text-align: center; border-top: 1px solid var(--border);">
+      <button class="btn btn-outline" onclick="addCustomWorkRow()" style="padding: 8px 16px; font-size: 0.9rem;">➕ Добавить свою позицию</button>
+    </div>
+  </div>
 
-    // Рендер стандартных услуг
-    const tbody = document.getElementById('services-body');
-    function renderServices() {
-      tbody.innerHTML = '';
-      servicesData.forEach((s, index) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
+  <!-- Переключатель закупки -->
+  <div class="purchase-toggle">
+    <input type="checkbox" id="master-buys-materials" checked onchange="calculateTotals()">
+    <label for="master-buys-materials">Материалы закупает Мастер (входят в итоговую сумму)</label>
+  </div>
+
+  <!-- Таблица Материалов -->
+  <div class="table-wrapper">
+    <div style="padding: 12px 15px; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+      <span style="color: var(--primary); font-weight: 600;">📦 Материалы (Авто-подбор)</span>
+      <button class="btn btn-outline" onclick="addMaterialRow()" style="padding: 4px 10px; font-size: 0.8rem;">+ Вручную</button>
+    </div>
+    <table>
+      <thead>
+      <tr><th>Наименование</th><th>Ед.</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th></th></tr>
+      </thead>
+      <tbody id="materials-body"></tbody>
+    </table>
+  </div>
+
+  <!-- Итоги -->
+  <div class="summary">
+    <div class="summary-row"><span>Стоимость работ:</span><span id="services-total-display">0 ₽</span></div>
+
+    <div class="discount-block">
+      <label for="discount-input" style="color: var(--text-muted); font-size: 0.9rem;">Скидка:</label>
+      <input type="text" id="discount-input" placeholder="0 ₽ или %" oninput="calculateTotals()">
+      <span id="discount-value-display" style="color: var(--danger); font-weight: 600; margin-left: auto;">-0 ₽</span>
+    </div>
+
+    <div class="summary-row" style="font-weight: bold; color: var(--text);"><span>Итого за работы:</span><span id="works-subtotal-display">0 ₽</span></div>
+
+    <div class="summary-row" id="materials-summary-row"><span>Стоимость материалов:</span><span id="materials-total-display">0 ₽</span></div>
+
+    <div class="summary-total"><span>К ОПЛАТЕ:</span><span id="grand-total">0 ₽</span></div>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="generatePDF()">📄 Скачать PDF</button>
+    <button class="btn btn-outline" onclick="clearForm()">🗑 Очистить всё</button>
+  </div>
+</div>
+
+<script>
+  // --- ДАННЫЕ ---
+  const servicesData = [
+    { name: 'Штробление: газобетон/пеноблок', unit: 'м.п.', price: 380 },
+    { name: 'Штробление: кирпич', unit: 'м.п.', price: 480 },
+    { name: 'Штробление: бетон', unit: 'м.п.', price: 580 },
+    { name: 'Прокладка кабеля до 6 мм² (в гофре)', unit: 'м.п.', price: 140 },
+    { name: 'Прокладка кабеля от 10 мм² (силовой)', unit: 'м.п.', price: 220 },
+    { name: 'Отверстие под подрозетник: бетон', unit: 'шт.', price: 720 },
+    { name: 'Монтаж подрозетника (вмазка)', unit: 'шт.', price: 220 },
+    { name: 'Установка механизма розетки/выключателя', unit: 'шт.', price: 450 },
+    { name: 'Розетка/выключатель «под ключ»', unit: 'шт.', price: 850 },
+    { name: 'Сборка электрощита (за модуль)', unit: 'мод.', price: 580 },
+    { name: 'Установка автомата 1P/2P/3P', unit: 'шт.', price: 450 },
+    { name: 'Монтаж светильника точечного', unit: 'шт.', price: 550 },
+    { name: 'Подключение варочной панели', unit: 'шт.', price: 1600 },
+    { name: 'Диагностика / Аварийный выезд', unit: 'выезд', price: 1100 }
+  ];
+
+  // Правила авто-добавления материалов (Коэффициент расхода)
+  const materialRules = {
+    'Прокладка кабеля до 6 мм² (в гофре)': [
+      { name: 'Гофра ПВХ 20мм', unit: 'м.п.', price: 15, coef: 1.0 },
+      { name: 'Клипса для гофры 20мм', unit: 'шт.', price: 5, coef: 2.0 }
+    ],
+    'Прокладка кабеля от 10 мм² (силовой)': [
+      { name: 'Гофра ПВХ 25мм', unit: 'м.п.', price: 25, coef: 1.0 },
+      { name: 'Клипса для гофры 25мм', unit: 'шт.', price: 7, coef: 2.0 }
+    ],
+    'Штробление: газобетон/пеноблок': [
+      { name: 'Смесь для заделки штроб (алебастр)', unit: 'кг', price: 50, coef: 0.5 }
+    ],
+    'Штробление: кирпич': [
+      { name: 'Смесь для заделки штроб (алебастр)', unit: 'кг', price: 50, coef: 0.5 }
+    ],
+    'Штробление: бетон': [
+      { name: 'Смесь для заделки штроб (алебастр)', unit: 'кг', price: 50, coef: 0.5 }
+    ],
+    'Монтаж подрозетника (вмазка)': [
+      { name: 'Подрозетник универсальный', unit: 'шт.', price: 30, coef: 1.0 }
+    ],
+    'Розетка/выключатель «под ключ»': [
+      { name: 'Подрозетник универсальный', unit: 'шт.', price: 30, coef: 1.0 }
+    ],
+    'Сборка электрощита (за модуль)': [
+      { name: 'Шина нулевая/земляная', unit: 'шт.', price: 150, coef: 0.1 },
+      { name: 'Гребенка соединительная', unit: 'шт.', price: 400, coef: 0.1 }
+    ]
+  };
+
+  // --- РЕНДЕРИНГ ---
+  const tbodyServices = document.getElementById('services-body');
+
+  function renderServices() {
+    tbodyServices.innerHTML = '';
+    servicesData.forEach((s, index) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
           <td>${s.name}</td>
           <td>${s.unit}</td>
           <td>${s.price.toLocaleString('ru-RU')} ₽</td>
@@ -193,407 +301,403 @@
           <td id="sum-${index}" style="text-align:center; font-weight:600;">0 ₽</td>
           <td></td>
         `;
-        tbody.appendChild(tr);
-      });
-    }
-    renderServices();
+      tbodyServices.appendChild(tr);
+    });
+  }
+  renderServices();
 
-    // --- ФУНКЦИЯ УМНОГО ПОДБОРА МАТЕРИАЛОВ ---
-    function handleServiceChange(index, qty) {
-      calculateTotals(); // Сначала считаем деньги
-      
-      const serviceName = servicesData[index].name;
-      const rules = materialRules[serviceName];
-      
-      if (!rules) return; // Если для этой работы нет правил, выходим
+  // --- ЛОГИКА ---
 
-      const workQty = parseFloat(qty) || 0;
+  // Обработка изменения количества работы (авто-добавление материалов)
+  function handleServiceChange(index, qty) {
+    calculateTotals();
 
-      rules.forEach(rule => {
-        // Ищем, есть ли уже такой материал в таблице
-        let existingRow = null;
-        const matRows = document.querySelectorAll('#materials-body tr');
-        
-        matRows.forEach(row => {
-          const nameInput = row.querySelector('.mat-name');
-          if (nameInput && nameInput.value === rule.name) {
-            existingRow = row;
-          }
-        });
+    const serviceName = servicesData[index].name;
+    const rules = materialRules[serviceName];
+    if (!rules) return;
 
-        const requiredQty = Math.ceil(workQty * rule.coef);
+    const workQty = parseFloat(qty) || 0;
 
-        if (requiredQty > 0) {
-          if (existingRow) {
-            // Обновляем количество, если строка уже есть
-            const qtyInput = existingRow.querySelector('.mat-qty');
-            // Важно: мы не просто заменяем, а добавляем к существующему, 
-            // но так как это сложно отследить при уменьшении, проще перезаписать, 
-            // если пользователь не менял его вручную. 
-            // Для простоты: если пользователь не трогал поле, обновляем.
-            // Но чтобы не сбрасывать ручной ввод, сделаем проверку:
-            // Если текущее значение меньше требуемого авто-значения, обновляем.
-            const currentVal = parseFloat(qtyInput.value) || 0;
-            if (currentVal < requiredQty) {
-               qtyInput.value = requiredQty;
-            }
-          } else {
-            // Добавляем новую строку
-            addMaterialRow(rule.name, rule.price, requiredQty);
-          }
-        } else {
-          // Если количество работы стало 0, можно предложить удалить материал, 
-          // но лучше оставить, вдруг пользователь добавил его вручную.
-          // Поэтому просто ничего не делаем с удалением.
+    rules.forEach(rule => {
+      let existingRow = null;
+      const matRows = document.querySelectorAll('#materials-body tr');
+
+      matRows.forEach(row => {
+        const nameInput = row.querySelector('.mat-name');
+        if (nameInput && nameInput.value === rule.name) {
+          existingRow = row;
         }
       });
-      
-      calculateTotals(); // Пересчитываем итог после добавления материалов
-    }
 
-    function addCustomWorkRow() {
-      const row = document.createElement('tr');
-      const id = Date.now();
-      row.classList.add('custom-work-row');
-      row.innerHTML = `
-        <td><input type="text" class="name-input" placeholder="Название работы" style="width:100%;"></td>
+      const requiredQty = Math.ceil(workQty * rule.coef);
+
+      if (requiredQty > 0) {
+        if (existingRow) {
+          const qtyInput = existingRow.querySelector('.mat-qty');
+          const currentVal = parseFloat(qtyInput.value) || 0;
+          // Обновляем только если текущее значение меньше требуемого (чтобы не стирать ручной ввод, если его больше)
+          if (currentVal < requiredQty) {
+            qtyInput.value = requiredQty;
+          }
+        } else {
+          addMaterialRow(rule.name, rule.price, requiredQty);
+        }
+      }
+    });
+    calculateTotals();
+  }
+
+  function addCustomWorkRow() {
+    const row = document.createElement('tr');
+    row.classList.add('custom-work-row');
+    row.innerHTML = `
+        <td><input type="text" class="name-input" placeholder="Название работы"></td>
         <td><input type="text" class="mat-unit" value="шт." style="width:50px;"></td>
         <td><input type="number" class="mat-price" placeholder="0" min="0" onchange="calculateTotals()" style="width:70px;"></td>
         <td><input type="number" class="mat-qty" placeholder="0" min="0" onchange="calculateTotals()" style="width:60px;"></td>
-        <td id="mat-sum-${id}" style="text-align:center; font-weight:600;">0 ₽</td>
+        <td style="text-align:center; font-weight:600;">0 ₽</td>
         <td style="text-align:center;"><button class="btn-remove" onclick="this.closest('tr').remove(); calculateTotals()">✕</button></td>
       `;
-      tbody.appendChild(row);
-    }
+    tbodyServices.appendChild(row);
+  }
 
-    function addMaterialRow(name = '', price = 0, qty = 0) {
-      const matBody = document.getElementById('materials-body');
-      const row = document.createElement('tr');
-      const id = Date.now();
-      row.innerHTML = `
-        <td><input type="text" class="mat-name" value="${name}" placeholder="Например: Кабель ВВГ 3x2.5" style="width:100%;"></td>
+  function addMaterialRow(name = '', price = 0, qty = 0) {
+    const matBody = document.getElementById('materials-body');
+    const row = document.createElement('tr');
+    row.innerHTML = `
+        <td><input type="text" class="mat-name" value="${name}" placeholder="Материал"></td>
         <td><input type="text" class="mat-unit" value="шт." style="width:50px;"></td>
         <td><input type="number" class="mat-price" value="${price}" placeholder="0" min="0" onchange="calculateTotals()" style="width:70px;"></td>
         <td><input type="number" class="mat-qty" value="${qty}" placeholder="0" min="0" onchange="calculateTotals()" style="width:60px;"></td>
-        <td id="mat-sum-${id}" style="text-align:center; font-weight:600;">0 ₽</td>
+        <td style="text-align:center; font-weight:600;">0 ₽</td>
         <td style="text-align:center;"><button class="btn-remove" onclick="this.closest('tr').remove(); calculateTotals()">✕</button></td>
       `;
-      matBody.appendChild(row);
-    }
+    matBody.appendChild(row);
+  }
 
-    // Подсчёт
-    function calculateTotals() {
-      let servicesTotal = 0;
-      
-      servicesData.forEach((s, index) => {
-        const qtyInput = document.getElementById(`qty-${index}`);
-        const sumCell = document.getElementById(`sum-${index}`);
-        const qty = parseFloat(qtyInput.value) || 0;
-        const sum = qty * s.price;
-        sumCell.textContent = sum.toLocaleString('ru-RU') + ' ₽';
-        servicesTotal += sum;
-      });
+  function calculateTotals() {
+    let servicesTotal = 0;
 
-      document.querySelectorAll('.custom-work-row').forEach(row => {
-        const priceInput = row.querySelector('.mat-price');
-        const qtyInput = row.querySelector('.mat-qty');
-        const sumCell = row.querySelector('td[id^="mat-sum-"]');
-        const price = parseFloat(priceInput.value) || 0;
-        const qty = parseFloat(qtyInput.value) || 0;
-        const sum = price * qty;
-        sumCell.textContent = sum.toLocaleString('ru-RU') + ' ₽';
-        servicesTotal += sum;
-      });
+    // Стандартные работы
+    servicesData.forEach((s, index) => {
+      const qtyInput = document.getElementById(`qty-${index}`);
+      const sumCell = document.getElementById(`sum-${index}`);
+      const qty = parseFloat(qtyInput.value) || 0;
+      const sum = qty * s.price;
+      sumCell.textContent = sum.toLocaleString('ru-RU') + ' ₽';
+      servicesTotal += sum;
+    });
 
-      // Скидка ТОЛЬКО на работы
-      const discountInput = document.getElementById('discount-input').value.trim();
-      let discountAmount = 0;
-      if (discountInput) {
-        if (discountInput.includes('%')) {
-          const percent = parseFloat(discountInput.replace('%', '')) || 0;
-          discountAmount = servicesTotal * (percent / 100);
-        } else {
-          discountAmount = parseFloat(discountInput) || 0;
-        }
-      }
-      discountAmount = Math.round(discountAmount);
-      const worksFinal = Math.max(0, servicesTotal - discountAmount);
+    // Кастомные работы
+    document.querySelectorAll('.custom-work-row').forEach(row => {
+      const priceInput = row.querySelector('.mat-price');
+      const qtyInput = row.querySelector('.mat-qty');
+      const sumCell = row.querySelector('td:nth-child(5)');
+      const price = parseFloat(priceInput.value) || 0;
+      const qty = parseFloat(qtyInput.value) || 0;
+      const sum = price * qty;
+      sumCell.textContent = sum.toLocaleString('ru-RU') + ' ₽';
+      servicesTotal += sum;
+    });
 
-      // Материалы
-      let materialsTotal = 0;
-      document.querySelectorAll('#materials-body tr').forEach(row => {
-        const priceInput = row.querySelector('.mat-price');
-        const qtyInput = row.querySelector('.mat-qty');
-        const sumCell = row.querySelector('td[id^="mat-sum-"]');
-        const price = parseFloat(priceInput.value) || 0;
-        const qty = parseFloat(qtyInput.value) || 0;
-        const sum = price * qty;
-        sumCell.textContent = sum.toLocaleString('ru-RU') + ' ₽';
-        materialsTotal += sum;
-      });
-
-      const masterBuys = document.getElementById('master-buys-materials').checked;
-      const materialsToPay = masterBuys ? materialsTotal : 0;
-      
-      const grandTotal = worksFinal + materialsToPay;
-
-      document.getElementById('services-total-display').textContent = servicesTotal.toLocaleString('ru-RU') + ' ₽';
-      document.getElementById('discount-value-display').textContent = '-' + discountAmount.toLocaleString('ru-RU') + ' ₽';
-      document.getElementById('works-subtotal-display').textContent = worksFinal.toLocaleString('ru-RU') + ' ₽';
-      document.getElementById('materials-total-display').textContent = materialsTotal.toLocaleString('ru-RU') + ' ₽';
-      document.getElementById('grand-total').textContent = grandTotal.toLocaleString('ru-RU') + ' ₽';
-
-      const matRow = document.getElementById('materials-summary-row');
-      if (!masterBuys) {
-        matRow.style.textDecoration = 'line-through';
-        matRow.style.opacity = '0.5';
+    // Скидка
+    const discountInput = document.getElementById('discount-input').value.trim();
+    let discountAmount = 0;
+    if (discountInput) {
+      if (discountInput.includes('%')) {
+        const percent = parseFloat(discountInput.replace('%', '')) || 0;
+        discountAmount = servicesTotal * (percent / 100);
       } else {
-        matRow.style.textDecoration = 'none';
-        matRow.style.opacity = '1';
+        discountAmount = parseFloat(discountInput) || 0;
       }
+    }
+    discountAmount = Math.round(discountAmount);
+    const worksFinal = Math.max(0, servicesTotal - discountAmount);
 
-      return { servicesTotal, discountAmount, worksFinal, materialsTotal, materialsToPay, grandTotal };
+    // Материалы
+    let materialsTotal = 0;
+    document.querySelectorAll('#materials-body tr').forEach(row => {
+      const priceInput = row.querySelector('.mat-price');
+      const qtyInput = row.querySelector('.mat-qty');
+      const sumCell = row.querySelector('td:nth-child(5)');
+      const price = parseFloat(priceInput.value) || 0;
+      const qty = parseFloat(qtyInput.value) || 0;
+      const sum = price * qty;
+      sumCell.textContent = sum.toLocaleString('ru-RU') + ' ₽';
+      materialsTotal += sum;
+    });
+
+    const masterBuys = document.getElementById('master-buys-materials').checked;
+    const materialsToPay = masterBuys ? materialsTotal : 0;
+    const grandTotal = worksFinal + materialsToPay;
+
+    // Обновление UI
+    document.getElementById('services-total-display').textContent = servicesTotal.toLocaleString('ru-RU') + ' ₽';
+    document.getElementById('discount-value-display').textContent = '-' + discountAmount.toLocaleString('ru-RU') + ' ₽';
+    document.getElementById('works-subtotal-display').textContent = worksFinal.toLocaleString('ru-RU') + ' ₽';
+    document.getElementById('materials-total-display').textContent = materialsTotal.toLocaleString('ru-RU') + ' ₽';
+    document.getElementById('grand-total').textContent = grandTotal.toLocaleString('ru-RU') + ' ₽';
+
+    const matRow = document.getElementById('materials-summary-row');
+    if (!masterBuys) {
+      matRow.style.opacity = '0.5';
+      matRow.style.textDecoration = 'line-through';
+    } else {
+      matRow.style.opacity = '1';
+      matRow.style.textDecoration = 'none';
     }
 
-    // --- ЧЕРНОВИКИ ---
-    function saveDraft() {
-      const name = document.getElementById('draft-name').value.trim();
-      if (!name) { alert('Введите название черновика'); return; }
-      
-      const data = {
-        clientName: document.getElementById('client-name').value,
-        clientAddress: document.getElementById('client-address').value,
-        date: document.getElementById('estimate-date').value,
-        invoiceNum: document.getElementById('invoice-number').value,
-        masterBuys: document.getElementById('master-buys-materials').checked,
-        discount: document.getElementById('discount-input').value,
-        services: servicesData.map((s, i) => ({ qty: document.getElementById(`qty-${i}`).value })),
-        customWorks: Array.from(document.querySelectorAll('.custom-work-row')).map(row => ({
-          name: row.querySelector('.name-input').value,
-          unit: row.querySelector('.mat-unit').value,
-          price: row.querySelector('.mat-price').value,
-          qty: row.querySelector('.mat-qty').value
-        })),
-        materials: Array.from(document.querySelectorAll('#materials-body tr')).map(row => ({
-          name: row.querySelector('.mat-name').value,
-          unit: row.querySelector('.mat-unit').value,
-          price: row.querySelector('.mat-price').value,
-          qty: row.querySelector('.mat-qty').value
-        }))
-      };
+    return { servicesTotal, discountAmount, worksFinal, materialsTotal, materialsToPay, grandTotal };
+  }
 
-      localStorage.setItem(`vg_draft_${name}`, JSON.stringify(data));
+  // --- ЧЕРНОВИКИ (LocalStorage) ---
+  function saveDraft() {
+    const name = document.getElementById('draft-name').value.trim();
+    if (!name) { alert('Введите название черновика'); return; }
+
+    const data = {
+      clientName: document.getElementById('client-name').value,
+      clientAddress: document.getElementById('client-address').value,
+      date: document.getElementById('estimate-date').value,
+      invoiceNum: document.getElementById('invoice-number').value,
+      masterBuys: document.getElementById('master-buys-materials').checked,
+      discount: document.getElementById('discount-input').value,
+      services: servicesData.map((s, i) => ({ qty: document.getElementById(`qty-${i}`).value })),
+      customWorks: Array.from(document.querySelectorAll('.custom-work-row')).map(row => ({
+        name: row.querySelector('.name-input').value,
+        unit: row.querySelector('.mat-unit').value,
+        price: row.querySelector('.mat-price').value,
+        qty: row.querySelector('.mat-qty').value
+      })),
+      materials: Array.from(document.querySelectorAll('#materials-body tr')).map(row => ({
+        name: row.querySelector('.mat-name').value,
+        unit: row.querySelector('.mat-unit').value,
+        price: row.querySelector('.mat-price').value,
+        qty: row.querySelector('.mat-qty').value
+      }))
+    };
+
+    localStorage.setItem(`vg_draft_${name}`, JSON.stringify(data));
+    updateDraftList();
+    alert(`Черновик "${name}" сохранен!`);
+  }
+
+  function loadDraft() {
+    const name = document.getElementById('draft-select').value;
+    if (!name) return;
+
+    const data = JSON.parse(localStorage.getItem(`vg_draft_${name}`));
+    if (!data) return;
+
+    document.getElementById('client-name').value = data.clientName || '';
+    document.getElementById('client-address').value = data.clientAddress || '';
+    document.getElementById('estimate-date').value = data.date || '';
+    document.getElementById('invoice-number').value = data.invoiceNum || '';
+    document.getElementById('master-buys-materials').checked = data.masterBuys !== false;
+    document.getElementById('discount-input').value = data.discount || '';
+
+    data.services.forEach((s, i) => {
+      const input = document.getElementById(`qty-${i}`);
+      if (input) input.value = s.qty;
+    });
+
+    document.querySelectorAll('.custom-work-row').forEach(r => r.remove());
+    data.customWorks.forEach(w => {
+      addCustomWorkRow();
+      const lastRow = document.querySelector('.custom-work-row:last-child');
+      lastRow.querySelector('.name-input').value = w.name;
+      lastRow.querySelector('.mat-unit').value = w.unit;
+      lastRow.querySelector('.mat-price').value = w.price;
+      lastRow.querySelector('.mat-qty').value = w.qty;
+    });
+
+    document.getElementById('materials-body').innerHTML = '';
+    data.materials.forEach(m => {
+      addMaterialRow(m.name, m.price, m.qty);
+    });
+
+    calculateTotals();
+  }
+
+  function deleteDraft() {
+    const name = document.getElementById('draft-select').value;
+    if (!name) return;
+    if (confirm(`Удалить черновик "${name}"?`)) {
+      localStorage.removeItem(`vg_draft_${name}`);
       updateDraftList();
-      alert(`Черновик "${name}" сохранен!`);
+      document.getElementById('draft-select').value = '';
     }
+  }
 
-    function loadDraft() {
-      const name = document.getElementById('draft-select').value;
-      if (!name) return;
-      
-      const data = JSON.parse(localStorage.getItem(`vg_draft_${name}`));
-      if (!data) return;
-
-      document.getElementById('client-name').value = data.clientName || '';
-      document.getElementById('client-address').value = data.clientAddress || '';
-      document.getElementById('estimate-date').value = data.date || '';
-      document.getElementById('invoice-number').value = data.invoiceNum || '';
-      document.getElementById('master-buys-materials').checked = data.masterBuys !== false;
-      document.getElementById('discount-input').value = data.discount || '';
-
-      data.services.forEach((s, i) => {
-        const input = document.getElementById(`qty-${i}`);
-        if (input) input.value = s.qty;
-      });
-
-      document.querySelectorAll('.custom-work-row').forEach(r => r.remove());
-      data.customWorks.forEach(w => {
-        addCustomWorkRow();
-        const lastRow = document.querySelector('.custom-work-row:last-child');
-        lastRow.querySelector('.name-input').value = w.name;
-        lastRow.querySelector('.mat-unit').value = w.unit;
-        lastRow.querySelector('.mat-price').value = w.price;
-        lastRow.querySelector('.mat-qty').value = w.qty;
-      });
-
-      document.getElementById('materials-body').innerHTML = '';
-      data.materials.forEach(m => {
-        addMaterialRow(m.name, m.price, m.qty);
-      });
-
-      calculateTotals();
-    }
-
-    function deleteDraft() {
-      const name = document.getElementById('draft-select').value;
-      if (!name) return;
-      if (confirm(`Удалить черновик "${name}"?`)) {
-        localStorage.removeItem(`vg_draft_${name}`);
-        updateDraftList();
-        document.getElementById('draft-select').value = '';
+  function updateDraftList() {
+    const select = document.getElementById('draft-select');
+    select.innerHTML = '<option value="">📂 Загрузить...</option>';
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key.startsWith('vg_draft_')) {
+        const name = key.replace('vg_draft_', '');
+        select.innerHTML += `<option value="${name}">${name}</option>`;
       }
     }
+  }
 
-    function updateDraftList() {
-      const select = document.getElementById('draft-select');
-      select.innerHTML = '<option value="">📂 Загрузить черновик...</option>';
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key.startsWith('vg_draft_')) {
-          const name = key.replace('vg_draft_', '');
-          select.innerHTML += `<option value="${name}">${name}</option>`;
-        }
-      }
+  function clearForm() {
+    if(!confirm('Очистить все поля?')) return;
+    document.querySelectorAll('.qty-input').forEach(i => i.value = '');
+    document.querySelectorAll('.mat-price, .mat-qty').forEach(i => i.value = '');
+    document.getElementById('services-body').innerHTML = '';
+    renderServices();
+    document.getElementById('materials-body').innerHTML = '';
+    document.getElementById('discount-input').value = '';
+    document.getElementById('client-name').value = '';
+    document.getElementById('client-address').value = '';
+    document.getElementById('estimate-date').valueAsDate = new Date();
+    document.getElementById('invoice-number').value = '';
+    document.getElementById('master-buys-materials').checked = true;
+    calculateTotals();
+  }
+
+  // --- ГЕНЕРАЦИЯ PDF (Печать) ---
+  function generatePDF() {
+    const totals = calculateTotals();
+    if (totals.grandTotal === 0) {
+      alert('Добавьте хотя бы одну позицию');
+      return;
     }
 
-    function clearForm() {
-      document.querySelectorAll('.qty-input').forEach(i => i.value = '');
-      document.querySelectorAll('.mat-price, .mat-qty').forEach(i => i.value = '');
-      document.getElementById('services-body').innerHTML = ''; 
-      renderServices();
-      document.getElementById('materials-body').innerHTML = '';
-      document.getElementById('discount-input').value = '';
-      document.getElementById('client-name').value = '';
-      document.getElementById('client-address').value = '';
-      document.getElementById('estimate-date').valueAsDate = new Date();
-      document.getElementById('invoice-number').value = '';
-      document.getElementById('master-buys-materials').checked = true;
-      calculateTotals();
+    let invoiceNum = document.getElementById('invoice-number').value.trim();
+    if (!invoiceNum) {
+      let counter = parseInt(localStorage.getItem('vg_estimate_counter') || '0') + 1;
+      localStorage.setItem('vg_estimate_counter', counter);
+      invoiceNum = `${new Date().getFullYear()}-${String(counter).padStart(3, '0')}`;
+      document.getElementById('invoice-number').value = invoiceNum;
     }
 
-    // Генерация PDF
-    function generatePDF() {
-      const totals = calculateTotals();
-      if (totals.grandTotal === 0) {
-        alert('Добавьте хотя бы одну позицию');
-        return;
+    const clientName = document.getElementById('client-name').value || '—';
+    const clientAddr = document.getElementById('client-address').value || '—';
+    const pdfDate = document.getElementById('estimate-date').value || new Date().toLocaleDateString('ru-RU');
+    const executor = 'Матвей Зрячих | VoltGroup (Самозанятый)';
+    const masterBuys = document.getElementById('master-buys-materials').checked;
+
+    let pdfBodyHTML = '';
+    let rowIdx = 1;
+
+    // Работы
+    servicesData.forEach((s, index) => {
+      const qtyInput = document.getElementById(`qty-${index}`);
+      const qty = parseFloat(qtyInput.value) || 0;
+      if (qty > 0) {
+        const sum = qty * s.price;
+        pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${s.name}</td><td>${s.unit}</td><td>${qty}</td><td>${s.price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
       }
-
-      let invoiceNum = document.getElementById('invoice-number').value.trim();
-      if (!invoiceNum) {
-        let counter = parseInt(localStorage.getItem('vg_estimate_counter') || '0') + 1;
-        localStorage.setItem('vg_estimate_counter', counter);
-        invoiceNum = `${new Date().getFullYear()}-${String(counter).padStart(3, '0')}`;
-        document.getElementById('invoice-number').value = invoiceNum;
+    });
+    document.querySelectorAll('.custom-work-row').forEach(row => {
+      const name = row.querySelector('.name-input').value || 'Доп. работа';
+      const unit = row.querySelector('.mat-unit').value || 'шт.';
+      const price = parseFloat(row.querySelector('.mat-price').value) || 0;
+      const qty = parseFloat(row.querySelector('.mat-qty').value) || 0;
+      if (qty > 0 || price > 0) {
+        const sum = price * qty;
+        pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${name}</td><td>${unit}</td><td>${qty}</td><td>${price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
       }
+    });
 
-      const clientName = document.getElementById('client-name').value || '—';
-      const clientAddr = document.getElementById('client-address').value || '—';
-      const pdfDate = document.getElementById('estimate-date').value || new Date().toLocaleDateString('ru-RU');
-      const executor = 'Матвей [Фамилия] | VoltGroup (Самозанятый)';
-      const masterBuys = document.getElementById('master-buys-materials').checked;
-
-      let pdfBodyHTML = '';
-      let rowIdx = 1;
-
-      servicesData.forEach((s, index) => {
-        const qtyInput = document.getElementById(`qty-${index}`);
-        const qty = parseFloat(qtyInput.value) || 0;
-        if (qty > 0) {
-          const sum = qty * s.price;
-          pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${s.name}</td><td>${s.unit}</td><td>${qty}</td><td>${s.price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
-        }
-      });
-      document.querySelectorAll('.custom-work-row').forEach(row => {
-        const name = row.querySelector('.name-input').value || 'Доп. работа';
-        const unit = row.querySelector('.mat-unit').value || 'шт.';
-        const price = parseFloat(row.querySelector('.mat-price').value) || 0;
-        const qty = parseFloat(row.querySelector('.mat-qty').value) || 0;
-        if (qty > 0 || price > 0) {
-          const sum = price * qty;
-          pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${name}</td><td>${unit}</td><td>${qty}</td><td>${price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
-        }
+    // Материалы
+    if (masterBuys) {
+      const matRows = document.querySelectorAll('#materials-body tr');
+      let hasMaterials = false;
+      matRows.forEach(r => {
+        const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
+        const price = parseFloat(r.querySelector('.mat-price').value) || 0;
+        if (qty > 0 || price > 0) hasMaterials = true;
       });
 
-      if (masterBuys) {
-        const matRows = document.querySelectorAll('#materials-body tr');
-        let hasMaterials = false;
+      if (hasMaterials) {
+        pdfBodyHTML += `<tr><td colspan="6" style="background:#f0f0f0; font-weight:bold; text-align:center; padding:8px; border:1px solid #ccc;">МАТЕРИАЛЫ</td></tr>`;
         matRows.forEach(r => {
-          const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
+          const name = r.querySelector('.mat-name').value || 'Материал';
+          const unit = r.querySelector('.mat-unit').value || 'шт.';
           const price = parseFloat(r.querySelector('.mat-price').value) || 0;
-          if (qty > 0 || price > 0) hasMaterials = true;
+          const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
+          if (qty > 0 || price > 0) {
+            const sum = price * qty;
+            pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${name}</td><td>${unit}</td><td>${qty}</td><td>${price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
+          }
         });
-
-        if (hasMaterials) {
-          pdfBodyHTML += `<tr><td colspan="6" style="background:#f0f0f0; font-weight:bold; text-align:center; padding:8px;">МАТЕРИАЛЫ</td></tr>`;
-          matRows.forEach(r => {
-            const name = r.querySelector('.mat-name').value || 'Материал';
-            const unit = r.querySelector('.mat-unit').value || 'шт.';
-            const price = parseFloat(r.querySelector('.mat-price').value) || 0;
-            const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
-            if (qty > 0 || price > 0) {
-              const sum = price * qty;
-              pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${name}</td><td>${unit}</td><td>${qty}</td><td>${price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
-            }
-          });
-        }
       }
+    }
 
-      const printHTML = `
+    const printHTML = `
         <!DOCTYPE html>
         <html>
         <head>
           <title>Смета №${invoiceNum} | VoltGroup</title>
           <style>
-            @media print { @page { margin: 12mm; size: A4; } body { -webkit-print-color-adjust: exact; } .no-print { display: none; } }
-            body { font-family: Arial, sans-serif; padding: 0; color: #000; max-width: 190mm; margin: 0 auto; font-size: 12px; }
-            h2 { text-align: center; margin: 0 0 15px 0; font-size: 18px; }
-            .header { display: flex; justify-content: space-between; margin-bottom: 12px; border-bottom: 2px solid #00E5FF; padding-bottom: 8px; }
+            @media print { @page { margin: 10mm; size: A4; } body { -webkit-print-color-adjust: exact; } .no-print { display: none; } }
+            body { font-family: Arial, sans-serif; padding: 0; color: #000; max-width: 210mm; margin: 0 auto; font-size: 12px; }
+            h2 { text-align: center; margin: 0 0 15px 0; font-size: 18px; text-transform: uppercase; }
+            .header { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 2px solid #000; padding-bottom: 10px; }
             table { width: 100%; border-collapse: collapse; margin: 10px 0; }
-            th, td { border: 1px solid #444; padding: 5px 6px; text-align: left; }
-            th { background: #f8f8f8; font-weight: bold; }
-            .total-block { margin: 12px 0 25px; border-top: 2px solid #000; padding-top: 6px; text-align: right; }
-            .total-row { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 13px; }
-            .total-final { font-size: 16px; font-weight: bold; margin-top: 8px; }
-            .signature { margin-top: 30px; display: flex; justify-content: space-between; font-size: 11px; }
-            .footer { margin-top: 25px; font-size: 9px; color: #555; text-align: center; border-top: 1px solid #ddd; padding-top: 8px; }
-            .btn { padding: 10px 20px; margin: 10px 5px; background: #00E5FF; color: #000; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; }
-            .controls { text-align: center; margin-bottom: 15px; padding: 10px; background: #f9f9f9; border-radius: 6px; }
+            th, td { border: 1px solid #000; padding: 6px 8px; text-align: left; }
+            th { background: #eee; font-weight: bold; }
+            .total-block { margin: 20px 0; border-top: 2px solid #000; padding-top: 10px; text-align: right; }
+            .total-row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 13px; }
+            .total-final { font-size: 16px; font-weight: bold; margin-top: 10px; }
+            .signature { margin-top: 40px; display: flex; justify-content: space-between; font-size: 12px; }
+            .footer { margin-top: 30px; font-size: 10px; color: #555; text-align: center; border-top: 1px solid #ddd; padding-top: 10px; }
+            .controls { text-align: center; margin: 20px; padding: 15px; background: #f9f9f9; border-radius: 8px; border: 1px dashed #ccc; }
+            .btn { padding: 10px 20px; margin: 5px; background: #00E5FF; color: #000; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
           </style>
         </head>
         <body>
           <div class="controls no-print">
-            <button class="btn" onclick="window.print()">📄 Сохранить как PDF</button>
+            <h3>Предпросмотр печати</h3>
+            <p>Нажмите кнопку ниже, чтобы сохранить как PDF или распечатать.</p>
+            <button class="btn" onclick="window.print()">🖨 Печать / Сохранить PDF</button>
             <button class="btn" onclick="window.close()" style="background:#ccc;">Закрыть</button>
           </div>
-          <h2>⚡ СМЕТА № ${invoiceNum}</h2>
+
+          <h2>Смета № ${invoiceNum}</h2>
           <div class="header">
             <div><strong>Заказчик:</strong> ${clientName}<br><strong>Адрес:</strong> ${clientAddr}</div>
             <div style="text-align:right;"><strong>Дата:</strong> ${pdfDate}<br><strong>Исполнитель:</strong> ${executor}</div>
           </div>
+
           <table>
             <thead><tr><th style="width:30px">№</th><th>Наименование</th><th style="width:50px">Ед.</th><th style="width:50px">Кол-во</th><th style="width:70px">Цена</th><th style="width:80px">Сумма</th></tr></thead>
             <tbody>${pdfBodyHTML}</tbody>
           </table>
+
           <div class="total-block">
             <div class="total-row"><span>Итого работы:</span><span>${totals.worksFinal.toLocaleString('ru-RU')} ₽</span></div>
             ${masterBuys ? `<div class="total-row"><span>Материалы:</span><span>${totals.materialsTotal.toLocaleString('ru-RU')} ₽</span></div>` : ''}
             ${totals.discountAmount > 0 ? `<div class="total-row" style="color:#d32f2f;"><span>Скидка:</span><span>-${totals.discountAmount.toLocaleString('ru-RU')} ₽</span></div>` : ''}
-            <div class="total-final"><span>К ОПЛАТЕ:</span><span>${totals.grandTotal.toLocaleString('ru-RU')} ₽</span></div>
+            <div class="total-final"><span>ИТОГО К ОПЛАТЕ:</span><span>${totals.grandTotal.toLocaleString('ru-RU')} ₽</span></div>
           </div>
+
           <div class="signature">
             <div>Заказчик: _______________ / _______________ /</div>
-            <div>Исполнитель: _______________ / Матвей [Фамилия] /</div>
+            <div>Исполнитель: _______________ / Матвей Зрячих /</div>
           </div>
+
           <div class="footer">
             ⚡ VoltGroup | Энергия решений | Самозанятый (НПД)<br>
-            Гарантия на работы: 12 месяцев.
+            Гарантия на работы: 12 месяцев. Оплата производится после подписания акта приёмки.
           </div>
         </body>
         </html>
       `;
 
-      const printWindow = window.open('', '_blank', 'width=850,height=900');
-      printWindow.document.write(printHTML);
-      printWindow.document.close();
-      setTimeout(() => printWindow.print(), 400);
-    }
+    const printWindow = window.open('', '_blank', 'width=900,height=900');
+    printWindow.document.write(printHTML);
+    printWindow.document.close();
+  }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('estimate-date').valueAsDate = new Date();
-      updateDraftList();
-    });
-  </script>
+  // Инициализация
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('estimate-date').valueAsDate = new Date();
+    updateDraftList();
+  });
+</script>
 </body>
 </html>
-

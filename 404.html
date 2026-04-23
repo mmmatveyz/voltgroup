@@ -4,18 +4,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Страница не найдена | VoltGroup</title>
+    <meta name="robots" content="noindex, nofollow"> <!-- Не индексировать страницу ошибок -->
+
     <style>
-        :root { --bg: #0B1120; --primary: #00E5FF; --text: #F8FAFC; --text-muted: #94A3B8; --radius: 8px; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
-        body { background: var(--bg); color: var(--text); display: flex; align-items: center; justify-content: center; min-height: 100vh; text-align: center; padding: 20px; }
-        .container { max-width: 500px; }
-        h1 { font-size: 6rem; color: var(--primary); line-height: 1; margin-bottom: 10px; text-shadow: 0 0 30px rgba(0,229,255,0.3); }
-        h2 { font-size: 1.5rem; margin-bottom: 15px; }
-        p { color: var(--text-muted); margin-bottom: 30px; line-height: 1.6; }
-        .btn { display: inline-block; padding: 12px 24px; background: var(--primary); color: var(--bg); text-decoration: none; border-radius: var(--radius); font-weight: 600; transition: 0.2s; }
-        .btn:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,229,255,0.25); }
-        .logo { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 20px; }
-        .logo span { color: var(--primary); font-weight: 700; }
+        :root {
+            --bg: #0B1120;
+            --surface: #111827;
+            --primary: #00E5FF;
+            --primary-hover: #00B8D4;
+            --text: #F8FAFC;
+            --text-muted: #94A3B8;
+            --radius: 8px;
+            --font: system-ui, -apple-system, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            background: var(--surface);
+            padding: 40px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            color: var(--text);
+            margin-bottom: 30px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .logo span { color: var(--primary); }
+
+        h1 {
+            font-size: clamp(4rem, 10vw, 6rem);
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 10px;
+            text-shadow: 0 0 40px rgba(0,229,255,0.2);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background: var(--primary);
+            color: var(--bg);
+            text-decoration: none;
+            border-radius: var(--radius);
+            font-weight: 700;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,229,255,0.3);
+        }
+
+        .timer-text {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            opacity: 0.7;
+        }
     </style>
 </head>
 <body>
@@ -23,8 +102,31 @@
     <div class="logo">⚡ Volt<span>Group</span></div>
     <h1>404</h1>
     <h2>Страница не найдена</h2>
-    <p>Возможно, ссылка устарела или вы ввели адрес с ошибкой.<br>Вернитесь на главную, чтобы найти нужную информацию.</p>
-    <a href="./index.html" class="btn">← На главную</a>
+    <p>Возможно, ссылка устарела или вы ввели адрес с ошибкой.<br>Мы уже работаем над исправлением.</p>
+
+    <a href="./index.html" class="btn">← Вернуться на главную</a>
+
+    <div class="timer-text">
+        Автоматический переход через <span id="countdown">10</span> сек...
+    </div>
 </div>
+
+<script>
+    // Таймер обратного отсчета и редирект
+    let seconds = 10;
+    const countdownEl = document.getElementById('countdown');
+
+    if (countdownEl) {
+        const timer = setInterval(() => {
+            seconds--;
+            countdownEl.textContent = seconds;
+
+            if (seconds <= 0) {
+                clearInterval(timer);
+                window.location.href = './index.html';
+            }
+        }, 1000);
+    }
+</script>
 </body>
 </html>
