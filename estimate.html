@@ -63,7 +63,60 @@
     th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
     th { background: rgba(255,255,255,0.03); color: var(--primary); font-weight: 600; white-space: nowrap; }
 
-    .qty-input { width: 70px; padding: 8px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); color: var(--text); text-align: center; }
+    /* Стили для степпера (+/-) */
+    .qty-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .qty-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 4px;
+        border: 1px solid var(--border);
+        background: var(--bg);
+        color: var(--text);
+        font-size: 1.2rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        user-select: none; /* Чтобы текст не выделялся при быстрых кликах */
+        padding: 0;
+    }
+
+    .qty-btn:hover {
+        background: var(--surface);
+        border-color: var(--primary);
+        color: var(--primary);
+    }
+
+    .qty-btn:active {
+        transform: scale(0.95);
+    }
+
+    .qty-input-stepper {
+        width: 60px !important; /* Фиксируем ширину поля */
+        text-align: center;
+        padding: 5px;
+        border: 1px solid var(--border);
+        background: var(--bg);
+        color: var(--text);
+        border-radius: 4px;
+        font-size: 1rem;
+        -moz-appearance: textfield; /* Убираем стрелочки в Firefox */
+    }
+
+    /* Убираем стандартные стрелочки input type=number в Chrome/Safari */
+    .qty-input-stepper::-webkit-outer-spin-button,
+    .qty-input-stepper::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
     .name-input { width: 100%; padding: 8px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); color: var(--text); }
 
     /* Summary Block */
@@ -231,6 +284,11 @@
     <div class="summary-row" id="materials-summary-row"><span>Стоимость материалов:</span><span id="materials-total-display">0 ₽</span></div>
 
     <div class="summary-total"><span>К ОПЛАТЕ:</span><span id="grand-total">0 ₽</span></div>
+    
+    <div style="margin-top: 15px; text-align: center; font-size: 0.9rem; color: var(--text-muted);">
+        Это предварительная оценка. Точная стоимость фиксируется в договоре после осмотра.<br>
+        <a href="./index.html#contact" style="color: var(--primary); text-decoration: underline;">Заказать бесплатный выезд →</a>
+    </div>
   </div>
 
   <div class="actions">
@@ -248,7 +306,7 @@
     { name: 'Прокладка кабеля до 6 мм² (в гофре)', unit: 'м.п.', price: 140 },
     { name: 'Прокладка кабеля до 6 мм² (без гофры)', unit: 'м.п.', price: 110 },
     { name: 'Прокладка кабеля от 10 мм² (силовой)', unit: 'м.п.', price: 220 },
-    { name: 'Отверстие под подрозетник (любое основание)', unit: 'шт.', price: 600 }, // Усредненная цена
+    { name: 'Отверстие под подрозетник (любое основание)', unit: 'шт.', price: 600 },
     { name: 'Монтаж подрозетника (вмазка)', unit: 'шт.', price: 220 },
     { name: 'Установка механизма розетки/выключателя', unit: 'шт.', price: 450 },
     { name: 'Розетка/выключатель «под ключ»', unit: 'шт.', price: 850 },
@@ -302,12 +360,12 @@
     tbodyServices.innerHTML = '';
     servicesData.forEach((s, index) => {
       const tr = document.createElement('tr');
+      // Обновленная структура с кнопками +/-
       tr.innerHTML = `
-          <td>${s.name}</td>
-          <td>${s.unit}</td>
-          <td>${s.price.toLocaleString('ru-RU')} ₽</td>
-          <td><input type="number" class="qty-input" id="qty-${index}" min="0" step="0.5" placeholder="0" onchange="handleServiceChange(${index}, this.value)"></td>
-          <td id="sum-${index}" style="text-align:center; font-weight:600;">0 ₽</td>
+          <td><LaTex>id_30</LaTex>{s.unit}</td>
+          <td><LaTex>id_29</LaTex>{index}, -1)">−</button>
+              <input type="number" class="qty-input-stepper" id="qty-<LaTex>id_28</LaTex>{index}, this.value)">
+              <button class="qty-btn" onclick="changeQty(<LaTex>id_27</LaTex>{index}" style="text-align:center; font-weight:600;">0 ₽</td>
           <td></td>
         `;
       tbodyServices.appendChild(tr);
@@ -317,134 +375,42 @@
 
   // --- ЛОГИКА ---
 
-  function handleServiceChange(index, qty) {
-    calculateTotals();
-
-    const serviceName = servicesData[index].name;
-    const rules = materialRules[serviceName];
-    if (!rules) return;
-
-    const workQty = parseFloat(qty) || 0;
-
-    rules.forEach(rule => {
-      let existingRow = null;
-      const matRows = document.querySelectorAll('#materials-body tr');
-
-      matRows.forEach(row => {
-        const nameInput = row.querySelector('.mat-name');
-        if (nameInput && nameInput.value === rule.name) {
-          existingRow = row;
-        }
-      });
-
-      const requiredQty = Math.ceil(workQty * rule.coef);
-
-      if (requiredQty > 0) {
-        if (existingRow) {
-          const qtyInput = existingRow.querySelector('.mat-qty');
-          const currentVal = parseFloat(qtyInput.value) || 0;
-          if (currentVal < requiredQty) {
-            qtyInput.value = requiredQty;
-          }
-        } else {
-          addMaterialRow(rule.name, rule.price, requiredQty);
-        }
-      }
-    });
-    calculateTotals();
-  }
-
-  function addCustomWorkRow() {
-    const row = document.createElement('tr');
-    row.classList.add('custom-work-row');
-    row.innerHTML = `
-        <td><input type="text" class="name-input" placeholder="Название работы"></td>
-        <td><input type="text" class="mat-unit" value="шт." style="width:50px;"></td>
-        <td><input type="number" class="mat-price" placeholder="0" min="0" onchange="calculateTotals()" style="width:70px;"></td>
-        <td><input type="number" class="mat-qty" placeholder="0" min="0" onchange="calculateTotals()" style="width:60px;"></td>
+  // Функция для кнопок +/-
+  function changeQty(index, delta) {
+    const input = document.getElementById(`qty-<LaTex>id_26</LaTex>{uniqueId}" placeholder="0" min="0" onchange="calculateTotals()">
+              <button class="qty-btn" onclick="changeCustomQty(this, 1)">+</button>
+            </div>
+        </td>
         <td style="text-align:center; font-weight:600;">0 ₽</td>
         <td style="text-align:center;"><button class="btn-remove" onclick="this.closest('tr').remove(); calculateTotals()">✕</button></td>
       `;
     tbodyServices.appendChild(row);
   }
 
+  // Вспомогательная функция для кастомных строк
+  function changeCustomQty(btn, delta) {
+      const wrapper = btn.parentElement;
+      const input = wrapper.querySelector('.custom-qty-input');
+      let currentVal = parseFloat(input.value) || 0;
+      let step = 1;
+      if (currentVal % 1 !== 0) step = 0.5;
+      
+      let newVal = currentVal + (delta * step);
+      if (newVal < 0) newVal = 0;
+      
+      input.value = newVal;
+      calculateTotals(); // Просто пересчитываем итоги
+  }
+
   function addMaterialRow(name = '', price = 0, qty = 0) {
     const matBody = document.getElementById('materials-body');
     const row = document.createElement('tr');
     row.innerHTML = `
-        <td><input type="text" class="mat-name" value="${name}" placeholder="Материал"></td>
-        <td><input type="text" class="mat-unit" value="шт." style="width:50px;"></td>
-        <td><input type="number" class="mat-price" value="${price}" placeholder="0" min="0" onchange="calculateTotals()" style="width:70px;"></td>
-        <td><input type="number" class="mat-qty" value="${qty}" placeholder="0" min="0" onchange="calculateTotals()" style="width:60px;"></td>
-        <td style="text-align:center; font-weight:600;">0 ₽</td>
-        <td style="text-align:center;"><button class="btn-remove" onclick="this.closest('tr').remove(); calculateTotals()">✕</button></td>
-      `;
-    matBody.appendChild(row);
-  }
-
-  function calculateTotals() {
-    let servicesTotal = 0;
-
-    servicesData.forEach((s, index) => {
-      const qtyInput = document.getElementById(`qty-${index}`);
-      const sumCell = document.getElementById(`sum-${index}`);
-      const qty = parseFloat(qtyInput.value) || 0;
-      const sum = qty * s.price;
-      sumCell.textContent = sum.toLocaleString('ru-RU') + ' ₽';
-      servicesTotal += sum;
-    });
-
-    document.querySelectorAll('.custom-work-row').forEach(row => {
-      const priceInput = row.querySelector('.mat-price');
-      const qtyInput = row.querySelector('.mat-qty');
-      const sumCell = row.querySelector('td:nth-child(5)');
-      const price = parseFloat(priceInput.value) || 0;
-      const qty = parseFloat(qtyInput.value) || 0;
-      const sum = price * qty;
-      sumCell.textContent = sum.toLocaleString('ru-RU') + ' ₽';
-      servicesTotal += sum;
-    });
-
-    // Скидка
-    const discountInput = document.getElementById('discount-input').value.trim();
-    let discountAmount = 0;
-    let discountPercent = 0;
-
-    if (discountInput) {
-      if (discountInput.includes('%')) {
-        discountPercent = parseFloat(discountInput.replace('%', '')) || 0;
-        discountAmount = servicesTotal * (discountPercent / 100);
-      } else {
-        discountAmount = parseFloat(discountInput) || 0;
-      }
-    }
-    discountAmount = Math.round(discountAmount);
-    const worksFinal = Math.max(0, servicesTotal - discountAmount);
-
-    // Материалы
-    let materialsTotal = 0;
-    document.querySelectorAll('#materials-body tr').forEach(row => {
-      const priceInput = row.querySelector('.mat-price');
-      const qtyInput = row.querySelector('.mat-qty');
-      const sumCell = row.querySelector('td:nth-child(5)');
-      const price = parseFloat(priceInput.value) || 0;
-      const qty = parseFloat(qtyInput.value) || 0;
-      const sum = price * qty;
-      sumCell.textContent = sum.toLocaleString('ru-RU') + ' ₽';
-      materialsTotal += sum;
-    });
-
-    const masterBuys = document.getElementById('master-buys-materials').checked;
-    const materialsToPay = masterBuys ? materialsTotal : 0;
-    const grandTotal = worksFinal + materialsToPay;
-
-    // Обновление UI
-    document.getElementById('services-total-display').textContent = servicesTotal.toLocaleString('ru-RU') + ' ₽';
-
-    // Отображение скидки с процентом, если он был введен
-    let discountText = `-${discountAmount.toLocaleString('ru-RU')} ₽`;
+        <td><input type="text" class="mat-name" value="<LaTex>id_25</LaTex>{price}" placeholder="0" min="0" onchange="calculateTotals()" style="width:70px;"></td>
+        <td><input type="number" class="mat-qty" value="<LaTex>id_24</LaTex>{index}`);
+      const sumCell = document.getElementById(`sum-<LaTex>id_23</LaTex>{discountAmount.toLocaleString('ru-RU')} ₽`;
     if (discountPercent > 0) {
-      discountText = `${discountPercent}% (${discountText})`;
+      discountText = `<LaTex>id_22</LaTex>{discountText})`;
     }
     document.getElementById('discount-value-display').textContent = discountText;
 
@@ -476,31 +442,9 @@
       invoiceNum: document.getElementById('invoice-number').value,
       masterBuys: document.getElementById('master-buys-materials').checked,
       discount: document.getElementById('discount-input').value,
-      services: servicesData.map((s, i) => ({ qty: document.getElementById(`qty-${i}`).value })),
-      customWorks: Array.from(document.querySelectorAll('.custom-work-row')).map(row => ({
-        name: row.querySelector('.name-input').value,
-        unit: row.querySelector('.mat-unit').value,
-        price: row.querySelector('.mat-price').value,
-        qty: row.querySelector('.mat-qty').value
-      })),
-      materials: Array.from(document.querySelectorAll('#materials-body tr')).map(row => ({
-        name: row.querySelector('.mat-name').value,
-        unit: row.querySelector('.mat-unit').value,
-        price: row.querySelector('.mat-price').value,
-        qty: row.querySelector('.mat-qty').value
-      }))
-    };
-
-    localStorage.setItem(`vg_draft_${name}`, JSON.stringify(data));
+      services: servicesData.map((s, i) => ({ qty: document.getElementById(`qty-<LaTex>id_21</LaTex>{name}`, JSON.stringify(data));
     updateDraftList();
-    alert(`Черновик "${name}" сохранен!`);
-  }
-
-  function loadDraft() {
-    const name = document.getElementById('draft-select').value;
-    if (!name) return;
-
-    const data = JSON.parse(localStorage.getItem(`vg_draft_${name}`));
+    alert(`Черновик "<LaTex>id_20</LaTex>{name}`));
     if (!data) return;
 
     document.getElementById('client-name').value = data.clientName || '';
@@ -511,108 +455,22 @@
     document.getElementById('discount-input').value = data.discount || '';
 
     data.services.forEach((s, i) => {
-      const input = document.getElementById(`qty-${i}`);
-      if (input) input.value = s.qty;
-    });
-
-    document.querySelectorAll('.custom-work-row').forEach(r => r.remove());
-    data.customWorks.forEach(w => {
-      addCustomWorkRow();
-      const lastRow = document.querySelector('.custom-work-row:last-child');
-      lastRow.querySelector('.name-input').value = w.name;
-      lastRow.querySelector('.mat-unit').value = w.unit;
-      lastRow.querySelector('.mat-price').value = w.price;
-      lastRow.querySelector('.mat-qty').value = w.qty;
-    });
-
-    document.getElementById('materials-body').innerHTML = '';
-    data.materials.forEach(m => {
-      addMaterialRow(m.name, m.price, m.qty);
-    });
-
-    calculateTotals();
-  }
-
-  function deleteDraft() {
-    const name = document.getElementById('draft-select').value;
-    if (!name) return;
-    if (confirm(`Удалить черновик "${name}"?`)) {
-      localStorage.removeItem(`vg_draft_${name}`);
-      updateDraftList();
-      document.getElementById('draft-select').value = '';
-    }
-  }
-
-  function updateDraftList() {
-    const select = document.getElementById('draft-select');
-    select.innerHTML = '<option value="">📂 Загрузить...</option>';
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      if (key.startsWith('vg_draft_')) {
-        const name = key.replace('vg_draft_', '');
-        select.innerHTML += `<option value="${name}">${name}</option>`;
-      }
-    }
-  }
-
-  function clearForm() {
-    if(!confirm('Очистить все поля?')) return;
-    document.querySelectorAll('.qty-input').forEach(i => i.value = '');
-    document.querySelectorAll('.mat-price, .mat-qty').forEach(i => i.value = '');
-    document.getElementById('services-body').innerHTML = '';
-    renderServices();
-    document.getElementById('materials-body').innerHTML = '';
-    document.getElementById('discount-input').value = '';
-    document.getElementById('client-name').value = '';
-    document.getElementById('client-address').value = '';
-    document.getElementById('estimate-date').valueAsDate = new Date();
-    document.getElementById('invoice-number').value = '';
-    document.getElementById('master-buys-materials').checked = true;
-    calculateTotals();
-  }
-
-  // --- ГЕНЕРАЦИЯ PDF ---
-  function generatePDF() {
-    const totals = calculateTotals();
-    if (totals.grandTotal === 0 && totals.materialsTotal === 0) {
-      alert('Добавьте хотя бы одну позицию');
-      return;
-    }
-
-    let invoiceNum = document.getElementById('invoice-number').value.trim();
-    if (!invoiceNum) {
-      let counter = parseInt(localStorage.getItem('vg_estimate_counter') || '0') + 1;
-      localStorage.setItem('vg_estimate_counter', counter);
-      invoiceNum = `${new Date().getFullYear()}-${String(counter).padStart(3, '0')}`;
-      document.getElementById('invoice-number').value = invoiceNum;
-    }
-
-    const clientName = document.getElementById('client-name').value || '—';
-    const clientAddr = document.getElementById('client-address').value || '—';
-    const pdfDate = document.getElementById('estimate-date').value || new Date().toLocaleDateString('ru-RU');
-    const executor = 'Матвей Зрячих | VoltGroup (Самозанятый)';
-    const masterBuys = document.getElementById('master-buys-materials').checked;
-
-    let pdfBodyHTML = '';
-    let rowIdx = 1;
-
-    // Работы
-    servicesData.forEach((s, index) => {
-      const qtyInput = document.getElementById(`qty-${index}`);
+      const input = document.getElementById(`qty-<LaTex>id_19</LaTex>{name}"?`)) {
+      localStorage.removeItem(`vg_draft_<LaTex>id_18</LaTex>{name}"><LaTex>id_17</LaTex>{new Date().getFullYear()}-<LaTex>id_16</LaTex>{index}`);
       const qty = parseFloat(qtyInput.value) || 0;
       if (qty > 0) {
         const sum = qty * s.price;
-        pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${s.name}</td><td>${s.unit}</td><td>${qty}</td><td>${s.price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
+        pdfBodyHTML += `<tr><td><LaTex>id_15</LaTex>{s.name}</td><td><LaTex>id_14</LaTex>{qty}</td><td><LaTex>id_13</LaTex>{sum.toLocaleString('ru-RU')} ₽</td></tr>`;
       }
     });
     document.querySelectorAll('.custom-work-row').forEach(row => {
       const name = row.querySelector('.name-input').value || 'Доп. работа';
       const unit = row.querySelector('.mat-unit').value || 'шт.';
       const price = parseFloat(row.querySelector('.mat-price').value) || 0;
-      const qty = parseFloat(row.querySelector('.mat-qty').value) || 0;
+      const qty = parseFloat(row.querySelector('.custom-qty-input').value) || 0; // Изменено на новый класс
       if (qty > 0 || price > 0) {
         const sum = price * qty;
-        pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${name}</td><td>${unit}</td><td>${qty}</td><td>${price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
+        pdfBodyHTML += `<tr><td><LaTex>id_12</LaTex>{name}</td><td><LaTex>id_11</LaTex>{qty}</td><td><LaTex>id_10</LaTex>{sum.toLocaleString('ru-RU')} ₽</td></tr>`;
       }
     });
 
@@ -627,27 +485,7 @@
 
     if (hasMaterials) {
       const matHeaderTitle = masterBuys ? "МАТЕРИАЛЫ (Закупка Исполнителя)" : "СПЕЦИФИКАЦИЯ МАТЕРИАЛОВ (Закупка Заказчика)";
-      pdfBodyHTML += `<tr><td colspan="6" style="background:#f0f0f0; font-weight:bold; text-align:center; padding:8px; border:1px solid #ccc;">${matHeaderTitle}</td></tr>`;
-
-      matRows.forEach(r => {
-        const name = r.querySelector('.mat-name').value || 'Материал';
-        const unit = r.querySelector('.mat-unit').value || 'шт.';
-        const price = parseFloat(r.querySelector('.mat-price').value) || 0;
-        const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
-        if (qty > 0 || price > 0) {
-          const sum = price * qty;
-          // Если закупает заказчик, цену и сумму можно скрыть или показать как справочно.
-          // Для прозрачности покажем цену, но в итог она не пойдет (это уже учтено в логике выше).
-          pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${name}</td><td>${unit}</td><td>${qty}</td><td>${price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
-        }
-      });
-    }
-
-    const printHTML = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <title>Смета №${invoiceNum} | VoltGroup</title>
+      pdfBodyHTML += `<tr><td colspan="6" style="background:#f0f0f0; font-weight:bold; text-align:center; padding:8px; border:1px solid #ccc;"><LaTex>id_9</LaTex>{rowIdx++}</td><td><LaTex>id_8</LaTex>{unit}</td><td><LaTex>id_7</LaTex>{price} ₽</td><td><LaTex>id_6</LaTex>{invoiceNum} | VoltGroup</title>
           <style>
             @media print { @page { margin: 10mm; size: A4; } body { -webkit-print-color-adjust: exact; } .no-print { display: none; } }
             body { font-family: Arial, sans-serif; padding: 0; color: #000; max-width: 210mm; margin: 0 auto; font-size: 12px; }
@@ -673,21 +511,12 @@
             <button class="btn" onclick="window.close()" style="background:#ccc;">Закрыть</button>
           </div>
 
-          <h2>Смета № ${invoiceNum}</h2>
-          <div class="header">
-            <div><strong>Заказчик:</strong> ${clientName}<br><strong>Адрес:</strong> ${clientAddr}</div>
-            <div style="text-align:right;"><strong>Дата:</strong> ${pdfDate}<br><strong>Исполнитель:</strong> ${executor}</div>
-          </div>
-
-          <table>
-            <thead><tr><th style="width:30px">№</th><th>Наименование</th><th style="width:50px">Ед.</th><th style="width:50px">Кол-во</th><th style="width:70px">Цена</th><th style="width:80px">Сумма</th></tr></thead>
-            <tbody>${pdfBodyHTML}</tbody>
+          <h2>Смета № <LaTex>id_5</LaTex>{clientName}<br><strong>Адрес:</strong> <LaTex>id_4</LaTex>{pdfDate}<br><strong>Исполнитель:</strong> <LaTex>id_3</LaTex>{pdfBodyHTML}</tbody>
           </table>
 
           <div class="total-block">
-            <div class="total-row"><span>Итого работы:</span><span>${totals.worksFinal.toLocaleString('ru-RU')} ₽</span></div>
-            ${totals.discountAmount > 0 ? `<div class="total-row" style="color:#d32f2f;"><span>Скидка ${totals.discountPercent > 0 ? '(' + totals.discountPercent + '%)' : ''}:</span><span>-${totals.discountAmount.toLocaleString('ru-RU')} ₽</span></div>` : ''}
-            ${masterBuys ? `<div class="total-row"><span>Материалы:</span><span>${totals.materialsTotal.toLocaleString('ru-RU')} ₽</span></div>` : ''}
+            <div class="total-row"><span>Итого работы:</span><span><LaTex>id_2</LaTex>{totals.discountAmount > 0 ? `<div class="total-row" style="color:#d32f2f;"><span>Скидка ${totals.discountPercent > 0 ? '(' + totals.discountPercent + '%)' : ''}:</span><span>-${totals.discountAmount.toLocaleString('ru-RU')} ₽</span></div>` : ''}
+            <LaTex>id_1</LaTex>{totals.materialsTotal.toLocaleString('ru-RU')} ₽</span></div>` : ''}
             <div class="total-final"><span>ИТОГО К ОПЛАТЕ:</span><span>${totals.grandTotal.toLocaleString('ru-RU')} ₽</span></div>
           </div>
 
@@ -699,21 +528,3 @@
           <div class="footer">
             ⚡ VoltGroup | Энергия решений | Самозанятый (НПД)<br>
             Гарантия на работы: 12 месяцев. Оплата производится после подписания акта приёмки.
-          </div>
-        </body>
-        </html>
-      `;
-
-    const printWindow = window.open('', '_blank', 'width=900,height=900');
-    printWindow.document.write(printHTML);
-    printWindow.document.close();
-  }
-
-  // Инициализация
-  document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('estimate-date').valueAsDate = new Date();
-    updateDraftList();
-  });
-</script>
-</body>
-</html>
