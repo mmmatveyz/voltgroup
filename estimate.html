@@ -294,6 +294,7 @@
 
   <div class="actions">
     <button class="btn btn-primary" onclick="generatePDF()">📄 Скачать PDF</button>
+    <button class="btn btn-primary" onclick="generateCommercialOffer()">📄 Сформировать КП</button>
     <button class="btn btn-outline" onclick="clearForm()">🗑 Очистить всё</button>
   </div>
 </div>
@@ -796,6 +797,214 @@
     document.getElementById('estimate-date').valueAsDate = new Date();
     updateDraftList();
   });
+
+  function generateCommercialOffer() {
+    const totals = calculateTotals();
+    if (totals.grandTotal === 0 && totals.materialsTotal === 0) {
+      alert('Добавьте хотя бы одну позицию в расчет');
+      return;
+    }
+
+    const clientName = document.getElementById('client-name').value || 'Уважаемый Заказчик';
+    const clientAddr = document.getElementById('client-address').value || 'г. Санкт-Петербург';
+    const date = new Date().toLocaleDateString('ru-RU');
+    const invoiceNum = document.getElementById('invoice-number').value || 'Б/Н';
+
+    // Формируем HTML для красивого КП
+    let offerHTML = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>КП №${invoiceNum} | VoltGroup</title>
+            <style>
+                @media print {
+                    @page { margin: 15mm; size: A4; }
+                    body { -webkit-print-color-adjust: exact; }
+                    .no-print { display: none; }
+                }
+                body { font-family: 'Arial', sans-serif; color: #333; max-width: 210mm; margin: 0 auto; padding: 20px; line-height: 1.5; background: #fff; }
+                .header { border-bottom: 3px solid #00E5FF; padding-bottom: 15px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; }
+                .logo { font-size: 28px; font-weight: 800; color: #0B1120; letter-spacing: -1px; }
+                .logo span { color: #00E5FF; }
+                .company-info { text-align: right; font-size: 13px; color: #555; line-height: 1.4; }
+                h1 { font-size: 22px; text-transform: uppercase; margin-bottom: 5px; color: #0B1120; border-left: 5px solid #00E5FF; padding-left: 10px; }
+                .subtitle { font-size: 14px; color: #666; margin-bottom: 30px; margin-left: 15px; }
+
+                .client-block { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #e9ecef; }
+                .client-block strong { color: #0B1120; display: block; margin-bottom: 5px; }
+
+                table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+                th { background: #0B1120; color: white; padding: 12px 10px; text-align: left; font-weight: 600; }
+                td { border-bottom: 1px solid #dee2e6; padding: 10px; }
+                tr:nth-child(even) { background-color: #f8f9fa; }
+
+                .total-section { margin-top: 40px; text-align: right; page-break-inside: avoid; }
+                .total-row { font-size: 16px; margin-bottom: 8px; color: #555; }
+                .final-price { font-size: 24px; font-weight: 800; color: #0B1120; margin-top: 15px; border-top: 2px solid #00E5FF; padding-top: 15px; display: inline-block; min-width: 200px; }
+
+                .terms { margin-top: 50px; font-size: 13px; color: #666; border-top: 1px solid #eee; padding-top: 20px; page-break-inside: avoid; }
+                .terms h3 { font-size: 14px; color: #0B1120; margin-bottom: 10px; }
+                .terms ul { padding-left: 20px; margin-bottom: 15px; }
+                .terms li { margin-bottom: 5px; }
+
+                .signature-block { margin-top: 60px; display: flex; justify-content: space-between; font-size: 14px; }
+                .sign-line { border-top: 1px solid #333; width: 200px; margin-top: 30px; text-align: center; padding-top: 5px; font-size: 12px; color: #777; }
+
+                .controls { text-align: center; margin-bottom: 20px; padding: 15px; background: #f0f0f0; border-radius: 8px; border: 1px dashed #ccc; }
+                .btn { padding: 12px 25px; background: #00E5FF; color: #0B1120; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 16px; margin: 5px; transition: 0.2s; }
+                .btn:hover { background: #00B8D4; }
+                .btn-close { background: #ccc; color: #333; }
+            </style>
+        </head>
+        <body>
+            <div class="controls no-print">
+                <h3>📄 Коммерческое предложение готово</h3>
+                <p>Проверьте данные. Нажмите "Сохранить как PDF", чтобы отправить клиенту.</p>
+                <button class="btn" onclick="window.print()">💾 Сохранить КП (PDF)</button>
+                <button class="btn btn-close" onclick="window.close()">Закрыть</button>
+            </div>
+
+            <div class="header">
+                <div class="logo">⚡ Volt<span>Group</span></div>
+                <div class="company-info">
+                    <strong>Исполнитель:</strong> Зрячих Матвей<br>
+                    Статус: Самозанятый (НПД)<br>
+                    ИНН: 591110297727<br>
+                    Тел: +7 (999) 000-00-00<br>
+                    Telegram: @voltgroup_spb
+                </div>
+            </div>
+
+            <h1>Коммерческое предложение № ${invoiceNum}</h1>
+            <div class="subtitle">на выполнение электромонтажных работ</div>
+
+            <div class="client-block">
+                <strong>Заказчик:</strong> ${clientName}<br>
+                <strong>Адрес объекта:</strong> ${clientAddr}<br>
+                <strong>Дата составления:</strong> ${date}
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 5%">№</th>
+                        <th>Наименование работ / Услуг</th>
+                        <th style="width: 10%">Ед.</th>
+                        <th style="width: 10%">Кол-во</th>
+                        <th style="width: 15%">Цена, ₽</th>
+                        <th style="width: 15%">Сумма, ₽</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    let rowIdx = 1;
+
+    // 1. Работы из прайса
+    servicesData.forEach((s, index) => {
+      const qtyInput = document.getElementById(`qty-${index}`);
+      const qty = parseFloat(qtyInput.value) || 0;
+      if (qty > 0) {
+        const sum = qty * s.price;
+        offerHTML += `<tr>
+                <td>${rowIdx++}</td>
+                <td>${s.name}</td>
+                <td>${s.unit}</td>
+                <td>${qty}</td>
+                <td>${s.price.toLocaleString('ru-RU')}</td>
+                <td><strong>${sum.toLocaleString('ru-RU')}</strong></td>
+            </tr>`;
+      }
+    });
+
+    // 2. Кастомные работы
+    document.querySelectorAll('.custom-work-row').forEach(row => {
+      const name = row.querySelector('.name-input').value || 'Дополнительная работа';
+      const unit = row.querySelector('.mat-unit').value || 'шт.';
+      const price = parseFloat(row.querySelector('.mat-price').value) || 0;
+      const qty = parseFloat(row.querySelector('.custom-qty-input').value) || 0;
+      if (qty > 0 || price > 0) {
+        const sum = price * qty;
+        offerHTML += `<tr>
+                <td>${rowIdx++}</td>
+                <td>${name}</td>
+                <td>${unit}</td>
+                <td>${qty}</td>
+                <td>${price.toLocaleString('ru-RU')}</td>
+                <td><strong>${sum.toLocaleString('ru-RU')}</strong></td>
+            </tr>`;
+      }
+    });
+
+    // 3. Материалы (если закупает мастер)
+    const masterBuys = document.getElementById('master-buys-materials').checked;
+    if (masterBuys && totals.materialsTotal > 0) {
+      offerHTML += `<tr><td colspan="6" style="background:#eef2f5; font-weight:bold; text-align:center; padding:10px; color:#0B1120;">МАТЕРИАЛЫ И КОМПЛЕКТУЮЩИЕ</td></tr>`;
+      document.querySelectorAll('#materials-body tr').forEach(r => {
+        const name = r.querySelector('.mat-name').value || 'Материал';
+        const unit = r.querySelector('.mat-unit').value || 'шт.';
+        const price = parseFloat(r.querySelector('.mat-price').value) || 0;
+        const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
+        if (qty > 0 || price > 0) {
+          const sum = price * qty;
+          offerHTML += `<tr>
+                    <td>${rowIdx++}</td>
+                    <td>${name}</td>
+                    <td>${unit}</td>
+                    <td>${qty}</td>
+                    <td>${price.toLocaleString('ru-RU')}</td>
+                    <td><strong>${sum.toLocaleString('ru-RU')}</strong></td>
+                </tr>`;
+        }
+      });
+    }
+
+    offerHTML += `
+                </tbody>
+            </table>
+
+            <div class="total-section">
+                <div class="total-row">Стоимость работ: ${totals.worksFinal.toLocaleString('ru-RU')} ₽</div>
+                ${masterBuys ? `<div class="total-row">Стоимость материалов: ${totals.materialsTotal.toLocaleString('ru-RU')} ₽</div>` : ''}
+                ${totals.discountAmount > 0 ? `<div class="total-row" style="color:#d32f2f;">Скидка: -${totals.discountAmount.toLocaleString('ru-RU')} ₽</div>` : ''}
+                <div class="final-price">ИТОГО: ${totals.grandTotal.toLocaleString('ru-RU')} ₽</div>
+            </div>
+
+            <div class="terms">
+                <h3>Условия выполнения работ:</h3>
+                <ul>
+                    <li><strong>Срок действия предложения:</strong> 3 рабочих дня.</li>
+                    <li><strong>Гарантия:</strong> 12 месяцев на монтажные работы.</li>
+                    <li><strong>Оплата:</strong> 50% предоплата за материалы (при закупке мастером), остаток — после подписания акта приёмки.</li>
+                    <li><strong>Выезд:</strong> Бесплатный выезд для уточнения деталей и финального замера в пределах КАД.</li>
+                    <li>Работы выполняются в соответствии с ПУЭ и СНиП.</li>
+                </ul>
+                <p style="margin-top: 15px; font-style: italic;">
+                    Для согласования даты выезда и начала работ, пожалуйста, подтвердите это предложение ответным сообщением.
+                </p>
+            </div>
+
+            <div class="signature-block">
+                <div>
+                    <strong>Исполнитель:</strong><br>
+                    Зрячих Матвей<br>
+                    VoltGroup
+                    <div class="sign-line">Подпись</div>
+                </div>
+                <div style="text-align: right;">
+                    <strong>Заказчик:</strong><br>
+                    ${clientName}
+                    <div class="sign-line">Подпись</div>
+                </div>
+            </div>
+        </body>
+        </html>
+    `;
+
+    const printWindow = window.open('', '_blank', 'width=900,height=900');
+    printWindow.document.write(offerHTML);
+    printWindow.document.close();
+  }
 </script>
 </body>
 </html>
