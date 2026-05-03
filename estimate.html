@@ -352,6 +352,7 @@
 
   <div class="actions">
     <button class="btn btn-primary" onclick="generatePDF()">📄 Скачать смету (PDF)</button>
+    <button class="btn btn-outline" onclick="generateAct()" style="border-color: #F59E0B; color: #F59E0B;">📝 Сформировать Акт</button>
     <button class="btn btn-primary" onclick="generateCommercialOffer()" style="background: #10B981; color: white;">📄 Сформировать КП</button>
     <button class="btn btn-outline" onclick="clearForm()">🗑 Очистить всё</button>
   </div>
@@ -1266,6 +1267,249 @@
     document.getElementById('estimate-date').valueAsDate = new Date();
     updateDraftList();
   });
+
+  function generateAct() {
+    const totals = calculateTotals();
+    if (totals.grandTotal === 0 && totals.materialsTotal === 0) {
+      alert('Добавьте хотя бы одну позицию');
+      return;
+    }
+
+    const clientName = document.getElementById('client-name').value || 'Заказчик';
+    const clientAddr = document.getElementById('client-address').value || 'г. Санкт-Петербург';
+    const date = new Date().toLocaleDateString('ru-RU');
+    const invoiceNum = document.getElementById('invoice-number').value || 'Б/Н';
+
+    // Проверяем, закупал ли мастер материалы
+    const masterBuys = document.getElementById('master-buys-materials').checked;
+
+    // Формируем HTML для Акта
+    let actHTML = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Акт №${invoiceNum} | VoltGroup</title>
+            <style>
+                @media print {
+                    @page { margin: 15mm; size: A4; }
+                    body { -webkit-print-color-adjust: exact; }
+                    .no-print { display: none; }
+                }
+                body { font-family: 'Times New Roman', Times, serif; color: #000; max-width: 210mm; margin: 0 auto; padding: 20px; line-height: 1.3; background: #fff; font-size: 12pt; }
+
+                h1 { text-align: center; font-size: 16pt; font-weight: bold; margin-bottom: 5px; text-transform: uppercase; }
+                .doc-subtitle { text-align: center; font-size: 11pt; margin-bottom: 20px; color: #333; }
+
+                .header-block { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 11pt; }
+                .header-block div { width: 48%; }
+
+                .preamble { margin-bottom: 15px; text-align: justify; font-size: 11pt; }
+
+                table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 11pt; }
+                th { background: #f0f0f0; border: 1px solid #000; padding: 6px; text-align: center; font-weight: bold; }
+                td { border: 1px solid #000; padding: 6px; vertical-align: top; }
+                td.num { text-align: center; width: 5%; }
+                td.unit { text-align: center; width: 10%; }
+                td.qty { text-align: center; width: 10%; }
+                td.price { text-align: right; width: 15%; }
+                td.sum { text-align: right; width: 15%; font-weight: bold; }
+
+                .total-section { margin-top: 10px; text-align: right; font-size: 12pt; }
+                .total-line { margin-bottom: 5px; }
+                .grand-total { font-size: 14pt; font-weight: bold; margin-top: 10px; border-top: 2px solid #000; padding-top: 5px; display: inline-block; min-width: 250px; }
+
+                .legal-text { margin-top: 20px; font-size: 11pt; text-align: justify; }
+                .legal-text ul { margin: 10px 0 10px 20px; padding: 0; }
+                .legal-text li { margin-bottom: 5px; }
+
+                .signatures { margin-top: 40px; display: flex; justify-content: space-between; font-size: 11pt; page-break-inside: avoid; }
+                .sign-box { width: 45%; }
+                .sign-title { font-weight: bold; margin-bottom: 10px; }
+                .sign-details { margin-bottom: 30px; line-height: 1.4; }
+                .sign-line { border-top: 1px solid #000; margin-top: 10px; padding-top: 5px; text-align: center; font-style: italic; font-size: 10pt; }
+
+                .controls { text-align: center; margin-bottom: 20px; padding: 15px; background: #f9f9f9; border-radius: 8px; border: 1px dashed #ccc; font-family: sans-serif; }
+                .btn { padding: 10px 20px; background: #00E5FF; color: #0B1120; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin: 5px; font-family: sans-serif; }
+                .btn-close { background: #ccc; color: #333; }
+            </style>
+        </head>
+        <body>
+            <div class="controls no-print">
+                <h3>📝 Акт приёмки-сдачи работ готов</h3>
+                <p>Проверьте данные. Нажмите "Печать", чтобы сохранить как PDF или распечатать.</p>
+                <button class="btn" onclick="window.print()">🖨 Печать / Сохранить PDF</button>
+                <button class="btn btn-close" onclick="window.close()">Закрыть</button>
+            </div>
+
+            <h1>Акт приёмки-сдачи выполненных работ</h1>
+            <div class="doc-subtitle">№ ${invoiceNum} от ${date}</div>
+
+            <div class="header-block">
+                <div>
+                    <strong>Исполнитель:</strong><br>
+                    Зрячих Матвей Олегович<br>
+                    (VoltGroup)<br>
+                    Плательщик НПД (Самозанятый)<br>
+                    ИНН: 591110297727<br>
+                    Тел: +7 (999) 000-00-00
+                </div>
+                <div style="text-align: right;">
+                    <strong>Заказчик:</strong><br>
+                    ${clientName}<br>
+                    Адрес объекта:<br>
+                    ${clientAddr}
+                </div>
+            </div>
+
+            <div class="preamble">
+                Мы, нижеподписавшиеся, Исполнитель <strong>Зрячих М.О.</strong>, с одной стороны, и Заказчик <strong>${clientName}</strong>, с другой стороны, составили настоящий Акт о нижеследующем:
+            </div>
+
+            <p style="margin-bottom: 10px;"><strong>1. Перечень выполненных работ и оказанных услуг:</strong></p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th class="num">№</th>
+                        <th>Наименование работ / Услуг</th>
+                        <th class="unit">Ед. изм.</th>
+                        <th class="qty">Кол-во</th>
+                        <th class="price">Цена, ₽</th>
+                        <th class="sum">Сумма, ₽</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    let rowIdx = 1;
+
+    // Работы
+    servicesData.forEach((s, index) => {
+      const state = servicesState[index] || { qty: 0, isComplex: false };
+      const qty = state.qty;
+
+      if (qty > 0) {
+        let price = s.price;
+        let note = '';
+        if (state.isComplex) {
+          price = price * 1.2;
+          note = ' (повыш. сложность)';
+        }
+        const sum = qty * price;
+        actHTML += `<tr>
+                <td class="num">${rowIdx++}</td>
+                <td>${s.name}${note}</td>
+                <td class="unit">${s.unit}</td>
+                <td class="qty">${qty}</td>
+                <td class="price">${Math.round(price)}</td>
+                <td class="sum">${sum.toLocaleString('ru-RU')}</td>
+            </tr>`;
+      }
+    });
+
+    // Кастомные работы
+    document.querySelectorAll('.custom-work-row').forEach(row => {
+      const name = row.querySelector('.name-input').value || 'Доп. работа';
+      const unit = row.querySelector('.mat-unit').value || 'шт.';
+      const priceBase = parseFloat(row.querySelector('.mat-price').value) || 0;
+      const qty = parseFloat(row.querySelector('.custom-qty-input').value) || 0;
+      const complexCheck = row.querySelector('.custom-complex');
+
+      if (qty > 0 || priceBase > 0) {
+        let finalPrice = priceBase;
+        let note = '';
+        if (complexCheck?.checked) {
+          finalPrice = priceBase * 1.2;
+          note = ' (повыш. сложность)';
+        }
+        const sum = qty * finalPrice;
+        actHTML += `<tr>
+                <td class="num">${rowIdx++}</td>
+                <td>${name}${note}</td>
+                <td class="unit">${unit}</td>
+                <td class="qty">${qty}</td>
+                <td class="price">${Math.round(finalPrice)}</td>
+                <td class="sum">${sum.toLocaleString('ru-RU')}</td>
+            </tr>`;
+      }
+    });
+
+    // Материалы (показываем справочно, если закупал мастер, но не суммируем в итог акта)
+    if (masterBuys && totals.materialsTotal > 0) {
+      actHTML += `<tr><td colspan="6" style="background:#eef2f5; font-weight:bold; text-align:center; padding:8px;">МАТЕРИАЛЫ И ОБОРУДОВАНИЕ (предоставлены Исполнителем, оплачены Заказчиком ранее)</td></tr>`;
+      document.querySelectorAll('#materials-body tr').forEach(r => {
+        const name = r.querySelector('.mat-name').value || 'Материал';
+        const unit = r.querySelector('.mat-unit').value || 'шт.';
+        const price = parseFloat(r.querySelector('.mat-price').value) || 0;
+        const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
+        if (qty > 0 || price > 0) {
+          const sum = price * qty;
+          actHTML += `<tr>
+                    <td class="num">${rowIdx++}</td>
+                    <td>${name}</td>
+                    <td class="unit">${unit}</td>
+                    <td class="qty">${qty}</td>
+                    <td class="price">${price}</td>
+                    <td class="sum">${sum.toLocaleString('ru-RU')}</td>
+                </tr>`;
+        }
+      });
+    }
+
+    // В акте к оплате только РАБОТЫ (так как материалы уже оплачены)
+    const totalToPayInAct = totals.worksFinal;
+
+    actHTML += `
+                </tbody>
+            </table>
+
+            <div class="total-section">
+                <div class="total-line">Стоимость выполненных работ: ${totals.worksFinal.toLocaleString('ru-RU')} ₽</div>
+                ${masterBuys ? `<div class="total-line" style="font-size: 10pt; color: #555;">(Материалы на сумму ${totals.materialsTotal.toLocaleString('ru-RU')} ₽ оплачены ранее)</div>` : ''}
+                ${totals.discountAmount > 0 ? `<div class="total-line" style="color:#d32f2f;">Скидка на работы: -${totals.discountAmount.toLocaleString('ru-RU')} ₽</div>` : ''}
+                <div class="grand-total">ИТОГО К ОПЛАТЕ ЗА РАБОТЫ: ${totalToPayInAct.toLocaleString('ru-RU')} ₽</div>
+            </div>
+
+            <div class="legal-text">
+                <p><strong>2. Качество и сроки:</strong></p>
+                <ul>
+                    <li>Работы выполнены в полном объеме, в срок и с надлежащим качеством.</li>
+                    <li>Работы соответствуют требованиям ПУЭ (Правила устройства электроустановок) и СНиП.</li>
+                    <li>Заказчик осмотрел результаты работ и претензий к качеству, объему и срокам выполнения не имеет.</li>
+                </ul>
+
+                <p><strong>3. Гарантийные обязательства:</strong></p>
+                <p>Исполнитель предоставляет гарантию на выполненные монтажные работы сроком на <strong>12 месяцев</strong> с даты подписания настоящего Акта. Гарантия не распространяется на оборудование и материалы (гарантия производителя), а также на повреждения, вызванные неправильной эксплуатацией или действиями третьих лиц.</p>
+            </div>
+
+            <div class="signatures">
+                <div class="sign-box">
+                    <div class="sign-title">ИСПОЛНИТЕЛЬ:</div>
+                    <div class="sign-details">
+                        Зрячих Матвей Олегович<br>
+                        Самозанятый (НПД)<br>
+                        ИНН 591110297727
+                    </div>
+                    <div class="sign-line">Подпись _________________ / М.П.</div>
+                </div>
+                <div class="sign-box" style="text-align: right;">
+                    <div class="sign-title">ЗАКАЗЧИК:</div>
+                    <div class="sign-details">
+                        ${clientName}<br>
+                        Паспортные данные (по требованию):<br>
+                        _________________________
+                    </div>
+                    <div class="sign-line">Подпись _________________</div>
+                </div>
+            </div>
+        </body>
+        </html>
+    `;
+
+    const printWindow = window.open('', '_blank', 'width=900,height=900');
+    printWindow.document.write(actHTML);
+    printWindow.document.close();
+  }
 </script>
 </body>
 </html>
