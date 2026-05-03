@@ -485,12 +485,36 @@
       
       const tr = document.createElement('tr');
       tr.innerHTML = `
-          <td><LaTex>id_47</LaTex>{s.unit}</td>
-          <td><LaTex>id_46</LaTex>{originalIndex}, -1)">−</button>
-              <input type="number" class="qty-input-stepper" id="qty-<LaTex>id_45</LaTex>{savedState.qty}" onchange="handleServiceChange(<LaTex>id_44</LaTex>{originalIndex}, 1)">+</button>
+          <td>${s.name}</td>
+          <td>${s.unit}</td>
+          <td>${s.price.toLocaleString('ru-RU')} ₽</td>
+          <td>
+            <div class="qty-wrapper">
+              <button class="qty-btn" onclick="changeQty(${originalIndex}, -1)">−</button>
+              <input type="number" class="qty-input-stepper" id="qty-${originalIndex}" min="0" step="0.5" value="${savedState.qty}" onchange="handleServiceChange(${originalIndex}, this.value)">
+              <button class="qty-btn" onclick="changeQty(${originalIndex}, 1)">+</button>
             </div>
           </td>
-          <td id="sum-<LaTex>id_43</LaTex>{originalIndex}" <LaTex>id_42</LaTex>{originalIndex}, document.getElementById('qty-<LaTex>id_41</LaTex>{index}`);
+          <td id="sum-${originalIndex}" style="text-align:center; font-weight:600;">0 ₽</td>
+          <td>
+             <label class="complexity-check">
+               <input type="checkbox" id="complex-${originalIndex}" ${savedState.isComplex ? 'checked' : ''} onchange="handleServiceChange(${originalIndex}, document.getElementById('qty-${originalIndex}').value)">
+               <span>Сложно</span>
+               <span class="complexity-badge">+20%</span>
+             </label>
+          </td>
+          <td></td>
+        `;
+      tbodyServices.appendChild(tr);
+    });
+    
+    // После отрисовки нужно пересчитать суммы для отображаемых строк
+    calculateTotals();
+  }
+
+  // Функция для кнопок +/-
+  function changeQty(index, delta) {
+    const input = document.getElementById(`qty-${index}`);
     if (!input) return; 
     
     let currentVal = parseFloat(input.value) || 0;
@@ -514,7 +538,61 @@
     if (!servicesState[index]) servicesState[index] = { qty: 0, isComplex: false };
     servicesState[index].qty = parseFloat(qty) || 0;
     
-    const complexCheck = document.getElementById(`complex-<LaTex>id_40</LaTex>{uniqueId}" placeholder="0" min="0" onchange="calculateTotals()">
+    const complexCheck = document.getElementById(`complex-${index}`);
+    if (complexCheck) {
+        servicesState[index].isComplex = complexCheck.checked;
+    }
+
+    calculateTotals();
+    
+    // Авто-материалы
+    const serviceName = servicesData[index].name;
+    const rules = materialRules[serviceName];
+    if (!rules) return;
+
+    const workQty = parseFloat(qty) || 0;
+
+    rules.forEach(rule => {
+      let existingRow = null;
+      const matRows = document.querySelectorAll('#materials-body tr');
+
+      matRows.forEach(row => {
+        const nameInput = row.querySelector('.mat-name');
+        if (nameInput && nameInput.value === rule.name) {
+          existingRow = row;
+        }
+      });
+
+      const requiredQty = Math.ceil(workQty * rule.coef);
+
+      if (requiredQty > 0) {
+        if (existingRow) {
+          const qtyInput = existingRow.querySelector('.mat-qty');
+          const currentVal = parseFloat(qtyInput.value) || 0;
+          if (currentVal < requiredQty) {
+            qtyInput.value = requiredQty;
+          }
+        } else {
+          addMaterialRow(rule.name, rule.price, requiredQty);
+        }
+      }
+    });
+    calculateTotals();
+  }
+
+  function addCustomWorkRow() {
+    const row = document.createElement('tr');
+    row.classList.add('custom-work-row');
+    const uniqueId = 'custom-' + Date.now(); 
+    
+    row.innerHTML = `
+        <td><input type="text" class="name-input" placeholder="Название работы"></td>
+        <td><input type="text" class="mat-unit" value="шт." style="width:50px;"></td>
+        <td><input type="number" class="mat-price" placeholder="0" min="0" onchange="calculateTotals()" style="width:70px;"></td>
+        <td>
+            <div class="qty-wrapper">
+              <button class="qty-btn" onclick="changeCustomQty(this, -1)">−</button>
+              <input type="number" class="qty-input-stepper custom-qty-input" id="${uniqueId}" placeholder="0" min="0" onchange="calculateTotals()">
               <button class="qty-btn" onclick="changeCustomQty(this, 1)">+</button>
             </div>
         </td>
@@ -549,9 +627,24 @@
     const matBody = document.getElementById('materials-body');
     const row = document.createElement('tr');
     row.innerHTML = `
-        <td><input type="text" class="mat-name" value="<LaTex>id_39</LaTex>{price}" placeholder="0" min="0" onchange="calculateTotals()" style="width:70px;"></td>
-        <td><input type="number" class="mat-qty" value="<LaTex>id_38</LaTex>{index}`);
-      const complexCheck = document.getElementById(`complex-<LaTex>id_37</LaTex>{index}`);
+        <td><input type="text" class="mat-name" value="${name}" placeholder="Материал"></td>
+        <td><input type="text" class="mat-unit" value="шт." style="width:50px;"></td>
+        <td><input type="number" class="mat-price" value="${price}" placeholder="0" min="0" onchange="calculateTotals()" style="width:70px;"></td>
+        <td><input type="number" class="mat-qty" value="${qty}" placeholder="0" min="0" onchange="calculateTotals()" style="width:60px;"></td>
+        <td style="text-align:center; font-weight:600;">0 ₽</td>
+        <td style="text-align:center;"><button class="btn-remove" onclick="this.closest('tr').remove(); calculateTotals()">✕</button></td>
+      `;
+    matBody.appendChild(row);
+  }
+
+  function calculateTotals() {
+    let servicesTotal = 0;
+
+    // Стандартные работы
+    servicesData.forEach((s, index) => {
+      const qtyInput = document.getElementById(`qty-${index}`);
+      const complexCheck = document.getElementById(`complex-${index}`);
+      const sumCell = document.getElementById(`sum-${index}`);
       
       // Берем данные либо из инпута (если он есть на экране), либо из памяти (если строка скрыта)
       let qty = 0;
@@ -643,9 +736,69 @@
     // Обновление UI
     document.getElementById('services-total-display').textContent = servicesTotal.toLocaleString('ru-RU') + ' ₽';
 
-    let discountText = `-<LaTex>id_36</LaTex>{discountPercent}% (<LaTex>id_35</LaTex>{name}`, JSON.stringify(data));
+    let discountText = `-${discountAmount.toLocaleString('ru-RU')} ₽`;
+    if (discountPercent > 0) {
+      discountText = `${discountPercent}% (${discountText})`;
+    }
+    document.getElementById('discount-value-display').textContent = discountText;
+
+    document.getElementById('works-subtotal-display').textContent = worksFinal.toLocaleString('ru-RU') + ' ₽';
+    document.getElementById('materials-total-display').textContent = materialsTotal.toLocaleString('ru-RU') + ' ₽';
+    document.getElementById('grand-total').textContent = grandTotal.toLocaleString('ru-RU') + ' ₽';
+
+    const matRow = document.getElementById('materials-summary-row');
+    if (!masterBuys) {
+      matRow.style.opacity = '0.5';
+      matRow.style.textDecoration = 'line-through';
+    } else {
+      matRow.style.opacity = '1';
+      matRow.style.textDecoration = 'none';
+    }
+
+    return { servicesTotal, discountAmount, discountPercent, worksFinal, materialsTotal, materialsToPay, grandTotal };
+  }
+
+  // --- ЧЕРНОВИКИ ---
+  function saveDraft() {
+    const name = document.getElementById('draft-name').value.trim();
+    if (!name) { alert('Введите название черновика'); return; }
+
+    // Сначала синхронизируем текущее состояние DOM с памятью
+    calculateTotals();
+
+    const data = {
+      clientName: document.getElementById('client-name').value,
+      clientAddress: document.getElementById('client-address').value,
+      date: document.getElementById('estimate-date').value,
+      invoiceNum: document.getElementById('invoice-number').value,
+      masterBuys: document.getElementById('master-buys-materials').checked,
+      discount: document.getElementById('discount-input').value,
+      servicesState: servicesState, // Сохраняем состояние всех работ
+      customWorks: Array.from(document.querySelectorAll('.custom-work-row')).map(row => ({
+        name: row.querySelector('.name-input').value,
+        unit: row.querySelector('.mat-unit').value,
+        price: row.querySelector('.mat-price').value,
+        qty: row.querySelector('.custom-qty-input').value,
+        complex: row.querySelector('.custom-complex').checked
+      })),
+      materials: Array.from(document.querySelectorAll('#materials-body tr')).map(row => ({
+        name: row.querySelector('.mat-name').value,
+        unit: row.querySelector('.mat-unit').value,
+        price: row.querySelector('.mat-price').value,
+        qty: row.querySelector('.mat-qty').value
+      }))
+    };
+
+    localStorage.setItem(`vg_draft_${name}`, JSON.stringify(data));
     updateDraftList();
-    alert(`Черновик "<LaTex>id_34</LaTex>{name}`));
+    alert(`Черновик "${name}" сохранен!`);
+  }
+
+  function loadDraft() {
+    const name = document.getElementById('draft-select').value;
+    if (!name) return;
+
+    const data = JSON.parse(localStorage.getItem(`vg_draft_${name}`));
     if (!data) return;
 
     document.getElementById('client-name').value = data.clientName || '';
@@ -690,7 +843,8 @@
   function deleteDraft() {
     const name = document.getElementById('draft-select').value;
     if (!name) return;
-    if (confirm(`Удалить черновик "<LaTex>id_33</LaTex>{name}`);
+    if (confirm(`Удалить черновик "${name}"?`)) {
+      localStorage.removeItem(`vg_draft_${name}`);
       updateDraftList();
       document.getElementById('draft-select').value = '';
     }
@@ -703,7 +857,7 @@
       const key = localStorage.key(i);
       if (key.startsWith('vg_draft_')) {
         const name = key.replace('vg_draft_', '');
-        select.innerHTML += `<option value="<LaTex>id_32</LaTex>{name}</option>`;
+        select.innerHTML += `<option value="${name}">${name}</option>`;
       }
     }
   }
@@ -741,7 +895,7 @@
     if (!invoiceNum) {
       let counter = parseInt(localStorage.getItem('vg_estimate_counter') || '0') + 1;
       localStorage.setItem('vg_estimate_counter', counter);
-      invoiceNum = `<LaTex>id_31</LaTex>{String(counter).padStart(3, '0')}`;
+      invoiceNum = `${new Date().getFullYear()}-${String(counter).padStart(3, '0')}`;
       document.getElementById('invoice-number').value = invoiceNum;
     }
 
@@ -767,7 +921,27 @@
           note = ' (коэф. сложности)';
         }
         const sum = qty * price;
-        pdfBodyHTML += `<tr><td><LaTex>id_30</LaTex>{s.name}<LaTex>id_29</LaTex>{s.unit}</td><td><LaTex>id_28</LaTex>{Math.round(price)} ₽</td><td><LaTex>id_27</LaTex>{rowIdx++}</td><td><LaTex>id_26</LaTex>{note}</td><td><LaTex>id_25</LaTex>{qty}</td><td><LaTex>id_24</LaTex>{sum.toLocaleString('ru-RU')} ₽</td></tr>`;
+        pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${s.name}${note}</td><td>${s.unit}</td><td>${qty}</td><td>${Math.round(price)} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
+      }
+    });
+    
+    // Кастомные работы (они всегда видны или удалены, поэтому берем из DOM)
+    document.querySelectorAll('.custom-work-row').forEach(row => {
+      const name = row.querySelector('.name-input').value || 'Доп. работа';
+      const unit = row.querySelector('.mat-unit').value || 'шт.';
+      const priceBase = parseFloat(row.querySelector('.mat-price').value) || 0;
+      const qty = parseFloat(row.querySelector('.custom-qty-input').value) || 0;
+      const complexCheck = row.querySelector('.custom-complex');
+      
+      if (qty > 0 || priceBase > 0) {
+        let finalPrice = priceBase;
+        let note = '';
+        if (complexCheck?.checked) {
+          finalPrice = priceBase * 1.2;
+          note = ' (коэф. сложности)';
+        }
+        const sum = qty * finalPrice;
+        pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${name}${note}</td><td>${unit}</td><td>${qty}</td><td>${Math.round(finalPrice)} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
       }
     });
 
@@ -782,7 +956,25 @@
 
     if (hasMaterials) {
       const matHeaderTitle = masterBuys ? "МАТЕРИАЛЫ (Закупка Исполнителя)" : "СПЕЦИФИКАЦИЯ МАТЕРИАЛОВ (Закупка Заказчика)";
-      pdfBodyHTML += `<tr><td colspan="6" style="background:#f0f0f0; font-weight:bold; text-align:center; padding:8px; border:1px solid #ccc;"><LaTex>id_23</LaTex>{rowIdx++}</td><td><LaTex>id_22</LaTex>{unit}</td><td><LaTex>id_21</LaTex>{price} ₽</td><td><LaTex>id_20</LaTex>{invoiceNum} | VoltGroup</title>
+      pdfBodyHTML += `<tr><td colspan="6" style="background:#f0f0f0; font-weight:bold; text-align:center; padding:8px; border:1px solid #ccc;">${matHeaderTitle}</td></tr>`;
+
+      matRows.forEach(r => {
+        const name = r.querySelector('.mat-name').value || 'Материал';
+        const unit = r.querySelector('.mat-unit').value || 'шт.';
+        const price = parseFloat(r.querySelector('.mat-price').value) || 0;
+        const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
+        if (qty > 0 || price > 0) {
+          const sum = price * qty;
+          pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${name}</td><td>${unit}</td><td>${qty}</td><td>${price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
+        }
+      });
+    }
+
+    const printHTML = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Смета №${invoiceNum} | VoltGroup</title>
           <style>
             @media print { @page { margin: 10mm; size: A4; } body { -webkit-print-color-adjust: exact; } .no-print { display: none; } }
             body { font-family: Arial, sans-serif; padding: 0; color: #000; max-width: 210mm; margin: 0 auto; font-size: 12px; }
@@ -808,13 +1000,60 @@
             <button class="btn" onclick="window.close()" style="background:#ccc;">Закрыть</button>
           </div>
 
-          <h2>Смета № <LaTex>id_19</LaTex>{clientName}<br><strong>Адрес:</strong> <LaTex>id_18</LaTex>{pdfDate}<br><strong>Исполнитель:</strong> <LaTex>id_17</LaTex>{pdfBodyHTML}</tbody>
+          <h2>Смета № ${invoiceNum}</h2>
+          <div class="header">
+            <div><strong>Заказчик:</strong> ${clientName}<br><strong>Адрес:</strong> ${clientAddr}</div>
+            <div style="text-align:right;"><strong>Дата:</strong> ${pdfDate}<br><strong>Исполнитель:</strong> ${executor}</div>
+          </div>
+
+          <table>
+            <thead><tr><th style="width:30px">№</th><th>Наименование</th><th style="width:50px">Ед.</th><th style="width:50px">Кол-во</th><th style="width:70px">Цена</th><th style="width:80px">Сумма</th></tr></thead>
+            <tbody>${pdfBodyHTML}</tbody>
           </table>
 
           <div class="total-block">
-            <div class="total-row"><span>Итого работы:</span><span><LaTex>id_16</LaTex>{totals.discountAmount > 0 ? `<div class="total-row" style="color:#d32f2f;"><span>Скидка ${totals.discountPercent > 0 ? '(' + totals.discountPercent + '%)' : ''}:</span><span>-${totals.discountAmount.toLocaleString('ru-RU')} ₽</span></div>` : ''}
-            <LaTex>id_15</LaTex>{totals.materialsTotal.toLocaleString('ru-RU')} ₽</span></div>` : ''}
-            <div class="total-final"><span>ИТОГО К ОПЛАТЕ:</span><span><LaTex>id_14</LaTex>{invoiceNum} | VoltGroup</title>
+            <div class="total-row"><span>Итого работы:</span><span>${totals.worksFinal.toLocaleString('ru-RU')} ₽</span></div>
+            ${totals.discountAmount > 0 ? `<div class="total-row" style="color:#d32f2f;"><span>Скидка ${totals.discountPercent > 0 ? '(' + totals.discountPercent + '%)' : ''}:</span><span>-${totals.discountAmount.toLocaleString('ru-RU')} ₽</span></div>` : ''}
+            ${masterBuys ? `<div class="total-row"><span>Материалы:</span><span>${totals.materialsTotal.toLocaleString('ru-RU')} ₽</span></div>` : ''}
+            <div class="total-final"><span>ИТОГО К ОПЛАТЕ:</span><span>${totals.grandTotal.toLocaleString('ru-RU')} ₽</span></div>
+          </div>
+
+          <div class="signature">
+            <div>Заказчик: _______________ / _______________ /</div>
+            <div>Исполнитель: _______________ / Матвей Зрячих /</div>
+          </div>
+
+          <div class="footer">
+            ⚡ VoltGroup | Энергия решений | Самозанятый (НПД)<br>
+            Гарантия на работы: 12 месяцев. Оплата производится после подписания акта приёмки.
+          </div>
+        </body>
+        </html>
+      `;
+
+    const printWindow = window.open('', '_blank', 'width=900,height=900');
+    printWindow.document.write(printHTML);
+    printWindow.document.close();
+  }
+
+  // --- ГЕНЕРАЦИЯ КП ---
+  function generateCommercialOffer() {
+    const totals = calculateTotals();
+    if (totals.grandTotal === 0 && totals.materialsTotal === 0) {
+        alert('Добавьте хотя бы одну позицию');
+        return;
+    }
+
+    const clientName = document.getElementById('client-name').value || 'Уважаемый Заказчик';
+    const clientAddr = document.getElementById('client-address').value || 'г. Санкт-Петербург';
+    const date = new Date().toLocaleDateString('ru-RU');
+    const invoiceNum = document.getElementById('invoice-number').value || 'Б/Н';
+    
+    let offerHTML = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>КП №${invoiceNum} | VoltGroup</title>
             <style>
                 @media print { 
                     @page { margin: 15mm; size: A4; } 
@@ -874,8 +1113,13 @@
                 </div>
             </div>
 
-            <h1>Коммерческое предложение № <LaTex>id_13</LaTex>{clientName}<br>
-                <strong>Адрес объекта:</strong> <LaTex>id_12</LaTex>{date}
+            <h1>Коммерческое предложение № ${invoiceNum}</h1>
+            <div class="subtitle">на выполнение электромонтажных работ</div>
+
+            <div class="client-block">
+                <strong>Заказчик:</strong> ${clientName}<br>
+                <strong>Адрес объекта:</strong> ${clientAddr}<br>
+                <strong>Дата составления:</strong> ${date}
             </div>
 
             <table>
@@ -908,12 +1152,39 @@
             }
             const sum = qty * price;
             offerHTML += `<tr>
-                <td><LaTex>id_11</LaTex>{s.name}<LaTex>id_10</LaTex>{s.unit}</td>
-                <td><LaTex>id_9</LaTex>{Math.round(price).toLocaleString('ru-RU')}</td>
-                <td><strong><LaTex>id_8</LaTex>{rowIdx++}</td>
-                <td><LaTex>id_7</LaTex>{note}</td>
-                <td><LaTex>id_6</LaTex>{qty}</td>
-                <td><LaTex>id_5</LaTex>{sum.toLocaleString('ru-RU')}</strong></td>
+                <td>${rowIdx++}</td>
+                <td>${s.name}${note}</td>
+                <td>${s.unit}</td>
+                <td>${qty}</td>
+                <td>${Math.round(price).toLocaleString('ru-RU')}</td>
+                <td><strong>${sum.toLocaleString('ru-RU')}</strong></td>
+            </tr>`;
+        }
+    });
+    
+    // Кастомные работы
+    document.querySelectorAll('.custom-work-row').forEach(row => {
+        const name = row.querySelector('.name-input').value || 'Дополнительная работа';
+        const unit = row.querySelector('.mat-unit').value || 'шт.';
+        const priceBase = parseFloat(row.querySelector('.mat-price').value) || 0;
+        const qty = parseFloat(row.querySelector('.custom-qty-input').value) || 0;
+        const complexCheck = row.querySelector('.custom-complex');
+        
+        if (qty > 0 || priceBase > 0) {
+            let finalPrice = priceBase;
+            let note = '';
+            if (complexCheck?.checked) {
+                finalPrice = priceBase * 1.2;
+                note = ' <small>(сложные условия)</small>';
+            }
+            const sum = qty * finalPrice;
+            offerHTML += `<tr>
+                <td>${rowIdx++}</td>
+                <td>${name}${note}</td>
+                <td>${unit}</td>
+                <td>${qty}</td>
+                <td>${Math.round(finalPrice).toLocaleString('ru-RU')}</td>
+                <td><strong>${sum.toLocaleString('ru-RU')}</strong></td>
             </tr>`;
         }
     });
@@ -929,9 +1200,12 @@
             if (qty > 0 || price > 0) {
                 const sum = price * qty;
                 offerHTML += `<tr>
-                    <td><LaTex>id_4</LaTex>{name}</td>
-                    <td><LaTex>id_3</LaTex>{qty}</td>
-                    <td><LaTex>id_2</LaTex>{sum.toLocaleString('ru-RU')}</strong></td>
+                    <td>${rowIdx++}</td>
+                    <td>${name}</td>
+                    <td>${unit}</td>
+                    <td>${qty}</td>
+                    <td>${price.toLocaleString('ru-RU')}</td>
+                    <td><strong>${sum.toLocaleString('ru-RU')}</strong></td>
                 </tr>`;
             }
         });
@@ -942,7 +1216,8 @@
             </table>
 
             <div class="total-section">
-                <div class="total-row">Стоимость работ: <LaTex>id_1</LaTex>{masterBuys ? `<div class="total-row">Стоимость материалов: ${totals.materialsTotal.toLocaleString('ru-RU')} ₽</div>` : ''}
+                <div class="total-row">Стоимость работ: ${totals.worksFinal.toLocaleString('ru-RU')} ₽</div>
+                ${masterBuys ? `<div class="total-row">Стоимость материалов: ${totals.materialsTotal.toLocaleString('ru-RU')} ₽</div>` : ''}
                 ${totals.discountAmount > 0 ? `<div class="total-row" style="color:#d32f2f;">Скидка: -${totals.discountAmount.toLocaleString('ru-RU')} ₽</div>` : ''}
                 <div class="final-price">ИТОГО: ${totals.grandTotal.toLocaleString('ru-RU')} ₽</div>
             </div>
@@ -983,7 +1258,7 @@
     printWindow.document.close();
   }
 
-// Инициализация
+  // Инициализация
   document.addEventListener('DOMContentLoaded', () => {
     renderServicesByCategory();
     document.getElementById('estimate-date').valueAsDate = new Date();
