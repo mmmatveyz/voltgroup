@@ -559,31 +559,39 @@
         });
     }
 
-    // Form Submission
+    // --- ОТПРАВКА ЗАЯВКИ НА ТВОЙ PYTHON СЕРВЕР ---
     const leadForm = document.getElementById('leadForm');
-    if(leadForm) {
+
+    if (leadForm) {
         leadForm.addEventListener('submit', async function(e) {
             e.preventDefault();
-            const btn = this.querySelector('button');
+
+            const btn = this.querySelector('button[type="submit"]');
             const status = document.getElementById('formStatus');
 
+            // Собираем данные
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            // UI
             btn.disabled = true;
             btn.textContent = 'Отправка...';
             status.style.display = 'block';
             status.style.color = 'var(--text-muted)';
-            status.textContent = '⏳ Отправляем заявку...';
-
-            const endpoint = 'https://formspree.io/f/xgopglbn';
+            status.textContent = '⏳ Отправляем...';
 
             try {
-                const res = await fetch(endpoint, {
+                // ВНИМАНИЕ: Замени URL на адрес твоего сервера на PythonAnywhere!
+                const SERVER_URL = 'https://matvey6527.pythonanywhere.com/send-message';
+
+                const response = await fetch(SERVER_URL, {
                     method: 'POST',
-                    body: new FormData(this),
-                    headers: { 'Accept': 'application/json' }
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
                 });
 
-                if (res.ok) {
-                    status.textContent = '✅ Заявка отправлена! Я свяжусь с вами в ближайшее время.';
+                if (response.ok) {
+                    status.textContent = '✅ Заявка отправлена! Я свяжусь с вами.';
                     status.style.color = '#10B981';
                     this.reset();
                 } else {
@@ -591,7 +599,7 @@
                 }
             } catch (error) {
                 console.error(error);
-                status.textContent = '❌ Ошибка отправки. Пожалуйста, напишите мне в VKontakte.';
+                status.textContent = '❌ Ошибка. Напишите мне в VKontakte @voltgroup_spb';
                 status.style.color = '#EF4444';
             } finally {
                 btn.disabled = false;
