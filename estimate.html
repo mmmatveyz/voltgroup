@@ -5,231 +5,210 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Калькулятор сметы | VoltGroup</title>
   <meta name="description" content="Рассчитайте предварительную стоимость электромонтажных работ онлайн. VoltGroup СПб.">
-  
-  <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <link rel="icon" href="image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 
   <style>
     :root {
-      --bg: #0B1120; --surface: #111827; --primary: #00E5FF; --primary-hover: #00B8D4;
-      --text: #F8FAFC; --text-muted: #94A3B8; --border: #1E293B; --radius: 8px;
-      --font: system-ui, -apple-system, sans-serif;
+      --bg-dark: #050914;
+      --bg-card: rgba(17, 24, 39, 0.7);
+      --primary: #00E5FF;
+      --primary-glow: rgba(0, 229, 255, 0.4);
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --border-light: rgba(255, 255, 255, 0.1);
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       --danger: #EF4444;
       --success: #10B981;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font); }
-    body { background: var(--bg); color: var(--text); line-height: 1.6; padding-bottom: 60px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); }
+    body {
+      background-color: var(--bg-dark);
+      background-image: radial-gradient(circle at 50% 0%, #1a2c4e 0%, var(--bg-dark) 60%);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding-bottom: 60px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
 
-    .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 20px; width: 100%; }
 
-    /* Header & Nav */
-    .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding-top: 10px; }
-    .btn-nav { text-decoration: none; color: var(--text-muted); display: flex; align-items: center; gap: 5px; font-size: 0.9rem; transition: 0.2s; }
-    .btn-nav:hover { color: var(--primary); }
-    h1 { font-size: clamp(1.5rem, 4vw, 2rem); color: var(--text); }
-    .subtitle { color: var(--text-muted); font-size: 0.95rem; margin-top: 5px; }
+    /* Header */
+    .header {
+      position: sticky; top: 0; left: 0; width: 100%; z-index: 1000;
+      background: rgba(5, 9, 20, 0.85); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-light);
+      padding: 15px 0;
+    }
+    .nav-container { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.5rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px; text-decoration: none; }
+    .logo span { color: var(--primary); }
 
-    /* Client Info Card */
+    .nav-links { display: flex; gap: 30px; align-items: center; }
+    .nav-links a { font-size: 0.95rem; font-weight: 500; opacity: 0.8; text-decoration: none; color: var(--text-main); transition: var(--transition); }
+    .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--primary); }
+
+    .mobile-toggle { display: none; background: none; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; }
+
+    /* Main Content Spacing */
+    main { flex-grow: 1; padding-top: 40px; }
+
+    h1 { font-size: clamp(1.5rem, 4vw, 2rem); color: var(--text-main); margin-bottom: 5px; }
+    .subtitle { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 30px; }
+
+    /* Cards & Inputs */
+    .card-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 25px;
+      margin-bottom: 25px;
+      backdrop-filter: blur(10px);
+    }
+
     .client-info {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 15px;
-      margin-bottom: 25px;
-      background: var(--surface);
-      padding: 20px;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
     }
     .input-group label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px; }
-    .client-info input {
-      width: 100%;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      background: var(--bg);
-      color: var(--text);
-      font-size: 1rem;
-    }
-    .client-info input:focus { outline: none; border-color: var(--primary); }
-
-    /* Category Selector */
-    .category-selector {
-      margin-bottom: 20px;
-      background: var(--surface);
-      padding: 15px;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-    }
-    .category-selector label { display: block; margin-bottom: 8px; color: var(--primary); font-weight: 600; }
-    .category-select {
+    .client-info input, .category-select, .draft-input, .draft-select {
       width: 100%;
       padding: 12px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      background: var(--bg);
-      color: var(--text);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-light);
+      background: rgba(0,0,0,0.3);
+      color: var(--text-main);
       font-size: 1rem;
-      cursor: pointer;
+      transition: var(--transition);
     }
+    .client-info input:focus, .category-select:focus, .draft-input:focus, .draft-select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0,229,255,0.1);
+    }
+
+    /* Category Selector */
+    .category-selector { margin-bottom: 20px; }
+    .category-selector label { display: block; margin-bottom: 8px; color: var(--primary); font-weight: 600; }
 
     /* Tables */
     .table-wrapper {
       overflow-x: auto;
       margin-bottom: 20px;
-      background: var(--surface);
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+      backdrop-filter: blur(10px);
     }
     table { width: 100%; border-collapse: collapse; min-width: 600px; }
-    th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
+    th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid var(--border-light); font-size: 0.95rem; }
     th { background: rgba(255,255,255,0.03); color: var(--primary); font-weight: 600; white-space: nowrap; }
+    tr:last-child td { border-bottom: none; }
 
-    /* Стили для степпера (+/-) */
-    .qty-wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 5px;
-    }
-
+    /* Stepper (+/-) */
+    .qty-wrapper { display: flex; align-items: center; justify-content: center; gap: 5px; }
     .qty-btn {
-        width: 32px;
-        height: 32px;
-        border-radius: 4px;
-        border: 1px solid var(--border);
-        background: var(--bg);
-        color: var(--text);
-        font-size: 1.2rem;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.2s;
-        user-select: none;
-        padding: 0;
+      width: 32px; height: 32px; border-radius: 6px; border: 1px solid var(--border-light);
+      background: rgba(0,0,0,0.3); color: var(--text-main); font-size: 1.2rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: var(--transition); user-select: none; padding: 0;
     }
-
-    .qty-btn:hover {
-        background: var(--surface);
-        border-color: var(--primary);
-        color: var(--primary);
-    }
-
-    .qty-btn:active {
-        transform: scale(0.95);
-    }
-
+    .qty-btn:hover { background: var(--primary); color: #000; border-color: var(--primary); }
+    .qty-btn:active { transform: scale(0.95); }
     .qty-input-stepper {
-        width: 60px !important;
-        text-align: center;
-        padding: 5px;
-        border: 1px solid var(--border);
-        background: var(--bg);
-        color: var(--text);
-        border-radius: 4px;
-        font-size: 1rem;
-        -moz-appearance: textfield;
+      width: 60px !important; text-align: center; padding: 5px; border: 1px solid var(--border-light);
+      background: rgba(0,0,0,0.3); color: var(--text-main); border-radius: 6px; font-size: 1rem;
+      -moz-appearance: textfield;
     }
-
     .qty-input-stepper::-webkit-outer-spin-button,
-    .qty-input-stepper::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
+    .qty-input-stepper::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 
-    .name-input { width: 100%; padding: 8px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); color: var(--text); }
-
-    /* Checkbox for Complexity */
+    /* Complexity Checkbox */
     .complexity-check {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        font-size: 0.85rem;
-        color: var(--text-muted);
-        cursor: pointer;
+      display: flex; align-items: center; gap: 5px; font-size: 0.85rem; color: var(--text-muted); cursor: pointer;
     }
     .complexity-check input { accent-color: var(--primary); width: 16px; height: 16px; cursor: pointer; }
     .complexity-badge {
-        font-size: 0.75rem;
-        background: rgba(239, 68, 68, 0.2);
-        color: #fca5a5;
-        padding: 2px 6px;
-        border-radius: 4px;
-        margin-left: 5px;
-        display: none;
+      font-size: 0.75rem; background: rgba(239, 68, 68, 0.2); color: #fca5a5;
+      padding: 2px 6px; border-radius: 4px; margin-left: 5px; display: none;
     }
     .complexity-check input:checked + span + .complexity-badge { display: inline-block; }
 
     /* Summary Block */
     .summary {
-      background: var(--surface);
-      padding: 25px;
-      border-radius: var(--radius);
+      background: var(--bg-card);
+      padding: 30px;
+      border-radius: var(--radius-lg);
       margin: 30px 0;
-      border: 1px solid var(--border);
+      border: 1px solid var(--border-light);
+      backdrop-filter: blur(10px);
     }
     .summary-row { display: flex; justify-content: space-between; margin-bottom: 10px; color: var(--text-muted); font-size: 1.1rem; }
     .summary-total {
-      display: flex;
-      justify-content: space-between;
-      font-size: 1.6rem;
-      font-weight: 700;
-      border-top: 2px solid var(--border);
-      padding-top: 15px;
-      color: var(--primary);
-      margin-top: 15px;
+      display: flex; justify-content: space-between; font-size: 1.6rem; font-weight: 700;
+      border-top: 2px solid var(--border-light); padding-top: 15px; color: var(--primary); margin-top: 15px;
     }
 
     /* Discount Input */
     .discount-block {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      margin: 15px 0;
-      padding: 10px;
-      background: rgba(239, 68, 68, 0.1);
-      border-radius: var(--radius);
-      border: 1px solid rgba(239, 68, 68, 0.2);
+      display: flex; gap: 10px; align-items: center; margin: 15px 0; padding: 10px;
+      background: rgba(239, 68, 68, 0.1); border-radius: var(--radius-md); border: 1px solid rgba(239, 68, 68, 0.2);
     }
-    .discount-block input { width: 100px; padding: 8px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+    .discount-block input {
+      width: 100px; padding: 8px; border-radius: 6px; border: 1px solid var(--border-light);
+      background: rgba(0,0,0,0.3); color: var(--text-main);
+    }
 
     /* Buttons */
     .actions { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
     .btn {
-      padding: 12px 24px;
-      border-radius: var(--radius);
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      font-size: 1rem;
-      transition: 0.2s;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+      padding: 12px 24px; border-radius: 50px; font-weight: 600; cursor: pointer; border: none;
+      font-size: 1rem; transition: var(--transition); text-decoration: none;
+      display: inline-flex; align-items: center; justify-content: center;
     }
-    .btn-primary { background: var(--primary); color: var(--bg); }
-    .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); }
+    .btn-primary { background: var(--primary); color: #000; box-shadow: 0 0 20px var(--primary-glow); }
+    .btn-primary:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 0 30px var(--primary-glow); }
     .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
-    .btn-outline:hover { background: var(--primary); color: var(--bg); }
+    .btn-outline:hover { background: var(--primary); color: #000; }
     .btn-remove { background: transparent; border: none; color: var(--danger); cursor: pointer; font-size: 1.2rem; padding: 4px; opacity: 0.7; }
     .btn-remove:hover { opacity: 1; }
 
     /* Toggle Switch */
     .purchase-toggle {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 20px 0;
-      padding: 12px;
-      background: rgba(0, 229, 255, 0.05);
-      border-radius: var(--radius);
-      border: 1px solid rgba(0, 229, 255, 0.2);
+      display: flex; align-items: center; gap: 10px; margin: 20px 0; padding: 12px;
+      background: rgba(0, 229, 255, 0.05); border-radius: var(--radius-md); border: 1px solid rgba(0, 229, 255, 0.2);
     }
-    .purchase-toggle label { cursor: pointer; color: var(--text); font-weight: 600; user-select: none; }
+    .purchase-toggle label { cursor: pointer; color: var(--text-main); font-weight: 600; user-select: none; }
     .purchase-toggle input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; }
 
-    @media (max-width: 600px) {
+    /* Footer */
+    .footer {
+      background: #02040a; border-top: 1px solid var(--border-light);
+      padding: 60px 0 30px; margin-top: auto;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px; margin-bottom: 40px;
+    }
+    .footer h4 { color: var(--text-main); margin-bottom: 20px; font-size: 1.1rem; }
+    .footer-links a { display: block; margin-bottom: 10px; color: var(--text-muted); font-size: 0.95rem; text-decoration: none; }
+    .footer-links a:hover { color: var(--primary); }
+    .copyright { text-align: center; color: #555; font-size: 0.9rem; border-top: 1px solid #111; padding-top: 20px; }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed; top: 70px; left: 0; width: 100%; background: var(--bg-dark);
+        flex-direction: column; padding: 30px; gap: 20px;
+        border-bottom: 1px solid var(--border-light);
+        transform: translateY(-150%); transition: transform 0.3s ease;
+      }
+      .nav-links.open { transform: translateY(0); }
+      .mobile-toggle { display: block; }
       .client-info { grid-template-columns: 1fr; }
       .actions { flex-direction: column; }
       .btn { width: 100%; }
@@ -238,127 +217,203 @@
 </head>
 <body>
 
-<div class="container">
-  <div class="top-bar">
-    <a href="./index.html" class="btn-nav">← На главную</a>
-    <div style="font-weight: 700; color: var(--primary);">VoltGroup</div>
+<header class="header">
+  <div class="container nav-container">
+    <a href="./index.html" class="logo">⚡ Volt<span>Group</span></a>
+    <button class="mobile-toggle" aria-label="Меню">☰</button>
+    <nav class="nav-links">
+      <a href="./index.html#services">Услуги</a>
+      <a href="./estimate.html" class="active">Калькулятор</a>
+      <a href="./works.html">Работы</a>
+      <a href="./index.html#why">Преимущества</a>
+      <a href="./index.html#faq">FAQ</a>
+      <a href="./index.html#contact" class="btn btn-primary" style="padding: 10px 20px; font-size: 0.9rem;">Оставить заявку</a>
+    </nav>
   </div>
+</header>
 
-  <h1>⚡ Калькулятор сметы</h1>
-  <p class="subtitle">Предварительный расчёт стоимости работ и материалов</p>
+<main>
+  <div class="container">
+    <h1>⚡ Калькулятор сметы</h1>
+    <p class="subtitle">Предварительный расчёт стоимости работ и материалов</p>
 
-  <!-- Данные заказчика -->
-  <div class="client-info">
-    <div class="input-group">
-      <label>Имя заказчика</label>
-      <input type="text" id="client-name" placeholder="Иванов И.И.">
+    <!-- Данные заказчика -->
+    <div class="card-box">
+      <div class="client-info">
+        <div class="input-group">
+          <label>Имя заказчика</label>
+          <input type="text" id="client-name" placeholder="Иванов И.И.">
+        </div>
+        <div class="input-group">
+          <label>Адрес объекта</label>
+          <input type="text" id="client-address" placeholder="СПб, ул. Ленина...">
+        </div>
+        <div class="input-group">
+          <label>Дата</label>
+          <input type="date" id="estimate-date">
+        </div>
+        <div class="input-group">
+          <label>№ Сметы / КП</label>
+          <input type="text" id="invoice-number" placeholder="Напр. КП-01 или Авто">
+        </div>
+      </div>
     </div>
-    <div class="input-group">
-      <label>Адрес объекта</label>
-      <input type="text" id="client-address" placeholder="СПб, ул. Ленина...">
-    </div>
-    <div class="input-group">
-      <label>Дата</label>
-      <input type="date" id="estimate-date">
-    </div>
-    <div class="input-group">
-      <label>№ Сметы / КП</label>
-      <input type="text" id="invoice-number" placeholder="Напр. КП-01 или Авто" style="background: var(--bg); color: var(--text);">
-    </div>
-  </div>
 
-  <!-- Управление черновиками -->
-  <div style="display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; align-items: center;">
-    <input type="text" id="draft-name" placeholder="Название (напр. Квартира на Невском)" style="padding: 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text); flex-grow: 1;">
-    <button class="btn btn-outline" onclick="saveDraft()" style="padding: 10px 15px; font-size: 0.9rem;">💾 Сохранить</button>
-    <select id="draft-select" onchange="loadDraft()" style="padding: 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text);">
-      <option value="">📂 Загрузить...</option>
-    </select>
-    <button class="btn btn-outline" onclick="deleteDraft()" style="padding: 10px 15px; font-size: 0.9rem; color: var(--danger); border-color: var(--danger);">🗑</button>
-  </div>
+    <!-- Управление черновиками -->
+    <div class="card-box" style="padding: 15px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+      <input type="text" id="draft-name" class="draft-input" placeholder="Название черновика..." style="flex-grow: 1;">
+      <button class="btn btn-outline" onclick="saveDraft()" style="padding: 10px 15px; font-size: 0.9rem;">💾 Сохранить</button>
+      <select id="draft-select" class="draft-select" onchange="loadDraft()" style="width: auto; min-width: 150px;">
+        <option value="">📂 Загрузить...</option>
+      </select>
+      <button class="btn btn-outline" onclick="deleteDraft()" style="padding: 10px 15px; font-size: 0.9rem; color: var(--danger); border-color: var(--danger);">🗑</button>
 
-  <!-- Выбор категории работ -->
-  <div class="category-selector">
-    <label for="category-select">Выберите раздел работ:</label>
-    <select id="category-select" class="category-select" onchange="renderServicesByCategory()">
-      <option value="all">Все работы</option>
-      <option value="Черновые работы">Черновые работы (штробление, кабель)</option>
-      <option value="Чистовые работы">Чистовые работы (розетки, выключатели)</option>
-      <option value="Щитовое оборудование">Щитовое оборудование</option>
-      <option value="Освещение">Освещение</option>
-      <option value="Подключение техники">Подключение техники</option>
-      <option value="Диагностика">Диагностика и выезд</option>
-    </select>
-  </div>
+      <!-- Экспорт/Импорт -->
+      <button class="btn btn-outline" onclick="exportDraftToFile()" style="padding: 10px 15px; font-size: 0.9rem; border-color: #F59E0B; color: #F59E0B;">💾 Скачать файл</button>
+      <label class="btn btn-outline" style="padding: 10px 15px; font-size: 0.9rem; cursor: pointer; border-color: var(--success); color: var(--success);">
+        📂 Загрузить файл
+        <input type="file" id="import-file-input" accept=".json" style="display: none;" onchange="importDraftFromFile(this)">
+      </label>
+    </div>
 
-  <!-- Таблица Работ -->
-  <div class="table-wrapper">
-    <table>
-      <thead>
-      <tr><th>Наименование работ</th><th>Ед.</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th>Условия</th><th></th></tr>
-      </thead>
-      <tbody id="services-body">
+    <!-- Выбор категории работ -->
+    <div class="category-selector card-box">
+      <label for="category-select">Выберите раздел работ:</label>
+      <select id="category-select" class="category-select" onchange="renderServicesByCategory()">
+        <option value="all">Все работы</option>
+        <option value="Черновые работы">Черновые работы (штробление, кабель)</option>
+        <option value="Чистовые работы">Чистовые работы (розетки, выключатели)</option>
+        <option value="Щитовое оборудование">Щитовое оборудование</option>
+        <option value="Освещение">Освещение</option>
+        <option value="Подключение техники">Подключение техники</option>
+        <option value="Диагностика">Диагностика и выезд</option>
+      </select>
+    </div>
+
+    <!-- Таблица Работ -->
+    <div class="table-wrapper">
+      <table>
+        <thead>
+        <tr><th>Наименование работ</th><th>Ед.</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th>Условия</th><th></th></tr>
+        </thead>
+        <tbody id="services-body">
         <!-- Сюда JS вставит строки -->
-      </tbody>
-    </table>
-    <div style="padding: 15px; text-align: center; border-top: 1px solid var(--border);">
-      <button class="btn btn-outline" onclick="addCustomWorkRow()" style="padding: 8px 16px; font-size: 0.9rem;">➕ Добавить свою позицию</button>
+        </tbody>
+      </table>
+      <div style="padding: 15px; text-align: center; border-top: 1px solid var(--border-light);">
+        <button class="btn btn-outline" onclick="addCustomWorkRow()" style="padding: 8px 16px; font-size: 0.9rem;">➕ Добавить свою позицию</button>
+      </div>
     </div>
-  </div>
 
-  <!-- Переключатель закупки -->
-  <div class="purchase-toggle">
-    <input type="checkbox" id="master-buys-materials" checked onchange="calculateTotals()">
-    <label for="master-buys-materials">Материалы закупает Мастер (входят в итоговую сумму)</label>
-  </div>
-
-  <!-- Таблица Материалов -->
-  <div class="table-wrapper">
-    <div style="padding: 12px 15px; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
-      <span style="color: var(--primary); font-weight: 600;">📦 Материалы (Авто-подбор)</span>
-      <button class="btn btn-outline" onclick="addMaterialRow()" style="padding: 4px 10px; font-size: 0.8rem;">+ Вручную</button>
+    <!-- Переключатель закупки -->
+    <div class="purchase-toggle">
+      <input type="checkbox" id="master-buys-materials" checked onchange="calculateTotals()">
+      <label for="master-buys-materials">Материалы закупает Мастер (входят в итоговую сумму)</label>
     </div>
-    <table>
-      <thead>
-      <tr><th>Наименование</th><th>Ед.</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th></th></tr>
-      </thead>
-      <tbody id="materials-body">
+
+    <!-- Таблица Материалов -->
+    <div class="table-wrapper">
+      <div style="padding: 12px 15px; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center;">
+        <span style="color: var(--primary); font-weight: 600;">📦 Материалы (Авто-подбор)</span>
+        <button class="btn btn-outline" onclick="addMaterialRow()" style="padding: 4px 10px; font-size: 0.8rem;">+ Вручную</button>
+      </div>
+      <table>
+        <thead>
+        <tr><th>Наименование</th><th>Ед.</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th></th></tr>
+        </thead>
+        <tbody id="materials-body">
         <!-- Сюда JS вставит строки -->
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Итоги -->
-  <div class="summary">
-    <div class="summary-row"><span>Стоимость работ:</span><span id="services-total-display">0 ₽</span></div>
-
-    <div class="discount-block">
-      <label for="discount-input" style="color: var(--text-muted); font-size: 0.9rem;">Скидка:</label>
-      <input type="text" id="discount-input" placeholder="0 ₽ или %" oninput="calculateTotals()">
-      <span id="discount-value-display" style="color: var(--danger); font-weight: 600; margin-left: auto;">-0 ₽</span>
+        </tbody>
+      </table>
     </div>
 
-    <div class="summary-row" style="font-weight: bold; color: var(--text);"><span>Итого за работы:</span><span id="works-subtotal-display">0 ₽</span></div>
+    <!-- Итоги -->
+    <div class="summary">
+      <div class="summary-row"><span>Стоимость работ:</span><span id="services-total-display">0 ₽</span></div>
 
-    <div class="summary-row" id="materials-summary-row"><span>Стоимость материалов:</span><span id="materials-total-display">0 ₽</span></div>
+      <div class="discount-block">
+        <label for="discount-input" style="color: var(--text-muted); font-size: 0.9rem;">Скидка:</label>
+        <input type="text" id="discount-input" placeholder="0 ₽ или %" oninput="calculateTotals()">
+        <span id="discount-value-display" style="color: var(--danger); font-weight: 600; margin-left: auto;">-0 ₽</span>
+      </div>
 
-    <div class="summary-total"><span>К ОПЛАТЕ:</span><span id="grand-total">0 ₽</span></div>
-    
-    <div style="margin-top: 15px; text-align: center; font-size: 0.9rem; color: var(--text-muted);">
+      <div class="summary-row" style="font-weight: bold; color: var(--text-main);"><span>Итого за работы:</span><span id="works-subtotal-display">0 ₽</span></div>
+
+      <div class="summary-row" id="materials-summary-row"><span>Стоимость материалов:</span><span id="materials-total-display">0 ₽</span></div>
+
+      <div class="summary-total"><span>К ОПЛАТЕ:</span><span id="grand-total">0 ₽</span></div>
+
+      <div style="margin-top: 15px; text-align: center; font-size: 0.9rem; color: var(--text-muted);">
         Это предварительная оценка. Точная стоимость фиксируется в договоре после осмотра.<br>
         <a href="./index.html#contact" style="color: var(--primary); text-decoration: underline;">Заказать бесплатный выезд →</a>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" onclick="generatePDF()">📄 Скачать смету (PDF)</button>
+      <button class="btn btn-primary" onclick="generateCommercialOffer()" style="background: var(--success); color: white; box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);">📄 Сформировать КП</button>
+      <button class="btn btn-outline" onclick="generateAct()" style="border-color: #F59E0B; color: #F59E0B;">📝 Сформировать Акт</button>
+      <button class="btn btn-outline" onclick="clearForm()">🗑 Очистить всё</button>
     </div>
   </div>
+</main>
 
-  <div class="actions">
-    <button class="btn btn-primary" onclick="generatePDF()">📄 Скачать смету (PDF)</button>
-    <button class="btn btn-outline" onclick="generateAct()" style="border-color: #F59E0B; color: #F59E0B;">📝 Сформировать Акт</button>
-    <button class="btn btn-primary" onclick="generateCommercialOffer()" style="background: #10B981; color: white;">📄 Сформировать КП</button>
-    <button class="btn btn-outline" onclick="clearForm()">🗑 Очистить всё</button>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>⚡ VoltGroup</h4>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
+          Энергия решений.<br>Электрика и автоматизация в СПб.
+        </p>
+        <a href="https://vk.com/voltgroup_spb" style="color: var(--primary); font-weight: 600;">@voltgroup_spb</a>
+      </div>
+      <div class="footer-links">
+        <h4>Навигация</h4>
+        <a href="./index.html#services">Услуги</a>
+        <a href="./estimate.html">Калькулятор</a>
+        <a href="./works.html">Портфолио</a>
+        <a href="./index.html#contact">Контакты</a>
+      </div>
+      <div class="footer-links">
+        <h4>Документы</h4>
+        <a href="./privacy.html">Политика конфиденциальности</a>
+        <a href="./offer.html">Публичная оферта</a>
+        <a href="./cookies.html">Cookies</a>
+      </div>
+      <div>
+        <h4>Контакты</h4>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;">📞 +7 (999) 000-00-00</p>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">🕒 Пн–Сб: 9:00–21:00</p>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">📍 Санкт-Петербург</p>
+      </div>
+    </div>
+    <div class="copyright">
+      © 2026 VoltGroup. Все права защищены.
+    </div>
   </div>
-</div>
+</footer>
 
 <script>
+  // Mobile Menu
+  const mobileToggle = document.querySelector('.mobile-toggle');
+  const navLinks = document.querySelector('.nav-links');
+
+  if(mobileToggle) {
+    mobileToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      mobileToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+    });
+  }
+
+  // Close menu on link click
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      mobileToggle.textContent = '☰';
+    });
+  });
+
   // --- ДАННЫЕ (С КАТЕГОРИЯМИ И РАСШИРЕННЫМ ПРАЙСОМ) ---
   const servicesData = [
     // --- ЧЕРНОВЫЕ РАБОТЫ ---
@@ -460,19 +515,19 @@
 
   const tbodyServices = document.getElementById('services-body');
   let currentCategory = 'all';
-  
-  // Хранилище состояния работ (чтобы не терять данные при переключении вкладок)
-  let servicesState = {}; 
+
+  // Хранилище состояния работ
+  let servicesState = {};
 
   function renderServicesByCategory() {
     const select = document.getElementById('category-select');
     currentCategory = select.value;
-    
+
     tbodyServices.innerHTML = '';
-    
-    const filteredData = currentCategory === 'all' 
-      ? servicesData 
-      : servicesData.filter(s => s.category === currentCategory);
+
+    const filteredData = currentCategory === 'all'
+    ? servicesData
+    : servicesData.filter(s => s.category === currentCategory);
 
     if (filteredData.length === 0) {
       tbodyServices.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:20px; color:var(--text-muted);">В этой категории пока нет работ</td></tr>';
@@ -480,12 +535,9 @@
     }
 
     filteredData.forEach((s, index) => {
-      // Важно: используем глобальный индекс из original массива для ID
       const originalIndex = servicesData.indexOf(s);
-      
-      // Восстанавливаем состояние из памяти
       const savedState = servicesState[originalIndex] || { qty: 0, isComplex: false };
-      
+
       const tr = document.createElement('tr');
       tr.innerHTML = `
           <td>${s.name}</td>
@@ -510,45 +562,40 @@
         `;
       tbodyServices.appendChild(tr);
     });
-    
-    // После отрисовки нужно пересчитать суммы для отображаемых строк
+
     calculateTotals();
   }
 
-  // Функция для кнопок +/-
   function changeQty(index, delta) {
     const input = document.getElementById(`qty-${index}`);
-    if (!input) return; 
-    
+    if (!input) return;
+
     let currentVal = parseFloat(input.value) || 0;
     let step = 1;
     if (currentVal % 1 !== 0) step = 0.5;
 
     let newVal = currentVal + (delta * step);
     if (newVal < 0) newVal = 0;
-    
+
     input.value = newVal;
-    
-    // Обновляем состояние в памяти
+
     if (!servicesState[index]) servicesState[index] = { qty: 0, isComplex: false };
     servicesState[index].qty = newVal;
-    
+
     handleServiceChange(index, newVal);
   }
 
   function handleServiceChange(index, qty) {
-    // Обновляем состояние в памяти
     if (!servicesState[index]) servicesState[index] = { qty: 0, isComplex: false };
     servicesState[index].qty = parseFloat(qty) || 0;
-    
+
     const complexCheck = document.getElementById(`complex-${index}`);
     if (complexCheck) {
-        servicesState[index].isComplex = complexCheck.checked;
+      servicesState[index].isComplex = complexCheck.checked;
     }
 
     calculateTotals();
-    
-    // Авто-материалы
+
     const serviceName = servicesData[index].name;
     const rules = materialRules[serviceName];
     if (!rules) return;
@@ -586,8 +633,8 @@
   function addCustomWorkRow() {
     const row = document.createElement('tr');
     row.classList.add('custom-work-row');
-    const uniqueId = 'custom-' + Date.now(); 
-    
+    const uniqueId = 'custom-' + Date.now();
+
     row.innerHTML = `
         <td><input type="text" class="name-input" placeholder="Название работы"></td>
         <td><input type="text" class="mat-unit" value="шт." style="width:50px;"></td>
@@ -613,17 +660,17 @@
   }
 
   function changeCustomQty(btn, delta) {
-      const wrapper = btn.parentElement;
-      const input = wrapper.querySelector('.custom-qty-input');
-      let currentVal = parseFloat(input.value) || 0;
-      let step = 1;
-      if (currentVal % 1 !== 0) step = 0.5;
-      
-      let newVal = currentVal + (delta * step);
-      if (newVal < 0) newVal = 0;
-      
-      input.value = newVal;
-      calculateTotals();
+    const wrapper = btn.parentElement;
+    const input = wrapper.querySelector('.custom-qty-input');
+    let currentVal = parseFloat(input.value) || 0;
+    let step = 1;
+    if (currentVal % 1 !== 0) step = 0.5;
+
+    let newVal = currentVal + (delta * step);
+    if (newVal < 0) newVal = 0;
+
+    input.value = newVal;
+    calculateTotals();
   }
 
   function addMaterialRow(name = '', price = 0, qty = 0) {
@@ -643,67 +690,60 @@
   function calculateTotals() {
     let servicesTotal = 0;
 
-    // Стандартные работы
     servicesData.forEach((s, index) => {
       const qtyInput = document.getElementById(`qty-${index}`);
       const complexCheck = document.getElementById(`complex-${index}`);
       const sumCell = document.getElementById(`sum-${index}`);
-      
-      // Берем данные либо из инпута (если он есть на экране), либо из памяти (если строка скрыта)
+
       let qty = 0;
       let isComplex = false;
-      
+
       if (qtyInput) {
-          qty = parseFloat(qtyInput.value) || 0;
-          isComplex = complexCheck ? complexCheck.checked : false;
-          // Синхронизируем память с текущим вводом, если элемент виден
-          if (!servicesState[index]) servicesState[index] = { qty: 0, isComplex: false };
-          servicesState[index].qty = qty;
-          servicesState[index].isComplex = isComplex;
+        qty = parseFloat(qtyInput.value) || 0;
+        isComplex = complexCheck ? complexCheck.checked : false;
+        if (!servicesState[index]) servicesState[index] = { qty: 0, isComplex: false };
+        servicesState[index].qty = qty;
+        servicesState[index].isComplex = isComplex;
       } else {
-          // Элемента нет на экране (скрыт фильтром), берем из памяти
-          if (servicesState[index]) {
-              qty = servicesState[index].qty || 0;
-              isComplex = servicesState[index].isComplex || false;
-          }
+        if (servicesState[index]) {
+          qty = servicesState[index].qty || 0;
+          isComplex = servicesState[index].isComplex || false;
+        }
       }
 
       let price = s.price;
       if (isComplex) {
         price = price * 1.2;
       }
-      
+
       const sum = qty * price;
-      
-      // Обновляем ячейку суммы только если она есть на экране
+
       if (sumCell) {
-          sumCell.textContent = sum.toLocaleString('ru-RU') + ' ₽';
+        sumCell.textContent = sum.toLocaleString('ru-RU') + ' ₽';
       }
-      
+
       servicesTotal += sum;
     });
 
-    // Кастомные работы
     document.querySelectorAll('.custom-work-row').forEach(row => {
       const priceInput = row.querySelector('.mat-price');
       const qtyInput = row.querySelector('.custom-qty-input');
       const complexCheck = row.querySelector('.custom-complex');
       const sumCell = row.querySelector('td:nth-child(5)');
-      
+
       const priceBase = parseFloat(priceInput.value) || 0;
       const qty = parseFloat(qtyInput.value) || 0;
       let finalPrice = priceBase;
-      
+
       if (complexCheck && complexCheck.checked) {
         finalPrice = priceBase * 1.2;
       }
-      
+
       const sum = qty * finalPrice;
       sumCell.textContent = sum.toLocaleString('ru-RU') + ' ₽';
       servicesTotal += sum;
     });
 
-    // Скидка
     const discountInput = document.getElementById('discount-input').value.trim();
     let discountAmount = 0;
     let discountPercent = 0;
@@ -719,7 +759,6 @@
     discountAmount = Math.round(discountAmount);
     const worksFinal = Math.max(0, servicesTotal - discountAmount);
 
-    // Материалы
     let materialsTotal = 0;
     document.querySelectorAll('#materials-body tr').forEach(row => {
       const priceInput = row.querySelector('.mat-price');
@@ -736,7 +775,6 @@
     const materialsToPay = masterBuys ? materialsTotal : 0;
     const grandTotal = worksFinal + materialsToPay;
 
-    // Обновление UI
     document.getElementById('services-total-display').textContent = servicesTotal.toLocaleString('ru-RU') + ' ₽';
 
     let discountText = `-${discountAmount.toLocaleString('ru-RU')} ₽`;
@@ -766,7 +804,6 @@
     const name = document.getElementById('draft-name').value.trim();
     if (!name) { alert('Введите название черновика'); return; }
 
-    // Сначала синхронизируем текущее состояние DOM с памятью
     calculateTotals();
 
     const data = {
@@ -776,7 +813,7 @@
       invoiceNum: document.getElementById('invoice-number').value,
       masterBuys: document.getElementById('master-buys-materials').checked,
       discount: document.getElementById('discount-input').value,
-      servicesState: servicesState, // Сохраняем состояние всех работ
+      servicesState: servicesState,
       customWorks: Array.from(document.querySelectorAll('.custom-work-row')).map(row => ({
         name: row.querySelector('.name-input').value,
         unit: row.querySelector('.mat-unit').value,
@@ -811,33 +848,29 @@
     document.getElementById('master-buys-materials').checked = data.masterBuys !== false;
     document.getElementById('discount-input').value = data.discount || '';
 
-    // Восстанавливаем состояние работ
     servicesState = data.servicesState || {};
-    
-    // Сначала рендерим все работы, чтобы восстановить значения
+
     document.getElementById('category-select').value = 'all';
     renderServicesByCategory();
 
-    // Восстанавливаем кастомные работы
     document.querySelectorAll('.custom-work-row').forEach(r => r.remove());
     if (data.customWorks) {
-        data.customWorks.forEach(w => {
-          addCustomWorkRow();
-          const lastRow = document.querySelector('.custom-work-row:last-child');
-          lastRow.querySelector('.name-input').value = w.name;
-          lastRow.querySelector('.mat-unit').value = w.unit;
-          lastRow.querySelector('.mat-price').value = w.price;
-          lastRow.querySelector('.custom-qty-input').value = w.qty;
-          lastRow.querySelector('.custom-complex').checked = w.complex;
-        });
+      data.customWorks.forEach(w => {
+        addCustomWorkRow();
+        const lastRow = document.querySelector('.custom-work-row:last-child');
+        lastRow.querySelector('.name-input').value = w.name;
+        lastRow.querySelector('.mat-unit').value = w.unit;
+        lastRow.querySelector('.mat-price').value = w.price;
+        lastRow.querySelector('.custom-qty-input').value = w.qty;
+        lastRow.querySelector('.custom-complex').checked = w.complex;
+      });
     }
 
-    // Восстанавливаем материалы
     document.getElementById('materials-body').innerHTML = '';
     if (data.materials) {
-        data.materials.forEach(m => {
-          addMaterialRow(m.name, m.price, m.qty);
-        });
+      data.materials.forEach(m => {
+        addMaterialRow(m.name, m.price, m.qty);
+      });
     }
 
     calculateTotals();
@@ -867,10 +900,9 @@
 
   function clearForm() {
     if(!confirm('Очистить все поля?')) return;
-    
-    // Очищаем память состояния
+
     servicesState = {};
-    
+
     document.querySelectorAll('.qty-input-stepper').forEach(i => i.value = '0');
     document.querySelectorAll('.complexity-check input').forEach(i => i.checked = false);
     document.querySelectorAll('.mat-price, .mat-qty').forEach(i => i.value = '');
@@ -884,6 +916,100 @@
     document.getElementById('invoice-number').value = '';
     document.getElementById('master-buys-materials').checked = true;
     calculateTotals();
+  }
+
+  // --- ЭКСПОРТ/ИМПОРТ ФАЙЛОВ ---
+  function exportDraftToFile() {
+    calculateTotals();
+    const draftName = document.getElementById('draft-name').value.trim() || 'Смета_VoltGroup';
+    const safeName = draftName.replace(/[^a-z0-9а-яё]/gi, '_');
+
+    const data = {
+      clientName: document.getElementById('client-name').value,
+      clientAddress: document.getElementById('client-address').value,
+      date: document.getElementById('estimate-date').value,
+      invoiceNum: document.getElementById('invoice-number').value,
+      masterBuys: document.getElementById('master-buys-materials').checked,
+      discount: document.getElementById('discount-input').value,
+      servicesState: servicesState,
+      customWorks: Array.from(document.querySelectorAll('.custom-work-row')).map(row => ({
+        name: row.querySelector('.name-input').value,
+        unit: row.querySelector('.mat-unit').value,
+        price: row.querySelector('.mat-price').value,
+        qty: row.querySelector('.custom-qty-input').value,
+        complex: row.querySelector('.custom-complex').checked
+      })),
+      materials: Array.from(document.querySelectorAll('#materials-body tr')).map(row => ({
+        name: row.querySelector('.mat-name').value,
+        unit: row.querySelector('.mat-unit').value,
+        price: row.querySelector('.mat-price').value,
+        qty: row.querySelector('.mat-qty').value
+      }))
+    };
+
+    const jsonStr = JSON.stringify(data, null, 2);
+    const blob = new Blob([jsonStr], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${safeName}_${new Date().toISOString().slice(0,10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  function importDraftFromFile(input) {
+    const file = input.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        const data = JSON.parse(e.target.result);
+
+        document.getElementById('client-name').value = data.clientName || '';
+        document.getElementById('client-address').value = data.clientAddress || '';
+        document.getElementById('estimate-date').value = data.date || '';
+        document.getElementById('invoice-number').value = data.invoiceNum || '';
+        document.getElementById('master-buys-materials').checked = data.masterBuys !== false;
+        document.getElementById('discount-input').value = data.discount || '';
+
+        servicesState = data.servicesState || {};
+
+        document.getElementById('category-select').value = 'all';
+        renderServicesByCategory();
+
+        document.querySelectorAll('.custom-work-row').forEach(r => r.remove());
+        if (data.customWorks) {
+          data.customWorks.forEach(w => {
+            addCustomWorkRow();
+            const lastRow = document.querySelector('.custom-work-row:last-child');
+            lastRow.querySelector('.name-input').value = w.name;
+            lastRow.querySelector('.mat-unit').value = w.unit;
+            lastRow.querySelector('.mat-price').value = w.price;
+            lastRow.querySelector('.custom-qty-input').value = w.qty;
+            lastRow.querySelector('.custom-complex').checked = w.complex;
+          });
+        }
+
+        document.getElementById('materials-body').innerHTML = '';
+        if (data.materials) {
+          data.materials.forEach(m => {
+            addMaterialRow(m.name, m.price, m.qty);
+          });
+        }
+
+        calculateTotals();
+        alert('✅ Черновик успешно загружен!');
+      } catch (err) {
+        console.error(err);
+        alert('❌ Ошибка при чтении файла. Убедитесь, что это корректный JSON.');
+      }
+    };
+    reader.readAsText(file);
+    input.value = '';
   }
 
   // --- ГЕНЕРАЦИЯ PDF ---
@@ -911,11 +1037,10 @@
     let pdfBodyHTML = '';
     let rowIdx = 1;
 
-    // Работы (берем данные из памяти servicesState, чтобы учесть скрытые категории)
     servicesData.forEach((s, index) => {
       const state = servicesState[index] || { qty: 0, isComplex: false };
       const qty = state.qty;
-      
+
       if (qty > 0) {
         let price = s.price;
         let note = '';
@@ -927,15 +1052,14 @@
         pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${s.name}${note}</td><td>${s.unit}</td><td>${qty}</td><td>${Math.round(price)} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
       }
     });
-    
-    // Кастомные работы (они всегда видны или удалены, поэтому берем из DOM)
+
     document.querySelectorAll('.custom-work-row').forEach(row => {
       const name = row.querySelector('.name-input').value || 'Доп. работа';
       const unit = row.querySelector('.mat-unit').value || 'шт.';
       const priceBase = parseFloat(row.querySelector('.mat-price').value) || 0;
       const qty = parseFloat(row.querySelector('.custom-qty-input').value) || 0;
       const complexCheck = row.querySelector('.custom-complex');
-      
+
       if (qty > 0 || priceBase > 0) {
         let finalPrice = priceBase;
         let note = '';
@@ -948,7 +1072,6 @@
       }
     });
 
-    // Материалы
     const matRows = document.querySelectorAll('#materials-body tr');
     let hasMaterials = false;
     matRows.forEach(r => {
@@ -1043,25 +1166,25 @@
   function generateCommercialOffer() {
     const totals = calculateTotals();
     if (totals.grandTotal === 0 && totals.materialsTotal === 0) {
-        alert('Добавьте хотя бы одну позицию');
-        return;
+      alert('Добавьте хотя бы одну позицию');
+      return;
     }
 
     const clientName = document.getElementById('client-name').value || 'Уважаемый Заказчик';
     const clientAddr = document.getElementById('client-address').value || 'г. Санкт-Петербург';
     const date = new Date().toLocaleDateString('ru-RU');
     const invoiceNum = document.getElementById('invoice-number').value || 'Б/Н';
-    
+
     let offerHTML = `
         <!DOCTYPE html>
         <html>
         <head>
             <title>КП №${invoiceNum} | VoltGroup</title>
             <style>
-                @media print { 
-                    @page { margin: 15mm; size: A4; } 
-                    body { -webkit-print-color-adjust: exact; } 
-                    .no-print { display: none; } 
+                @media print {
+                    @page { margin: 15mm; size: A4; }
+                    body { -webkit-print-color-adjust: exact; }
+                    .no-print { display: none; }
                 }
                 body { font-family: 'Arial', sans-serif; color: #333; max-width: 210mm; margin: 0 auto; padding: 20px; line-height: 1.5; background: #fff; }
                 .header { border-bottom: 3px solid #00E5FF; padding-bottom: 15px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; }
@@ -1070,24 +1193,24 @@
                 .company-info { text-align: right; font-size: 13px; color: #555; line-height: 1.4; }
                 h1 { font-size: 22px; text-transform: uppercase; margin-bottom: 5px; color: #0B1120; border-left: 5px solid #00E5FF; padding-left: 10px; }
                 .subtitle { font-size: 14px; color: #666; margin-bottom: 30px; margin-left: 15px; }
-                
+
                 .client-block { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #e9ecef; }
                 .client-block strong { color: #0B1120; display: block; margin-bottom: 5px; }
-                
+
                 table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
                 th { background: #0B1120; color: white; padding: 12px 10px; text-align: left; font-weight: 600; }
                 td { border-bottom: 1px solid #dee2e6; padding: 10px; }
                 tr:nth-child(even) { background-color: #f8f9fa; }
-                
+
                 .total-section { margin-top: 40px; text-align: right; page-break-inside: avoid; }
                 .total-row { font-size: 16px; margin-bottom: 8px; color: #555; }
                 .final-price { font-size: 24px; font-weight: 800; color: #0B1120; margin-top: 15px; border-top: 2px solid #00E5FF; padding-top: 15px; display: inline-block; min-width: 200px; }
-                
+
                 .terms { margin-top: 50px; font-size: 13px; color: #666; border-top: 1px solid #eee; padding-top: 20px; page-break-inside: avoid; }
                 .terms h3 { font-size: 14px; color: #0B1120; margin-bottom: 10px; }
                 .terms ul { padding-left: 20px; margin-bottom: 15px; }
                 .terms li { margin-bottom: 5px; }
-                
+
                 .signature-block { margin-top: 60px; display: flex; justify-content: space-between; font-size: 14px; }
                 .sign-line { border-top: 1px solid #333; width: 200px; margin-top: 30px; text-align: center; padding-top: 5px; font-size: 12px; color: #777; }
 
@@ -1112,7 +1235,7 @@
                     Статус: Самозанятый (НПД)<br>
                     ИНН: 591110297727<br>
                     Тел: +7 (999) 000-00-00<br>
-                    Telegram: @voltgroup_spb
+                    VKontakte: @voltgroup_spb
                 </div>
             </div>
 
@@ -1140,21 +1263,20 @@
     `;
 
     let rowIdx = 1;
-    
-    // Работы (берем данные из памяти servicesState)
+
     servicesData.forEach((s, index) => {
-        const state = servicesState[index] || { qty: 0, isComplex: false };
-        const qty = state.qty;
-        
-        if (qty > 0) {
-            let price = s.price;
-            let note = '';
-            if (state.isComplex) {
-                price = price * 1.2;
-                note = ' <small>(сложные условия)</small>';
-            }
-            const sum = qty * price;
-            offerHTML += `<tr>
+      const state = servicesState[index] || { qty: 0, isComplex: false };
+      const qty = state.qty;
+
+      if (qty > 0) {
+        let price = s.price;
+        let note = '';
+        if (state.isComplex) {
+          price = price * 1.2;
+          note = ' <small>(сложные условия)</small>';
+        }
+        const sum = qty * price;
+        offerHTML += `<tr>
                 <td>${rowIdx++}</td>
                 <td>${s.name}${note}</td>
                 <td>${s.unit}</td>
@@ -1162,26 +1284,25 @@
                 <td>${Math.round(price).toLocaleString('ru-RU')}</td>
                 <td><strong>${sum.toLocaleString('ru-RU')}</strong></td>
             </tr>`;
-        }
+      }
     });
-    
-    // Кастомные работы
+
     document.querySelectorAll('.custom-work-row').forEach(row => {
-        const name = row.querySelector('.name-input').value || 'Дополнительная работа';
-        const unit = row.querySelector('.mat-unit').value || 'шт.';
-        const priceBase = parseFloat(row.querySelector('.mat-price').value) || 0;
-        const qty = parseFloat(row.querySelector('.custom-qty-input').value) || 0;
-        const complexCheck = row.querySelector('.custom-complex');
-        
-        if (qty > 0 || priceBase > 0) {
-            let finalPrice = priceBase;
-            let note = '';
-            if (complexCheck?.checked) {
-                finalPrice = priceBase * 1.2;
-                note = ' <small>(сложные условия)</small>';
-            }
-            const sum = qty * finalPrice;
-            offerHTML += `<tr>
+      const name = row.querySelector('.name-input').value || 'Дополнительная работа';
+      const unit = row.querySelector('.mat-unit').value || 'шт.';
+      const priceBase = parseFloat(row.querySelector('.mat-price').value) || 0;
+      const qty = parseFloat(row.querySelector('.custom-qty-input').value) || 0;
+      const complexCheck = row.querySelector('.custom-complex');
+
+      if (qty > 0 || priceBase > 0) {
+        let finalPrice = priceBase;
+        let note = '';
+        if (complexCheck?.checked) {
+          finalPrice = priceBase * 1.2;
+          note = ' <small>(сложные условия)</small>';
+        }
+        const sum = qty * finalPrice;
+        offerHTML += `<tr>
                 <td>${rowIdx++}</td>
                 <td>${name}${note}</td>
                 <td>${unit}</td>
@@ -1189,20 +1310,20 @@
                 <td>${Math.round(finalPrice).toLocaleString('ru-RU')}</td>
                 <td><strong>${sum.toLocaleString('ru-RU')}</strong></td>
             </tr>`;
-        }
+      }
     });
 
     const masterBuys = document.getElementById('master-buys-materials').checked;
     if (masterBuys && totals.materialsTotal > 0) {
-        offerHTML += `<tr><td colspan="6" style="background:#eef2f5; font-weight:bold; text-align:center; padding:10px; color:#0B1120;">МАТЕРИАЛЫ И КОМПЛЕКТУЮЩИЕ</td></tr>`;
-        document.querySelectorAll('#materials-body tr').forEach(r => {
-            const name = r.querySelector('.mat-name').value || 'Материал';
-            const unit = r.querySelector('.mat-unit').value || 'шт.';
-            const price = parseFloat(r.querySelector('.mat-price').value) || 0;
-            const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
-            if (qty > 0 || price > 0) {
-                const sum = price * qty;
-                offerHTML += `<tr>
+      offerHTML += `<tr><td colspan="6" style="background:#eef2f5; font-weight:bold; text-align:center; padding:10px; color:#0B1120;">МАТЕРИАЛЫ И КОМПЛЕКТУЮЩИЕ</td></tr>`;
+      document.querySelectorAll('#materials-body tr').forEach(r => {
+        const name = r.querySelector('.mat-name').value || 'Материал';
+        const unit = r.querySelector('.mat-unit').value || 'шт.';
+        const price = parseFloat(r.querySelector('.mat-price').value) || 0;
+        const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
+        if (qty > 0 || price > 0) {
+          const sum = price * qty;
+          offerHTML += `<tr>
                     <td>${rowIdx++}</td>
                     <td>${name}</td>
                     <td>${unit}</td>
@@ -1210,8 +1331,8 @@
                     <td>${price.toLocaleString('ru-RU')}</td>
                     <td><strong>${sum.toLocaleString('ru-RU')}</strong></td>
                 </tr>`;
-            }
-        });
+        }
+      });
     }
 
     offerHTML += `
@@ -1261,13 +1382,7 @@
     printWindow.document.close();
   }
 
-  // Инициализация
-  document.addEventListener('DOMContentLoaded', () => {
-    renderServicesByCategory();
-    document.getElementById('estimate-date').valueAsDate = new Date();
-    updateDraftList();
-  });
-
+  // --- ГЕНЕРАЦИЯ АКТА ---
   function generateAct() {
     const totals = calculateTotals();
     if (totals.grandTotal === 0 && totals.materialsTotal === 0) {
@@ -1280,10 +1395,8 @@
     const date = new Date().toLocaleDateString('ru-RU');
     const invoiceNum = document.getElementById('invoice-number').value || 'Б/Н';
 
-    // Проверяем, закупал ли мастер материалы
     const masterBuys = document.getElementById('master-buys-materials').checked;
 
-    // Формируем HTML для Акта
     let actHTML = `
         <!DOCTYPE html>
         <html>
@@ -1383,7 +1496,6 @@
 
     let rowIdx = 1;
 
-    // Работы
     servicesData.forEach((s, index) => {
       const state = servicesState[index] || { qty: 0, isComplex: false };
       const qty = state.qty;
@@ -1407,7 +1519,6 @@
       }
     });
 
-    // Кастомные работы
     document.querySelectorAll('.custom-work-row').forEach(row => {
       const name = row.querySelector('.name-input').value || 'Доп. работа';
       const unit = row.querySelector('.mat-unit').value || 'шт.';
@@ -1434,7 +1545,6 @@
       }
     });
 
-    // Материалы (показываем справочно, если закупал мастер, но не суммируем в итог акта)
     if (masterBuys && totals.materialsTotal > 0) {
       actHTML += `<tr><td colspan="6" style="background:#eef2f5; font-weight:bold; text-align:center; padding:8px;">МАТЕРИАЛЫ И ОБОРУДОВАНИЕ (предоставлены Исполнителем, оплачены Заказчиком ранее)</td></tr>`;
       document.querySelectorAll('#materials-body tr').forEach(r => {
@@ -1456,7 +1566,6 @@
       });
     }
 
-    // В акте к оплате только РАБОТЫ (так как материалы уже оплачены)
     const totalToPayInAct = totals.worksFinal;
 
     actHTML += `
@@ -1510,6 +1619,13 @@
     printWindow.document.write(actHTML);
     printWindow.document.close();
   }
+
+  // Инициализация
+  document.addEventListener('DOMContentLoaded', () => {
+    renderServicesByCategory();
+    document.getElementById('estimate-date').valueAsDate = new Date();
+    updateDraftList();
+  });
 </script>
 </body>
 </html>

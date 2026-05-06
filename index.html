@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VoltGroup | Энергия решений — Электрика и автоматизация в СПб</title>
-    <meta name="description" content="Профессиональный электромонтаж, умный дом и автоматизация в Санкт-Петербурге. Договор, гарантия 12 мес., чек НПД. Работаем официально.">
+    <meta name="description" content="Профессиональный электромонтаж, умный дом и автоматизация в Санкт-Петербурге. Договор, гарантия 12 мес., чек НПД.">
     <meta name="robots" content="index, follow">
 
-    <!-- Open Graph / Facebook / Telegram -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mmmatveyz.github.io/voltgroup/">
     <meta property="og:title" content="VoltGroup | Электрика и автоматизация в СПб">
@@ -15,310 +15,393 @@
     <meta property="og:image" content="https://mmmatveyz.github.io/voltgroup/og-image.jpg">
 
     <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+    <link rel="icon" href="image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 
-    
-<!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-    (function(m,e,t,r,i,k,a){
-        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108492681', 'ym');
-
-    ym(108492681, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/108492681" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
-
-
-    <!-- JSON-LD Schema for Local Business -->
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "Electrician",
-            "name": "VoltGroup",
-            "image": "https://username.github.io/voltgroup-site/og-image.jpg",
-            "url": "https://username.github.io/voltgroup-site/",
-            "telephone": "+79990000000",
-            "priceRange": "₽₽",
-            "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Санкт-Петербург",
-                "addressRegion": "СПб",
-                "addressCountry": "RU"
-            },
-            "geo": {
-                "@type": "GeoCoordinates",
-                "latitude": 59.9343,
-                "longitude": 30.3351
-            },
-            "openingHoursSpecification": {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
-                "opens": "09:00",
-                "closes": "21:00"
-            },
-            "sameAs": ["https://vk.com/club237900859"]
-        }
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108492681', 'ym');
+        ym(108492681, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
     </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/108492681" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 
     <style>
         :root {
-            --bg: #0B1120;
-            --surface: #111827;
+            --bg-dark: #050914;
+            --bg-card: rgba(17, 24, 39, 0.7);
             --primary: #00E5FF;
-            --primary-hover: #00B8D4;
-            --text: #F8FAFC;
+            --primary-glow: rgba(0, 229, 255, 0.4);
+            --text-main: #F8FAFC;
             --text-muted: #94A3B8;
-            --border: #1E293B;
-            --radius: 8px;
-            --shadow: 0 4px 12px rgba(0,0,0,0.4);
-            --font: system-ui, -apple-system, sans-serif;
-            --transition: all 0.2s ease;
+            --border-light: rgba(255, 255, 255, 0.1);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
+        /* Сброс и база */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; font-size: 16px; }
-        body { background: var(--bg); color: var(--text); font-family: var(--font); line-height: 1.6; }
-        a { color: var(--primary); text-decoration: none; transition: var(--transition); }
-        a:hover { color: var(--primary-hover); }
-        img { max-width: 100%; height: auto; display: block; }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at 50% 0%, #1a2c4e 0%, var(--bg-dark) 60%);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-        /* Buttons */
-        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 12px 24px; border-radius: var(--radius); font-weight: 600; font-size: 1rem; cursor: pointer; border: none; transition: var(--transition); text-align: center; }
-        .btn-primary { background: var(--primary); color: var(--bg); }
-        .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: var(--shadow); }
-        .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
-        .btn-outline:hover { background: var(--primary); color: var(--bg); }
+        /* Типографика */
+        h1, h2, h3 { font-weight: 700; letter-spacing: -0.02em; }
+        h1 { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 20px; }
+        h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 40px; text-align: center; }
+        h2 span { color: var(--primary); }
+        p { color: var(--text-muted); font-size: 1.1rem; }
 
-        /* Layout */
-        .section { padding: 60px 0; }
-        .section-title { font-size: clamp(1.8rem, 4vw, 2.5rem); text-align: center; margin-bottom: 40px; font-weight: 700; }
-        .grid { display: grid; gap: 20px; }
-        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        /* Кнопки */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 14px 32px; border-radius: 50px; font-weight: 600; font-size: 1rem;
+            cursor: pointer; border: none; transition: var(--transition);
+            text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .btn-primary {
+            background: var(--primary); color: #000;
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px var(--primary-glow);
+            background: #fff;
+        }
+        .btn-outline {
+            background: transparent; border: 2px solid var(--primary); color: var(--primary);
+        }
+        .btn-outline:hover {
+            background: var(--primary); color: #000;
+        }
 
-        /* Cards */
-        .card { background: var(--surface); padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); transition: var(--transition); }
-        .card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--primary); }
-        .card h3 { color: var(--primary); margin-bottom: 10px; font-size: 1.3rem; }
-        .card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 8px; }
-        .price { color: #10B981; font-weight: 700; font-size: 1.1rem; }
-        .badge { display: inline-block; background: var(--surface); border: 1px solid var(--border); padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; color: var(--text-muted); margin-right: 8px; margin-bottom: 8px; }
-
-        /* Trust Bar */
-        .trust-bar { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 25px; color: var(--text-muted); font-size: 0.9rem; }
-        .trust-bar span { display: flex; align-items: center; gap: 6px; }
-
-        /* Forms */
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 6px; color: var(--text-muted); font-size: 0.9rem; }
-        .form-control { width: 100%; padding: 12px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg); color: var(--text); font-family: inherit; font-size: 1rem; transition: var(--transition); }
-        .form-control:focus-visible { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,229,255,0.2); }
-        .form-error { color: #EF4444; font-size: 0.85rem; margin-top: 5px; display: none; }
-
-        /* Accordion */
-        .accordion-item { border-bottom: 1px solid var(--border); }
-        .accordion-btn { width: 100%; text-align: left; background: none; border: none; color: var(--text); padding: 18px 0; font-size: 1.05rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-        .accordion-btn::after { content: "+"; font-size: 1.5rem; color: var(--primary); transition: transform 0.3s; }
-        .accordion-btn.active::after { transform: rotate(45deg); }
-        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-        .accordion-content p { padding: 0 0 18px; color: var(--text-muted); line-height: 1.7; }
-
-        /* Header & Nav */
-        .header { position: sticky; top: 0; background: rgba(11, 17, 32, 0.95); backdrop-filter: blur(8px); z-index: 100; border-bottom: 1px solid var(--border); padding: 15px 0; }
-        .nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; position: relative; } /* Added position: relative */
-        .logo { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.5px; }
+        /* Header */
+        .header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background: rgba(5, 9, 20, 0.8); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-light);
+            padding: 15px 0;
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px; }
         .logo span { color: var(--primary); }
-        .nav-links { display: flex; gap: 20px; align-items: center; }
-        .nav-links a { color: var(--text-muted); font-size: 0.95rem; }
-        .nav-links a:hover { color: var(--text); }
-        .mobile-menu-btn { display: none; background: none; border: none; color: var(--text); font-size: 1.5rem; cursor: pointer; }
 
-        /* Hero */
-        .hero { text-align: center; padding: 80px 0 60px; }
-        .hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 15px; line-height: 1.2; }
-        .hero p { color: var(--text-muted); font-size: 1.15rem; margin-bottom: 25px; max-width: 700px; margin-left: auto; margin-right: auto; }
-        .hero-actions { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-links a { font-size: 0.95rem; font-weight: 500; opacity: 0.8; }
+        .nav-links a:hover { opacity: 1; color: var(--primary); }
 
-        /* NPD Block */
-        .npd-block { background: var(--surface); border: 1px dashed var(--border); padding: 15px; border-radius: var(--radius); margin: 20px auto; max-width: 800px; font-size: 0.9rem; color: var(--text-muted); text-align: center; }
+        .mobile-toggle { display: none; background: none; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; }
+
+        /* Hero Section */
+        .hero {
+            padding: 160px 0 100px;
+            text-align: center;
+            position: relative;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+            width: 600px; height: 600px; background: var(--primary);
+            filter: blur(150px); opacity: 0.15; border-radius: 50%; z-index: -1;
+        }
+        .hero-subtitle {
+            font-size: 1.25rem; max-width: 600px; margin: 0 auto 40px;
+            color: var(--text-muted);
+        }
+        .hero-actions { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+
+        .trust-badges {
+            display: flex; justify-content: center; gap: 30px; margin-top: 60px;
+            flex-wrap: wrap; font-size: 0.9rem; color: var(--text-muted);
+        }
+        .trust-item { display: flex; align-items: center; gap: 8px; }
+        .trust-item svg { width: 20px; height: 20px; fill: var(--primary); }
+
+        /* Cards & Grid */
+        .section { padding: 80px 0; }
+        .grid-3 {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            transition: var(--transition);
+            position: relative; overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .card-icon {
+            width: 50px; height: 50px; background: rgba(0, 229, 255, 0.1);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            margin-bottom: 20px; font-size: 1.5rem; color: var(--primary);
+        }
+        .card h3 { font-size: 1.3rem; margin-bottom: 10px; color: var(--text-main); }
+        .card-price {
+            margin-top: 15px; font-size: 1.1rem; font-weight: 700; color: var(--primary);
+        }
+
+        /* Why Us */
+        .why-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .feature-item {
+            display: flex; gap: 15px; align-items: flex-start;
+            padding: 20px; background: rgba(255,255,255,0.03); border-radius: var(--radius-md);
+        }
+        .feature-check { color: #10B981; font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+
+        /* Process Steps */
+        .process-steps {
+            display: flex; justify-content: space-between; position: relative;
+            margin-top: 50px; flex-wrap: wrap; gap: 30px;
+        }
+        .step {
+            flex: 1; min-width: 150px; text-align: center; position: relative; z-index: 1;
+        }
+        .step-num {
+            width: 50px; height: 50px; background: var(--bg-card); border: 2px solid var(--primary);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 15px; font-weight: 700; color: var(--primary); font-size: 1.2rem;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+        .step h4 { font-size: 1.1rem; margin-bottom: 5px; }
+        .step p { font-size: 0.9rem; }
+
+        /* FAQ Accordion */
+        .accordion-item {
+            background: var(--bg-card); border: 1px solid var(--border-light);
+            border-radius: var(--radius-md); margin-bottom: 15px; overflow: hidden;
+        }
+        .accordion-btn {
+            width: 100%; padding: 20px; text-align: left; background: none; border: none;
+            color: var(--text-main); font-size: 1.1rem; font-weight: 600; cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .accordion-btn::after { content: '+'; font-size: 1.5rem; color: var(--primary); transition: 0.3s; }
+        .accordion-btn.active::after { transform: rotate(45deg); }
+        .accordion-content {
+            max-height: 0; overflow: hidden; transition: max-height 0.3s ease;
+            padding: 0 20px; color: var(--text-muted);
+        }
+        .accordion-content p { padding-bottom: 20px; }
+
+        /* Contact Form */
+        .contact-section { background: linear-gradient(180deg, var(--bg-dark) 0%, #0a1020 100%); }
+        .form-box {
+            max-width: 600px; margin: 0 auto; background: var(--bg-card);
+            padding: 40px; border-radius: var(--radius-lg); border: 1px solid var(--border-light);
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-muted); }
+        .form-input {
+            width: 100%; padding: 14px; background: rgba(0,0,0,0.3); border: 1px solid var(--border-light);
+            border-radius: var(--radius-md); color: var(--text-main); font-size: 1rem;
+            transition: var(--transition);
+        }
+        .form-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,229,255,0.1); }
+        textarea.form-input { resize: vertical; min-height: 120px; }
 
         /* Footer */
-        .footer { padding: 40px 0 20px; text-align: center; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--border); }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; text-align: left; margin-bottom: 30px; }
-        .footer h4 { color: var(--text); margin-bottom: 12px; font-size: 1.1rem; }
-        .footer a { color: var(--text-muted); font-size: 0.9rem; }
-        .footer a:hover { color: var(--primary); }
-
-        /* Cookie Banner */
-        #cookieBanner { position: fixed; bottom: 20px; left: 20px; right: 20px; max-width: 500px; background: var(--surface); border: 1px solid var(--border); padding: 15px; border-radius: var(--radius); display: none; z-index: 999; font-size: 0.9rem; color: var(--text-muted); }
-        #cookieBanner button { margin-left: 10px; padding: 6px 12px; background: var(--primary); color: var(--bg); border: none; border-radius: 4px; cursor: pointer; font-weight: 600; }
-
-        /* Work Cards */
-        .work-card {
-            background: var(--surface);
-            border-radius: var(--radius);
-            overflow: hidden;
-            border: 1px solid var(--border);
-            transition: var(--transition);
-            height: 100%;
-            display: flex;
-            flex-direction: column;
+        .footer {
+            background: #02040a; border-top: 1px solid var(--border-light);
+            padding: 60px 0 30px; margin-top: 80px;
         }
-        .work-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--primary); }
-        .work-card img { width: 100%; height: 220px; object-fit: cover; }
-        .work-card-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
-        .work-card-content h3 { color: var(--primary); font-size: 1.1rem; margin-bottom: 8px; }
-        .work-card-content p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px; line-height: 1.5; flex-grow: 1; }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .container { max-width: 900px; }
+        .footer-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px; margin-bottom: 40px;
         }
+        .footer h4 { color: var(--text-main); margin-bottom: 20px; font-size: 1.1rem; }
+        .footer-links a { display: block; margin-bottom: 10px; color: var(--text-muted); font-size: 0.95rem; }
+        .footer-links a:hover { color: var(--primary); }
+        .copyright { text-align: center; color: #555; font-size: 0.9rem; border-top: 1px solid #111; padding-top: 20px; }
 
+        /* Mobile Responsive */
         @media (max-width: 768px) {
-            html { font-size: 16px !important; }
-            h1 { font-size: 1.8rem !important; }
-            h2 { font-size: 1.5rem !important; }
-            .card { padding: 18px; }
-            .card h3 { font-size: 1.15rem; }
-            .card p { font-size: 0.9rem; }
-            .btn { width: 100%; padding: 14px 20px; font-size: 1rem; }
-            .hero-actions { flex-direction: column; width: 100%; }
-            .trust-bar { flex-direction: column; gap: 8px; font-size: 0.85rem; }
-            .section { padding: 40px 0; }
-            .container { padding: 0 15px; }
-
-            /* Mobile Menu Fix */
+            h1 { font-size: 2.2rem; }
             .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 100%; /* Stick to bottom of header */
-                left: 0;
-                right: 0;
-                background: var(--bg);
-                padding: 20px;
-                border-bottom: 1px solid var(--border);
-                gap: 12px;
-                box-shadow: var(--shadow);
+                position: fixed; top: 70px; left: 0; width: 100%; background: var(--bg-dark);
+                flex-direction: column; padding: 30px; gap: 20px;
+                border-bottom: 1px solid var(--border-light);
+                transform: translateY(-150%); transition: transform 0.3s ease;
             }
-            .nav-links.open { display: flex; }
-            .mobile-menu-btn { display: block; }
-
-            .hero { padding: 50px 0 30px; }
-            .hero p { font-size: 1rem; }
-            .grid-3 { grid-template-columns: 1fr; }
-            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            .nav-links.open { transform: translateY(0); }
+            .mobile-toggle { display: block; }
+            .hero { padding: 120px 0 60px; }
+            .process-steps { flex-direction: column; gap: 40px; }
+            .step::after { display: none; } /* Убираем линии на мобильном */
         }
 
-        @media (max-width: 480px) {
-            h1 { font-size: 1.5rem !important; }
-            h2 { font-size: 1.3rem !important; }
-            .section-title { font-size: 1.4rem !important; }
-            .hero p { font-size: 0.95rem; }
-            .card h3 { font-size: 1.1rem; }
-            .price { font-size: 1rem; }
-            .btn { font-size: 0.95rem; padding: 12px 16px; }
-        }
+        /* Animation Classes */
+        .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
 
 <header class="header">
-    <div class="container nav">
-        <a href="./index.html" class="logo">⚡ Volt<span>Group</span></a>
-        <button class="mobile-menu-btn" aria-label="Открыть меню">☰</button>
+    <div class="container nav-container">
+        <a href="#" class="logo">⚡ Volt<span>Group</span></a>
+        <button class="mobile-toggle" aria-label="Меню">☰</button>
         <nav class="nav-links">
             <a href="#services">Услуги</a>
             <a href="./estimate.html">Калькулятор</a>
             <a href="./works.html">Работы</a>
-            <a href="#why">Почему мы</a>
-            <a href="#process">Как работаем</a>
+            <a href="#why">Преимущества</a>
             <a href="#faq">FAQ</a>
-            <a href="#contact">Контакты</a>
-            <a href="tel:+79990000000" class="btn btn-primary">📞 Позвонить</a>
+            <a href="#contact" class="btn btn-primary" style="padding: 10px 20px; font-size: 0.9rem;">Оставить заявку</a>
         </nav>
     </div>
 </header>
 
 <main>
+    <!-- Hero Section -->
     <section class="hero">
-        <div class="container">
-            <h1>Профессиональный электромонтаж<br>и автоматизация в СПб</h1>
-            <p>Энергия решений — от розетки до умного дома. Промышленный опыт, честные цены, гарантия 12 месяцев.</p>
+        <div class="container fade-in">
+            <h1>Профессиональный электромонтаж<br><span style="color: var(--primary);">и автоматизация</span> в СПб</h1>
+            <p class="hero-subtitle">Энергия решений — от розетки до умного дома. Промышленный опыт, честные цены, гарантия 12 месяцев.</p>
             <div class="hero-actions">
-                <a href="#contact" class="btn btn-primary">Рассчитать смету</a>
-                <a href="https://vk.com/club237900859" class="btn btn-outline">💬 Написать в VK</a>
+                <a href="#contact" class="btn btn-primary">Рассчитать стоимость</a>
+                <a href="https://t.me/voltgroup_spb" class="btn btn-outline">Написать в Telegram</a>
             </div>
-            <div class="trust-bar">
-                <span>✅ Договор и акт приёмки</span>
-                <span>📄 Чек НПД (ФНС)</span>
-                <span>🛠 Опыт с 2021 г.</span>
-                <span>🧹 Штроборез с пылесосом</span>
-                <span>📸 Фотоотчёт «до/после»</span>
+
+            <div class="trust-badges">
+                <div class="trust-item">
+                    <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                    <span>Договор и акт</span>
+                </div>
+                <div class="trust-item">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    <span>Чек НПД (ФНС)</span>
+                </div>
+                <div class="trust-item">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zm0 9l2.5-1.25L12 8.5l-2.5 1.25L12 11zm0 2.5l-5-2.5-5 2.5L12 22l10-8.5-5-2.5-5 2.5z"/></svg>
+                    <span>Опыт с 2021 г.</span>
+                </div>
             </div>
         </div>
     </section>
 
+    <!-- Services -->
     <section id="services" class="section">
         <div class="container">
-            <h2 class="section-title">Наши услуги</h2>
-            <div class="grid grid-3">
-                <div class="card"><h3>🏠 Для дома</h3><p>Розетки, выключатели, замена проводки, сборка щитов, диагностика</p><p class="price">от 450 ₽/точка</p></div>
-                <div class="card"><h3>🏡 Умный дом</h3><p>Сценарии света, климат-контроль, датчики безопасности, интеграция</p><p class="price">от 15 000 ₽/комната</p></div>
-                <div class="card"><h3>🏭 Для бизнеса</h3><p>Промышленные щиты, ПЛК, диспетчеризация, энергоаудит</p><p class="price">По ТЗ</p></div>
+            <h2 class="fade-in">Наши <span>услуги</span></h2>
+            <div class="grid-3">
+                <div class="card fade-in">
+                    <div class="card-icon">🏠</div>
+                    <h3>Для дома</h3>
+                    <p>Розетки, выключатели, полная замена проводки, сборка электрощитов, поиск неисправностей.</p>
+                    <div class="card-price">от 450 ₽/точка</div>
+                </div>
+                <div class="card fade-in" style="transition-delay: 0.1s;">
+                    <div class="card-icon">🧠</div>
+                    <h3>Умный дом</h3>
+                    <p>Сценарии освещения, климат-контроль, датчики протечки и безопасности, интеграция с Алисой.</p>
+                    <div class="card-price">от 15 000 ₽/комната</div>
+                </div>
+                <div class="card fade-in" style="transition-delay: 0.2s;">
+                    <div class="card-icon">🏭</div>
+                    <h3>Для бизнеса</h3>
+                    <p>Промышленные щиты автоматики, подключение станков.</p>
+                    <div class="card-price">По ТЗ</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- СЕКЦИЯ РАБОТ -->
-    <section id="gallery" class="section" style="background: var(--surface);">
+    <!-- Why Us -->
+    <section id="why" class="section" style="background: rgba(255,255,255,0.02);">
         <div class="container">
-            <h2 class="section-title">Примеры работ</h2>
-            <div class="grid grid-3" id="featuredWorks">
-                <!-- JS вставит карточки здесь -->
-            </div>
-
-            <div style="text-align: center; margin-top: 40px;">
-                <a href="./works.html" class="btn btn-outline" style="font-size: 1.1rem; padding: 15px 30px;">
-                    📸 Смотреть все работы
-                </a>
+            <h2 class="fade-in">Почему выбирают <span>VoltGroup</span></h2>
+            <div class="why-grid">
+                <div class="feature-item fade-in">
+                    <div class="feature-check">✔</div>
+                    <div>
+                        <h4>Прозрачная смета</h4>
+                        <p style="font-size: 0.9rem;">Цена фиксируется ДО начала работ. Никаких скрытых платежей и «сюрпризов» в процессе.</p>
+                    </div>
+                </div>
+                <div class="feature-item fade-in">
+                    <div class="feature-check">✔</div>
+                    <div>
+                        <h4>Идеальная чистота</h4>
+                        <p style="font-size: 0.9rem;">Штроборез с пылесосом, лазерный уровень. Убираю за собой. Ваш ремонт останется целым.</p>
+                    </div>
+                </div>
+                <div class="feature-item fade-in">
+                    <div class="feature-check">✔</div>
+                    <div>
+                        <h4>Официально</h4>
+                        <p style="font-size: 0.9rem;">Договор подряда, акт приёмки, чек из «Мой налог». Гарантия 12 месяцев по закону.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="why" class="section">
+    <!-- Process -->
+    <section id="process" class="section">
         <div class="container">
-            <h2 class="section-title">Почему выбирают VoltGroup</h2>
-            <div class="grid grid-3">
-                <div class="card"><h3>🔹 Прозрачная смета</h3><p>Цена фиксируется ДО начала работ. Никаких «сюрпризов».</p></div>
-                <div class="card"><h3>🔹 Чистота</h3><p>Штроборез с пылесосом, лазерный уровень, защитные плёнки. Убираю за собой. Ваш ремонт останется в том же состоянии.</p></div>
-                <div class="card"><h3>🔹 Официально</h3><p>Договор подряда, акт приёмки, чек из приложения ФНС «Мой налог». Гарантия 12 месяцев на работы. Работаю в рамках закона.</p></div>
+            <h2 class="fade-in">Как мы <span>работаем</span></h2>
+            <div class="process-steps">
+                <div class="step fade-in">
+                    <div class="step-num">1</div>
+                    <h4>Заявка</h4>
+                    <p>Пишете в VK или на сайте. Отвечаю за 15 мин.</p>
+                </div>
+                <div class="step fade-in">
+                    <div class="step-num">2</div>
+                    <h4>Выезд</h4>
+                    <p>Осмотр объекта, замеры, консультация.</p>
+                </div>
+                <div class="step fade-in">
+                    <div class="step-num">3</div>
+                    <h4>Смета</h4>
+                    <p>Фиксируем цену и сроки. Подписываем договор.</p>
+                </div>
+                <div class="step fade-in">
+                    <div class="step-num">4</div>
+                    <h4>Монтаж</h4>
+                    <p>Работа по ПУЭ, фотоотчеты, уборка.</p>
+                </div>
+                <div class="step fade-in">
+                    <div class="step-num">5</div>
+                    <h4>Сдача</h4>
+                    <p>Подписываем акт, выдаю чек и гарантию.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="process" class="section" style="background: var(--surface);">
-        <div class="container">
-            <h2 class="section-title">Как мы работаем</h2>
-            <div class="grid grid-3">
-                <div class="card" style="text-align:center"><div style="font-size:2rem; margin-bottom:10px">1️⃣</div><strong>Заявка</strong><p style="margin-top:8px">Пишете в VK или оставляете форму. Отвечаю в течение часа.</p></div>
-                <div class="card" style="text-align:center"><div style="font-size:2rem; margin-bottom:10px">2️⃣</div><strong>Выезд</strong><p style="margin-top:8px">Осмотр, замеры, консультация.</p></div>
-                <div class="card" style="text-align:center"><div style="font-size:2rem; margin-bottom:10px">3️⃣</div><strong>Смета</strong><p style="margin-top:8px">Фиксируем объём, материалы, сроки. Цена не меняется без вашего согласия.</p></div>
-                <div class="card" style="text-align:center"><div style="font-size:2rem; margin-bottom:10px">4️⃣</div><strong>Работа</strong><p style="margin-top:8px">Монтаж по ПУЭ, фотоотчёт, уборка. Сдаю объект в срок.</p></div>
-                <div class="card" style="text-align:center"><div style="font-size:2rem; margin-bottom:10px">5️⃣</div><strong>Приёмка</strong><p style="margin-top:8px">Подписываем акт, формирую чек НПД. Гарантия 12 месяцев</p></div>
-            </div>
-        </div>
-    </section>
-
+    <!-- FAQ -->
     <section id="faq" class="section">
         <div class="container">
-            <h2 class="section-title">Частые вопросы</h2>
-            <div class="accordion">
+            <h2 class="fade-in">Частые <span>вопросы</span></h2>
+            <div class="accordion fade-in">
                 <div class="accordion-item">
                     <button class="accordion-btn">Работаете ли вы официально?</button>
                     <div class="accordion-content">
@@ -334,7 +417,7 @@
                 <div class="accordion-item">
                     <button class="accordion-btn">Как рассчитывается стоимость?</button>
                     <div class="accordion-content">
-                        <p>Базовые работы — по фиксированному прайсу. Сложные — после осмотра. Смета согласовывается до старта. Предоплата только за материалы (50%), работы — после приёмки.</p>
+                        <p>Базовые работы — по фиксированному прайсу. Сложные — после осмотра. Смета согласовывается до старта. Предоплата только за материалы (100%), работы — после приёмки.</p>
                     </div>
                 </div>
                 <div class="accordion-item">
@@ -347,28 +430,45 @@
         </div>
     </section>
 
-    <section id="contact" class="section" style="background: var(--surface);">
+    <!-- Contact -->
+    <section id="contact" class="section contact-section">
         <div class="container">
-            <h2 class="section-title">Оставьте заявку</h2>
-            <form id="leadForm" style="max-width: 600px; margin: 0 auto; background: var(--bg); padding: 30px; border-radius: var(--radius); border: 1px solid var(--border);">
-                <div class="form-group"><label for="name">Имя *</label><input type="text" id="name" name="name" class="form-control" required placeholder="Как к вам обращаться?"></div>
-                <div class="form-group"><label for="phone">Телефон *</label><input type="tel" id="phone" name="phone" class="form-control" required placeholder="+7 (___) ___-__-__"></div>
-                <div class="form-group"><label for="service">Тип задачи</label><select id="service" name="service" class="form-control"><option value="Точечный монтаж">Точечный монтаж</option><option value="Замена проводки">Замена проводки</option><option value="Сборка щита">Сборка щита</option><option value="Умный дом">Умный дом / автоматизация</option><option value="Диагностика">Диагностика / авария</option><option value="Другое">Другое</option></select></div>
-                <div class="form-group"><label for="comment">Комментарий</label><textarea id="comment" name="comment" class="form-control" rows="4" placeholder="Район, тип помещения, срочность..."></textarea></div>
+            <h2 class="fade-in">Оставьте <span>заявку</span></h2>
+            <p style="text-align: center; margin-bottom: 30px;">Отвечу в течение часа. Расчет сметы — бесплатно.</p>
 
-                <!-- Honeypot for Spam Protection -->
-                <input type="text" name="_gotcha" style="display:none !important;" tabindex="-1" autocomplete="off">
-
-                <!-- Consent Checkbox -->
+            <form id="leadForm" class="form-box fade-in">
                 <div class="form-group">
-                    <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:0.85rem; color:var(--text-muted);">
-                        <input type="checkbox" name="consent" required style="margin-top:4px; accent-color: var(--primary);">
-                        <span>Я даю согласие на обработку персональных данных в соответствии с <a href="./privacy.html">Политикой конфиденциальности</a></span>
+                    <label class="form-label">Ваше имя</label>
+                    <input type="text" name="name" class="form-input" required placeholder="Иван">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Телефон</label>
+                    <input type="tel" name="phone" class="form-input" required placeholder="+7 (999) 000-00-00">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Тип задачи</label>
+                    <select name="service" class="form-input">
+                        <option>Замена проводки</option>
+                        <option>Сборка щита</option>
+                        <option>Умный дом</option>
+                        <option>Диагностика</option>
+                        <option>Другое</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Комментарий</label>
+                    <textarea name="comment" class="form-input" placeholder="Район, площадь, пожелания..."></textarea>
+                </div>
+
+                <div class="form-group" style="display: flex; gap: 10px; align-items: flex-start;">
+                    <input type="checkbox" name="consent" required id="consent" style="margin-top: 5px; accent-color: var(--primary);">
+                    <label for="consent" style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">
+                        Я даю согласие на обработку персональных данных в соответствии с <a href="./privacy.html" style="color: var(--primary); text-decoration: underline;">Политикой конфиденциальности</a>
                     </label>
                 </div>
 
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Получить расчёт за 30 минут</button>
-                <p id="formStatus" style="margin-top: 10px; text-align: center; display: none;"></p>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Получить расчёт</button>
+                <p id="formStatus" style="margin-top: 15px; text-align: center; display: none;"></p>
             </form>
         </div>
     </section>
@@ -377,37 +477,65 @@
 <footer class="footer">
     <div class="container">
         <div class="footer-grid">
-            <div><h4>⚡ VoltGroup</h4><p style="color: var(--text-muted); font-size: 0.9rem;">Энергия решений.<br>Электрика и автоматизация в СПб.</p></div>
-            <div><h4>Контакты</h4><p>📞 <a href="tel:+79990000000">+7 (999) 000-00-00</a></p><p>💬 <a href="https://vk.com/club237900859">@voltgroup_spb</a></p><p>🕒 Пн–Сб: 9:00–21:00</p></div>
-            <div><h4>Документы</h4><p><a href="./privacy.html">Политика конфиденциальности</a></p><p><a href="./offer.html">Публичная оферта</a></p><p><a href="./cookies.html">Политика cookies</a></p></div>
+            <div>
+                <h4>⚡ VoltGroup</h4>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
+                    Энергия решений.<br>Электрика и автоматизация в СПб.
+                </p>
+                <a href="https://vk.com/voltgroup_spb" style="color: var(--primary); font-weight: 600;">@voltgroup_spb</a>
+            </div>
+            <div class="footer-links">
+                <h4>Навигация</h4>
+                <a href="#services">Услуги</a>
+                <a href="./estimate.html">Калькулятор</a>
+                <a href="./works.html">Портфолио</a>
+                <a href="#contact">Контакты</a>
+            </div>
+            <div class="footer-links">
+                <h4>Документы</h4>
+                <a href="./privacy.html">Политика конфиденциальности</a>
+                <a href="./offer.html">Публичная оферта</a>
+                <a href="./cookies.html">Cookies</a>
+            </div>
+            <div>
+                <h4>Контакты</h4>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;">📞 +7 (999) 000-00-00</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">🕒 Пн–Сб: 9:00–21:00</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">📍 Санкт-Петербург</p>
+            </div>
         </div>
-        <div class="npd-block">Исполнитель: Зрячих Матвей, плательщик НПД (самозанятый)<br>ИНН: 591110297727 | Чек формируется в приложении ФНС «Мой налог»<br>© 2026 VoltGroup. Все права защищены.</div>
+        <div class="copyright">
+            © 2026 VoltGroup. Все права защищены.
+        </div>
     </div>
 </footer>
 
-<div id="cookieBanner">🍪 Мы используем cookie для аналитики. <a href="./cookies.html">Подробнее</a>.<button onclick="localStorage.setItem('cookies','ok');document.getElementById('cookieBanner').style.display='none'">Согласен</button></div>
+<div id="cookieBanner" style="position: fixed; bottom: 20px; left: 20px; right: 20px; max-width: 400px; background: var(--bg-card); border: 1px solid var(--border-light); padding: 20px; border-radius: var(--radius-md); display: none; z-index: 999; backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+    <p style="font-size: 0.9rem; margin-bottom: 10px;">🍪 Мы используем cookie для аналитики.</p>
+    <button onclick="localStorage.setItem('cookies','ok');document.getElementById('cookieBanner').style.display='none'" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.8rem;">Согласен</button>
+</div>
 
 <script>
-    // Mobile Menu Toggle
-    const menuBtn = document.querySelector('.mobile-menu-btn');
+    // Mobile Menu
+    const mobileToggle = document.querySelector('.mobile-toggle');
     const navLinks = document.querySelector('.nav-links');
 
-    if(menuBtn && navLinks) {
-        menuBtn.addEventListener('click', () => {
+    if(mobileToggle) {
+        mobileToggle.addEventListener('click', () => {
             navLinks.classList.toggle('open');
-            const isExpanded = navLinks.classList.contains('open');
-            menuBtn.setAttribute('aria-expanded', isExpanded);
-        });
-
-        // Close menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('open');
-            });
+            mobileToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
         });
     }
 
-    // Accordion Logic
+    // Close menu on link click
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('open');
+            mobileToggle.textContent = '☰';
+        });
+    });
+
+    // Accordion
     document.querySelectorAll('.accordion-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             btn.classList.toggle('active');
@@ -421,7 +549,7 @@
     });
 
     // Phone Mask
-    const phoneInput = document.getElementById('phone');
+    const phoneInput = document.querySelector('input[name="phone"]');
     if(phoneInput) {
         phoneInput.addEventListener('input', e => {
             let x = e.target.value.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
@@ -444,7 +572,7 @@
             status.style.color = 'var(--text-muted)';
             status.textContent = '⏳ Отправляем заявку...';
 
-            const endpoint = 'https://formspree.io/f/xgopglbn'; // Замените на ваш ID, если другой
+            const endpoint = 'https://formspree.io/f/xgopglbn';
 
             try {
                 const res = await fetch(endpoint, {
@@ -466,7 +594,7 @@
                 status.style.color = '#EF4444';
             } finally {
                 btn.disabled = false;
-                btn.textContent = 'Получить расчёт за 30 минут';
+                btn.textContent = 'Получить расчёт';
             }
         });
     }
@@ -476,44 +604,17 @@
         document.getElementById('cookieBanner').style.display = 'block';
     }
 
-    // Load Featured Works from JSON
-    async function loadFeaturedWorks() {
-        const container = document.getElementById('featuredWorks');
-        if (!container) return;
-
-        try {
-            const res = await fetch('./gallery/gallery-config.json');
-            if (!res.ok) throw new Error('Файл конфигурации не найден');
-
-            const items = await res.json();
-            const featured = items.slice(0, 3); // Берем первые 3
-
-            if (featured.length === 0) {
-                container.innerHTML = '<p style="color:var(--text-muted); text-align:center; grid-column:1/-1;">Примеры работ скоро появятся</p>';
-                return;
+    // Scroll Animation (Fade In)
+    const observerOptions = { threshold: 0.1 };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
             }
+        });
+    }, observerOptions);
 
-            container.innerHTML = featured.map(item => `
-                <div class="work-card">
-                    <img src="${item.image}" alt="${item.title}" loading="lazy">
-                    <div class="work-card-content">
-                        <h3>${item.title}</h3>
-                        <p>${item.description}</p>
-                        <div style="display:flex; flex-wrap:wrap; gap:6px;">
-                            ${item.badges ? item.badges.map(b => `<span class="badge">${b}</span>`).join('') : ''}
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-
-        } catch (e) {
-            console.warn("Не удалось загрузить работы:", e);
-            container.innerHTML = '<p style="color:var(--text-muted); text-align:center; grid-column:1/-1;">Загрузка примеров...</p>';
-        }
-    }
-
-    // Init
-    document.addEventListener('DOMContentLoaded', loadFeaturedWorks);
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>

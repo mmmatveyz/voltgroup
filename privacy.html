@@ -4,190 +4,195 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Политика конфиденциальности | VoltGroup</title>
-    <meta name="description" content="Политика обработки персональных данных на сайте VoltGroup. Соответствие 152-ФЗ.">
-
+    <link rel="icon" href="image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
     <style>
         :root {
-            --bg: #0B1120;
-            --surface: #111827;
+            --bg-dark: #050914;
+            --bg-card: rgba(17, 24, 39, 0.7);
             --primary: #00E5FF;
-            --text: #F8FAFC;
+            --primary-glow: rgba(0, 229, 255, 0.4);
+            --text-main: #F8FAFC;
             --text-muted: #94A3B8;
-            --radius: 8px;
-            --font: system-ui, -apple-system, sans-serif;
+            --border-light: rgba(255, 255, 255, 0.1);
+            --radius-lg: 16px;
+            --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: var(--font);
-            line-height: 1.7;
-            padding: 40px 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        h1 {
-            color: var(--primary);
-            margin-bottom: 20px;
-            font-size: 2rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 15px;
-        }
-
-        h2 {
-            color: var(--text);
-            margin-top: 30px;
-            margin-bottom: 15px;
-            font-size: 1.4rem;
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at 50% 0%, #1a2c4e 0%, var(--bg-dark) 60%);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            min-height: 100vh;
             display: flex;
-            align-items: center;
-            gap: 10px;
+            flex-direction: column;
         }
+        .container { max-width: 800px; margin: 0 auto; width: 100%; padding: 0 20px; }
 
-        h2::before {
-            content: '';
-            display: inline-block;
-            width: 6px;
-            height: 24px;
-            background: var(--primary);
-            border-radius: 4px;
-        }
+        /* Header */
+        .header { position: sticky; top: 0; z-index: 100; background: rgba(5, 9, 20, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-light); padding: 15px 0; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .logo span { color: var(--primary); }
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-links a { font-size: 0.95rem; font-weight: 500; opacity: 0.8; text-decoration: none; color: var(--text-main); transition: var(--transition); }
+        .nav-links a:hover { opacity: 1; color: var(--primary); }
+        .mobile-toggle { display: none; background: none; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; }
 
-        p {
-            color: var(--text-muted);
-            margin-bottom: 15px;
-        }
+        /* Content */
+        .content-wrapper { flex: 1; padding: 60px 0; }
+        h1 { font-size: 2rem; margin-bottom: 30px; color: var(--primary); border-bottom: 1px solid var(--border-light); padding-bottom: 15px; }
+        h2 { font-size: 1.4rem; margin-top: 30px; margin-bottom: 15px; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
+        h2::before { content: ''; display: inline-block; width: 6px; height: 24px; background: var(--primary); border-radius: 4px; }
+        p { color: var(--text-muted); margin-bottom: 15px; }
+        ul { margin-bottom: 20px; padding-left: 20px; color: var(--text-muted); }
+        li { margin-bottom: 10px; }
+        strong { color: var(--text-main); }
+        a { color: var(--primary); text-decoration: none; transition: opacity 0.2s; }
+        a:hover { opacity: 0.8; text-decoration: underline; }
 
-        ul {
-            margin-bottom: 20px;
-            padding-left: 20px;
-            color: var(--text-muted);
-        }
-
-        li {
-            margin-bottom: 10px;
-        }
-
-        strong {
-            color: var(--text);
-        }
-
-        a {
-            color: var(--primary);
-            text-decoration: none;
-            transition: opacity 0.2s;
-        }
-
-        a:hover {
-            opacity: 0.8;
-            text-decoration: underline;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background: var(--surface);
-            border-radius: var(--radius);
-            overflow: hidden;
-        }
-
-        th, td {
-            border: 1px solid var(--border);
-            padding: 12px 15px;
-            text-align: left;
-            font-size: 0.95rem;
-        }
-
-        th {
-            background: rgba(255,255,255,0.05);
-            color: var(--primary);
-            font-weight: 600;
-        }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; background: var(--bg-card); border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border-light); }
+        th, td { border: 1px solid var(--border-light); padding: 12px 15px; text-align: left; font-size: 0.95rem; }
+        th { background: rgba(255,255,255,0.05); color: var(--primary); font-weight: 600; }
 
         .back-btn {
-            display: inline-block;
-            margin-top: 40px;
-            padding: 12px 24px;
-            background: var(--primary);
-            color: var(--bg);
-            border-radius: var(--radius);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.2s ease;
+            display: inline-flex; align-items: center; gap: 8px;
+            margin-top: 40px; padding: 14px 28px;
+            background: var(--primary); color: #000; border-radius: 50px;
+            text-decoration: none; font-weight: 600; transition: var(--transition);
+            box-shadow: 0 0 20px var(--primary-glow);
+            border: none; cursor: pointer; font-size: 1rem;
+        }
+        .back-btn:hover {
+            background: #fff; transform: translateY(-2px);
+            box-shadow: 0 0 30px var(--primary-glow);
         }
 
-        .back-btn:hover {
-            background: #00B8D4;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,229,255,0.2);
+        /* Footer */
+        .footer { background: #02040a; border-top: 1px solid var(--border-light); padding: 60px 0 30px; margin-top: 60px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .footer h4 { color: var(--text-main); margin-bottom: 20px; font-size: 1.1rem; }
+        .footer-links a { display: block; margin-bottom: 10px; color: var(--text-muted); font-size: 0.95rem; text-decoration: none; }
+        .footer-links a:hover { color: var(--primary); }
+        .copyright { text-align: center; color: #555; font-size: 0.9rem; border-top: 1px solid #111; padding-top: 20px; max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed; top: 70px; left: 0; width: 100%; background: var(--bg-dark);
+                flex-direction: column; padding: 30px; gap: 20px;
+                border-bottom: 1px solid var(--border-light);
+                transform: translateY(-150%); transition: transform 0.3s ease;
+            }
+            .nav-links.open { transform: translateY(0); }
+            .mobile-toggle { display: block; }
+            .content-wrapper { padding: 40px 0; }
         }
     </style>
 </head>
 <body>
-<h1>Политика конфиденциальности</h1>
-<p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 30px;">в отношении обработки персональных данных</p>
+<header class="header">
+    <div class="nav-container">
+        <a href="./index.html" class="logo">⚡ Volt<span>Group</span></a>
+        <button class="mobile-toggle" aria-label="Меню">☰</button>
+        <nav class="nav-links">
+            <a href="./index.html#services">Услуги</a>
+            <a href="./estimate.html">Калькулятор</a>
+            <a href="./works.html">Работы</a>
+            <a href="./index.html#why">Преимущества</a>
+            <a href="./index.html#faq">FAQ</a>
+            <a href="./index.html#contact" style="padding: 10px 20px; font-size: 0.9rem;">Оставить заявку</a>
+        </nav>
+    </div>
+</header>
 
-<h2>1. Общие положения</h2>
-<p>Настоящая Политика конфиденциальности (далее — «Политика») определяет порядок обработки и защиты персональных данных пользователей сайта <strong>voltgroup-spb.ru</strong> (далее — «Сайт»), принадлежащего <strong>Зрячих Матвею</strong>, применяющему специальный налоговый режим «Налог на профессиональный доход» (НПД).</p>
-<p>Используя Сайт, вы соглашаетесь с условиями данной Политики.</p>
+<div class="content-wrapper">
+    <div class="container">
+        <h1>Политика конфиденциальности</h1>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 30px;">в отношении обработки персональных данных</p>
 
-<h2>2. Оператор персональных данных</h2>
-<p><strong>Оператор:</strong> Зрячих Матвей<br>
-    <strong>Статус:</strong> Плательщик НПД (самозанятый)<br>
-    <strong>Контакты:</strong> <a href="https://vk.com/club237900859">@voltgroup_spb</a></p>
+        <h2>1. Общие положения</h2>
+        <p>Настоящая Политика конфиденциальности определяет порядок обработки и защиты персональных данных пользователей сайта <strong>voltgroup-spb.ru</strong>, принадлежащего <strong>Зрячих Матвею Олеговичу</strong>.</p>
 
-<h2>3. Какие данные мы собираем</h2>
-<p>Мы собираем только те данные, которые необходимы для оказания услуг и связи с вами:</p>
-<table>
-    <thead>
-    <tr>
-        <th>Тип данных</th>
-        <th>Цель обработки</th>
-        <th>Срок хранения</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>Имя, номер телефона, email (если указан)</td>
-        <td>Обработка заявок, консультация, заключение договора, выполнение работ</td>
-        <td>До отзыва согласия или в течение 3 лет после последнего взаимодействия (для налоговой отчётности)</td>
-    </tr>
-    <tr>
-        <td>Технические данные (IP-адрес, cookies, User-Agent)</td>
-        <td>Аналитика посещаемости (Яндекс.Метрика), улучшение работы Сайта</td>
-        <td>13 месяцев (согласно настройкам Яндекс.Метрики)</td>
-    </tr>
-    </tbody>
-</table>
+        <h2>2. Оператор персональных данных</h2>
+        <p><strong>Оператор:</strong> Зрячих Матвей Олегович<br>
+            <strong>Статус:</strong> Плательщик НПД (самозанятый)<br>
+            <strong>Контакты:</strong> <a href="https://vk.com/voltgroup_spb">@voltgroup_spb</a></p>
 
-<h2>4. Как мы используем данные</h2>
-<ul>
-    <li>Для связи с вами по оставленной заявке.</li>
-    <li>Для расчёта стоимости работ и составления сметы.</li>
-    <li>Для выполнения электромонтажных работ и оформления документов (договор, акт, чек).</li>
-    <li>Для улучшения качества обслуживания и анализа статистики посещений.</li>
-</ul>
-<p>Мы <strong>не передаём</strong> ваши персональные данные третьим лицам, за исключением случаев, предусмотренных законодательством РФ (например, по запросу правоохранительных органов).</p>
+        <h2>3. Какие данные мы собираем</h2>
+        <table>
+            <thead>
+            <tr><th>Тип данных</th><th>Цель обработки</th><th>Срок хранения</th></tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Имя, телефон, email</td>
+                <td>Обработка заявок, консультация, заключение договора</td>
+                <td>До отзыва согласия или 3 года</td>
+            </tr>
+            <tr>
+                <td>Технические данные (IP, cookies)</td>
+                <td>Аналитика посещаемости (Яндекс.Метрика)</td>
+                <td>13 месяцев</td>
+            </tr>
+            </tbody>
+        </table>
 
-<h2>5. Ваши права</h2>
-<p>Вы имеете право:</p>
-<ul>
-    <li>Запросить информацию о том, какие ваши данные мы храним.</li>
-    <li>Потребовать исправления неточных данных.</li>
-    <li>Отозвать согласие на обработку персональных данных, написав нам в VK <a href="https://vk.com/club237900859">@voltgroup_spb</a>.</li>
-</ul>
-<p>Запрос обрабатывается в течение 10 рабочих дней.</p>
+        <h2>4. Ваши права</h2>
+        <ul>
+            <li>Запросить информацию о хранимых данных.</li>
+            <li>Потребовать исправления неточных данных.</li>
+            <li>Отозвать согласие на обработку, написав в VKontakte.</li>
+        </ul>
 
-<h2>6. Защита данных</h2>
-<p>Мы принимаем необходимые организационные и технические меры для защиты ваших данных от несанкционированного доступа, изменения или уничтожения.</p>
+        <a href="./index.html" class="back-btn">← Вернуться на главную</a>
+    </div>
+</div>
 
-<h2>7. Изменения в Политике</h2>
-<p>Мы можем обновлять данную Политику. Актуальная версия всегда доступна на этой странице.</p>
+<footer class="footer">
+    <div class="footer-grid">
+        <div>
+            <h4>⚡ VoltGroup</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
+                Энергия решений.<br>Электрика и автоматизация в СПб.
+            </p>
+            <a href="https://vk.com/voltgroup_spb" style="color: var(--primary); font-weight: 600;">@voltgroup_spb</a>
+        </div>
+        <div class="footer-links">
+            <h4>Навигация</h4>
+            <a href="./index.html#services">Услуги</a>
+            <a href="./estimate.html">Калькулятор</a>
+            <a href="./works.html">Портфолио</a>
+            <a href="./index.html#contact">Контакты</a>
+        </div>
+        <div class="footer-links">
+            <h4>Документы</h4>
+            <a href="./privacy.html">Политика конфиденциальности</a>
+            <a href="./offer.html">Публичная оферта</a>
+            <a href="./cookies.html">Cookies</a>
+        </div>
+        <div>
+            <h4>Контакты</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;">📞 +7 (999) 000-00-00</p>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">🕒 Пн–Сб: 9:00–21:00</p>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">📍 Санкт-Петербург</p>
+        </div>
+    </div>
+    <div class="copyright">
+        © 2026 VoltGroup. Все права защищены.
+    </div>
+</footer>
 
-<a href="./index.html" class="back-btn">← Вернуться на главную</a>
+<script>
+    const mobileToggle = document.querySelector('.mobile-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    if(mobileToggle) {
+        mobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+            mobileToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+        });
+    }
+</script>
 </body>
 </html>

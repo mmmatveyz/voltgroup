@@ -6,126 +6,232 @@
     <title>Примеры работ | VoltGroup</title>
     <meta name="description" content="Портфолио выполненных электромонтажных работ: сборка щитов, замена проводки, умный дом. Фото до и после.">
 
-     <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+    <!-- Favicon -->
+    <link rel="icon" href="image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 
     <style>
         :root {
-            --bg: #0B1120;
-            --surface: #111827;
+            --bg-dark: #050914;
+            --bg-card: rgba(17, 24, 39, 0.7);
             --primary: #00E5FF;
-            --primary-hover: #00B8D4;
-            --text: #F8FAFC;
+            --primary-glow: rgba(0, 229, 255, 0.4);
+            --text-main: #F8FAFC;
             --text-muted: #94A3B8;
-            --border: #1E293B;
-            --radius: 8px;
-            --font: system-ui, -apple-system, sans-serif;
-            --shadow: 0 4px 12px rgba(0,0,0,0.4);
+            --border-light: rgba(255, 255, 255, 0.1);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at 50% 0%, #1a2c4e 0%, var(--bg-dark) 60%);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-        body { background: var(--bg); color: var(--text); font-family: var(--font); line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; }
-
-        a { color: var(--primary); text-decoration: none; transition: 0.2s; }
-        a:hover { color: var(--primary-hover); }
-        img { max-width: 100%; height: auto; display: block; }
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; width: 100%; }
 
+        /* Typography */
+        h1, h2, h3 { font-weight: 700; letter-spacing: -0.02em; }
+        h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 15px; text-align: center; }
+        p { color: var(--text-muted); font-size: 1.1rem; }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 12px 28px; border-radius: 50px; font-weight: 600; font-size: 1rem;
+            cursor: pointer; border: none; transition: var(--transition);
+        }
+        .btn-primary {
+            background: var(--primary); color: #000;
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px var(--primary-glow);
+            background: #fff;
+        }
+        .btn-outline {
+            background: transparent; border: 2px solid var(--primary); color: var(--primary);
+        }
+        .btn-outline:hover {
+            background: var(--primary); color: #000;
+        }
+
         /* Header */
-        .header { position: sticky; top: 0; background: rgba(11, 17, 32, 0.95); backdrop-filter: blur(8px); z-index: 100; border-bottom: 1px solid var(--border); padding: 15px 0; }
-        .nav { display: flex; justify-content: space-between; align-items: center; position: relative; } /* Added position: relative */
-        .logo { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.5px; }
+        .header {
+            position: sticky; top: 0; left: 0; width: 100%; z-index: 1000;
+            background: rgba(5, 9, 20, 0.85); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-light);
+            padding: 15px 0;
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px; }
         .logo span { color: var(--primary); }
-        .nav-links { display: flex; gap: 20px; align-items: center; }
-        .nav-links a { color: var(--text-muted); font-size: 0.95rem; }
-        .nav-links a:hover, .nav-links a.active { color: var(--text); }
-        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 12px 24px; border-radius: var(--radius); font-weight: 600; border: none; cursor: pointer; transition: all 0.2s; }
-        .btn-primary { background: var(--primary); color: var(--bg); }
-        .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: var(--shadow); }
-        .mobile-menu-btn { display: none; background: none; border: none; color: var(--text); font-size: 1.5rem; cursor: pointer; }
+
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-links a { font-size: 0.95rem; font-weight: 500; opacity: 0.8; }
+        .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--primary); }
+
+        .mobile-toggle { display: none; background: none; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; }
 
         /* Page Header */
-        .page-header { padding: 60px 0 40px; text-align: center; }
-        .page-header h1 { font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 15px; }
-        .page-header p { color: var(--text-muted); font-size: 1.1rem; max-width: 700px; margin: 0 auto; }
+        .page-header { padding: 100px 0 60px; text-align: center; }
+        .page-header p { max-width: 600px; margin: 0 auto; }
 
         /* Works Grid */
-        .works-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; padding: 20px 0 60px; }
-        .work-card { background: var(--surface); border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; height: 100%; }
-        .work-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); border-color: var(--primary); }
-        .work-card img { width: 100%; height: 220px; object-fit: cover; cursor: zoom-in; transition: opacity 0.3s; }
-        .work-card img:hover { opacity: 0.9; }
-        .work-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
-        .work-content h3 { color: var(--primary); font-size: 1.2rem; margin-bottom: 10px; }
-        .work-content p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px; flex-grow: 1; }
-        .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
-        .badge { background: var(--bg); border: 1px solid var(--border); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; color: var(--text-muted); }
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            padding-bottom: 80px;
+        }
 
-        /* Footer */
-        .footer { margin-top: auto; padding: 40px 0 20px; text-align: center; color: var(--text-muted); border-top: 1px solid var(--border); }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; text-align: left; margin-bottom: 30px; }
-        .footer h4 { color: var(--text); margin-bottom: 12px; font-size: 1.1rem; }
-        .footer a { color: var(--text-muted); font-size: 0.9rem; }
-        .footer a:hover { color: var(--primary); }
-        .npd-block { background: var(--surface); border: 1px dashed var(--border); padding: 15px; border-radius: var(--radius); margin: 20px auto; max-width: 800px; font-size: 0.9rem; color: var(--text-muted); text-align: center; }
+        .work-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            backdrop-filter: blur(10px);
+        }
+        .work-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .work-card-img-wrapper {
+            position: relative;
+            overflow: hidden;
+            height: 220px;
+        }
+        .work-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .work-card:hover img { transform: scale(1.05); }
+
+        .work-content { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
+        .work-content h3 { color: var(--text-main); font-size: 1.25rem; margin-bottom: 10px; }
+        .work-content p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px; flex-grow: 1; }
+
+        .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+        .badge {
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--primary);
+        }
 
         /* Lightbox */
-        .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; padding: 20px; opacity: 0; transition: opacity 0.3s ease; }
-        .lightbox.active { display: flex; opacity: 1; }
-        .lightbox img { max-width: 100%; max-height: 90vh; object-fit: contain; border-radius: 8px; box-shadow: 0 0 20px rgba(0,229,255,0.1); }
-        .lightbox-close { position: absolute; top: 20px; right: 30px; font-size: 3rem; color: var(--primary); cursor: pointer; background: none; border: none; line-height: 1; transition: 0.2s; }
-        .lightbox-close:hover { color: var(--text); transform: scale(1.1); }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .works-grid { grid-template-columns: 1fr; }
-            .page-header h1 { font-size: 1.8rem; }
-
-            /* Mobile Menu Fix */
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 100%; /* Stick to bottom of header */
-                left: 0;
-                right: 0;
-                background: var(--bg);
-                padding: 20px;
-                border-bottom: 1px solid var(--border);
-                gap: 12px;
-                box-shadow: var(--shadow);
-            }
-            .nav-links.open { display: flex; }
-            .mobile-menu-btn { display: block; }
-
-            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
+        .lightbox.active { display: flex; opacity: 1; }
+        .lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: var(--radius-md);
+            box-shadow: 0 0 30px rgba(0,229,255,0.2);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px; right: 30px;
+            font-size: 3rem;
+            color: var(--text-main);
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: 0.2s;
+            z-index: 2001;
+        }
+        .lightbox-close:hover { color: var(--primary); transform: scale(1.1); }
+
+        /* Footer */
+        .footer {
+            background: #02040a; border-top: 1px solid var(--border-light);
+            padding: 60px 0 30px; margin-top: auto;
+        }
+        .footer-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px; margin-bottom: 40px;
+        }
+        .footer h4 { color: var(--text-main); margin-bottom: 20px; font-size: 1.1rem; }
+        .footer-links a { display: block; margin-bottom: 10px; color: var(--text-muted); font-size: 0.95rem; }
+        .footer-links a:hover { color: var(--primary); }
+        .copyright { text-align: center; color: #555; font-size: 0.9rem; border-top: 1px solid #111; padding-top: 20px; }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed; top: 70px; left: 0; width: 100%; background: var(--bg-dark);
+                flex-direction: column; padding: 30px; gap: 20px;
+                border-bottom: 1px solid var(--border-light);
+                transform: translateY(-150%); transition: transform 0.3s ease;
+            }
+            .nav-links.open { transform: translateY(0); }
+            .mobile-toggle { display: block; }
+            .works-grid { grid-template-columns: 1fr; }
+            .page-header { padding: 80px 0 40px; }
+        }
+
+        /* Animation */
+        .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
 
 <header class="header">
-    <div class="container nav">
+    <div class="container nav-container">
         <a href="./index.html" class="logo">⚡ Volt<span>Group</span></a>
-        <button class="mobile-menu-btn" aria-label="Открыть меню">☰</button>
+        <button class="mobile-toggle" aria-label="Меню">☰</button>
         <nav class="nav-links">
             <a href="./index.html#services">Услуги</a>
             <a href="./estimate.html">Калькулятор</a>
             <a href="./works.html" class="active">Работы</a>
-            <a href="./index.html#why">Почему мы</a>
-            <a href="./index.html#process">Как работаем</a>
+            <a href="./index.html#why">Преимущества</a>
             <a href="./index.html#faq">FAQ</a>
-            <a href="./index.html#contact">Контакты</a>
-            <a href="tel:+79990000000" class="btn btn-primary">📞 Позвонить</a>
+            <a href="./index.html#contact" class="btn btn-primary" style="padding: 10px 20px; font-size: 0.9rem;">Оставить заявку</a>
         </nav>
     </div>
 </header>
 
-<div class="page-header">
+<div class="page-header fade-in">
     <div class="container">
-        <h1>Все наши работы</h1>
-        <p>Полное портфолио выполненных объектов: от замены розеток до промышленной автоматизации.</p>
+        <h1>Наши <span style="color: var(--primary);">работы</span></h1>
+        <p>Реальные примеры электромонтажа и автоматизации. От замены розеток до сложных щитов.</p>
     </div>
 </div>
 
@@ -147,48 +253,56 @@
         <div class="footer-grid">
             <div>
                 <h4>⚡ VoltGroup</h4>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">
-                    Энергия решений.<br>
-                    Электрика и автоматизация в СПб.
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
+                    Энергия решений.<br>Электрика и автоматизация в СПб.
                 </p>
+                <a href="https://vk.com/voltgroup_spb" style="color: var(--primary); font-weight: 600;">@voltgroup_spb</a>
+            </div>
+            <div class="footer-links">
+                <h4>Навигация</h4>
+                <a href="./index.html#services">Услуги</a>
+                <a href="./estimate.html">Калькулятор</a>
+                <a href="./works.html">Портфолио</a>
+                <a href="./index.html#contact">Контакты</a>
+            </div>
+            <div class="footer-links">
+                <h4>Документы</h4>
+                <a href="./privacy.html">Политика конфиденциальности</a>
+                <a href="./offer.html">Публичная оферта</a>
+                <a href="./cookies.html">Cookies</a>
             </div>
             <div>
                 <h4>Контакты</h4>
-                <p>📞 <a href="tel:+79990000000">+7 (999) 000-00-00</a></p>
-                <p>💬 <a href="https://vk.com/club237900859">@voltgroup_spb</a></p>
-                <p>🕒 Пн–Сб: 9:00–21:00</p>
-            </div>
-            <div>
-                <h4>Документы</h4>
-                <p><a href="./privacy.html">Политика конфиденциальности</a></p>
-                <p><a href="./offer.html">Публичная оферта</a></p>
-                <p><a href="./cookies.html">Политика cookies</a></p>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;">📞 +7 (999) 000-00-00</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">🕒 Пн–Сб: 9:00–21:00</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">📍 Санкт-Петербург</p>
             </div>
         </div>
-        <div class="npd-block">
-            Исполнитель: Зрячих Матвей, плательщик НПД (самозанятый)<br>
-            ИНН: 591110297727 | Чек формируется в приложении ФНС «Мой налог»<br>
+        <div class="copyright">
             © 2026 VoltGroup. Все права защищены.
         </div>
     </div>
 </footer>
 
 <script>
-    // Mobile Menu Logic
-    const menuBtn = document.querySelector('.mobile-menu-btn');
+    // Mobile Menu
+    const mobileToggle = document.querySelector('.mobile-toggle');
     const navLinks = document.querySelector('.nav-links');
 
-    if(menuBtn && navLinks) {
-        menuBtn.addEventListener('click', () => {
+    if(mobileToggle) {
+        mobileToggle.addEventListener('click', () => {
             navLinks.classList.toggle('open');
-        });
-        // Close menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('open');
-            });
+            mobileToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
         });
     }
+
+    // Close menu on link click
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('open');
+            mobileToggle.textContent = '☰';
+        });
+    });
 
     // Load Works from JSON
     async function loadWorks() {
@@ -204,9 +318,11 @@
                 return;
             }
 
-            grid.innerHTML = items.map(item => `
-                <div class="work-card">
-                    <img src="${item.image}" alt="${item.title}" loading="lazy" onclick="openLightbox('${item.image}')">
+            grid.innerHTML = items.map((item, index) => `
+                <div class="work-card fade-in" style="transition-delay: ${index * 0.1}s;">
+                    <div class="work-card-img-wrapper">
+                        <img src="${item.image}" alt="${item.title}" loading="lazy" onclick="openLightbox('${item.image}')">
+                    </div>
                     <div class="work-content">
                         <h3>${item.title}</h3>
                         <p>${item.description}</p>
@@ -216,6 +332,11 @@
                     </div>
                 </div>
             `).join('');
+
+            // Trigger animations
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
+            }, 100);
 
         } catch (e) {
             console.error("Ошибка загрузки работ:", e);
@@ -230,13 +351,13 @@
     function openLightbox(src) {
         lightboxImg.src = src;
         lightbox.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Блокируем скролл фона
+        document.body.style.overflow = 'hidden';
     }
 
     function closeLightbox() {
         lightbox.classList.remove('active');
-        document.body.style.overflow = ''; // Возвращаем скролл
-        setTimeout(() => { lightboxImg.src = ''; }, 300); // Очищаем src после анимации
+        document.body.style.overflow = '';
+        setTimeout(() => { lightboxImg.src = ''; }, 300);
     }
 
     // Close on click outside or Escape key
