@@ -8,8 +8,8 @@ app = Flask(__name__)
 
 # Получаем данные из переменных окружения (безопасно!)
 # Если переменная не задана, используем значения по умолчанию (для тестов)
-BOT_TOKEN = os.environ.get('BOT_TOKEN', '8188401835:AAGm4-L6jMd-dbx0r2_tI1HAIByceqfi-Ys')
-CHAT_ID = os.environ.get('CHAT_ID', '351100092')
+BOT_TOKEN = os.environ.get('BOT_TOKEN')
+CHAT_ID = os.environ.get('CHAT_ID')
 
 @app.after_request
 def after_request(response):
