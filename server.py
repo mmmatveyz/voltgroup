@@ -14,7 +14,7 @@ CHAT_ID = os.environ.get('CHAT_ID')
 @app.after_request
 def after_request(response):
     # Разрешаем CORS для твоего сайта на GitHub Pages
-    response.headers.add('Access-Control-Allow-Origin', 'https://mmmatveyz.github.io')
+    response.headers.add('Access-Control-Allow-Origin', '*')
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
     return response
