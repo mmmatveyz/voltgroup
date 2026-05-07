@@ -1,7 +1,4 @@
 User-agent: *
-
-# Карта сайта
-Sitemap: https://mmmatveyz.github.io/voltgroup/index.html/sitemap.xml
-
-# Главное зеркало сайта (для Яндекса)
-Host: mmmatveyz.github.io
+Allow: /
+Host: https://voltgroup-spb.ru
+Sitemap: https://voltgroup-spb.ru/sitemap.xml
