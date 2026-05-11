@@ -641,14 +641,52 @@
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 </script>
+
+<!-- Индикатор офлайн режима -->
+<div id="offline-banner" style="display: none; position: fixed; top: 0; left: 0; width: 100%; background: #EF4444; color: white; padding: 10px; text-align: center; z-index: 9999; font-family: sans-serif; font-weight: 600;">
+    ⚠️ Вы работаете офлайн. Калькулятор доступен, но заявка не отправится.
+</div>
+
 <script>
+    // Показываем/скрываем индикатор офлайн режима
+    window.addEventListener('offline', () => {
+        document.getElementById('offline-banner').style.display = 'block';
+    });
+
+    window.addEventListener('online', () => {
+        document.getElementById('offline-banner').style.display = 'none';
+    });
+
+    // Проверяем статус при загрузке
+    if (!navigator.onLine) {
+        document.getElementById('offline-banner').style.display = 'block';
+    }
+</script>
+
+<script>
+    // Регистрация Service Worker
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('/sw.js')
-                .then((reg) => console.log('SW registered'))
-                .catch((err) => console.log('SW error', err));
+                .then(reg => {
+                console.log('✅ SW зарегистрирован:', reg.scope);
+
+                // Проверяем обновления SW
+                reg.addEventListener('updatefound', () => {
+                    console.log('🔄 Найдено обновление SW');
+                });
+            })
+                .catch(error => {
+                console.log('❌ Ошибка регистрации SW:', error);
+            });
+        });
+
+        // Слушаем обновления SW
+        navigator.serviceWorker.addEventListener('message', event => {
+            console.log('Сообщение от SW:', event.data);
         });
     }
 </script>
+
 </body>
 </html>
