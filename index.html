@@ -688,40 +688,5 @@
     }
 </script>
 
-<!-- Кнопка установки PWA -->
-<div id="pwa-install-btn" style="display:none;position:fixed;bottom:20px;right:20px;background:#00E5FF;color:#000;padding:15px 25px;border-radius:50px;font-weight:700;cursor:pointer;z-index:9999;box-shadow:0 4px 20px rgba(0,229,255,0.4);font-family:sans-serif;">
-    ⚡ Установить приложение
-</div>
-
-<script>
-    let deferredPrompt;
-    const installButton = document.getElementById('pwa-install-btn');
-
-    // Слушаем событие готовности к установке
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-        installButton.style.display = 'block';
-        console.log('✅ PWA готова к установке - кнопка показана');
-    });
-
-    // Клик по кнопке
-    installButton.addEventListener('click', async () => {
-        if (deferredPrompt) {
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            console.log(`Результат установки: ${outcome}`);
-            installButton.style.display = 'none';
-            deferredPrompt = null;
-        }
-    });
-
-    // Скрываем кнопку после установки
-    window.addEventListener('appinstalled', () => {
-        installButton.style.display = 'none';
-        console.log('✅ PWA установлено');
-    });
-</script>
-
 </body>
 </html>
