@@ -1,25 +1,20 @@
 {
-  "id": "/index.html",
-  "name": "VoltGroup | Электрика и автоматизация",
+  "name": "VoltGroup",
   "short_name": "VoltGroup",
-  "description": "Электромонтаж, щиты, автоматизация в СПб. Рассчитайте стоимость онлайн.",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#050914",
   "theme_color": "#00E5FF",
-  "orientation": "portrait-primary",
   "icons": [
     {
       "src": "/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
+      "type": "image/png"
     },
     {
       "src": "/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
+      "type": "image/png"
     }
   ]
 }
