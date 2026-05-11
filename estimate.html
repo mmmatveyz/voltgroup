@@ -1654,25 +1654,54 @@
   });
 </script>
 
-<!-- Индикатор офлайн режима -->
-<div id="offline-banner" style="display: none; position: fixed; top: 0; left: 0; width: 100%; background: #EF4444; color: white; padding: 10px; text-align: center; z-index: 9999; font-family: sans-serif; font-weight: 600;">
+<!-- Улучшенный индикатор офлайн режима -->
+<div id="offline-banner" style="display:none;position:fixed;top:0;left:0;width:100%;background:#EF4444;color:white;padding:12px 20px;text-align:center;z-index:10000;font-family:sans-serif;font-weight:600;font-size:14px;box-shadow:0 2px 10px rgba(0,0,0,0.2);">
   ⚠️ Вы работаете офлайн. Калькулятор доступен, но заявка не отправится.
+  <button id="offline-dismiss" style="margin-left:15px;background:rgba(255,255,255,0.2);border:none;color:white;padding:4px 12px;border-radius:4px;cursor:pointer;font-size:13px;">✕ Закрыть</button>
 </div>
 
+<!-- Отступ для контента, чтобы баннер не перекрывал меню -->
+<div id="offline-spacer" style="display:none;height:50px;"></div>
+
 <script>
-  // Показываем/скрываем индикатор офлайн режима
+  const offlineBanner = document.getElementById('offline-banner');
+  const offlineSpacer = document.getElementById('offline-spacer');
+  const offlineDismiss = document.getElementById('offline-dismiss');
+
+  // Показываем баннер при потере связи
   window.addEventListener('offline', () => {
-    document.getElementById('offline-banner').style.display = 'block';
+    offlineBanner.style.display = 'block';
+    offlineSpacer.style.display = 'block';
+    localStorage.setItem('offlineBannerDismissed', 'false');
   });
 
+  // Скрываем баннер при восстановлении связи
   window.addEventListener('online', () => {
-    document.getElementById('offline-banner').style.display = 'none';
+    if (localStorage.getItem('offlineBannerDismissed') !== 'true') {
+      offlineBanner.style.display = 'none';
+      offlineSpacer.style.display = 'none';
+    }
   });
 
   // Проверяем статус при загрузке
   if (!navigator.onLine) {
-    document.getElementById('offline-banner').style.display = 'block';
+    offlineBanner.style.display = 'block';
+    offlineSpacer.style.display = 'block';
   }
+
+  // Кнопка "Закрыть"
+  if (offlineDismiss) {
+    offlineDismiss.addEventListener('click', () => {
+      offlineBanner.style.display = 'none';
+      offlineSpacer.style.display = 'none';
+      localStorage.setItem('offlineBannerDismissed', 'true');
+    });
+  }
+
+  // Сбрасываем флаг при восстановлении связи
+  window.addEventListener('online', () => {
+    localStorage.setItem('offlineBannerDismissed', 'false');
+  });
 </script>
 
 </body>
