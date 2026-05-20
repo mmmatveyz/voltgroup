@@ -58,6 +58,17 @@
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        /* Блокируем горизонтальный скролл глобально, но безопасно */
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            position: relative;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         /* Сброс и база */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -67,7 +78,6 @@
             color: var(--text-main);
             font-family: var(--font-main);
             line-height: 1.6;
-            overflow-x: hidden;
         }
 
         a { text-decoration: none; color: inherit; transition: var(--transition); }
@@ -255,24 +265,74 @@
         .copyright { text-align: center; color: #555; font-size: 0.9rem; border-top: 1px solid #111; padding-top: 20px; }
 
         /* Mobile Responsive */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
         @media (max-width: 768px) {
-            h1 { font-size: 2.2rem; }
-            .nav-links {
-                position: fixed; top: 70px; left: 0; width: 100%; background: var(--bg-dark);
-                flex-direction: column; padding: 30px; gap: 20px;
-                border-bottom: 1px solid var(--border-light);
-                transform: translateY(-150%); transition: transform 0.3s ease;
+            h1 { font-size: 2rem; line-height: 1.2; }
+
+            .hero { padding: 100px 0 40px; }
+
+            /* Исправляем шапку */
+            .header {
+                padding: 10px 0;
             }
-            .nav-links.open { transform: translateY(0); }
-            .mobile-toggle { display: block; }
-            .hero { padding: 120px 0 60px; }
-            .process-steps { flex-direction: column; gap: 40px; }
-            .step::after { display: none; } /* Убираем линии на мобильном */
+
+            .nav-container {
+                padding: 0 15px; /* Уменьшаем отступы контейнера */
+                width: 100%;
+            }
+
+            .logo img {
+                height: 40px; /* Чуть меньше лого на мобильном */
+            }
+
+            /* Мобильное меню */
+            .nav-links {
+                position: fixed;
+                top: 80px;           /* Отступ сверху (под хедером) */
+                right: -100%;        /* Спрятано за правым краем */
+                width: 85%;          /* Ширина шторки */
+                max-width: 320px;    /* Максимальная ширина */
+                height: calc(100vh - 160px); /* Высота минус отступы сверху и снизу */
+
+                background: rgba(5, 9, 20, 0.98);
+                backdrop-filter: blur(15px);
+                border-radius: 20px 0 0 20px; /* Скругление только слева */
+                border-left: 1px solid var(--border-light);
+                box-shadow: -5px 0 20px rgba(0,0,0,0.4);
+
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 30px;
+                padding: 20px;
+
+                transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 1001;
+            }
+
+            .nav-links.open {
+                right: 0; /* Выезжает на экран */
+            }
+
+            .mobile-toggle {
+                display: block;
+                z-index: 1002; /* Кнопка выше меню */
+                font-size: 1.8rem;
+            }
+
+            .process-steps { flex-direction: column; gap: 30px; }
+            .step::after { display: none; }
         }
 
         /* Animation Classes */
         .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
         .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+
     </style>
 </head>
 <body>
@@ -459,7 +519,7 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label">Телефон</label>
-                    <input type="tel" name="phone" class="form-input" required placeholder="+7 (999) 000-00-00">
+                    <input type="tel" name="phone" class="form-input" required placeholder="+7 (900) 000-00-00">
                 </div>
                 <div class="form-group">
                     <label class="form-label">Тип задачи</label>
@@ -515,7 +575,7 @@
             </div>
             <div>
                 <h4>Контакты</h4>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;">📞 +7 (999) 000-00-00</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;">📞 +7 (905) 208-42-84</p>
                 <p style="color: var(--text-muted); font-size: 0.9rem;">🕒 Пн–Сб: 9:00–21:00</p>
                 <p style="color: var(--text-muted); font-size: 0.9rem;">📍 Санкт-Петербург</p>
             </div>
