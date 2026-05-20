@@ -107,15 +107,18 @@
         @media (max-width: 768px) {
             .nav-links {
                 position: fixed;
-                top: 80px;           /* Отступ сверху (под хедером) */
-                right: -100%;        /* Спрятано за правым краем */
-                width: 85%;          /* Ширина шторки */
-                max-width: 320px;    /* Максимальная ширина */
-                height: calc(100vh - 160px); /* Высота минус отступы сверху и снизу */
+                top: 80px;
+                left: auto;
+                right: 0;
+                transform: translateX(100%); /* Спрятано за правым краем */
+
+                width: 85%;
+                max-width: 320px;
+                height: calc(100vh - 160px);
 
                 background: rgba(5, 9, 20, 0.98);
                 backdrop-filter: blur(15px);
-                border-radius: 20px 0 0 20px; /* Скругление только слева */
+                border-radius: 20px 0 0 20px;
                 border-left: 1px solid var(--border-light);
                 box-shadow: -5px 0 20px rgba(0,0,0,0.4);
 
@@ -125,14 +128,23 @@
                 gap: 30px;
                 padding: 20px;
 
-                transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
                 z-index: 1001;
+
+                /* Важно: скрываем всё, что вылезает */
+                overflow-y: auto;
+                overflow-x: hidden;
             }
 
             .nav-links.open {
-                right: 0; /* Выезжает на экран */
+                transform: translateX(0); /* Выезжает на экран */
             }
-            .mobile-toggle { display: block; }
+
+            .mobile-toggle {
+                display: block;
+                z-index: 1002;
+                font-size: 1.8rem;
+            }
             .content-wrapper { padding: 40px 0; }
         }
     </style>
