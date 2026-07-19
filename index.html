@@ -4,23 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VoltGroup | Энергия решений - Электрика и автоматизация в СПб</title>
-    <meta name="description" content="Профессиональный электромонтаж, умный дом и автоматизация в Санкт-Петербурге. Договор, гарантия 12 мес., чек НПД.">
-    <meta name="robots" content="index, follow">
-
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://mmmatveyz.github.io/voltgroup/">
-    <meta property="og:title" content="VoltGroup | Электрика и автоматизация в СПб">
-    <meta property="og:description" content="Промышленный опыт в вашей квартире. Щиты, проводка, умный дом. Гарантия 12 месяцев.">
-    <meta property="og:image" content="https://mmmatveyz.github.io/voltgroup/og-image.jpg">
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-
-    <link rel="manifest" href="/manifest.json">
-
-
+    <meta name="description" content="Профессиональный электромонтаж, умный дом и промышленная автоматизация в Санкт-Петербурге.">
+    <meta property="og:image" content="./assets/images/og-main.jpg">
+    <link rel="icon" type="image/x-icon" href="./favicon.ico">
+    <link rel="manifest" href="./manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./static/css/style.css">
 
 
     <!-- Yandex.Metrika counter -->
@@ -32,330 +21,28 @@
             k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
         })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108492681', 'ym');
 
-        ym(108492681, 'init', {ssr:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+        ym(108492681, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/108492681" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrika counter -->
 
 
 
-
-
-
-
-    <style>
-        :root {
-            --bg-dark: #050914;
-            --bg-card: rgba(17, 24, 39, 0.7);
-            --primary: #00E5FF;
-            --primary-glow: rgba(0, 229, 255, 0.4);
-            --text-main: #F8FAFC;
-            --text-muted: #94A3B8;
-            --border-light: rgba(255, 255, 255, 0.1);
-            --radius-lg: 16px;
-            --radius-md: 12px;
-            --font-main: 'Inter', system-ui, -apple-system, sans-serif;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        html {
-            overflow-x: hidden !important;
-            width: 100%;
-            position: relative;
-        }
-
-        body {
-            overflow-x: hidden !important;
-            width: 100%;
-            max-width: 100vw;
-            position: relative;
-            margin: 0;
-            padding: 0;
-        }
-
-        img, video, iframe, svg {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        /* Сброс и база */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            background-color: var(--bg-dark);
-            background-image: radial-gradient(circle at 50% 0%, #1a2c4e 0%, var(--bg-dark) 60%);
-            color: var(--text-main);
-            font-family: var(--font-main);
-            line-height: 1.6;
-        }
-
-        a { text-decoration: none; color: inherit; transition: var(--transition); }
-        ul { list-style: none; }
-        img { max-width: 100%; display: block; }
-
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
-        /* Типографика */
-        h1, h2, h3 { font-weight: 700; letter-spacing: -0.02em; }
-        h1 { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 20px; }
-        h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 40px; text-align: center; }
-        h2 span { color: var(--primary); }
-        p { color: var(--text-muted); font-size: 1.1rem; }
-
-        /* Кнопки */
-        .btn {
-            display: inline-flex; align-items: center; justify-content: center;
-            padding: 14px 32px; border-radius: 50px; font-weight: 600; font-size: 1rem;
-            cursor: pointer; border: none; transition: var(--transition);
-            text-transform: uppercase; letter-spacing: 0.05em;
-        }
-        .btn-primary {
-            background: var(--primary); color: #000;
-            box-shadow: 0 0 20px var(--primary-glow);
-        }
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 30px var(--primary-glow);
-            background: #fff;
-        }
-        .btn-outline {
-            background: transparent; border: 2px solid var(--primary); color: var(--primary);
-        }
-        .btn-outline:hover {
-            background: var(--primary); color: #000;
-        }
-
-        /* Header */
-        .header {
-            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
-            background: rgba(5, 9, 20, 0.8); backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-light);
-            padding: 15px 0;
-        }
-        .nav-container { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px; }
-        .logo span { color: var(--primary); }
-
-        .nav-links { display: flex; gap: 30px; align-items: center; }
-        .nav-links a { font-size: 0.95rem; font-weight: 500; opacity: 0.8; }
-        .nav-links a:hover { opacity: 1; color: var(--primary); }
-
-        .mobile-toggle { display: none; background: none; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; }
-
-        /* Hero Section */
-        .hero {
-            padding: 160px 0 100px;
-            text-align: center;
-            position: relative;
-        }
-        .hero::before {
-            content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
-            width: 600px; height: 600px; background: var(--primary);
-            filter: blur(150px); opacity: 0.15; border-radius: 50%; z-index: -1;
-        }
-        .hero-subtitle {
-            font-size: 1.25rem; max-width: 600px; margin: 0 auto 40px;
-            color: var(--text-muted);
-        }
-        .hero-actions { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
-
-        .trust-badges {
-            display: flex; justify-content: center; gap: 30px; margin-top: 60px;
-            flex-wrap: wrap; font-size: 0.9rem; color: var(--text-muted);
-        }
-        .trust-item { display: flex; align-items: center; gap: 8px; }
-        .trust-item svg { width: 20px; height: 20px; fill: var(--primary); }
-
-        /* Cards & Grid */
-        .section { padding: 80px 0; }
-        .grid-3 {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-lg);
-            padding: 30px;
-            transition: var(--transition);
-            position: relative; overflow: hidden;
-            backdrop-filter: blur(10px);
-        }
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-        .card-icon {
-            width: 50px; height: 50px; background: rgba(0, 229, 255, 0.1);
-            border-radius: 12px; display: flex; align-items: center; justify-content: center;
-            margin-bottom: 20px; font-size: 1.5rem; color: var(--primary);
-        }
-        .card h3 { font-size: 1.3rem; margin-bottom: 10px; color: var(--text-main); }
-        .card-price {
-            margin-top: 15px; font-size: 1.1rem; font-weight: 700; color: var(--primary);
-        }
-
-        /* Why Us */
-        .why-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        .feature-item {
-            display: flex; gap: 15px; align-items: flex-start;
-            padding: 20px; background: rgba(255,255,255,0.03); border-radius: var(--radius-md);
-        }
-        .feature-check { color: #10B981; font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
-
-        /* Process Steps */
-        .process-steps {
-            display: flex; justify-content: space-between; position: relative;
-            margin-top: 50px; flex-wrap: wrap; gap: 30px;
-        }
-        .step {
-            flex: 1; min-width: 150px; text-align: center; position: relative; z-index: 1;
-        }
-        .step-num {
-            width: 50px; height: 50px; background: var(--bg-card); border: 2px solid var(--primary);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 15px; font-weight: 700; color: var(--primary); font-size: 1.2rem;
-            box-shadow: 0 0 15px var(--primary-glow);
-        }
-        .step h4 { font-size: 1.1rem; margin-bottom: 5px; }
-        .step p { font-size: 0.9rem; }
-
-        /* FAQ Accordion */
-        .accordion-item {
-            background: var(--bg-card); border: 1px solid var(--border-light);
-            border-radius: var(--radius-md); margin-bottom: 15px; overflow: hidden;
-        }
-        .accordion-btn {
-            width: 100%; padding: 20px; text-align: left; background: none; border: none;
-            color: var(--text-main); font-size: 1.1rem; font-weight: 600; cursor: pointer;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .accordion-btn::after { content: '+'; font-size: 1.5rem; color: var(--primary); transition: 0.3s; }
-        .accordion-btn.active::after { transform: rotate(45deg); }
-        .accordion-content {
-            max-height: 0; overflow: hidden; transition: max-height 0.3s ease;
-            padding: 0 20px; color: var(--text-muted);
-        }
-        .accordion-content p { padding-bottom: 20px; }
-
-        /* Contact Form */
-        .contact-section { background: linear-gradient(180deg, var(--bg-dark) 0%, #0a1020 100%); }
-        .form-box {
-            max-width: 600px; margin: 0 auto; background: var(--bg-card);
-            padding: 40px; border-radius: var(--radius-lg); border: 1px solid var(--border-light);
-        }
-        .form-group { margin-bottom: 20px; }
-        .form-label { display: block; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-muted); }
-        .form-input {
-            width: 100%; padding: 14px; background: rgba(0,0,0,0.3); border: 1px solid var(--border-light);
-            border-radius: var(--radius-md); color: var(--text-main); font-size: 1rem;
-            transition: var(--transition);
-        }
-        .form-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,229,255,0.1); }
-        textarea.form-input { resize: vertical; min-height: 120px; }
-
-        /* Footer */
-        .footer {
-            background: #02040a; border-top: 1px solid var(--border-light);
-            padding: 60px 0 30px; margin-top: 80px;
-        }
-        .footer-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px; margin-bottom: 40px;
-        }
-        .footer h4 { color: var(--text-main); margin-bottom: 20px; font-size: 1.1rem; }
-        .footer-links a { display: block; margin-bottom: 10px; color: var(--text-muted); font-size: 0.95rem; }
-        .footer-links a:hover { color: var(--primary); }
-        .copyright { text-align: center; color: #555; font-size: 0.9rem; border-top: 1px solid #111; padding-top: 20px; }
-
-        /* Mobile Responsive */
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        @media (max-width: 768px) {
-            .header { padding: 10px 0; }
-            .nav-container { padding: 0 15px; }
-            .logo img { height: 40px; }
-
-            /* Меню-шторка справа */
-            .nav-links {
-                position: fixed;
-                top: 80px;
-                right: 0;
-                transform: translateX(100%); /* Спрятано за экраном */
-
-                width: 85%;
-                max-width: 320px;
-                height: calc(100vh - 160px);
-
-                background: rgba(5, 9, 20, 0.98);
-                backdrop-filter: blur(15px);
-                border-radius: 20px 0 0 20px;
-                border-left: 1px solid var(--border-light);
-                box-shadow: -5px 0 20px rgba(0,0,0,0.4);
-
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 30px;
-                padding: 20px;
-
-                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                z-index: 1001;
-
-                /* Важно: скрываем содержимое меню, если оно вылезает */
-                overflow-y: auto;
-                overflow-x: hidden;
-            }
-
-            .nav-links.open {
-                transform: translateX(0); /* Выезжает на экран */
-            }
-
-            .mobile-toggle {
-                display: block;
-                z-index: 1002;
-                font-size: 1.8rem;
-            }
-
-            .process-steps { flex-direction: column; gap: 30px; }
-            .step::after { display: none; }
-        }
-
-        /* Animation Classes */
-        .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
-        .fade-in.visible { opacity: 1; transform: translateY(0); }
-
-
-    </style>
 </head>
 <body>
 
 <header class="header">
     <div class="container nav-container">
         <a href="./index.html" class="logo">
-            <img src="./logo.png" alt="VoltGroup Logo" style="height: 50px; width: auto;">
+            <img src="./assets/images/logo-voltgroup.png" alt="VoltGroup Logo">
         </a>
         <button class="mobile-toggle" aria-label="Меню">☰</button>
         <nav class="nav-links">
-            <a href="#services">Услуги</a>
+            <a href="./install/">Install</a>
+            <a href="./engineering/">Engineering</a>
             <a href="./estimate.html">Калькулятор</a>
             <a href="./works.html">Работы</a>
-            <a href="#why">Преимущества</a>
-            <a href="#faq">FAQ</a>
-            <a href="#contact" class="btn btn-primary" style="padding: 10px 20px; font-size: 0.9rem;">Оставить заявку</a>
+            <a href="./contacts/" class="btn btn-outline" style="padding: 8px 20px; font-size: 0.9rem;">Контакты</a>
         </nav>
     </div>
 </header>
@@ -364,58 +51,59 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container fade-in">
-            <h1>Профессиональный электромонтаж<br><span style="color: var(--primary);">и автоматизация</span> в СПб</h1>
+            <h1>Профессиональный электромонтаж<br><span>и автоматизация</span> в СПб</h1>
             <p class="hero-subtitle">Энергия решений - от розетки до умного дома. Промышленный опыт, честные цены, гарантия 12 месяцев.</p>
             <div class="hero-actions">
-                <a href="#contact" class="btn btn-primary">Рассчитать стоимость</a>
-                <a href="https://vk.com/voltgroup_spb" class="btn btn-outline">Написать в ВКонтакте</a>
-            </div>
-
-            <div class="trust-badges">
-                <div class="trust-item">
-                    <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-                    <span>Договор и акт</span>
-                </div>
-                <div class="trust-item">
-                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                    <span>Чек НПД (ФНС)</span>
-                </div>
-                <div class="trust-item">
-                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zm0 9l2.5-1.25L12 8.5l-2.5 1.25L12 11zm0 2.5l-5-2.5-5 2.5L12 22l10-8.5-5-2.5-5 2.5z"/></svg>
-                    <span>Опыт с 2021 г.</span>
-                </div>
+                <a href="./install/" class="btn btn-primary">Электромонтаж (Install)</a>
+                <a href="./engineering/" class="btn btn-secondary">Инженерия (Engineering)</a>
             </div>
         </div>
     </section>
 
-    <!-- Services -->
+    <!-- Services Section -->
     <section id="services" class="section">
         <div class="container">
             <h2 class="fade-in">Наши <span>услуги</span></h2>
             <div class="grid-3">
                 <div class="card fade-in">
-                    <div class="card-icon">🏠</div>
+                    <div class="card-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                    </div>
                     <h3>Для дома</h3>
-                    <p>Розетки, выключатели, полная замена проводки, сборка электрощитов, поиск неисправностей.</p>
-                    <div class="card-price">от 450 ₽/точка</div>
+                    <p>Розетки, проводка, щиты.</p>
                 </div>
+
                 <div class="card fade-in" style="transition-delay: 0.1s;">
-                    <div class="card-icon">🧠</div>
+                    <div class="card-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2a10 10 0 1 0 10 10H12V2z"></path>
+                            <path d="M12 2a10 10 0 0 1 10 10"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </div>
                     <h3>Умный дом</h3>
-                    <p>Сценарии освещения, климат-контроль, датчики протечки и безопасности, интеграция с Алисой.</p>
-                    <div class="card-price">от 15 000 ₽/комната</div>
+                    <p>Сценарии, Алиса, датчики.</p>
                 </div>
+
                 <div class="card fade-in" style="transition-delay: 0.2s;">
-                    <div class="card-icon">🏭</div>
+                    <div class="card-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-2-2H4L2 8v12z"></path>
+                            <path d="M12 12v6"></path>
+                            <path d="M9 15h6"></path>
+                        </svg>
+                    </div>
                     <h3>Для бизнеса</h3>
-                    <p>Промышленные щиты автоматики, подключение станков.</p>
-                    <div class="card-price">По ТЗ</div>
+                    <p>Щиты автоматики, станки.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Why Us -->
+    <!-- WHY CHOOSE US (НОВОЕ) -->
     <section id="why" class="section" style="background: rgba(255,255,255,0.02);">
         <div class="container">
             <h2 class="fade-in">Почему выбирают <span>VoltGroup</span></h2>
@@ -424,28 +112,28 @@
                     <div class="feature-check">✔</div>
                     <div>
                         <h4>Прозрачная смета</h4>
-                        <p style="font-size: 0.9rem;">Цена фиксируется ДО начала работ. Никаких скрытых платежей и «сюрпризов» в процессе.</p>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">Цена фиксируется ДО начала работ. Никаких скрытых платежей и «сюрпризов» в процессе.</p>
                     </div>
                 </div>
                 <div class="feature-item fade-in">
                     <div class="feature-check">✔</div>
                     <div>
                         <h4>Идеальная чистота</h4>
-                        <p style="font-size: 0.9rem;">Штроборез с пылесосом, лазерный уровень. Убираю за собой. Ваш ремонт останется целым.</p>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">Штроборез с пылесосом, лазерный уровень. Убираю за собой. Ваш ремонт останется целым.</p>
                     </div>
                 </div>
                 <div class="feature-item fade-in">
                     <div class="feature-check">✔</div>
                     <div>
                         <h4>Официально</h4>
-                        <p style="font-size: 0.9rem;">Договор подряда, акт приёмки, чек из «Мой налог». Гарантия 12 месяцев по закону.</p>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">Договор подряда, акт приёмки, чек из «Мой налог». Гарантия 12 месяцев по закону.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Process -->
+    <!-- HOW WE WORK (НОВОЕ) -->
     <section id="process" class="section">
         <div class="container">
             <h2 class="fade-in">Как мы <span>работаем</span></h2>
@@ -453,37 +141,37 @@
                 <div class="step fade-in">
                     <div class="step-num">1</div>
                     <h4>Заявка</h4>
-                    <p>Пишете в VK или на сайте. Отвечаю за 15 мин.</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Пишете в VK или на сайте. Отвечаю за 15 мин.</p>
                 </div>
                 <div class="step fade-in">
                     <div class="step-num">2</div>
                     <h4>Выезд</h4>
-                    <p>Осмотр объекта, замеры, консультация.</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Осмотр объекта, замеры, консультация.</p>
                 </div>
                 <div class="step fade-in">
                     <div class="step-num">3</div>
                     <h4>Смета</h4>
-                    <p>Фиксируем цену и сроки. Подписываем договор.</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Фиксируем цену и сроки. Подписываем договор.</p>
                 </div>
                 <div class="step fade-in">
                     <div class="step-num">4</div>
                     <h4>Монтаж</h4>
-                    <p>Работа по ПУЭ, фотоотчеты, уборка.</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Работа по ПУЭ, фотоотчеты, уборка.</p>
                 </div>
                 <div class="step fade-in">
                     <div class="step-num">5</div>
                     <h4>Сдача</h4>
-                    <p>Подписываем акт, выдаю чек и гарантию.</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Подписываем акт, выдаю чек и гарантию.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ -->
-    <section id="faq" class="section">
+    <!-- FAQ (НОВОЕ) -->
+    <section id="faq" class="section" style="background: rgba(255,255,255,0.02);">
         <div class="container">
             <h2 class="fade-in">Частые <span>вопросы</span></h2>
-            <div class="accordion fade-in">
+            <div class="accordion fade-in" style="max-width: 800px; margin: 0 auto;">
                 <div class="accordion-item">
                     <button class="accordion-btn">Работаете ли вы официально?</button>
                     <div class="accordion-content">
@@ -493,62 +181,53 @@
                 <div class="accordion-item">
                     <button class="accordion-btn">Что входит в гарантию 12 месяцев?</button>
                     <div class="accordion-content">
-                        <p>Бесплатное устранение дефектов монтажа по моей вине: плохой контакт, ошибка в схеме, несоблюдение ПУЭ. На материалы гарантия от производителя.</p>
+                        <p>Бесплатное устранение дефектов монтажа по моей вине: плохой контакт, ошибка в схеме, несоблюдение ПУЭ. На материалы действует гарантия от производителя.</p>
                     </div>
                 </div>
                 <div class="accordion-item">
                     <button class="accordion-btn">Как рассчитывается стоимость?</button>
                     <div class="accordion-content">
-                        <p>Базовые работы - по фиксированному прайсу. Сложные - после осмотра. Смета согласовывается до старта. Предоплата только за материалы (100%), работы - после приёмки.</p>
+                        <p>Базовые работы оцениваются по фиксированному прайсу. Сложные или индивидуальные задачи — после осмотра объекта. Смета согласовывается до старта работ. Предоплата берется только за материалы (100%), работы оплачиваются после приёмки.</p>
                     </div>
                 </div>
                 <div class="accordion-item">
                     <button class="accordion-btn">Делаете ли вы умный дом «под ключ»?</button>
                     <div class="accordion-content">
-                        <p>Да. Проектирую схемы, подбираю оборудование, монтирую, настраиваю сценарии, обучаю пользованию. Интегрирую с Я.Алисой, HomeKit, локальными контроллерами.</p>
+                        <p>Да. Я проектирую схемы, подбираю оборудование, монтирую, настраиваю сценарии и обучаю пользованию. Интегрирую системы с Я.Алисой, HomeKit и локальными контроллерами.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact -->
+    <!-- Contact Form -->
     <section id="contact" class="section contact-section">
         <div class="container">
             <h2 class="fade-in">Оставьте <span>заявку</span></h2>
-            <p style="text-align: center; margin-bottom: 30px;">Отвечу в течение часа. Расчет сметы - бесплатно.</p>
-
             <form id="leadForm" class="form-box fade-in">
                 <div class="form-group">
                     <label class="form-label">Ваше имя</label>
-                    <input type="text" name="name" class="form-input" required placeholder="Иван">
+                    <input type="text" name="name" class="form-input" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Телефон</label>
-                    <input type="tel" name="phone" class="form-input" required placeholder="+7 (900) 000-00-00">
+                    <input type="tel" name="phone" class="form-input" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Тип задачи</label>
                     <select name="service" class="form-input">
                         <option>Замена проводки</option>
                         <option>Сборка щита</option>
-                        <option>Умный дом</option>
-                        <option>Диагностика</option>
+                        <option>Диагностика станка</option>
                         <option>Другое</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Комментарий</label>
-                    <textarea name="comment" class="form-input" placeholder="Район, площадь, пожелания..."></textarea>
-                </div>
-
-                <div class="form-group" style="display: flex; gap: 10px; align-items: flex-start;">
-                    <input type="checkbox" name="consent" required id="consent" style="margin-top: 5px; accent-color: var(--primary);">
-                    <label for="consent" style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">
-                        Я даю согласие на обработку персональных данных в соответствии с <a href="./privacy.html" style="color: var(--primary); text-decoration: underline;">Политикой конфиденциальности</a>
+                <div class="form-group" style="display: flex; align-items: flex-start; gap: 10px; margin-top: 15px;">
+                    <input type="checkbox" id="privacy-consent-main" required style="margin-top: 4px; width: 18px; height: 18px; accent-color: var(--primary-install); cursor: pointer;">
+                    <label for="privacy-consent-main" style="font-size: 0.85rem; color: var(--text-muted); cursor: pointer; line-height: 1.4;">
+                        Я даю согласие на обработку <a href="./privacy.html" target="_blank" style="color: var(--primary-install); text-decoration: underline;">персональных данных</a>
                     </label>
                 </div>
-
                 <button type="submit" class="btn btn-primary" style="width: 100%;">Получить расчёт</button>
                 <p id="formStatus" style="margin-top: 15px; text-align: center; display: none;"></p>
             </form>
@@ -564,14 +243,15 @@
                 <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
                     Энергия решений.<br>Электрика и автоматизация в СПб.
                 </p>
-                <a href="https://vk.com/voltgroup_spb" style="color: var(--primary); font-weight: 600;">@voltgroup_spb</a>
+                <a href="https://vk.com/voltgroup_spb" style="color: var(--primary-install); font-weight: 600;">@voltgroup_spb</a>
             </div>
             <div class="footer-links">
                 <h4>Навигация</h4>
-                <a href="#services">Услуги</a>
+                <a href="./install/">Install</a>
+                <a href="./engineering/">Engineering</a>
                 <a href="./estimate.html">Калькулятор</a>
                 <a href="./works.html">Портфолио</a>
-                <a href="#contact">Контакты</a>
+                <a href="./contacts/">Контакты</a>
             </div>
             <div class="footer-links">
                 <h4>Документы</h4>
@@ -592,32 +272,22 @@
     </div>
 </footer>
 
-<div id="cookieBanner" style="position: fixed; bottom: 20px; left: 20px; right: 20px; max-width: 400px; background: var(--bg-card); border: 1px solid var(--border-light); padding: 20px; border-radius: var(--radius-md); display: none; z-index: 999; backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-    <p style="font-size: 0.9rem; margin-bottom: 10px;">🍪 Мы используем cookie для аналитики.</p>
-    <button onclick="localStorage.setItem('cookies','ok');document.getElementById('cookieBanner').style.display='none'" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.8rem;">Согласен</button>
-</div>
-
 <script>
     // Mobile Menu
     const mobileToggle = document.querySelector('.mobile-toggle');
     const navLinks = document.querySelector('.nav-links');
-
     if(mobileToggle) {
         mobileToggle.addEventListener('click', () => {
             navLinks.classList.toggle('open');
             mobileToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
         });
-    }
-
-    // Close menu on link click
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', () => {
+        document.querySelectorAll('.nav-links a').forEach(l => l.addEventListener('click', () => {
             navLinks.classList.remove('open');
             mobileToggle.textContent = '☰';
-        });
-    });
+        }));
+    }
 
-    // Accordion
+    // Accordion Logic (НОВОЕ)
     document.querySelectorAll('.accordion-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             btn.classList.toggle('active');
@@ -625,63 +295,41 @@
             if (content.style.maxHeight) {
                 content.style.maxHeight = null;
             } else {
-                content.style.maxHeight = content.scrollHeight + 'px';
+                content.style.maxHeight = content.scrollHeight + "px";
             }
         });
     });
 
-    // Phone Mask
-    const phoneInput = document.querySelector('input[name="phone"]');
-    if(phoneInput) {
-        phoneInput.addEventListener('input', e => {
-            let x = e.target.value.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
-            if (!x) return;
-            e.target.value = !x[2] ? (x[1] ? '+7 (' : '') : '+7 (' + x[2] + (x[3] ? ') ' + x[3] : '') + (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : '');
-        });
-    }
-
-    // --- ОТПРАВКА ЗАЯВКИ НА ТВОЙ PYTHON СЕРВЕР ---
+    // Form Submission
     const leadForm = document.getElementById('leadForm');
-
     if (leadForm) {
         leadForm.addEventListener('submit', async function(e) {
             e.preventDefault();
-
             const btn = this.querySelector('button[type="submit"]');
             const status = document.getElementById('formStatus');
+            const data = Object.fromEntries(new FormData(this));
+            data.source = 'main_site';
 
-            // Собираем данные
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData.entries());
-
-            // UI
             btn.disabled = true;
             btn.textContent = 'Отправка...';
             status.style.display = 'block';
-            status.style.color = 'var(--text-muted)';
             status.textContent = '⏳ Отправляем...';
 
             try {
-                // ВНИМАНИЕ: Замени URL на адрес твоего сервера на PythonAnywhere!
-                //const SERVER_URL = 'https://matvey6527.pythonanywhere.com/send-message';
-                const SERVER_URL = 'https://voltgroup-bot.onrender.com/send-message';
-                
-                const response = await fetch(SERVER_URL, {
+                const res = await fetch('https://voltgroup-bot.onrender.com/send-message', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(data)
                 });
-
-                if (response.ok) {
-                    status.textContent = '✅ Заявка отправлена! Я свяжусь с вами.';
+                if (res.ok) {
+                    status.textContent = '✅ Заявка отправлена!';
                     status.style.color = '#10B981';
                     this.reset();
                 } else {
                     throw new Error('Ошибка сервера');
                 }
-            } catch (error) {
-                console.error(error);
-                status.textContent = '❌ Ошибка. Напишите мне в VKontakte @voltgroup_spb';
+            } catch (err) {
+                status.textContent = '❌ Ошибка. Напишите в VK.';
                 status.style.color = '#EF4444';
             } finally {
                 btn.disabled = false;
@@ -690,48 +338,20 @@
         });
     }
 
-    // Cookie Banner
-    if(!localStorage.getItem('cookies')) {
-        document.getElementById('cookieBanner').style.display = 'block';
-    }
-
-    // Scroll Animation (Fade In)
-    const observerOptions = { threshold: 0.1 };
+    // Fade In Animation
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
+        entries.forEach(e => {
+            if (e.isIntersecting) e.target.classList.add('visible');
         });
-    }, observerOptions);
-
+    }, { threshold: 0.1 });
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-</script>
 
-<script>
-    // Регистрация Service Worker
+    // Service Worker ОТКЛЮЧЕН для разработки
+    /*
     if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/sw.js')
-                .then(reg => {
-                console.log('✅ SW зарегистрирован:', reg.scope);
-
-                // Проверяем обновления SW
-                reg.addEventListener('updatefound', () => {
-                    console.log('🔄 Найдено обновление SW');
-                });
-            })
-                .catch(error => {
-                console.log('❌ Ошибка регистрации SW:', error);
-            });
-        });
-
-        // Слушаем обновления SW
-        navigator.serviceWorker.addEventListener('message', event => {
-            console.log('Сообщение от SW:', event.data);
-        });
+        window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(console.error));
     }
+    */
 </script>
-
 </body>
 </html>

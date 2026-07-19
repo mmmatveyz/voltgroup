@@ -4,83 +4,127 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Страница не найдена | VoltGroup</title>
-    <!-- Иконка для браузеров и поиска -->
+    <meta name="description" content="Страница не найдена. Вернитесь на главную страницу VoltGroup.">
+
+    <!-- Favicon & PWA -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-
     <link rel="manifest" href="/manifest.json">
 
-    <style>
-        :root {
-            --bg-dark: #050914;
-            --primary: #00E5FF;
-            --primary-glow: rgba(0, 229, 255, 0.4);
-            --text-main: #F8FAFC;
-            --text-muted: #94A3B8;
-            --font-main: 'Inter', system-ui, -apple-system, sans-serif;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background-color: var(--bg-dark);
-            background-image: radial-gradient(circle at 50% 0%, #1a2c4e 0%, var(--bg-dark) 60%);
-            color: var(--text-main);
-            font-family: var(--font-main);
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 20px;
-        }
+    <!-- CSS -->
+    <link rel="stylesheet" href="./static/css/style.css">
 
-        .error-code {
-            font-size: 8rem;
-            font-weight: 900;
-            color: transparent;
-            -webkit-text-stroke: 2px var(--primary);
-            margin-bottom: 20px;
-            line-height: 1;
-            text-shadow: 0 0 30px var(--primary-glow);
-        }
 
-        h1 { font-size: 2rem; margin-bottom: 15px; color: var(--text-main); }
-        p { color: var(--text-muted); font-size: 1.1rem; max-width: 500px; margin-bottom: 30px; }
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108492681', 'ym');
 
-        .home-btn {
-            display: inline-flex; align-items: center; justify-content: center;
-            padding: 14px 32px; border-radius: 50px; font-weight: 600; font-size: 1rem;
-            cursor: pointer; border: none; transition: var(--transition);
-            background: var(--primary); color: #000;
-            box-shadow: 0 0 20px var(--primary-glow);
-            text-decoration: none;
-        }
-        .home-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 30px var(--primary-glow);
-            background: #fff;
-        }
+        ym(108492681, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/108492681" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
 
-        .spark-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            animation: pulse 2s infinite;
-        }
 
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-    </style>
+
 </head>
 <body>
-<div class="spark-icon">⚡</div>
-<div class="error-code">404</div>
-<h1>Страница не найдена</h1>
-<p>Похоже, эта страница ушла в отпуск или была удалена. Но электричество здесь всё ещё есть!</p>
 
-<a href="./index.html" class="home-btn">Вернуться на главную</a>
+<header class="header">
+    <div class="container nav-container">
+        <a href="./index.html" class="logo">
+            <img src="./assets/images/logo-voltgroup.png" alt="VoltGroup Logo">
+        </a>
+        <button class="mobile-toggle" aria-label="Меню">☰</button>
+        <nav class="nav-links">
+            <a href="./install/">Install</a>
+            <a href="./engineering/">Engineering</a>
+            <a href="./estimate.html">Калькулятор</a>
+            <a href="./works.html">Работы</a>
+            <a href="./contacts/" class="btn btn-outline" style="padding: 8px 20px; font-size: 0.9rem;">Контакты</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <div class="container" style="padding-top: 120px; padding-bottom: 60px; min-height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+        <div style="font-size: 4rem; margin-bottom: 10px; filter: drop-shadow(0 0 20px var(--primary-glow));">⚡</div>
+        <h1 style="font-size: clamp(4rem, 10vw, 8rem); color: var(--primary); margin: 0; line-height: 1;">404</h1>
+        <h2 style="font-size: 1.5rem; margin: 20px 0 10px; color: var(--text-main);">Страница не найдена</h2>
+        <p style="color: var(--text-muted); max-width: 500px; margin-bottom: 40px; font-size: 1.1rem; line-height: 1.6;">
+            Похоже, эта страница ушла в отпуск или была удалена. Но электричество здесь всё ещё есть!
+        </p>
+        <a href="./index.html" class="btn btn-primary">Вернуться на главную</a>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <h4>⚡ VoltGroup</h4>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
+                    Энергия решений.<br>Электрика и автоматизация в СПб.
+                </p>
+                <a href="https://vk.com/voltgroup_spb" style="color: var(--primary-install); font-weight: 600;">@voltgroup_spb</a>
+            </div>
+
+            <div class="footer-links">
+                <h4>Навигация</h4>
+                <a href="./install/">Install</a>
+                <a href="./engineering/">Engineering</a>
+                <a href="./estimate.html">Калькулятор</a>
+                <a href="./works.html">Портфолио</a>
+                <a href="./contacts/">Контакты</a>
+            </div>
+
+            <div class="footer-links">
+                <h4>Документы</h4>
+                <a href="./privacy.html">Политика конфиденциальности</a>
+                <a href="./offer.html">Публичная оферта</a>
+                <a href="./cookies.html">Cookies</a>
+            </div>
+
+            <div>
+                <h4>Контакты</h4>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;">📞 +7 (905) 208-42-84</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">🕒 Пн–Сб: 9:00–21:00</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">📍 Санкт-Петербург</p>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2026 VoltGroup. Все права защищены.
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Mobile Menu
+    const mobileToggle = document.querySelector('.mobile-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    if(mobileToggle) {
+        mobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+            mobileToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+        });
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+                mobileToggle.textContent = '☰';
+            });
+        });
+    }
+
+    // Service Worker ОТКЛЮЧЕН для разработки
+    /*
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(console.error));
+    }
+    */
+</script>
 </body>
 </html>

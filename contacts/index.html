@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты | VoltGroup</title>
+    <meta name="description" content="Контактная информация VoltGroup. Телефон, адрес, ссылки на социальные сети.">
+
+    <!-- Favicon & PWA -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="manifest" href="../manifest.json">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108492681', 'ym');
+
+        ym(108492681, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/108492681" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
+
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../static/css/style.css">
+
+    <style>
+        /* Дополнительные стили для страницы контактов */
+        .contact-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        .contact-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        .contact-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-install);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.1);
+        }
+        .contact-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        .contact-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--text-main);
+        }
+        .contact-card a {
+            color: var(--primary-install);
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: block;
+            margin: 10px 0;
+        }
+        .contact-card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container nav-container">
+        <a href="../index.html" class="logo">
+            <img src="../assets/images/logo-voltgroup.png" alt="VoltGroup Logo">
+        </a>
+        <button class="mobile-toggle" aria-label="Меню">☰</button>
+        <nav class="nav-links">
+            <a href="../install/">Install</a>
+            <a href="../engineering/">Engineering</a>
+            <a href="../estimate.html">Калькулятор</a>
+            <a href="../works.html">Работы</a>
+            <a href="../contacts/" class="btn btn-outline active" style="padding: 8px 20px; font-size: 0.9rem;">Контакты</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="hero" style="padding-top: 120px; padding-bottom: 40px;">
+        <div class="container">
+            <h1>Контакты</h1>
+            <p class="hero-subtitle">Свяжитесь с нами удобным способом. Отвечаю в течение 15 минут.</p>
+            <div class="hero-actions">
+                <a href="https://vk.com/voltgroup_spb" target="_blank" class="btn btn-primary">Написать ВКонтакте</a>
+                <a href="tel:+79052084284" class="btn btn-outline">Позвонить</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="padding-bottom: 80px;">
+        <div class="container">
+            <div class="contact-cards">
+                <div class="contact-card">
+                    <div class="contact-icon">📞</div>
+                    <h3>Телефон</h3>
+                    <a href="tel:+79052084284">+7 (905) 208-42-84</a>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Пн–Сб: 9:00–21:00</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Звоните в рабочее время</p>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">📍</div>
+                    <h3>Адрес</h3>
+                    <p style="font-size: 1.1rem; margin-bottom: 10px;">Санкт-Петербург и ЛО</p>
+                    <p style="font-size: 0.9rem;">Выезд на объект для замера и консультации — <strong>бесплатно</strong> в пределах КАД</p>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">💬</div>
+                    <h3>Мессенджеры</h3>
+                    <a href="https://vk.com/voltgroup_spb" target="_blank">ВКонтакте: @voltgroup_spb</a>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Присылайте фото щитов или ТЗ для быстрой оценки</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <h4>⚡ VoltGroup</h4>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
+                    Энергия решений.<br>Электрика и автоматизация в СПб.
+                </p>
+                <a href="https://vk.com/voltgroup_spb" style="color: var(--primary-install); font-weight: 600;">@voltgroup_spb</a>
+            </div>
+
+            <div class="footer-links">
+                <h4>Навигация</h4>
+                <a href="../install/">Install</a>
+                <a href="../engineering/">Engineering</a>
+                <a href="../estimate.html">Калькулятор</a>
+                <a href="../works.html">Портфолио</a>
+                <a href="../contacts/">Контакты</a>
+            </div>
+
+            <div class="footer-links">
+                <h4>Документы</h4>
+                <a href="../privacy.html">Политика конфиденциальности</a>
+                <a href="../offer.html">Публичная оферта</a>
+                <a href="../cookies.html">Cookies</a>
+            </div>
+
+            <div>
+                <h4>Контакты</h4>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;"> +7 (905) 208-42-84</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">🕒 Пн–Сб: 9:00–21:00</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">📍 Санкт-Петербург</p>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2026 VoltGroup. Все права защищены.
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Mobile Menu
+    const mobileToggle = document.querySelector('.mobile-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    if(mobileToggle) {
+        mobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+            mobileToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+        });
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+                mobileToggle.textContent = '☰';
+            });
+        });
+    }
+
+    // Service Worker ОТКЛЮЧЕН для разработки
+    /*
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(console.error));
+    }
+    */
+</script>
+</body>
+</html>

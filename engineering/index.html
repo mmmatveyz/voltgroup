@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engineering | Промышленная автоматизация - VoltGroup</title>
+    <meta name="description" content="Диагностика и ремонт металлорежущих станков, восстановление релейных схем и ЧПУ в Санкт-Петербурге.">
+
+    <!-- Favicon & PWA -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="manifest" href="../manifest.json">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108492681', 'ym');
+
+        ym(108492681, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/108492681" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
+
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="container nav-container">
+        <a href="../index.html" class="logo">
+            <img src="../assets/images/logo-voltgroup.png" alt="VoltGroup Logo">
+        </a>
+        <button class="mobile-toggle" aria-label="Меню">☰</button>
+        <nav class="nav-links">
+            <a href="../install/">Install</a>
+            <a href="../engineering/" class="active">Engineering</a>
+            <a href="../estimate.html">Калькулятор</a>
+            <a href="../works.html">Работы</a>
+            <a href="../contacts/" class="btn btn-outline" style="padding: 8px 20px; font-size: 0.9rem;">Контакты</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="hero" style="padding-top: 120px;">
+        <div class="container">
+            <h1 style="color: var(--primary-eng);">VoltGroup Engineering</h1>
+            <p class="hero-subtitle">Диагностика и ремонт металлорежущих станков. Восстановление релейных схем и ЧПУ.</p>
+            <div class="hero-actions">
+                <a href="../estimate.html" class="btn btn-secondary">Рассчитать стоимость работ</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2>Услуги и цены</h2>
+            <div id="eng-prices">
+                <p style="text-align: center; color: var(--text-muted);">Загрузка прайса...</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section contact-section">
+        <div class="container">
+            <h2>Заказать аудит / Ремонт</h2>
+            <form id="leadForm" class="form-box">
+                <div class="form-group">
+                    <label class="form-label">Имя</label>
+                    <input type="text" name="name" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Телефон</label>
+                    <input type="tel" name="phone" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Оборудование / Задача</label>
+                    <input type="text" name="service" class="form-input" placeholder="Например: Станок 16К20, ЧПУ Fanuc">
+                </div>
+                <div class="form-group" style="display: flex; align-items: flex-start; gap: 10px; margin-top: 15px;">
+                    <input type="checkbox" id="privacy-consent-main" required style="margin-top: 4px; width: 18px; height: 18px; accent-color: var(--primary-install); cursor: pointer;">
+                    <label for="privacy-consent-main" style="font-size: 0.85rem; color: var(--text-muted); cursor: pointer; line-height: 1.4;">
+                        Я даю согласие на обработку <a href="./privacy.html" target="_blank" style="color: var(--primary-install); text-decoration: underline;">персональных данных</a>
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-secondary" style="width:100%;">Отправить заявку</button>
+                <p id="formStatus" style="margin-top:15px;text-align:center;display:none;"></p>
+            </form>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <!-- Блок 1: Бренд -->
+            <div>
+                <h4>⚡ VoltGroup</h4>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
+                    Энергия решений.<br>Электрика и автоматизация в СПб.
+                </p>
+                <a href="https://vk.com/voltgroup_spb" style="color: var(--primary-install); font-weight: 600;">@voltgroup_spb</a>
+            </div>
+
+            <!-- Блок 2: Навигация (ИСПРАВЛЕНЫ ПУТИ для вложенной папки) -->
+            <div class="footer-links">
+                <h4>Навигация</h4>
+                <a href="../install/">Install</a>
+                <a href="../engineering/">Engineering</a>
+                <a href="../estimate.html">Калькулятор</a>
+                <a href="../works.html">Портфолио</a>
+                <a href="../contacts/">Контакты</a>
+            </div>
+
+            <!-- Блок 3: Документы (ИСПРАВЛЕНЫ ПУТИ) -->
+            <div class="footer-links">
+                <h4>Документы</h4>
+                <a href="../privacy.html">Политика конфиденциальности</a>
+                <a href="../offer.html">Публичная оферта</a>
+                <a href="../cookies.html">Cookies</a>
+            </div>
+
+            <!-- Блок 4: Контакты -->
+            <div>
+                <h4>Контакты</h4>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;">📞 +7 (905) 208-42-84</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">🕒 Пн–Сб: 9:00–21:00</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">📍 Санкт-Петербург</p>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2026 VoltGroup. Все права защищены.
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Mobile Menu
+    const mobileToggle = document.querySelector('.mobile-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    if(mobileToggle) {
+        mobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+            mobileToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+        });
+        // Закрываем меню при клике на ссылку
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+                mobileToggle.textContent = '☰';
+            });
+        });
+    }
+
+    // Load Prices from JSON
+    fetch('../static/data/prices.json')
+        .then(r => {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+    })
+        .then(d => {
+        let html = '';
+        if (d.engineering && d.engineering.categories) {
+            d.engineering.categories.forEach(c => {
+                html += `<div class="price-category"><h3 style="border-color:var(--primary-eng);">${c.name}</h3><table class="price-table"><thead><tr><th>Услуга</th><th>Описание</th><th>Цена</th></tr></thead><tbody>`;
+                c.items.forEach(i => {
+                    const unitText = i.unit === 'работа' ? '' : i.unit;
+                    html += `<tr><td>${i.service}</td><td style="font-size:0.9rem;color:var(--text-muted);">${i.desc || '-'}</td><td class="price-value" style="color:var(--primary-eng);">${i.price.toLocaleString('ru-RU')} ₽ ${unitText}</td></tr>`;
+                });
+                html += `</tbody></table></div>`;
+            });
+            document.getElementById('eng-prices').innerHTML = html;
+        } else {
+            document.getElementById('eng-prices').innerHTML = '<p style="text-align:center;color:var(--text-muted);">Раздел Engineering не найден в прайсе.</p>';
+        }
+    })
+        .catch(err => {
+        console.error('Ошибка загрузки прайса:', err);
+        document.getElementById('eng-prices').innerHTML = `
+                <div style="text-align:center; padding:40px; background:var(--bg-card); border-radius:var(--radius-lg); border:1px solid var(--border-light);">
+                    <p style="color:var(--danger); margin-bottom:15px;">⚠️ Не удалось загрузить прайс-лист</p>
+                    <a href="../contacts/" class="btn btn-secondary">Связаться с нами напрямую</a>
+                </div>`;
+    });
+
+    // Form Submission
+    const leadForm = document.getElementById('leadForm');
+    if(leadForm){
+        leadForm.addEventListener('submit', async e => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const status = document.getElementById('formStatus');
+            const formData = new FormData(e.target);
+            formData.append('source', 'engineering_page');
+
+            btn.disabled = true;
+            btn.textContent = 'Отправка...';
+            status.style.display = 'block';
+            status.textContent = '⏳ Отправляем...';
+
+            try {
+                const res = await fetch('https://voltgroup-bot.onrender.com/send-message', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(Object.fromEntries(formData))
+                });
+                if(res.ok){
+                    status.textContent = '✅ Заявка отправлена!';
+                    status.style.color = '#10B981';
+                    e.target.reset();
+                } else {
+                    throw new Error('Ошибка сервера');
+                }
+            } catch(err) {
+                status.textContent = '❌ Ошибка. Напишите в VK.';
+                status.style.color = '#EF4444';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Отправить заявку';
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,1064 +1,627 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Калькулятор сметы | VoltGroup</title>
-  <meta name="description" content="Рассчитайте предварительную стоимость электромонтажных работ онлайн. VoltGroup СПб.">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор сметы | VoltGroup</title>
+    <meta name="description" content="Рассчитайте предварительную стоимость электромонтажных работ онлайн. VoltGroup СПб.">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-
-  <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
 
 
-  <!-- Yandex.Metrika counter -->
-  <script type="text/javascript">
-    (function(m,e,t,r,i,k,a){
-      m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-      m[i].l=1*new Date();
-      for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-      k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108492681', 'ym');
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108492681', 'ym');
 
-    ym(108492681, 'init', {ssr:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
-  </script>
-  <noscript><div><img src="https://mc.yandex.ru/watch/108492681" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-  <!-- /Yandex.Metrika counter -->
+        ym(108492681, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/108492681" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
 
 
 
 
+    <style>
+        :root {
+            --bg-dark: #050914; --bg-card: rgba(17, 24, 39, 0.7); --primary: #00E5FF;
+            --primary-glow: rgba(0, 229, 255, 0.4); --text-main: #F8FAFC; --text-muted: #94A3B8;
+            --border-light: rgba(255, 255, 255, 0.1); --radius-lg: 16px; --radius-md: 12px;
+            --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); --danger: #EF4444; --success: #10B981;
+        }
+        html { overflow-x: hidden !important; width: 100%; position: relative; }
+        body { overflow-x: hidden !important; width: 100%; max-width: 100vw; position: relative; margin: 0; padding: 0; }
+        img, video, iframe, svg { max-width: 100%; height: auto; display: block; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-main); }
+        body {
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at 50% 0%, #1a2c4e 0%, var(--bg-dark) 60%);
+            color: var(--text-main); line-height: 1.6; padding-bottom: 60px;
+            display: flex; flex-direction: column; min-height: 100vh;
+        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; width: 100%; }
+        .header {
+            position: sticky; top: 0; left: 0; width: 100%; z-index: 1000;
+            background: rgba(5, 9, 20, 0.85); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-light); padding: 15px 0;
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px; text-decoration: none; }
+        .logo img { height: 40px; width: auto; }
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-links a { font-size: 0.95rem; font-weight: 500; opacity: 0.8; text-decoration: none; color: var(--text-main); transition: var(--transition); }
+        .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--primary); }
+        .mobile-toggle { display: none; background: none; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; }
+        main { flex-grow: 1; padding-top: 40px; }
+        h1 { font-size: clamp(1.5rem, 4vw, 2rem); color: var(--text-main); margin-bottom: 5px; }
+        .subtitle { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 30px; }
+        .card-box {
+            background: var(--bg-card); border: 1px solid var(--border-light); border-radius: var(--radius-lg);
+            padding: 25px; margin-bottom: 25px; backdrop-filter: blur(10px);
+        }
+        .client-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .input-group label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px; }
+        .client-info input, .category-select, .draft-input, .draft-select {
+            width: 100%; padding: 12px; border-radius: var(--radius-md); border: 1px solid var(--border-light);
+            background: rgba(0,0,0,0.3); color: var(--text-main); font-size: 1rem; transition: var(--transition);
+        }
+        .client-info input:focus, .category-select:focus, .draft-input:focus, .draft-select:focus {
+            outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,229,255,0.1);
+        }
+        .section-selector { display: flex; gap: 10px; margin-bottom: 15px; }
+        .section-selector button {
+            padding: 10px 20px; border-radius: 30px; border: 2px solid var(--border-light);
+            background: transparent; color: var(--text-muted); font-weight: 600; cursor: pointer;
+            transition: var(--transition); font-size: 0.95rem;
+        }
+        .section-selector button.active { border-color: var(--primary); color: var(--primary); background: rgba(0, 229, 255, 0.1); }
+        .section-selector button:hover { transform: translateY(-2px); }
+        .section-selector button:first-child.active { border-color: #00E5FF; color: #00E5FF; }
+        .section-selector button:last-child.active { border-color: #7B61FF; color: #7B61FF; }
+        .category-selector { margin-bottom: 20px; }
+        .category-selector label { display: block; margin-bottom: 8px; color: var(--primary); font-weight: 600; }
+        .table-wrapper {
+            overflow-x: auto; margin-bottom: 20px; background: var(--bg-card);
+            border-radius: var(--radius-lg); border: 1px solid var(--border-light); backdrop-filter: blur(10px);
+        }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid var(--border-light); font-size: 0.95rem; }
+        th { background: rgba(255,255,255,0.03); color: var(--primary); font-weight: 600; white-space: nowrap; }
+        tr:last-child td { border-bottom: none; }
+        .qty-wrapper { display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .qty-btn {
+            width: 32px; height: 32px; border-radius: 6px; border: 1px solid var(--border-light);
+            background: rgba(0,0,0,0.3); color: var(--text-main); font-size: 1.2rem;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: var(--transition); user-select: none; padding: 0;
+        }
+        .qty-btn:hover { background: var(--primary); color: #000; border-color: var(--primary); }
+        .qty-btn:active { transform: scale(0.95); }
+        .qty-input-stepper {
+            width: 60px !important; text-align: center; padding: 5px; border: 1px solid var(--border-light);
+            background: rgba(0,0,0,0.3); color: var(--text-main); border-radius: 6px; font-size: 1rem;
+            -moz-appearance: textfield;
+        }
+        .qty-input-stepper::-webkit-outer-spin-button, .qty-input-stepper::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .complexity-check { display: flex; align-items: center; gap: 5px; font-size: 0.85rem; color: var(--text-muted); cursor: pointer; }
+        .complexity-check input { accent-color: var(--primary); width: 16px; height: 16px; cursor: pointer; }
+        .complexity-badge {
+            font-size: 0.75rem; background: rgba(239, 68, 68, 0.2); color: #fca5a5;
+            padding: 2px 6px; border-radius: 4px; margin-left: 5px; display: none;
+        }
+        .complexity-check input:checked + span + .complexity-badge { display: inline-block; }
+        .summary {
+            background: var(--bg-card); padding: 30px; border-radius: var(--radius-lg);
+            margin: 30px 0; border: 1px solid var(--border-light); backdrop-filter: blur(10px);
+        }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 10px; color: var(--text-muted); font-size: 1.1rem; }
+        .summary-total {
+            display: flex; justify-content: space-between; font-size: 1.6rem; font-weight: 700;
+            border-top: 2px solid var(--border-light); padding-top: 15px; color: var(--primary); margin-top: 15px;
+        }
+        .discount-block {
+            display: flex; gap: 10px; align-items: center; margin: 15px 0; padding: 10px;
+            background: rgba(239, 68, 68, 0.1); border-radius: var(--radius-md); border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+        .discount-block input {
+            width: 100px; padding: 8px; border-radius: 6px; border: 1px solid var(--border-light);
+            background: rgba(0,0,0,0.3); color: var(--text-main);
+        }
+        .actions { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+        .btn {
+            padding: 12px 24px; border-radius: 50px; font-weight: 600; cursor: pointer; border: none;
+            font-size: 1rem; transition: var(--transition); text-decoration: none;
+            display: inline-flex; align-items: center; justify-content: center;
+        }
+        .btn-primary { background: var(--primary); color: #000; box-shadow: 0 0 20px var(--primary-glow); }
+        .btn-primary:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 0 30px var(--primary-glow); }
+        .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+        .btn-outline:hover { background: var(--primary); color: #000; }
+        .btn-remove { background: transparent; border: none; color: var(--danger); cursor: pointer; font-size: 1.2rem; padding: 4px; opacity: 0.7; }
+        .btn-remove:hover { opacity: 1; }
+        .purchase-toggle {
+            display: flex; align-items: center; gap: 10px; margin: 20px 0; padding: 12px;
+            background: rgba(0, 229, 255, 0.05); border-radius: var(--radius-md); border: 1px solid rgba(0, 229, 255, 0.2);
+        }
+        .purchase-toggle label { cursor: pointer; color: var(--text-main); font-weight: 600; user-select: none; }
+        .purchase-toggle input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; }
+        .footer { background: #02040a; border-top: 1px solid var(--border-light); padding: 60px 0 30px; margin-top: auto; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer h4 { color: var(--text-main); margin-bottom: 20px; font-size: 1.1rem; }
+        .footer-links a { display: block; margin-bottom: 10px; color: var(--text-muted); font-size: 0.95rem; text-decoration: none; }
+        .footer-links a:hover { color: var(--primary); }
+        .copyright { text-align: center; color: #555; font-size: 0.9rem; border-top: 1px solid #111; padding-top: 20px; }
 
-  <style>
-    :root {
-      --bg-dark: #050914;
-      --bg-card: rgba(17, 24, 39, 0.7);
-      --primary: #00E5FF;
-      --primary-glow: rgba(0, 229, 255, 0.4);
-      --text-main: #F8FAFC;
-      --text-muted: #94A3B8;
-      --border-light: rgba(255, 255, 255, 0.1);
-      --radius-lg: 16px;
-      --radius-md: 12px;
-      --font-main: 'Inter', system-ui, -apple-system, sans-serif;
-      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      --danger: #EF4444;
-      --success: #10B981;
-    }
-
-    html {
-      overflow-x: hidden !important;
-      width: 100%;
-      position: relative;
-    }
-
-    body {
-      overflow-x: hidden !important;
-      width: 100%;
-      max-width: 100vw;
-      position: relative;
-      margin: 0;
-      padding: 0;
-    }
-
-    img, video, iframe, svg {
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); }
-    body {
-      background-color: var(--bg-dark);
-      background-image: radial-gradient(circle at 50% 0%, #1a2c4e 0%, var(--bg-dark) 60%);
-      color: var(--text-main);
-      line-height: 1.6;
-      padding-bottom: 60px;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      overflow-x: hidden;
-      width: 100%;
-      position: relative;
-    }
-
-    .container { max-width: 1000px; margin: 0 auto; padding: 20px; width: 100%; }
-
-    /* Header */
-    .header {
-      position: sticky; top: 0; left: 0; width: 100%; z-index: 1000;
-      background: rgba(5, 9, 20, 0.85); backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border-light);
-      padding: 15px 0;
-    }
-    .nav-container { display: flex; justify-content: space-between; align-items: center; }
-    .logo { font-size: 1.5rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px; text-decoration: none; }
-    .logo span { color: var(--primary); }
-
-    .nav-links { display: flex; gap: 30px; align-items: center; }
-    .nav-links a { font-size: 0.95rem; font-weight: 500; opacity: 0.8; text-decoration: none; color: var(--text-main); transition: var(--transition); }
-    .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--primary); }
-
-    .mobile-toggle { display: none; background: none; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; }
-
-    /* Main Content Spacing */
-    main { flex-grow: 1; padding-top: 40px; }
-
-    h1 { font-size: clamp(1.5rem, 4vw, 2rem); color: var(--text-main); margin-bottom: 5px; }
-    .subtitle { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 30px; }
-
-    /* Cards & Inputs */
-    .card-box {
-      background: var(--bg-card);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: 25px;
-      margin-bottom: 25px;
-      backdrop-filter: blur(10px);
-    }
-
-    .client-info {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-    }
-    .input-group label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px; }
-    .client-info input, .category-select, .draft-input, .draft-select {
-      width: 100%;
-      padding: 12px;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-light);
-      background: rgba(0,0,0,0.3);
-      color: var(--text-main);
-      font-size: 1rem;
-      transition: var(--transition);
-    }
-    .client-info input:focus, .category-select:focus, .draft-input:focus, .draft-select:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(0,229,255,0.1);
-    }
-
-    /* Category Selector */
-    .category-selector { margin-bottom: 20px; }
-    .category-selector label { display: block; margin-bottom: 8px; color: var(--primary); font-weight: 600; }
-
-    /* Tables */
-    .table-wrapper {
-      overflow-x: auto;
-      margin-bottom: 20px;
-      background: var(--bg-card);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-light);
-      backdrop-filter: blur(10px);
-    }
-    table { width: 100%; border-collapse: collapse; min-width: 600px; }
-    th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid var(--border-light); font-size: 0.95rem; }
-    th { background: rgba(255,255,255,0.03); color: var(--primary); font-weight: 600; white-space: nowrap; }
-    tr:last-child td { border-bottom: none; }
-
-    /* Stepper (+/-) */
-    .qty-wrapper { display: flex; align-items: center; justify-content: center; gap: 5px; }
-    .qty-btn {
-      width: 32px; height: 32px; border-radius: 6px; border: 1px solid var(--border-light);
-      background: rgba(0,0,0,0.3); color: var(--text-main); font-size: 1.2rem;
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
-      transition: var(--transition); user-select: none; padding: 0;
-    }
-    .qty-btn:hover { background: var(--primary); color: #000; border-color: var(--primary); }
-    .qty-btn:active { transform: scale(0.95); }
-    .qty-input-stepper {
-      width: 60px !important; text-align: center; padding: 5px; border: 1px solid var(--border-light);
-      background: rgba(0,0,0,0.3); color: var(--text-main); border-radius: 6px; font-size: 1rem;
-      -moz-appearance: textfield;
-    }
-    .qty-input-stepper::-webkit-outer-spin-button,
-    .qty-input-stepper::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-
-    /* Complexity Checkbox */
-    .complexity-check {
-      display: flex; align-items: center; gap: 5px; font-size: 0.85rem; color: var(--text-muted); cursor: pointer;
-    }
-    .complexity-check input { accent-color: var(--primary); width: 16px; height: 16px; cursor: pointer; }
-    .complexity-badge {
-      font-size: 0.75rem; background: rgba(239, 68, 68, 0.2); color: #fca5a5;
-      padding: 2px 6px; border-radius: 4px; margin-left: 5px; display: none;
-    }
-    .complexity-check input:checked + span + .complexity-badge { display: inline-block; }
-
-    /* Summary Block */
-    .summary {
-      background: var(--bg-card);
-      padding: 30px;
-      border-radius: var(--radius-lg);
-      margin: 30px 0;
-      border: 1px solid var(--border-light);
-      backdrop-filter: blur(10px);
-    }
-    .summary-row { display: flex; justify-content: space-between; margin-bottom: 10px; color: var(--text-muted); font-size: 1.1rem; }
-    .summary-total {
-      display: flex; justify-content: space-between; font-size: 1.6rem; font-weight: 700;
-      border-top: 2px solid var(--border-light); padding-top: 15px; color: var(--primary); margin-top: 15px;
-    }
-
-    /* Discount Input */
-    .discount-block {
-      display: flex; gap: 10px; align-items: center; margin: 15px 0; padding: 10px;
-      background: rgba(239, 68, 68, 0.1); border-radius: var(--radius-md); border: 1px solid rgba(239, 68, 68, 0.2);
-    }
-    .discount-block input {
-      width: 100px; padding: 8px; border-radius: 6px; border: 1px solid var(--border-light);
-      background: rgba(0,0,0,0.3); color: var(--text-main);
-    }
-
-    /* Buttons */
-    .actions { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
-    .btn {
-      padding: 12px 24px; border-radius: 50px; font-weight: 600; cursor: pointer; border: none;
-      font-size: 1rem; transition: var(--transition); text-decoration: none;
-      display: inline-flex; align-items: center; justify-content: center;
-    }
-    .btn-primary { background: var(--primary); color: #000; box-shadow: 0 0 20px var(--primary-glow); }
-    .btn-primary:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 0 30px var(--primary-glow); }
-    .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
-    .btn-outline:hover { background: var(--primary); color: #000; }
-    .btn-remove { background: transparent; border: none; color: var(--danger); cursor: pointer; font-size: 1.2rem; padding: 4px; opacity: 0.7; }
-    .btn-remove:hover { opacity: 1; }
-
-    /* Toggle Switch */
-    .purchase-toggle {
-      display: flex; align-items: center; gap: 10px; margin: 20px 0; padding: 12px;
-      background: rgba(0, 229, 255, 0.05); border-radius: var(--radius-md); border: 1px solid rgba(0, 229, 255, 0.2);
-    }
-    .purchase-toggle label { cursor: pointer; color: var(--text-main); font-weight: 600; user-select: none; }
-    .purchase-toggle input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; }
-
-    /* Footer */
-    .footer {
-      background: #02040a; border-top: 1px solid var(--border-light);
-      padding: 60px 0 30px; margin-top: auto;
-    }
-    .footer-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 40px; margin-bottom: 40px;
-    }
-    .footer h4 { color: var(--text-main); margin-bottom: 20px; font-size: 1.1rem; }
-    .footer-links a { display: block; margin-bottom: 10px; color: var(--text-muted); font-size: 0.95rem; text-decoration: none; }
-    .footer-links a:hover { color: var(--primary); }
-    .copyright { text-align: center; color: #555; font-size: 0.9rem; border-top: 1px solid #111; padding-top: 20px; }
-
-    @media (max-width: 768px) {
-      .header { padding: 10px 0; }
-      .nav-container { padding: 0 15px; }
-      .logo img { height: 40px; }
-
-      /* Меню-шторка справа */
-      .nav-links {
-        position: fixed;
-        top: 80px;
-        right: 0;
-        transform: translateX(100%); /* Спрятано за экраном */
-
-        width: 85%;
-        max-width: 320px;
-        height: calc(100vh - 160px);
-
-        background: rgba(5, 9, 20, 0.98);
-        backdrop-filter: blur(15px);
-        border-radius: 20px 0 0 20px;
-        border-left: 1px solid var(--border-light);
-        box-shadow: -5px 0 20px rgba(0,0,0,0.4);
-
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 30px;
-        padding: 20px;
-
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 1001;
-
-        /* Важно: скрываем содержимое меню, если оно вылезает */
-        overflow-y: auto;
-        overflow-x: hidden;
-      }
-
-      .nav-links.open {
-        transform: translateX(0); /* Выезжает на экран */
-      }
-
-      .mobile-toggle {
-        display: block;
-        z-index: 1002;
-        font-size: 1.8rem;
-      }
-      .client-info { grid-template-columns: 1fr; }
-      .actions { flex-direction: column; }
-      .btn { width: 100%; }
-    }
-  </style>
+        @media (max-width: 768px) {
+            .header { padding: 10px 0; }
+            .nav-container { padding: 0 15px; }
+            .nav-links {
+                position: fixed; top: 80px; right: 0; transform: translateX(100%);
+                width: 85%; max-width: 320px; height: calc(100vh - 160px);
+                background: rgba(5, 9, 20, 0.98); backdrop-filter: blur(15px);
+                border-radius: 20px 0 0 20px; border-left: 1px solid var(--border-light);
+                box-shadow: -5px 0 20px rgba(0,0,0,0.4); flex-direction: column;
+                justify-content: center; align-items: center; gap: 30px; padding: 20px;
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1001;
+                overflow-y: auto; overflow-x: hidden;
+            }
+            .nav-links.open { transform: translateX(0); }
+            .mobile-toggle { display: block; z-index: 1002; font-size: 1.8rem; }
+            .client-info { grid-template-columns: 1fr; }
+            .actions { flex-direction: column; }
+            .btn { width: 100%; }
+        }
+    </style>
 </head>
 <body>
 
 <header class="header">
-  <div class="container nav-container">
-    <a href="./index.html" class="logo">
-      <img src="./logo.png" alt="VoltGroup Logo" style="height: 50px; width: auto;">
-    </a>
-    <button class="mobile-toggle" aria-label="Меню">☰</button>
-    <nav class="nav-links">
-      <a href="./index.html#services">Услуги</a>
-      <a href="./estimate.html" class="active">Калькулятор</a>
-      <a href="./works.html">Работы</a>
-      <a href="./index.html#why">Преимущества</a>
-      <a href="./index.html#faq">FAQ</a>
-      <a href="./index.html#contact" class="btn btn-primary" style="padding: 10px 20px; font-size: 0.9rem;">Оставить заявку</a>
-    </nav>
-  </div>
+    <div class="container nav-container">
+        <a href="./index.html" class="logo">
+            <img src="./assets/images/logo-voltgroup.png" alt="VoltGroup Logo">
+        </a>
+        <button class="mobile-toggle" aria-label="Меню">☰</button>
+        <nav class="nav-links">
+            <a href="./install/">Install</a>
+            <a href="./engineering/">Engineering</a>
+            <a href="./estimate.html" class="active">Калькулятор</a>
+            <a href="./works.html">Работы</a>
+            <a href="./contacts/">Контакты</a>
+        </nav>
+    </div>
 </header>
 
 <main>
-  <div class="container">
-    <h1>⚡ Калькулятор сметы</h1>
-    <p class="subtitle">Предварительный расчёт стоимости работ и материалов</p>
+    <div class="container">
+        <h1>⚡ Калькулятор сметы</h1>
+        <p class="subtitle">Предварительный расчёт стоимости работ и материалов</p>
 
-    <!-- Данные заказчика -->
-    <div class="card-box">
-      <div class="client-info">
-        <div class="input-group">
-          <label>Имя заказчика</label>
-          <input type="text" id="client-name" placeholder="Иванов И.И.">
+        <div class="card-box">
+            <div class="client-info">
+                <div class="input-group"><label>Имя заказчика</label><input type="text" id="client-name" placeholder="Иванов И.И."></div>
+                <div class="input-group"><label>Адрес объекта</label><input type="text" id="client-address" placeholder="СПб, ул. Ленина..."></div>
+                <div class="input-group"><label>Дата</label><input type="date" id="estimate-date"></div>
+                <div class="input-group"><label>№ Сметы / КП</label><input type="text" id="invoice-number" placeholder="Напр. КП-01"></div>
+            </div>
         </div>
-        <div class="input-group">
-          <label>Адрес объекта</label>
-          <input type="text" id="client-address" placeholder="СПб, ул. Ленина...">
+
+        <div class="card-box" style="padding: 15px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+            <input type="text" id="draft-name" class="draft-input" placeholder="Название черновика..." style="flex-grow: 1;">
+            <button class="btn btn-outline" onclick="saveDraft()" style="padding: 10px 15px; font-size: 0.9rem;">💾 Сохранить</button>
+            <select id="draft-select" class="draft-select" onchange="loadDraft()" style="width: auto; min-width: 150px;"><option value="">📂 Загрузить...</option></select>
+            <button class="btn btn-outline" onclick="deleteDraft()" style="padding: 10px 15px; font-size: 0.9rem; color: var(--danger); border-color: var(--danger);">🗑</button>
+            <button class="btn btn-outline" onclick="exportDraftToFile()" style="padding: 10px 15px; font-size: 0.9rem; border-color: #F59E0B; color: #F59E0B;">💾 Скачать файл</button>
+            <label class="btn btn-outline" style="padding: 10px 15px; font-size: 0.9rem; cursor: pointer; border-color: var(--success); color: var(--success);">
+                📂 Загрузить файл <input type="file" id="import-file-input" accept=".json" style="display: none;" onchange="importDraftFromFile(this)">
+            </label>
         </div>
-        <div class="input-group">
-          <label>Дата</label>
-          <input type="date" id="estimate-date">
+
+        <div class="card-box" style="padding: 15px;">
+            <div class="section-selector">
+                <button id="btn-install" class="active" onclick="switchSection('install')">⚡ Install</button>
+                <button id="btn-eng" onclick="switchSection('engineering')">🏭 Engineering</button>
+            </div>
         </div>
-        <div class="input-group">
-          <label>№ Сметы / КП</label>
-          <input type="text" id="invoice-number" placeholder="Напр. КП-01 или Авто">
+
+        <div class="category-selector card-box">
+            <label for="category-select">Выберите категорию работ:</label>
+            <select id="category-select" class="category-select" onchange="renderServices()"><option value="all">Все работы</option></select>
         </div>
-      </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead><tr><th>Наименование работ</th><th>Ед.</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th>Условия</th><th></th></tr></thead>
+                <tbody id="services-body"></tbody>
+            </table>
+            <div style="padding: 15px; text-align: center; border-top: 1px solid var(--border-light);">
+                <button class="btn btn-outline" onclick="addCustomWorkRow()" style="padding: 8px 16px; font-size: 0.9rem;">➕ Добавить свою позицию</button>
+            </div>
+        </div>
+
+        <div class="purchase-toggle">
+            <input type="checkbox" id="master-buys-materials" checked onchange="calculateTotals()">
+            <label for="master-buys-materials">Материалы закупает Мастер (входят в итоговую сумму)</label>
+        </div>
+
+        <div class="table-wrapper">
+            <div style="padding: 12px 15px; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center;">
+                <span style="color: var(--primary); font-weight: 600;">📦 Материалы (добавляются вручную)</span>
+                <button class="btn btn-outline" onclick="addMaterialRow()" style="padding: 4px 10px; font-size: 0.8rem;">+ Вручную</button>
+            </div>
+            <table>
+                <thead><tr><th>Наименование</th><th>Ед.</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th></th></tr></thead>
+                <tbody id="materials-body"></tbody>
+            </table>
+        </div>
+
+        <div class="summary">
+            <div class="summary-row"><span>Стоимость работ:</span><span id="services-total-display">0 ₽</span></div>
+            <div class="discount-block">
+                <label for="discount-input" style="color: var(--text-muted); font-size: 0.9rem;">Скидка:</label>
+                <input type="text" id="discount-input" placeholder="0 ₽ или %" oninput="calculateTotals()">
+                <span id="discount-value-display" style="color: var(--danger); font-weight: 600; margin-left: auto;">-0 ₽</span>
+            </div>
+            <div class="summary-row" style="font-weight: bold; color: var(--text-main);"><span>Итого за работы:</span><span id="works-subtotal-display">0 ₽</span></div>
+            <div class="summary-row" id="materials-summary-row"><span>Стоимость материалов:</span><span id="materials-total-display">0 ₽</span></div>
+            <div class="summary-total"><span>К ОПЛАТЕ:</span><span id="grand-total">0 ₽</span></div>
+            <div style="margin-top: 15px; text-align: center; font-size: 0.9rem; color: var(--text-muted);">
+                Это предварительная оценка. Точная стоимость фиксируется в договоре после осмотра.<br>
+                <a href="./contacts/" style="color: var(--primary); text-decoration: underline;">Заказать бесплатный выезд →</a>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-primary" onclick="generatePDF()">📄 Скачать смету (PDF)</button>
+            <button class="btn btn-primary" onclick="generateCommercialOffer()" style="background: var(--success); color: white; box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);">📄 Сформировать КП</button>
+            <button class="btn btn-outline" onclick="generateAct()" style="border-color: #F59E0B; color: #F59E0B;">📝 Сформировать Акт</button>
+            <button class="btn btn-outline" onclick="clearForm()">🗑 Очистить всё</button>
+        </div>
     </div>
-
-    <!-- Управление черновиками -->
-    <div class="card-box" style="padding: 15px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
-      <input type="text" id="draft-name" class="draft-input" placeholder="Название черновика..." style="flex-grow: 1;">
-      <button class="btn btn-outline" onclick="saveDraft()" style="padding: 10px 15px; font-size: 0.9rem;">💾 Сохранить</button>
-      <select id="draft-select" class="draft-select" onchange="loadDraft()" style="width: auto; min-width: 150px;">
-        <option value="">📂 Загрузить...</option>
-      </select>
-      <button class="btn btn-outline" onclick="deleteDraft()" style="padding: 10px 15px; font-size: 0.9rem; color: var(--danger); border-color: var(--danger);">🗑</button>
-
-      <!-- Экспорт/Импорт -->
-      <button class="btn btn-outline" onclick="exportDraftToFile()" style="padding: 10px 15px; font-size: 0.9rem; border-color: #F59E0B; color: #F59E0B;">💾 Скачать файл</button>
-      <label class="btn btn-outline" style="padding: 10px 15px; font-size: 0.9rem; cursor: pointer; border-color: var(--success); color: var(--success);">
-        📂 Загрузить файл
-        <input type="file" id="import-file-input" accept=".json" style="display: none;" onchange="importDraftFromFile(this)">
-      </label>
-    </div>
-
-    <!-- Выбор категории работ -->
-    <div class="category-selector card-box">
-      <label for="category-select">Выберите раздел работ:</label>
-      <select id="category-select" class="category-select" onchange="renderServicesByCategory()">
-        <option value="all">Все работы</option>
-        <option value="Черновые работы">Черновые работы (штробление, кабель)</option>
-        <option value="Чистовые работы">Чистовые работы (розетки, выключатели)</option>
-        <option value="Щитовое оборудование">Щитовое оборудование</option>
-        <option value="Освещение">Освещение</option>
-        <option value="Подключение техники">Подключение техники</option>
-        <option value="Диагностика">Диагностика и выезд</option>
-      </select>
-    </div>
-
-    <!-- Таблица Работ -->
-    <div class="table-wrapper">
-      <table>
-        <thead>
-        <tr><th>Наименование работ</th><th>Ед.</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th>Условия</th><th></th></tr>
-        </thead>
-        <tbody id="services-body">
-        <!-- Сюда JS вставит строки -->
-        </tbody>
-      </table>
-      <div style="padding: 15px; text-align: center; border-top: 1px solid var(--border-light);">
-        <button class="btn btn-outline" onclick="addCustomWorkRow()" style="padding: 8px 16px; font-size: 0.9rem;">➕ Добавить свою позицию</button>
-      </div>
-    </div>
-
-    <!-- Переключатель закупки -->
-    <div class="purchase-toggle">
-      <input type="checkbox" id="master-buys-materials" checked onchange="calculateTotals()">
-      <label for="master-buys-materials">Материалы закупает Мастер (входят в итоговую сумму)</label>
-    </div>
-
-    <!-- Таблица Материалов -->
-    <div class="table-wrapper">
-      <div style="padding: 12px 15px; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center;">
-        <span style="color: var(--primary); font-weight: 600;">📦 Материалы (Авто-подбор)</span>
-        <button class="btn btn-outline" onclick="addMaterialRow()" style="padding: 4px 10px; font-size: 0.8rem;">+ Вручную</button>
-      </div>
-      <table>
-        <thead>
-        <tr><th>Наименование</th><th>Ед.</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th></th></tr>
-        </thead>
-        <tbody id="materials-body">
-        <!-- Сюда JS вставит строки -->
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Итоги -->
-    <div class="summary">
-      <div class="summary-row"><span>Стоимость работ:</span><span id="services-total-display">0 ₽</span></div>
-
-      <div class="discount-block">
-        <label for="discount-input" style="color: var(--text-muted); font-size: 0.9rem;">Скидка:</label>
-        <input type="text" id="discount-input" placeholder="0 ₽ или %" oninput="calculateTotals()">
-        <span id="discount-value-display" style="color: var(--danger); font-weight: 600; margin-left: auto;">-0 ₽</span>
-      </div>
-
-      <div class="summary-row" style="font-weight: bold; color: var(--text-main);"><span>Итого за работы:</span><span id="works-subtotal-display">0 ₽</span></div>
-
-      <div class="summary-row" id="materials-summary-row"><span>Стоимость материалов:</span><span id="materials-total-display">0 ₽</span></div>
-
-      <div class="summary-total"><span>К ОПЛАТЕ:</span><span id="grand-total">0 ₽</span></div>
-
-      <div style="margin-top: 15px; text-align: center; font-size: 0.9rem; color: var(--text-muted);">
-        Это предварительная оценка. Точная стоимость фиксируется в договоре после осмотра.<br>
-        <a href="./index.html#contact" style="color: var(--primary); text-decoration: underline;">Заказать бесплатный выезд →</a>
-      </div>
-    </div>
-
-    <div class="actions">
-      <button class="btn btn-primary" onclick="generatePDF()">📄 Скачать смету (PDF)</button>
-      <button class="btn btn-primary" onclick="generateCommercialOffer()" style="background: var(--success); color: white; box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);">📄 Сформировать КП</button>
-      <button class="btn btn-outline" onclick="generateAct()" style="border-color: #F59E0B; color: #F59E0B;">📝 Сформировать Акт</button>
-      <button class="btn btn-outline" onclick="clearForm()">🗑 Очистить всё</button>
-    </div>
-  </div>
 </main>
 
 <footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div>
-        <h4>⚡ VoltGroup</h4>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
-          Энергия решений.<br>Электрика и автоматизация в СПб.
-        </p>
-        <a href="https://vk.com/voltgroup_spb" style="color: var(--primary); font-weight: 600;">@voltgroup_spb</a>
-      </div>
-      <div class="footer-links">
-        <h4>Навигация</h4>
-        <a href="./index.html#services">Услуги</a>
-        <a href="./estimate.html">Калькулятор</a>
-        <a href="./works.html">Портфолио</a>
-        <a href="./index.html#contact">Контакты</a>
-      </div>
-      <div class="footer-links">
-        <h4>Документы</h4>
-        <a href="./privacy.html">Политика конфиденциальности</a>
-        <a href="./offer.html">Публичная оферта</a>
-        <a href="./cookies.html">Cookies</a>
-      </div>
-      <div>
-        <h4>Контакты</h4>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;">📞 +7 (905) 208-42-84</p>
-        <p style="color: var(--text-muted); font-size: 0.9rem;">🕒 Пн–Сб: 9:00–21:00</p>
-        <p style="color: var(--text-muted); font-size: 0.9rem;">📍 Санкт-Петербург</p>
-      </div>
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <h4>⚡ VoltGroup</h4>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">Энергия решений.<br>Электрика и автоматизация в СПб.</p>
+                <a href="https://vk.com/voltgroup_spb" style="color: var(--primary); font-weight: 600;">@voltgroup_spb</a>
+            </div>
+            <div class="footer-links">
+                <h4>Навигация</h4>
+                <a href="./install/">Install</a>
+                <a href="./engineering/">Engineering</a>
+                <a href="./estimate.html">Калькулятор</a>
+                <a href="./works.html">Портфолио</a>
+                <a href="./contacts/">Контакты</a>
+            </div>
+            <div class="footer-links">
+                <h4>Документы</h4>
+                <a href="./privacy.html">Политика конфиденциальности</a>
+                <a href="./offer.html">Публичная оферта</a>
+                <a href="./cookies.html">Cookies</a>
+            </div>
+            <div>
+                <h4>Контакты</h4>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;">📞 +7 (905) 208-42-84</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">🕒 Пн–Сб: 9:00–21:00</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">📍 Санкт-Петербург</p>
+            </div>
+        </div>
+        <div class="copyright">© 2026 VoltGroup. Все права защищены.</div>
     </div>
-    <div class="copyright">
-      © 2026 VoltGroup. Все права защищены.
-    </div>
-  </div>
 </footer>
 
 <script>
-  // Mobile Menu
-  const mobileToggle = document.querySelector('.mobile-toggle');
-  const navLinks = document.querySelector('.nav-links');
-
-  if(mobileToggle) {
-    mobileToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
-      mobileToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+    const mobileToggle = document.querySelector('.mobile-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    if(mobileToggle) {
+        mobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+            mobileToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+        });
+    }
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => { navLinks.classList.remove('open'); mobileToggle.textContent = '☰'; });
     });
-  }
 
-  // Close menu on link click
-  document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-      navLinks.classList.remove('open');
-      mobileToggle.textContent = '☰';
-    });
-  });
+    let allServices = [];
+    let servicesState = {};
+    let currentSection = 'install';
+    let currentCategory = 'all';
 
-  // --- ДАННЫЕ (С КАТЕГОРИЯМИ И РАСШИРЕННЫМ ПРАЙСОМ) ---
-  const servicesData = [
-    // --- ЧЕРНОВЫЕ РАБОТЫ ---
-    { name: 'Штробление: газобетон/пеноблок', unit: 'м.п.', price: 380, category: 'Черновые работы' },
-    { name: 'Штробление: кирпич', unit: 'м.п.', price: 480, category: 'Черновые работы' },
-    { name: 'Штробление: бетон', unit: 'м.п.', price: 580, category: 'Черновые работы' },
-    { name: 'Штробление пола (стяжка)', unit: 'м.п.', price: 450, category: 'Черновые работы' },
-    { name: 'Прокладка кабеля до 6 мм² (в гофре/трубе)', unit: 'м.п.', price: 140, category: 'Черновые работы' },
-    { name: 'Прокладка кабеля до 6 мм² (без гофры, клипсы)', unit: 'м.п.', price: 110, category: 'Черновые работы' },
-    { name: 'Прокладка кабеля от 10 мм² (силовой)', unit: 'м.п.', price: 220, category: 'Черновые работы' },
-    { name: 'Прокладка слаботочного кабеля (интернет/TV)', unit: 'м.п.', price: 90, category: 'Черновые работы' },
-    { name: 'Отверстие под подрозетник (бетон/кирпич)', unit: 'шт.', price: 600, category: 'Черновые работы' },
-    { name: 'Отверстие под подрозетник (гипсокартон)', unit: 'шт.', price: 350, category: 'Черновые работы' },
-    { name: 'Монтаж подрозетника (вмазка/фиксация)', unit: 'шт.', price: 220, category: 'Черновые работы' },
-    { name: 'Заделка штроб (алебастр/смесь)', unit: 'м.п.', price: 150, category: 'Черновые работы' },
-
-    // --- ЧИСТОВЫЕ РАБОТЫ ---
-    { name: 'Установка механизма розетки/выключателя', unit: 'шт.', price: 450, category: 'Чистовые работы' },
-    { name: 'Розетка/выключатель «под ключ» (с подрозетником)', unit: 'шт.', price: 850, category: 'Чистовые работы' },
-    { name: 'Установка рамки (декоративной)', unit: 'шт.', price: 150, category: 'Чистовые работы' },
-    { name: 'Установка диммера (светорегулятора)', unit: 'шт.', price: 650, category: 'Чистовые работы' },
-    { name: 'Установка терморегулятора (теплый пол)', unit: 'шт.', price: 750, category: 'Чистовые работы' },
-    { name: 'Установка датчика движения/присутствия', unit: 'шт.', price: 800, category: 'Чистовые работы' },
-
-    // --- ОСВЕЩЕНИЕ ---
-    { name: 'Монтаж точечного светильника (врезной)', unit: 'шт.', price: 550, category: 'Освещение' },
-    { name: 'Монтаж накладного светильника/бра', unit: 'шт.', price: 700, category: 'Освещение' },
-    { name: 'Монтаж люстры (до 5 кг, простой крепеж)', unit: 'шт.', price: 900, category: 'Освещение' },
-    { name: 'Монтаж тяжелой люстры (>5 кг, сложный крепеж)', unit: 'шт.', price: 1800, category: 'Освещение' },
-    { name: 'Монтаж светодиодной ленты (профиль + лента)', unit: 'м.п.', price: 450, category: 'Освещение' },
-    { name: 'Подключение блока питания LED ленты', unit: 'шт.', price: 400, category: 'Освещение' },
-
-    // --- ЩИТОВОЕ ОБОРУДОВАНИЕ ---
-    { name: 'Сборка электрощита (за модуль)', unit: 'мод.', price: 580, category: 'Щитовое оборудование' },
-    { name: 'Установка корпуса щита (встраиваемый)', unit: 'шт.', price: 1500, category: 'Щитовое оборудование' },
-    { name: 'Установка корпуса щита (накладной)', unit: 'шт.', price: 800, category: 'Щитовое оборудование' },
-    { name: 'Установка и подключение автомата 1P', unit: 'шт.', price: 350, category: 'Щитовое оборудование' },
-    { name: 'Установка и подключение автомата 2P/3P', unit: 'шт.', price: 450, category: 'Щитовое оборудование' },
-    { name: 'Установка УЗО / Дифавтомата', unit: 'шт.', price: 550, category: 'Щитовое оборудование' },
-    { name: 'Установка реле напряжения', unit: 'шт.', price: 600, category: 'Щитовое оборудование' },
-    { name: 'Маркировка кабелей в щите', unit: 'щит', price: 500, category: 'Щитовое оборудование' },
-
-    // --- ПОДКЛЮЧЕНИЕ ТЕХНИКИ ---
-    { name: 'Подключение варочной панели', unit: 'шт.', price: 1600, category: 'Подключение техники' },
-    { name: 'Подключение духового шкафа', unit: 'шт.', price: 1200, category: 'Подключение техники' },
-    { name: 'Подключение посудомоечной машины', unit: 'шт.', price: 1100, category: 'Подключение техники' },
-    { name: 'Подключение стиральной машины', unit: 'шт.', price: 1100, category: 'Подключение техники' },
-    { name: 'Подключение бойлера (водонагревателя)', unit: 'шт.', price: 1200, category: 'Подключение техники' },
-    { name: 'Подключение кондиционера (электрическая часть)', unit: 'шт.', price: 1500, category: 'Подключение техники' },
-    { name: 'Подключение электрокотла', unit: 'шт.', price: 2500, category: 'Подключение техники' },
-
-    // --- ДИАГНОСТИКА И ПРОЧЕЕ ---
-    { name: 'Диагностика неисправности сети', unit: 'час', price: 1500, category: 'Диагностика' },
-    { name: 'Аварийный выезд (восстановление света)', unit: 'выезд', price: 2000, category: 'Диагностика' },
-    { name: 'Поиск обрыва кабеля (трассоискателем)', unit: 'точка', price: 1500, category: 'Диагностика' },
-    { name: 'Консультация на объекте (без работ)', unit: 'выезд', price: 1000, category: 'Диагностика' }
-  ];
-
-  const materialRules = {
-    'Прокладка кабеля до 6 мм² (в гофре/трубе)': [
-      { name: 'Гофра ПВХ 20мм', unit: 'м.п.', price: 15, coef: 1.0 },
-      { name: 'Клипса для гофры 20мм', unit: 'шт.', price: 5, coef: 2.0 }
-    ],
-    'Прокладка кабеля до 6 мм² (без гофры, клипсы)': [
-      { name: 'Дюбель-хомут для кабеля', unit: 'шт.', price: 3, coef: 2.0 }
-    ],
-    'Прокладка кабеля от 10 мм² (силовой)': [
-      { name: 'Гофра ПВХ 25мм', unit: 'м.п.', price: 25, coef: 1.0 },
-      { name: 'Клипса для гофры 25мм', unit: 'шт.', price: 7, coef: 2.0 }
-    ],
-    'Штробление: газобетон/пеноблок': [
-      { name: 'Смесь для заделки штроб (алебастр)', unit: 'кг', price: 50, coef: 0.5 }
-    ],
-    'Штробление: кирпич': [
-      { name: 'Смесь для заделки штроб (алебастр)', unit: 'кг', price: 50, coef: 0.5 }
-    ],
-    'Штробление: бетон': [
-      { name: 'Смесь для заделки штроб (алебастр)', unit: 'кг', price: 50, coef: 0.5 }
-    ],
-    'Заделка штроб (алебастр/смесь)': [
-      { name: 'Смесь для заделки штроб (алебастр)', unit: 'кг', price: 50, coef: 1.0 }
-    ],
-    'Монтаж подрозетника (вмазка/фиксация)': [
-      { name: 'Подрозетник универсальный', unit: 'шт.', price: 30, coef: 1.0 }
-    ],
-    'Розетка/выключатель «под ключ» (с подрозетником)': [
-      { name: 'Подрозетник универсальный', unit: 'шт.', price: 30, coef: 1.0 }
-    ],
-    'Сборка электрощита (за модуль)': [
-      { name: 'Шина нулевая/земляная', unit: 'шт.', price: 150, coef: 0.1 },
-      { name: 'Гребенка соединительная', unit: 'шт.', price: 400, coef: 0.1 },
-      { name: 'Заглушка для щита', unit: 'шт.', price: 20, coef: 0.5 }
-    ],
-    'Прокладка слаботочного кабеля (интернет/TV)': [
-      { name: 'Стяжка нейлоновая', unit: 'упак', price: 100, coef: 0.1 },
-      { name: 'Клипса для кабеля', unit: 'шт.', price: 3, coef: 2.0 }
-    ]
-  };
-
-  const tbodyServices = document.getElementById('services-body');
-  let currentCategory = 'all';
-
-  // Хранилище состояния работ
-  let servicesState = {};
-
-  function renderServicesByCategory() {
-    const select = document.getElementById('category-select');
-    currentCategory = select.value;
-
-    tbodyServices.innerHTML = '';
-
-    const filteredData = currentCategory === 'all'
-    ? servicesData
-    : servicesData.filter(s => s.category === currentCategory);
-
-    if (filteredData.length === 0) {
-      tbodyServices.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:20px; color:var(--text-muted);">В этой категории пока нет работ</td></tr>';
-      return;
+    function loadPrices() {
+        return fetch('./static/data/prices.json')
+            .then(response => {
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            return response.json();
+        })
+            .then(data => {
+            allServices = [];
+            ['install', 'engineering'].forEach(section => {
+                if (data[section] && data[section].categories) {
+                    data[section].categories.forEach(cat => {
+                        if (cat.items && Array.isArray(cat.items)) {
+                            cat.items.forEach(item => {
+                                allServices.push({
+                                    name: item.service || item.name || 'Без названия',
+                                    unit: item.unit || 'шт.',
+                                    price: item.price || 0,
+                                    category: cat.name || 'Общее',
+                                    section: section
+                                });
+                            });
+                        }
+                    });
+                }
+            });
+            return true;
+        })
+            .catch(err => {
+            console.error('❌ Ошибка загрузки prices.json:', err);
+            document.getElementById('services-body').innerHTML = `<tr><td colspan="7" style="text-align:center; padding:30px; color:var(--danger);">❌ Не удалось загрузить прайс-лист. Проверьте файл <strong>static/data/prices.json</strong>.</td></tr>`;
+            return false;
+        });
     }
 
-    filteredData.forEach((s, index) => {
-      const originalIndex = servicesData.indexOf(s);
-      const savedState = servicesState[originalIndex] || { qty: 0, isComplex: false };
-
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-          <td>${s.name}</td>
-          <td>${s.unit}</td>
-          <td>${s.price.toLocaleString('ru-RU')} ₽</td>
-          <td>
-            <div class="qty-wrapper">
-              <button class="qty-btn" onclick="changeQty(${originalIndex}, -1)">−</button>
-              <input type="number" class="qty-input-stepper" id="qty-${originalIndex}" min="0" step="0.5" value="${savedState.qty}" onchange="handleServiceChange(${originalIndex}, this.value)">
-              <button class="qty-btn" onclick="changeQty(${originalIndex}, 1)">+</button>
-            </div>
-          </td>
-          <td id="sum-${originalIndex}" style="text-align:center; font-weight:600;">0 ₽</td>
-          <td>
-             <label class="complexity-check">
-               <input type="checkbox" id="complex-${originalIndex}" ${savedState.isComplex ? 'checked' : ''} onchange="handleServiceChange(${originalIndex}, document.getElementById('qty-${originalIndex}').value)">
-               <span>Сложно</span>
-               <span class="complexity-badge">+20%</span>
-             </label>
-          </td>
-          <td></td>
-        `;
-      tbodyServices.appendChild(tr);
-    });
-
-    calculateTotals();
-  }
-
-  function changeQty(index, delta) {
-    const input = document.getElementById(`qty-${index}`);
-    if (!input) return;
-
-    let currentVal = parseFloat(input.value) || 0;
-    let step = 1;
-    if (currentVal % 1 !== 0) step = 0.5;
-
-    let newVal = currentVal + (delta * step);
-    if (newVal < 0) newVal = 0;
-
-    input.value = newVal;
-
-    if (!servicesState[index]) servicesState[index] = { qty: 0, isComplex: false };
-    servicesState[index].qty = newVal;
-
-    handleServiceChange(index, newVal);
-  }
-
-  function handleServiceChange(index, qty) {
-    if (!servicesState[index]) servicesState[index] = { qty: 0, isComplex: false };
-    servicesState[index].qty = parseFloat(qty) || 0;
-
-    const complexCheck = document.getElementById(`complex-${index}`);
-    if (complexCheck) {
-      servicesState[index].isComplex = complexCheck.checked;
+    function initApp() {
+        document.getElementById('estimate-date').valueAsDate = new Date();
+        updateCategoryOptions();
+        currentSection = 'install';
+        currentCategory = 'all';
+        document.getElementById('btn-install').classList.add('active');
+        document.getElementById('category-select').value = 'all';
+        renderServices();
+        updateDraftList();
+        calculateTotals();
     }
 
-    calculateTotals();
+    function updateCategoryOptions() {
+        const select = document.getElementById('category-select');
+        const cats = new Set();
+        allServices.filter(s => s.section === currentSection).forEach(s => cats.add(s.category));
+        select.innerHTML = '<option value="all">Все работы</option>';
+        cats.forEach(cat => { select.innerHTML += `<option value="${cat}">${cat}</option>`; });
+    }
 
-    const serviceName = servicesData[index].name;
-    const rules = materialRules[serviceName];
-    if (!rules) return;
+    function switchSection(section) {
+        currentSection = section;
+        document.querySelectorAll('.section-selector button').forEach(btn => btn.classList.remove('active'));
+        if (section === 'install') document.getElementById('btn-install').classList.add('active');
+        else document.getElementById('btn-eng').classList.add('active');
+        updateCategoryOptions();
+        document.getElementById('category-select').value = 'all';
+        currentCategory = 'all';
+        renderServices();
+    }
 
-    const workQty = parseFloat(qty) || 0;
+    function renderServices() {
+        const selectedCat = document.getElementById('category-select').value;
+        currentCategory = selectedCat;
+        const tbody = document.getElementById('services-body');
+        tbody.innerHTML = '';
 
-    rules.forEach(rule => {
-      let existingRow = null;
-      const matRows = document.querySelectorAll('#materials-body tr');
+        let filtered = allServices.filter(s => s.section === currentSection);
+        if (currentCategory !== 'all') filtered = filtered.filter(s => s.category === currentCategory);
 
-      matRows.forEach(row => {
-        const nameInput = row.querySelector('.mat-name');
-        if (nameInput && nameInput.value === rule.name) {
-          existingRow = row;
+        if (filtered.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:20px; color:var(--text-muted);">В этой категории пока нет работ</td></tr>';
+            calculateTotals();
+            return;
         }
-      });
 
-      const requiredQty = Math.ceil(workQty * rule.coef);
+        filtered.forEach(service => {
+            const index = allServices.indexOf(service);
+            const savedState = servicesState[index] || { qty: 0, isComplex: false };
+            const tr = document.createElement('tr');
+            tr.dataset.index = index;
+            tr.innerHTML = `
+                <td>${service.name}</td>
+                <td>${service.unit}</td>
+                <td>${service.price.toLocaleString('ru-RU')} ₽</td>
+                <td>
+                  <div class="qty-wrapper">
+                    <button class="qty-btn" onclick="changeQty(${index}, -1)">−</button>
+                    <input type="number" class="qty-input-stepper" id="qty-${index}" min="0" step="0.5" value="${savedState.qty}" onchange="handleServiceChange(${index}, this.value)">
+                    <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                  </div>
+                </td>
+                <td id="sum-${index}" style="text-align:center; font-weight:600;">${(savedState.qty * (savedState.isComplex ? service.price * 1.2 : service.price)).toLocaleString('ru-RU')} ₽</td>
+                <td>
+                  <label class="complexity-check">
+                    <input type="checkbox" id="complex-${index}" ${savedState.isComplex ? 'checked' : ''} onchange="handleServiceChange(${index}, document.getElementById('qty-${index}').value)">
+                    <span>Сложно</span>
+                    <span class="complexity-badge">+20%</span>
+                  </label>
+                </td>
+                <td></td>
+            `;
+            tbody.appendChild(tr);
+        });
+        calculateTotals();
+    }
 
-      if (requiredQty > 0) {
-        if (existingRow) {
-          const qtyInput = existingRow.querySelector('.mat-qty');
-          const currentVal = parseFloat(qtyInput.value) || 0;
-          if (currentVal < requiredQty) {
-            qtyInput.value = requiredQty;
-          }
-        } else {
-          addMaterialRow(rule.name, rule.price, requiredQty);
-        }
-      }
-    });
-    calculateTotals();
-  }
+    function changeQty(index, delta) {
+        const input = document.getElementById(`qty-${index}`);
+        if (!input) return;
+        let currentVal = parseFloat(input.value) || 0;
+        let step = currentVal % 1 !== 0 ? 0.5 : 1;
+        let newVal = Math.max(0, currentVal + (delta * step));
+        input.value = newVal;
+        handleServiceChange(index, newVal);
+    }
 
-  function addCustomWorkRow() {
-    const row = document.createElement('tr');
-    row.classList.add('custom-work-row');
-    const uniqueId = 'custom-' + Date.now();
-
-    row.innerHTML = `
-        <td><input type="text" class="name-input" placeholder="Название работы"></td>
-        <td><input type="text" class="mat-unit" value="шт." style="width:50px;"></td>
-        <td><input type="number" class="mat-price" placeholder="0" min="0" onchange="calculateTotals()" style="width:70px;"></td>
-        <td>
-            <div class="qty-wrapper">
-              <button class="qty-btn" onclick="changeCustomQty(this, -1)">−</button>
-              <input type="number" class="qty-input-stepper custom-qty-input" id="${uniqueId}" placeholder="0" min="0" onchange="calculateTotals()">
-              <button class="qty-btn" onclick="changeCustomQty(this, 1)">+</button>
-            </div>
-        </td>
-        <td style="text-align:center; font-weight:600;">0 ₽</td>
-        <td>
-             <label class="complexity-check">
-               <input type="checkbox" class="custom-complex" onchange="calculateTotals()">
-               <span>Сложно</span>
-               <span class="complexity-badge">+20%</span>
-             </label>
-        </td>
-        <td style="text-align:center;"><button class="btn-remove" onclick="this.closest('tr').remove(); calculateTotals()">✕</button></td>
-      `;
-    tbodyServices.appendChild(row);
-  }
-
-  function changeCustomQty(btn, delta) {
-    const wrapper = btn.parentElement;
-    const input = wrapper.querySelector('.custom-qty-input');
-    let currentVal = parseFloat(input.value) || 0;
-    let step = 1;
-    if (currentVal % 1 !== 0) step = 0.5;
-
-    let newVal = currentVal + (delta * step);
-    if (newVal < 0) newVal = 0;
-
-    input.value = newVal;
-    calculateTotals();
-  }
-
-  function addMaterialRow(name = '', price = 0, qty = 0) {
-    const matBody = document.getElementById('materials-body');
-    const row = document.createElement('tr');
-    row.innerHTML = `
-        <td><input type="text" class="mat-name" value="${name}" placeholder="Материал"></td>
-        <td><input type="text" class="mat-unit" value="шт." style="width:50px;"></td>
-        <td><input type="number" class="mat-price" value="${price}" placeholder="0" min="0" onchange="calculateTotals()" style="width:70px;"></td>
-        <td><input type="number" class="mat-qty" value="${qty}" placeholder="0" min="0" onchange="calculateTotals()" style="width:60px;"></td>
-        <td style="text-align:center; font-weight:600;">0 ₽</td>
-        <td style="text-align:center;"><button class="btn-remove" onclick="this.closest('tr').remove(); calculateTotals()">✕</button></td>
-      `;
-    matBody.appendChild(row);
-  }
-
-  function calculateTotals() {
-    let servicesTotal = 0;
-
-    servicesData.forEach((s, index) => {
-      const qtyInput = document.getElementById(`qty-${index}`);
-      const complexCheck = document.getElementById(`complex-${index}`);
-      const sumCell = document.getElementById(`sum-${index}`);
-
-      let qty = 0;
-      let isComplex = false;
-
-      if (qtyInput) {
-        qty = parseFloat(qtyInput.value) || 0;
-        isComplex = complexCheck ? complexCheck.checked : false;
+    function handleServiceChange(index, qty) {
         if (!servicesState[index]) servicesState[index] = { qty: 0, isComplex: false };
-        servicesState[index].qty = qty;
-        servicesState[index].isComplex = isComplex;
-      } else {
-        if (servicesState[index]) {
-          qty = servicesState[index].qty || 0;
-          isComplex = servicesState[index].isComplex || false;
+        servicesState[index].qty = parseFloat(qty) || 0;
+        const complexCheck = document.getElementById(`complex-${index}`);
+        if (complexCheck) servicesState[index].isComplex = complexCheck.checked;
+
+        const service = allServices[index];
+        if (!service) return;
+
+        let price = service.price;
+        if (servicesState[index].isComplex) price = price * 1.2;
+        const sum = servicesState[index].qty * price;
+        const sumCell = document.getElementById(`sum-${index}`);
+        if (sumCell) sumCell.textContent = sum.toLocaleString('ru-RU') + ' ₽';
+
+        calculateTotals();
+    }
+
+    function addCustomWorkRow() {
+        const tbody = document.getElementById('services-body');
+        const row = document.createElement('tr');
+        row.classList.add('custom-work-row');
+        const uniqueId = 'custom-' + Date.now();
+        row.innerHTML = `
+            <td><input type="text" class="name-input" placeholder="Название работы"></td>
+            <td><input type="text" class="mat-unit" value="шт." style="width:50px;"></td>
+            <td><input type="number" class="mat-price" placeholder="0" min="0" onchange="calculateTotals()" style="width:70px;"></td>
+            <td>
+                <div class="qty-wrapper">
+                  <button class="qty-btn" onclick="changeCustomQty(this, -1)">−</button>
+                  <input type="number" class="qty-input-stepper custom-qty-input" id="${uniqueId}" placeholder="0" min="0" onchange="calculateTotals()">
+                  <button class="qty-btn" onclick="changeCustomQty(this, 1)">+</button>
+                </div>
+            </td>
+            <td style="text-align:center; font-weight:600;">0 ₽</td>
+            <td>
+                <label class="complexity-check">
+                  <input type="checkbox" class="custom-complex" onchange="calculateTotals()">
+                  <span>Сложно</span>
+                  <span class="complexity-badge">+20%</span>
+                </label>
+            </td>
+            <td style="text-align:center;"><button class="btn-remove" onclick="this.closest('tr').remove(); calculateTotals()">✕</button></td>
+        `;
+        tbody.appendChild(row);
+    }
+
+    function changeCustomQty(btn, delta) {
+        const wrapper = btn.parentElement;
+        const input = wrapper.querySelector('.custom-qty-input');
+        let currentVal = parseFloat(input.value) || 0;
+        let step = currentVal % 1 !== 0 ? 0.5 : 1;
+        input.value = Math.max(0, currentVal + (delta * step));
+        calculateTotals();
+    }
+
+    function addMaterialRow(name = '', price = 0, qty = 0) {
+        const matBody = document.getElementById('materials-body');
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td><input type="text" class="mat-name" value="${name}" placeholder="Материал"></td>
+            <td><input type="text" class="mat-unit" value="шт." style="width:50px;"></td>
+            <td><input type="number" class="mat-price" value="${price}" placeholder="0" min="0" onchange="calculateTotals()" style="width:70px;"></td>
+            <td><input type="number" class="mat-qty" value="${qty}" placeholder="0" min="0" onchange="calculateTotals()" style="width:60px;"></td>
+            <td style="text-align:center; font-weight:600;">0 ₽</td>
+            <td style="text-align:center;"><button class="btn-remove" onclick="this.closest('tr').remove(); calculateTotals()">✕</button></td>
+        `;
+        matBody.appendChild(row);
+    }
+
+    function calculateTotals() {
+        let servicesTotal = 0;
+        allServices.forEach((s, index) => {
+            const state = servicesState[index] || { qty: 0, isComplex: false };
+            let price = s.price;
+            if (state.isComplex) price = price * 1.2;
+            servicesTotal += state.qty * price;
+        });
+
+        document.querySelectorAll('.custom-work-row').forEach(row => {
+            const priceBase = parseFloat(row.querySelector('.mat-price').value) || 0;
+            const qty = parseFloat(row.querySelector('.custom-qty-input').value) || 0;
+            const complexCheck = row.querySelector('.custom-complex');
+            const sumCell = row.querySelector('td:nth-child(5)');
+            let finalPrice = (complexCheck && complexCheck.checked) ? priceBase * 1.2 : priceBase;
+            const sum = qty * finalPrice;
+            if (sumCell) sumCell.textContent = sum.toLocaleString('ru-RU') + ' ₽';
+            servicesTotal += sum;
+        });
+
+        const discountInput = document.getElementById('discount-input').value.trim();
+        let discountAmount = 0, discountPercent = 0;
+        if (discountInput) {
+            if (discountInput.includes('%')) {
+                discountPercent = parseFloat(discountInput.replace('%', '')) || 0;
+                discountAmount = servicesTotal * (discountPercent / 100);
+            } else {
+                discountAmount = parseFloat(discountInput) || 0;
+            }
         }
-      }
+        discountAmount = Math.round(discountAmount);
+        const worksFinal = Math.max(0, servicesTotal - discountAmount);
 
-      let price = s.price;
-      if (isComplex) {
-        price = price * 1.2;
-      }
+        let materialsTotal = 0;
+        document.querySelectorAll('#materials-body tr').forEach(row => {
+            const price = parseFloat(row.querySelector('.mat-price').value) || 0;
+            const qty = parseFloat(row.querySelector('.mat-qty').value) || 0;
+            const sum = price * qty;
+            const sumCell = row.querySelector('td:nth-child(5)');
+            if (sumCell) sumCell.textContent = sum.toLocaleString('ru-RU') + ' ₽';
+            materialsTotal += sum;
+        });
 
-      const sum = qty * price;
+        const masterBuys = document.getElementById('master-buys-materials').checked;
+        const materialsToPay = masterBuys ? materialsTotal : 0;
+        const grandTotal = worksFinal + materialsToPay;
 
-      if (sumCell) {
-        sumCell.textContent = sum.toLocaleString('ru-RU') + ' ₽';
-      }
+        document.getElementById('services-total-display').textContent = servicesTotal.toLocaleString('ru-RU') + ' ₽';
+        document.getElementById('discount-value-display').textContent = discountPercent > 0 ? `${discountPercent}% (-${discountAmount.toLocaleString('ru-RU')} ₽)` : `-${discountAmount.toLocaleString('ru-RU')} ₽`;
+        document.getElementById('works-subtotal-display').textContent = worksFinal.toLocaleString('ru-RU') + ' ₽';
+        document.getElementById('materials-total-display').textContent = materialsTotal.toLocaleString('ru-RU') + ' ₽';
+        document.getElementById('grand-total').textContent = grandTotal.toLocaleString('ru-RU') + ' ₽';
 
-      servicesTotal += sum;
-    });
+        const matRow = document.getElementById('materials-summary-row');
+        matRow.style.opacity = masterBuys ? '1' : '0.5';
+        matRow.style.textDecoration = masterBuys ? 'none' : 'line-through';
 
-    document.querySelectorAll('.custom-work-row').forEach(row => {
-      const priceInput = row.querySelector('.mat-price');
-      const qtyInput = row.querySelector('.custom-qty-input');
-      const complexCheck = row.querySelector('.custom-complex');
-      const sumCell = row.querySelector('td:nth-child(5)');
-
-      const priceBase = parseFloat(priceInput.value) || 0;
-      const qty = parseFloat(qtyInput.value) || 0;
-      let finalPrice = priceBase;
-
-      if (complexCheck && complexCheck.checked) {
-        finalPrice = priceBase * 1.2;
-      }
-
-      const sum = qty * finalPrice;
-      sumCell.textContent = sum.toLocaleString('ru-RU') + ' ₽';
-      servicesTotal += sum;
-    });
-
-    const discountInput = document.getElementById('discount-input').value.trim();
-    let discountAmount = 0;
-    let discountPercent = 0;
-
-    if (discountInput) {
-      if (discountInput.includes('%')) {
-        discountPercent = parseFloat(discountInput.replace('%', '')) || 0;
-        discountAmount = servicesTotal * (discountPercent / 100);
-      } else {
-        discountAmount = parseFloat(discountInput) || 0;
-      }
-    }
-    discountAmount = Math.round(discountAmount);
-    const worksFinal = Math.max(0, servicesTotal - discountAmount);
-
-    let materialsTotal = 0;
-    document.querySelectorAll('#materials-body tr').forEach(row => {
-      const priceInput = row.querySelector('.mat-price');
-      const qtyInput = row.querySelector('.mat-qty');
-      const sumCell = row.querySelector('td:nth-child(5)');
-      const price = parseFloat(priceInput.value) || 0;
-      const qty = parseFloat(qtyInput.value) || 0;
-      const sum = price * qty;
-      sumCell.textContent = sum.toLocaleString('ru-RU') + ' ₽';
-      materialsTotal += sum;
-    });
-
-    const masterBuys = document.getElementById('master-buys-materials').checked;
-    const materialsToPay = masterBuys ? materialsTotal : 0;
-    const grandTotal = worksFinal + materialsToPay;
-
-    document.getElementById('services-total-display').textContent = servicesTotal.toLocaleString('ru-RU') + ' ₽';
-
-    let discountText = `-${discountAmount.toLocaleString('ru-RU')} ₽`;
-    if (discountPercent > 0) {
-      discountText = `${discountPercent}% (${discountText})`;
-    }
-    document.getElementById('discount-value-display').textContent = discountText;
-
-    document.getElementById('works-subtotal-display').textContent = worksFinal.toLocaleString('ru-RU') + ' ₽';
-    document.getElementById('materials-total-display').textContent = materialsTotal.toLocaleString('ru-RU') + ' ₽';
-    document.getElementById('grand-total').textContent = grandTotal.toLocaleString('ru-RU') + ' ₽';
-
-    const matRow = document.getElementById('materials-summary-row');
-    if (!masterBuys) {
-      matRow.style.opacity = '0.5';
-      matRow.style.textDecoration = 'line-through';
-    } else {
-      matRow.style.opacity = '1';
-      matRow.style.textDecoration = 'none';
+        return { servicesTotal, discountAmount, discountPercent, worksFinal, materialsTotal, materialsToPay, grandTotal };
     }
 
-    return { servicesTotal, discountAmount, discountPercent, worksFinal, materialsTotal, materialsToPay, grandTotal };
-  }
-
-  // --- ЧЕРНОВИКИ ---
-  function saveDraft() {
-    const name = document.getElementById('draft-name').value.trim();
-    if (!name) { alert('Введите название черновика'); return; }
-
-    calculateTotals();
-
-    const data = {
-      clientName: document.getElementById('client-name').value,
-      clientAddress: document.getElementById('client-address').value,
-      date: document.getElementById('estimate-date').value,
-      invoiceNum: document.getElementById('invoice-number').value,
-      masterBuys: document.getElementById('master-buys-materials').checked,
-      discount: document.getElementById('discount-input').value,
-      servicesState: servicesState,
-      customWorks: Array.from(document.querySelectorAll('.custom-work-row')).map(row => ({
-        name: row.querySelector('.name-input').value,
-        unit: row.querySelector('.mat-unit').value,
-        price: row.querySelector('.mat-price').value,
-        qty: row.querySelector('.custom-qty-input').value,
-        complex: row.querySelector('.custom-complex').checked
-      })),
-      materials: Array.from(document.querySelectorAll('#materials-body tr')).map(row => ({
-        name: row.querySelector('.mat-name').value,
-        unit: row.querySelector('.mat-unit').value,
-        price: row.querySelector('.mat-price').value,
-        qty: row.querySelector('.mat-qty').value
-      }))
-    };
-
-    localStorage.setItem(`vg_draft_${name}`, JSON.stringify(data));
-    updateDraftList();
-    alert(`Черновик "${name}" сохранен!`);
-  }
-
-  function loadDraft() {
-    const name = document.getElementById('draft-select').value;
-    if (!name) return;
-
-    const data = JSON.parse(localStorage.getItem(`vg_draft_${name}`));
-    if (!data) return;
-
-    document.getElementById('client-name').value = data.clientName || '';
-    document.getElementById('client-address').value = data.clientAddress || '';
-    document.getElementById('estimate-date').value = data.date || '';
-    document.getElementById('invoice-number').value = data.invoiceNum || '';
-    document.getElementById('master-buys-materials').checked = data.masterBuys !== false;
-    document.getElementById('discount-input').value = data.discount || '';
-
-    servicesState = data.servicesState || {};
-
-    document.getElementById('category-select').value = 'all';
-    renderServicesByCategory();
-
-    document.querySelectorAll('.custom-work-row').forEach(r => r.remove());
-    if (data.customWorks) {
-      data.customWorks.forEach(w => {
-        addCustomWorkRow();
-        const lastRow = document.querySelector('.custom-work-row:last-child');
-        lastRow.querySelector('.name-input').value = w.name;
-        lastRow.querySelector('.mat-unit').value = w.unit;
-        lastRow.querySelector('.mat-price').value = w.price;
-        lastRow.querySelector('.custom-qty-input').value = w.qty;
-        lastRow.querySelector('.custom-complex').checked = w.complex;
-      });
+    function saveDraft() {
+        const name = document.getElementById('draft-name').value.trim();
+        if (!name) { alert('Введите название черновика'); return; }
+        calculateTotals();
+        const data = {
+            clientName: document.getElementById('client-name').value,
+            clientAddress: document.getElementById('client-address').value,
+            date: document.getElementById('estimate-date').value,
+            invoiceNum: document.getElementById('invoice-number').value,
+            masterBuys: document.getElementById('master-buys-materials').checked,
+            discount: document.getElementById('discount-input').value,
+            servicesState: servicesState,
+            currentSection: currentSection,
+            currentCategory: currentCategory,
+            customWorks: Array.from(document.querySelectorAll('.custom-work-row')).map(row => ({
+                name: row.querySelector('.name-input').value, unit: row.querySelector('.mat-unit').value,
+                price: row.querySelector('.mat-price').value, qty: row.querySelector('.custom-qty-input').value,
+                complex: row.querySelector('.custom-complex').checked
+            })),
+            materials: Array.from(document.querySelectorAll('#materials-body tr')).map(row => ({
+                name: row.querySelector('.mat-name').value, unit: row.querySelector('.mat-unit').value,
+                price: row.querySelector('.mat-price').value, qty: row.querySelector('.mat-qty').value
+            }))
+        };
+        localStorage.setItem(`vg_draft_${name}`, JSON.stringify(data));
+        updateDraftList();
+        alert(`Черновик "${name}" сохранен!`);
     }
 
-    document.getElementById('materials-body').innerHTML = '';
-    if (data.materials) {
-      data.materials.forEach(m => {
-        addMaterialRow(m.name, m.price, m.qty);
-      });
-    }
-
-    calculateTotals();
-  }
-
-  function deleteDraft() {
-    const name = document.getElementById('draft-select').value;
-    if (!name) return;
-    if (confirm(`Удалить черновик "${name}"?`)) {
-      localStorage.removeItem(`vg_draft_${name}`);
-      updateDraftList();
-      document.getElementById('draft-select').value = '';
-    }
-  }
-
-  function updateDraftList() {
-    const select = document.getElementById('draft-select');
-    select.innerHTML = '<option value="">📂 Загрузить...</option>';
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      if (key.startsWith('vg_draft_')) {
-        const name = key.replace('vg_draft_', '');
-        select.innerHTML += `<option value="${name}">${name}</option>`;
-      }
-    }
-  }
-
-  function clearForm() {
-    if(!confirm('Очистить все поля?')) return;
-
-    servicesState = {};
-
-    document.querySelectorAll('.qty-input-stepper').forEach(i => i.value = '0');
-    document.querySelectorAll('.complexity-check input').forEach(i => i.checked = false);
-    document.querySelectorAll('.mat-price, .mat-qty').forEach(i => i.value = '');
-    document.getElementById('services-body').innerHTML = '';
-    renderServicesByCategory();
-    document.getElementById('materials-body').innerHTML = '';
-    document.getElementById('discount-input').value = '';
-    document.getElementById('client-name').value = '';
-    document.getElementById('client-address').value = '';
-    document.getElementById('estimate-date').valueAsDate = new Date();
-    document.getElementById('invoice-number').value = '';
-    document.getElementById('master-buys-materials').checked = true;
-    calculateTotals();
-  }
-
-  // --- ЭКСПОРТ/ИМПОРТ ФАЙЛОВ ---
-  function exportDraftToFile() {
-    calculateTotals();
-    const draftName = document.getElementById('draft-name').value.trim() || 'Смета_VoltGroup';
-    const safeName = draftName.replace(/[^a-z0-9а-яё]/gi, '_');
-
-    const data = {
-      clientName: document.getElementById('client-name').value,
-      clientAddress: document.getElementById('client-address').value,
-      date: document.getElementById('estimate-date').value,
-      invoiceNum: document.getElementById('invoice-number').value,
-      masterBuys: document.getElementById('master-buys-materials').checked,
-      discount: document.getElementById('discount-input').value,
-      servicesState: servicesState,
-      customWorks: Array.from(document.querySelectorAll('.custom-work-row')).map(row => ({
-        name: row.querySelector('.name-input').value,
-        unit: row.querySelector('.mat-unit').value,
-        price: row.querySelector('.mat-price').value,
-        qty: row.querySelector('.custom-qty-input').value,
-        complex: row.querySelector('.custom-complex').checked
-      })),
-      materials: Array.from(document.querySelectorAll('#materials-body tr')).map(row => ({
-        name: row.querySelector('.mat-name').value,
-        unit: row.querySelector('.mat-unit').value,
-        price: row.querySelector('.mat-price').value,
-        qty: row.querySelector('.mat-qty').value
-      }))
-    };
-
-    const jsonStr = JSON.stringify(data, null, 2);
-    const blob = new Blob([jsonStr], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${safeName}_${new Date().toISOString().slice(0,10)}.json`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  }
-
-  function importDraftFromFile(input) {
-    const file = input.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      try {
-        const data = JSON.parse(e.target.result);
+    function loadDraft() {
+        const name = document.getElementById('draft-select').value;
+        if (!name) return;
+        const data = JSON.parse(localStorage.getItem(`vg_draft_${name}`));
+        if (!data) return;
 
         document.getElementById('client-name').value = data.clientName || '';
         document.getElementById('client-address').value = data.clientAddress || '';
@@ -1068,655 +631,448 @@
         document.getElementById('discount-input').value = data.discount || '';
 
         servicesState = data.servicesState || {};
-
-        document.getElementById('category-select').value = 'all';
-        renderServicesByCategory();
+        if (data.currentSection) switchSection(data.currentSection);
+        document.getElementById('category-select').value = data.currentCategory || 'all';
+        currentCategory = data.currentCategory || 'all';
 
         document.querySelectorAll('.custom-work-row').forEach(r => r.remove());
         if (data.customWorks) {
-          data.customWorks.forEach(w => {
-            addCustomWorkRow();
-            const lastRow = document.querySelector('.custom-work-row:last-child');
-            lastRow.querySelector('.name-input').value = w.name;
-            lastRow.querySelector('.mat-unit').value = w.unit;
-            lastRow.querySelector('.mat-price').value = w.price;
-            lastRow.querySelector('.custom-qty-input').value = w.qty;
-            lastRow.querySelector('.custom-complex').checked = w.complex;
-          });
+            data.customWorks.forEach(w => {
+                addCustomWorkRow();
+                const lastRow = document.querySelector('.custom-work-row:last-child');
+                lastRow.querySelector('.name-input').value = w.name;
+                lastRow.querySelector('.mat-unit').value = w.unit;
+                lastRow.querySelector('.mat-price').value = w.price;
+                lastRow.querySelector('.custom-qty-input').value = w.qty;
+                lastRow.querySelector('.custom-complex').checked = w.complex;
+            });
         }
 
         document.getElementById('materials-body').innerHTML = '';
-        if (data.materials) {
-          data.materials.forEach(m => {
-            addMaterialRow(m.name, m.price, m.qty);
-          });
-        }
+        if (data.materials) data.materials.forEach(m => addMaterialRow(m.name, m.price, m.qty));
 
+        renderServices();
         calculateTotals();
-        alert('✅ Черновик успешно загружен!');
-      } catch (err) {
-        console.error(err);
-        alert('❌ Ошибка при чтении файла. Убедитесь, что это корректный JSON.');
-      }
-    };
-    reader.readAsText(file);
-    input.value = '';
-  }
-
-  // --- ГЕНЕРАЦИЯ PDF ---
-  function generatePDF() {
-    const totals = calculateTotals();
-    if (totals.grandTotal === 0 && totals.materialsTotal === 0) {
-      alert('Добавьте хотя бы одну позицию');
-      return;
     }
 
-    let invoiceNum = document.getElementById('invoice-number').value.trim();
-    if (!invoiceNum) {
-      let counter = parseInt(localStorage.getItem('vg_estimate_counter') || '0') + 1;
-      localStorage.setItem('vg_estimate_counter', counter);
-      invoiceNum = `${new Date().getFullYear()}-${String(counter).padStart(3, '0')}`;
-      document.getElementById('invoice-number').value = invoiceNum;
+    function deleteDraft() {
+        const name = document.getElementById('draft-select').value;
+        if (!name) return;
+        if (confirm(`Удалить черновик "${name}"?`)) {
+            localStorage.removeItem(`vg_draft_${name}`);
+            updateDraftList();
+            document.getElementById('draft-select').value = '';
+        }
     }
 
-    const clientName = document.getElementById('client-name').value || '—';
-    const clientAddr = document.getElementById('client-address').value || '—';
-    const pdfDate = document.getElementById('estimate-date').value || new Date().toLocaleDateString('ru-RU');
-    const executor = 'Матвей Зрячих | VoltGroup (Самозанятый)';
-    const masterBuys = document.getElementById('master-buys-materials').checked;
-
-    let pdfBodyHTML = '';
-    let rowIdx = 1;
-
-    servicesData.forEach((s, index) => {
-      const state = servicesState[index] || { qty: 0, isComplex: false };
-      const qty = state.qty;
-
-      if (qty > 0) {
-        let price = s.price;
-        let note = '';
-        if (state.isComplex) {
-          price = price * 1.2;
-          note = ' (коэф. сложности)';
+    function updateDraftList() {
+        const select = document.getElementById('draft-select');
+        select.innerHTML = '<option value="">📂 Загрузить...</option>';
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key.startsWith('vg_draft_')) {
+                select.innerHTML += `<option value="${key.replace('vg_draft_', '')}">${key.replace('vg_draft_', '')}</option>`;
+            }
         }
-        const sum = qty * price;
-        pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${s.name}${note}</td><td>${s.unit}</td><td>${qty}</td><td>${Math.round(price)} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
-      }
-    });
-
-    document.querySelectorAll('.custom-work-row').forEach(row => {
-      const name = row.querySelector('.name-input').value || 'Доп. работа';
-      const unit = row.querySelector('.mat-unit').value || 'шт.';
-      const priceBase = parseFloat(row.querySelector('.mat-price').value) || 0;
-      const qty = parseFloat(row.querySelector('.custom-qty-input').value) || 0;
-      const complexCheck = row.querySelector('.custom-complex');
-
-      if (qty > 0 || priceBase > 0) {
-        let finalPrice = priceBase;
-        let note = '';
-        if (complexCheck?.checked) {
-          finalPrice = priceBase * 1.2;
-          note = ' (коэф. сложности)';
-        }
-        const sum = qty * finalPrice;
-        pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${name}${note}</td><td>${unit}</td><td>${qty}</td><td>${Math.round(finalPrice)} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
-      }
-    });
-
-    const matRows = document.querySelectorAll('#materials-body tr');
-    let hasMaterials = false;
-    matRows.forEach(r => {
-      const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
-      const price = parseFloat(r.querySelector('.mat-price').value) || 0;
-      if (qty > 0 || price > 0) hasMaterials = true;
-    });
-
-    if (hasMaterials) {
-      const matHeaderTitle = masterBuys ? "МАТЕРИАЛЫ (Закупка Исполнителя)" : "СПЕЦИФИКАЦИЯ МАТЕРИАЛОВ (Закупка Заказчика)";
-      pdfBodyHTML += `<tr><td colspan="6" style="background:#f0f0f0; font-weight:bold; text-align:center; padding:8px; border:1px solid #ccc;">${matHeaderTitle}</td></tr>`;
-
-      matRows.forEach(r => {
-        const name = r.querySelector('.mat-name').value || 'Материал';
-        const unit = r.querySelector('.mat-unit').value || 'шт.';
-        const price = parseFloat(r.querySelector('.mat-price').value) || 0;
-        const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
-        if (qty > 0 || price > 0) {
-          const sum = price * qty;
-          pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${name}</td><td>${unit}</td><td>${qty}</td><td>${price} ₽</td><td>${sum.toLocaleString('ru-RU')} ₽</td></tr>`;
-        }
-      });
     }
 
-    const printHTML = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <title>Смета №${invoiceNum} | VoltGroup</title>
-          <style>
-            @media print { @page { margin: 10mm; size: A4; } body { -webkit-print-color-adjust: exact; } .no-print { display: none; } }
-            body { font-family: Arial, sans-serif; padding: 0; color: #000; max-width: 210mm; margin: 0 auto; font-size: 12px; }
-            h2 { text-align: center; margin: 0 0 15px 0; font-size: 18px; text-transform: uppercase; }
-            .header { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 2px solid #000; padding-bottom: 10px; }
-            table { width: 100%; border-collapse: collapse; margin: 10px 0; }
-            th, td { border: 1px solid #000; padding: 6px 8px; text-align: left; }
-            th { background: #eee; font-weight: bold; }
-            .total-block { margin: 20px 0; border-top: 2px solid #000; padding-top: 10px; text-align: right; }
-            .total-row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 13px; }
-            .total-final { font-size: 16px; font-weight: bold; margin-top: 10px; }
-            .signature { margin-top: 40px; display: flex; justify-content: space-between; font-size: 12px; }
-            .footer { margin-top: 30px; font-size: 10px; color: #555; text-align: center; border-top: 1px solid #ddd; padding-top: 10px; }
-            .controls { text-align: center; margin: 20px; padding: 15px; background: #f9f9f9; border-radius: 8px; border: 1px dashed #ccc; }
-            .btn { padding: 10px 20px; margin: 5px; background: #00E5FF; color: #000; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
-          </style>
-        </head>
-        <body>
-          <div class="controls no-print">
-            <h3>Предпросмотр печати</h3>
-            <p>Нажмите кнопку ниже, чтобы сохранить как PDF или распечатать.</p>
-            <button class="btn" onclick="window.print()">🖨 Печать / Сохранить PDF</button>
-            <button class="btn" onclick="window.close()" style="background:#ccc;">Закрыть</button>
-          </div>
+    function clearForm() {
+        if(!confirm('Очистить все поля?')) return;
+        servicesState = {};
+        document.getElementById('client-name').value = '';
+        document.getElementById('client-address').value = '';
+        document.getElementById('estimate-date').valueAsDate = new Date();
+        document.getElementById('invoice-number').value = '';
+        document.getElementById('master-buys-materials').checked = true;
+        document.getElementById('discount-input').value = '';
+        document.querySelectorAll('.custom-work-row').forEach(r => r.remove());
+        document.getElementById('materials-body').innerHTML = '';
+        renderServices();
+        calculateTotals();
+    }
 
-          <h2>Смета № ${invoiceNum}</h2>
-          <div class="header">
-            <div><strong>Заказчик:</strong> ${clientName}<br><strong>Адрес:</strong> ${clientAddr}</div>
-            <div style="text-align:right;"><strong>Дата:</strong> ${pdfDate}<br><strong>Исполнитель:</strong> ${executor}</div>
-          </div>
+    function exportDraftToFile() {
+        calculateTotals();
+        const draftName = document.getElementById('draft-name').value.trim() || 'Смета_VoltGroup';
+        const safeName = draftName.replace(/[^a-z0-9а-яё]/gi, '_');
+        const data = {
+            clientName: document.getElementById('client-name').value,
+            clientAddress: document.getElementById('client-address').value,
+            date: document.getElementById('estimate-date').value,
+            invoiceNum: document.getElementById('invoice-number').value,
+            masterBuys: document.getElementById('master-buys-materials').checked,
+            discount: document.getElementById('discount-input').value,
+            servicesState: servicesState,
+            currentSection: currentSection,
+            currentCategory: currentCategory,
+            customWorks: Array.from(document.querySelectorAll('.custom-work-row')).map(row => ({
+                name: row.querySelector('.name-input').value, unit: row.querySelector('.mat-unit').value,
+                price: row.querySelector('.mat-price').value, qty: row.querySelector('.custom-qty-input').value,
+                complex: row.querySelector('.custom-complex').checked
+            })),
+            materials: Array.from(document.querySelectorAll('#materials-body tr')).map(row => ({
+                name: row.querySelector('.mat-name').value, unit: row.querySelector('.mat-unit').value,
+                price: row.querySelector('.mat-price').value, qty: row.querySelector('.mat-qty').value
+            }))
+        };
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `${safeName}_${new Date().toISOString().slice(0,10)}.json`;
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(a.href);
+    }
 
-          <table>
-            <thead><tr><th style="width:30px">№</th><th>Наименование</th><th style="width:50px">Ед.</th><th style="width:50px">Кол-во</th><th style="width:70px">Цена</th><th style="width:80px">Сумма</th></tr></thead>
-            <tbody>${pdfBodyHTML}</tbody>
-          </table>
+    function importDraftFromFile(input) {
+        const file = input.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const data = JSON.parse(e.target.result);
+                document.getElementById('client-name').value = data.clientName || '';
+                document.getElementById('client-address').value = data.clientAddress || '';
+                document.getElementById('estimate-date').value = data.date || '';
+                document.getElementById('invoice-number').value = data.invoiceNum || '';
+                document.getElementById('master-buys-materials').checked = data.masterBuys !== false;
+                document.getElementById('discount-input').value = data.discount || '';
+                servicesState = data.servicesState || {};
+                if (data.currentSection) switchSection(data.currentSection);
+                document.getElementById('category-select').value = data.currentCategory || 'all';
+                currentCategory = data.currentCategory || 'all';
+                document.querySelectorAll('.custom-work-row').forEach(r => r.remove());
+                if (data.customWorks) {
+                    data.customWorks.forEach(w => {
+                        addCustomWorkRow();
+                        const lastRow = document.querySelector('.custom-work-row:last-child');
+                        lastRow.querySelector('.name-input').value = w.name;
+                        lastRow.querySelector('.mat-unit').value = w.unit;
+                        lastRow.querySelector('.mat-price').value = w.price;
+                        lastRow.querySelector('.custom-qty-input').value = w.qty;
+                        lastRow.querySelector('.custom-complex').checked = w.complex;
+                    });
+                }
+                document.getElementById('materials-body').innerHTML = '';
+                if (data.materials) data.materials.forEach(m => addMaterialRow(m.name, m.price, m.qty));
+                renderServices();
+                calculateTotals();
+                alert('✅ Черновик успешно загружен!');
+            } catch (err) {
+                console.error(err);
+                alert('❌ Ошибка при чтении файла. Убедитесь, что это корректный JSON.');
+            }
+        };
+        reader.readAsText(file);
+        input.value = '';
+    }
 
-          <div class="total-block">
+    function generatePDF() {
+        const totals = calculateTotals();
+        if (totals.grandTotal === 0 && totals.materialsTotal === 0) { alert('Добавьте хотя бы одну позицию'); return; }
+        let invoiceNum = document.getElementById('invoice-number').value.trim() || `Смета-${new Date().getFullYear()}`;
+        const clientName = document.getElementById('client-name').value || '—';
+        const clientAddr = document.getElementById('client-address').value || '—';
+        const pdfDate = document.getElementById('estimate-date').value || new Date().toLocaleDateString('ru-RU');
+
+        let pdfBodyHTML = '';
+        let rowIdx = 1;
+
+        allServices.forEach((s, index) => {
+            const state = servicesState[index] || { qty: 0, isComplex: false };
+            if (state.qty > 0) {
+                let price = s.price;
+                let note = state.isComplex ? ' (коэф. сложности)' : '';
+                pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${s.name}${note}</td><td>${s.unit}</td><td>${state.qty}</td><td>${Math.round(price)} ₽</td><td>${(state.qty * price).toLocaleString('ru-RU')} ₽</td></tr>`;
+            }
+        });
+
+        document.querySelectorAll('.custom-work-row').forEach(row => {
+            const name = row.querySelector('.name-input').value || 'Доп. работа';
+            const unit = row.querySelector('.mat-unit').value || 'шт.';
+            const priceBase = parseFloat(row.querySelector('.mat-price').value) || 0;
+            const qty = parseFloat(row.querySelector('.custom-qty-input').value) || 0;
+            const complexCheck = row.querySelector('.custom-complex');
+            if (qty > 0 || priceBase > 0) {
+                let finalPrice = (complexCheck && complexCheck.checked) ? priceBase * 1.2 : priceBase;
+                let note = (complexCheck && complexCheck.checked) ? ' (коэф. сложности)' : '';
+                pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${name}${note}</td><td>${unit}</td><td>${qty}</td><td>${Math.round(finalPrice)} ₽</td><td>${(qty * finalPrice).toLocaleString('ru-RU')} ₽</td></tr>`;
+            }
+        });
+
+        const matRows = document.querySelectorAll('#materials-body tr');
+        let hasMaterials = false;
+        matRows.forEach(r => { if ((parseFloat(r.querySelector('.mat-qty').value) || 0) > 0) hasMaterials = true; });
+
+        if (hasMaterials) {
+            pdfBodyHTML += `<tr><td colspan="6" style="background:#f0f0f0; font-weight:bold; text-align:center; padding:8px; border:1px solid #ccc;">МАТЕРИАЛЫ</td></tr>`;
+            matRows.forEach(r => {
+                const name = r.querySelector('.mat-name').value || 'Материал';
+                const unit = r.querySelector('.mat-unit').value || 'шт.';
+                const price = parseFloat(r.querySelector('.mat-price').value) || 0;
+                const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
+                if (qty > 0 || price > 0) {
+                    pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${name}</td><td>${unit}</td><td>${qty}</td><td>${price} ₽</td><td>${(price * qty).toLocaleString('ru-RU')} ₽</td></tr>`;
+                }
+            });
+        }
+
+        const printHTML = `<!DOCTYPE html><html><head><title>Смета №${invoiceNum}</title>
+        <style>@media print { @page { margin: 10mm; size: A4; } body { -webkit-print-color-adjust: exact; } .no-print { display: none; } }
+        body { font-family: Arial, sans-serif; padding: 0; color: #000; max-width: 210mm; margin: 0 auto; font-size: 12px; }
+        h2 { text-align: center; margin: 0 0 15px 0; font-size: 18px; text-transform: uppercase; }
+        .header { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 2px solid #000; padding-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #000; padding: 6px 8px; text-align: left; }
+        th { background: #eee; font-weight: bold; }
+        .total-block { margin: 20px 0; border-top: 2px solid #000; padding-top: 10px; text-align: right; }
+        .total-row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 13px; }
+        .total-final { font-size: 16px; font-weight: bold; margin-top: 10px; }
+        .signature { margin-top: 40px; display: flex; justify-content: space-between; font-size: 12px; }
+        .footer { margin-top: 30px; font-size: 10px; color: #555; text-align: center; border-top: 1px solid #ddd; padding-top: 10px; }
+        .controls { text-align: center; margin: 20px; padding: 15px; background: #f9f9f9; border-radius: 8px; border: 1px dashed #ccc; }
+        .btn { padding: 10px 20px; margin: 5px; background: #00E5FF; color: #000; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }</style></head><body>
+        <div class="controls no-print"><h3>Предпросмотр печати</h3><button class="btn" onclick="window.print()">🖨 Печать / Сохранить PDF</button><button class="btn" onclick="window.close()" style="background:#ccc;">Закрыть</button></div>
+        <h2>Смета № ${invoiceNum}</h2>
+        <div class="header"><div><strong>Заказчик:</strong> ${clientName}<br><strong>Адрес:</strong> ${clientAddr}</div><div style="text-align:right;"><strong>Дата:</strong> ${pdfDate}<br><strong>Исполнитель:</strong> Зрячих М.О. (НПД)</div></div>
+        <table><thead><tr><th style="width:30px">№</th><th>Наименование</th><th style="width:50px">Ед.</th><th style="width:50px">Кол-во</th><th style="width:70px">Цена</th><th style="width:80px">Сумма</th></tr></thead><tbody>${pdfBodyHTML}</tbody></table>
+        <div class="total-block">
             <div class="total-row"><span>Итого работы:</span><span>${totals.worksFinal.toLocaleString('ru-RU')} ₽</span></div>
-            ${totals.discountAmount > 0 ? `<div class="total-row" style="color:#d32f2f;"><span>Скидка ${totals.discountPercent > 0 ? '(' + totals.discountPercent + '%)' : ''}:</span><span>-${totals.discountAmount.toLocaleString('ru-RU')} ₽</span></div>` : ''}
-            ${masterBuys ? `<div class="total-row"><span>Материалы:</span><span>${totals.materialsTotal.toLocaleString('ru-RU')} ₽</span></div>` : ''}
+            ${totals.discountAmount > 0 ? `<div class="total-row" style="color:#d32f2f;"><span>Скидка:</span><span>-${totals.discountAmount.toLocaleString('ru-RU')} ₽</span></div>` : ''}
+            ${document.getElementById('master-buys-materials').checked ? `<div class="total-row"><span>Материалы:</span><span>${totals.materialsTotal.toLocaleString('ru-RU')} ₽</span></div>` : ''}
             <div class="total-final"><span>ИТОГО К ОПЛАТЕ:</span><span>${totals.grandTotal.toLocaleString('ru-RU')} ₽</span></div>
-          </div>
+        </div>
+        <div class="signature"><div>Заказчик: _______________ / _______________ /</div><div>Исполнитель: _______________ / Матвей Зрячих /</div></div>
+        <div class="footer">⚡ VoltGroup | Энергия решений | Самозанятый (НПД)<br>Гарантия на работы: 12 месяцев.</div></body></html>`;
 
-          <div class="signature">
-            <div>Заказчик: _______________ / _______________ /</div>
-            <div>Исполнитель: _______________ / Матвей Зрячих /</div>
-          </div>
-
-          <div class="footer">
-            ⚡ VoltGroup | Энергия решений | Самозанятый (НПД)<br>
-            Гарантия на работы: 12 месяцев. Оплата производится после подписания акта приёмки.
-          </div>
-        </body>
-        </html>
-      `;
-
-    const printWindow = window.open('', '_blank', 'width=900,height=900');
-    printWindow.document.write(printHTML);
-    printWindow.document.close();
-  }
-
-  // --- ГЕНЕРАЦИЯ КП ---
-  function generateCommercialOffer() {
-    const totals = calculateTotals();
-    if (totals.grandTotal === 0 && totals.materialsTotal === 0) {
-      alert('Добавьте хотя бы одну позицию');
-      return;
+        const printWindow = window.open('', '_blank', 'width=900,height=900');
+        printWindow.document.write(printHTML);
+        printWindow.document.close();
     }
 
-    const clientName = document.getElementById('client-name').value || 'Уважаемый Заказчик';
-    const clientAddr = document.getElementById('client-address').value || 'г. Санкт-Петербург';
-    const date = new Date().toLocaleDateString('ru-RU');
-    const invoiceNum = document.getElementById('invoice-number').value || 'Б/Н';
+    function generateCommercialOffer() {
+        const totals = calculateTotals();
+        if (totals.grandTotal === 0 && totals.materialsTotal === 0) { alert('Добавьте хотя бы одну позицию'); return; }
+        const clientName = document.getElementById('client-name').value || 'Уважаемый Заказчик';
+        const clientAddr = document.getElementById('client-address').value || 'г. Санкт-Петербург';
+        const date = new Date().toLocaleDateString('ru-RU');
+        const invoiceNum = document.getElementById('invoice-number').value || 'Б/Н';
 
-    let offerHTML = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>КП №${invoiceNum} | VoltGroup</title>
-            <style>
-                @media print {
-                    @page { margin: 15mm; size: A4; }
-                    body { -webkit-print-color-adjust: exact; }
-                    .no-print { display: none; }
+        let offerHTML = `<!DOCTYPE html><html><head><title>КП №${invoiceNum}</title>
+        <style>@media print { @page { margin: 15mm; size: A4; } body { -webkit-print-color-adjust: exact; } .no-print { display: none; } }
+        body { font-family: 'Arial', sans-serif; color: #333; max-width: 210mm; margin: 0 auto; padding: 20px; line-height: 1.5; background: #fff; }
+        .header { border-bottom: 3px solid #00E5FF; padding-bottom: 15px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 28px; font-weight: 800; color: #0B1120; letter-spacing: -1px; }
+        .logo span { color: #00E5FF; }
+        .company-info { text-align: right; font-size: 13px; color: #555; line-height: 1.4; }
+        h1 { font-size: 22px; text-transform: uppercase; margin-bottom: 5px; color: #0B1120; border-left: 5px solid #00E5FF; padding-left: 10px; }
+        .subtitle { font-size: 14px; color: #666; margin-bottom: 30px; margin-left: 15px; }
+        .client-block { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #e9ecef; }
+        .client-block strong { color: #0B1120; display: block; margin-bottom: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+        th { background: #0B1120; color: white; padding: 12px 10px; text-align: left; font-weight: 600; }
+        td { border-bottom: 1px solid #dee2e6; padding: 10px; }
+        tr:nth-child(even) { background-color: #f8f9fa; }
+        .total-section { margin-top: 40px; text-align: right; page-break-inside: avoid; }
+        .total-row { font-size: 16px; margin-bottom: 8px; color: #555; }
+        .final-price { font-size: 24px; font-weight: 800; color: #0B1120; margin-top: 15px; border-top: 2px solid #00E5FF; padding-top: 15px; display: inline-block; min-width: 200px; }
+        .terms { margin-top: 50px; font-size: 13px; color: #666; border-top: 1px solid #eee; padding-top: 20px; page-break-inside: avoid; }
+        .terms h3 { font-size: 14px; color: #0B1120; margin-bottom: 10px; }
+        .terms ul { padding-left: 20px; margin-bottom: 15px; }
+        .terms li { margin-bottom: 5px; }
+        .signature-block { margin-top: 60px; display: flex; justify-content: space-between; font-size: 14px; }
+        .sign-line { border-top: 1px solid #333; width: 200px; margin-top: 30px; text-align: center; padding-top: 5px; font-size: 12px; color: #777; }
+        .controls { text-align: center; margin-bottom: 20px; padding: 15px; background: #f0f0f0; border-radius: 8px; border: 1px dashed #ccc; }
+        .btn { padding: 12px 25px; background: #00E5FF; color: #0B1120; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 16px; margin: 5px; transition: 0.2s; }
+        .btn:hover { background: #00B8D4; }
+        .btn-close { background: #ccc; color: #333; }</style></head><body>
+        <div class="controls no-print"><h3>📄 Коммерческое предложение готово</h3><button class="btn" onclick="window.print()">💾 Сохранить КП (PDF)</button><button class="btn btn-close" onclick="window.close()">Закрыть</button></div>
+        <div class="header"><div class="logo">⚡ Volt<span>Group</span></div><div class="company-info"><strong>Исполнитель:</strong> Зрячих Матвей<br>Статус: Самозанятый (НПД)<br>ИНН: 591110297727<br>Тел: +7 (905) 208-42-84</div></div>
+        <h1>Коммерческое предложение № ${invoiceNum}</h1>
+        <div class="subtitle">на выполнение электромонтажных работ</div>
+        <div class="client-block"><strong>Заказчик:</strong> ${clientName}<br><strong>Адрес объекта:</strong> ${clientAddr}<br><strong>Дата составления:</strong> ${date}</div>
+        <table><thead><tr><th style="width:5%">№</th><th>Наименование работ / Услуг</th><th style="width:10%">Ед.</th><th style="width:10%">Кол-во</th><th style="width:15%">Цена, ₽</th><th style="width:15%">Сумма, ₽</th></tr></thead><tbody>`;
+
+        let rowIdx = 1;
+        allServices.forEach((s, index) => {
+            const state = servicesState[index] || { qty: 0, isComplex: false };
+            if (state.qty > 0) {
+                let price = s.price;
+                let note = state.isComplex ? ' <small>(сложные условия)</small>' : '';
+                offerHTML += `<tr><td>${rowIdx++}</td><td>${s.name}${note}</td><td>${s.unit}</td><td>${state.qty}</td><td>${Math.round(price).toLocaleString('ru-RU')}</td><td><strong>${(state.qty * price).toLocaleString('ru-RU')}</strong></td></tr>`;
+            }
+        });
+
+        document.querySelectorAll('.custom-work-row').forEach(row => {
+            const name = row.querySelector('.name-input').value || 'Доп. работа';
+            const unit = row.querySelector('.mat-unit').value || 'шт.';
+            const priceBase = parseFloat(row.querySelector('.mat-price').value) || 0;
+            const qty = parseFloat(row.querySelector('.custom-qty-input').value) || 0;
+            const complexCheck = row.querySelector('.custom-complex');
+            if (qty > 0 || priceBase > 0) {
+                let finalPrice = (complexCheck && complexCheck.checked) ? priceBase * 1.2 : priceBase;
+                let note = (complexCheck && complexCheck.checked) ? ' <small>(сложные условия)</small>' : '';
+                offerHTML += `<tr><td>${rowIdx++}</td><td>${name}${note}</td><td>${unit}</td><td>${qty}</td><td>${Math.round(finalPrice).toLocaleString('ru-RU')}</td><td><strong>${(qty * finalPrice).toLocaleString('ru-RU')}</strong></td></tr>`;
+            }
+        });
+
+        const masterBuys = document.getElementById('master-buys-materials').checked;
+        if (masterBuys && totals.materialsTotal > 0) {
+            offerHTML += `<tr><td colspan="6" style="background:#eef2f5; font-weight:bold; text-align:center; padding:10px; color:#0B1120;">МАТЕРИАЛЫ И КОМПЛЕКТУЮЩИЕ</td></tr>`;
+            document.querySelectorAll('#materials-body tr').forEach(r => {
+                const name = r.querySelector('.mat-name').value || 'Материал';
+                const unit = r.querySelector('.mat-unit').value || 'шт.';
+                const price = parseFloat(r.querySelector('.mat-price').value) || 0;
+                const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
+                if (qty > 0 || price > 0) {
+                    offerHTML += `<tr><td>${rowIdx++}</td><td>${name}</td><td>${unit}</td><td>${qty}</td><td>${price.toLocaleString('ru-RU')}</td><td><strong>${(price * qty).toLocaleString('ru-RU')}</strong></td></tr>`;
                 }
-                body { font-family: 'Arial', sans-serif; color: #333; max-width: 210mm; margin: 0 auto; padding: 20px; line-height: 1.5; background: #fff; }
-                .header { border-bottom: 3px solid #00E5FF; padding-bottom: 15px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; }
-                .logo { font-size: 28px; font-weight: 800; color: #0B1120; letter-spacing: -1px; }
-                .logo span { color: #00E5FF; }
-                .company-info { text-align: right; font-size: 13px; color: #555; line-height: 1.4; }
-                h1 { font-size: 22px; text-transform: uppercase; margin-bottom: 5px; color: #0B1120; border-left: 5px solid #00E5FF; padding-left: 10px; }
-                .subtitle { font-size: 14px; color: #666; margin-bottom: 30px; margin-left: 15px; }
-
-                .client-block { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #e9ecef; }
-                .client-block strong { color: #0B1120; display: block; margin-bottom: 5px; }
-
-                table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
-                th { background: #0B1120; color: white; padding: 12px 10px; text-align: left; font-weight: 600; }
-                td { border-bottom: 1px solid #dee2e6; padding: 10px; }
-                tr:nth-child(even) { background-color: #f8f9fa; }
-
-                .total-section { margin-top: 40px; text-align: right; page-break-inside: avoid; }
-                .total-row { font-size: 16px; margin-bottom: 8px; color: #555; }
-                .final-price { font-size: 24px; font-weight: 800; color: #0B1120; margin-top: 15px; border-top: 2px solid #00E5FF; padding-top: 15px; display: inline-block; min-width: 200px; }
-
-                .terms { margin-top: 50px; font-size: 13px; color: #666; border-top: 1px solid #eee; padding-top: 20px; page-break-inside: avoid; }
-                .terms h3 { font-size: 14px; color: #0B1120; margin-bottom: 10px; }
-                .terms ul { padding-left: 20px; margin-bottom: 15px; }
-                .terms li { margin-bottom: 5px; }
-
-                .signature-block { margin-top: 60px; display: flex; justify-content: space-between; font-size: 14px; }
-                .sign-line { border-top: 1px solid #333; width: 200px; margin-top: 30px; text-align: center; padding-top: 5px; font-size: 12px; color: #777; }
-
-                .controls { text-align: center; margin-bottom: 20px; padding: 15px; background: #f0f0f0; border-radius: 8px; border: 1px dashed #ccc; }
-                .btn { padding: 12px 25px; background: #00E5FF; color: #0B1120; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 16px; margin: 5px; transition: 0.2s; }
-                .btn:hover { background: #00B8D4; }
-                .btn-close { background: #ccc; color: #333; }
-            </style>
-        </head>
-        <body>
-            <div class="controls no-print">
-                <h3>📄 Коммерческое предложение готово</h3>
-                <p>Проверьте данные. Нажмите "Сохранить как PDF", чтобы отправить клиенту.</p>
-                <button class="btn" onclick="window.print()">💾 Сохранить КП (PDF)</button>
-                <button class="btn btn-close" onclick="window.close()">Закрыть</button>
-            </div>
-
-            <div class="header">
-                <div class="logo">⚡ Volt<span>Group</span></div>
-                <div class="company-info">
-                    <strong>Исполнитель:</strong> Зрячих Матвей<br>
-                    Статус: Самозанятый (НПД)<br>
-                    ИНН: 591110297727<br>
-                    Тел: +7 (905) 208-42-84<br>
-                    VKontakte: @voltgroup_spb
-                </div>
-            </div>
-
-            <h1>Коммерческое предложение № ${invoiceNum}</h1>
-            <div class="subtitle">на выполнение электромонтажных работ</div>
-
-            <div class="client-block">
-                <strong>Заказчик:</strong> ${clientName}<br>
-                <strong>Адрес объекта:</strong> ${clientAddr}<br>
-                <strong>Дата составления:</strong> ${date}
-            </div>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th style="width: 5%">№</th>
-                        <th>Наименование работ / Услуг</th>
-                        <th style="width: 10%">Ед.</th>
-                        <th style="width: 10%">Кол-во</th>
-                        <th style="width: 15%">Цена, ₽</th>
-                        <th style="width: 15%">Сумма, ₽</th>
-                    </tr>
-                </thead>
-                <tbody>
-    `;
-
-    let rowIdx = 1;
-
-    servicesData.forEach((s, index) => {
-      const state = servicesState[index] || { qty: 0, isComplex: false };
-      const qty = state.qty;
-
-      if (qty > 0) {
-        let price = s.price;
-        let note = '';
-        if (state.isComplex) {
-          price = price * 1.2;
-          note = ' <small>(сложные условия)</small>';
+            });
         }
-        const sum = qty * price;
-        offerHTML += `<tr>
-                <td>${rowIdx++}</td>
-                <td>${s.name}${note}</td>
-                <td>${s.unit}</td>
-                <td>${qty}</td>
-                <td>${Math.round(price).toLocaleString('ru-RU')}</td>
-                <td><strong>${sum.toLocaleString('ru-RU')}</strong></td>
-            </tr>`;
-      }
-    });
 
-    document.querySelectorAll('.custom-work-row').forEach(row => {
-      const name = row.querySelector('.name-input').value || 'Дополнительная работа';
-      const unit = row.querySelector('.mat-unit').value || 'шт.';
-      const priceBase = parseFloat(row.querySelector('.mat-price').value) || 0;
-      const qty = parseFloat(row.querySelector('.custom-qty-input').value) || 0;
-      const complexCheck = row.querySelector('.custom-complex');
+        offerHTML += `</tbody></table>
+        <div class="total-section">
+            <div class="total-row">Стоимость работ: ${totals.worksFinal.toLocaleString('ru-RU')} ₽</div>
+            ${masterBuys ? `<div class="total-row">Стоимость материалов: ${totals.materialsTotal.toLocaleString('ru-RU')} ₽</div>` : ''}
+            ${totals.discountAmount > 0 ? `<div class="total-row" style="color:#d32f2f;">Скидка: -${totals.discountAmount.toLocaleString('ru-RU')} ₽</div>` : ''}
+            <div class="final-price">ИТОГО: ${totals.grandTotal.toLocaleString('ru-RU')} ₽</div>
+        </div>
+        <div class="terms"><h3>Условия выполнения работ:</h3><ul>
+            <li><strong>Срок действия предложения:</strong> 3 рабочих дня.</li>
+            <li><strong>Гарантия:</strong> 12 месяцев на монтажные работы.</li>
+            <li><strong>Оплата:</strong> 100% предоплата за материалы (при закупке мастером), остаток - после подписания акта приёмки.</li>
+            <li>Работы выполняются в соответствии с ПУЭ и СНиП.</li>
+        </ul></div>
+        <div class="signature-block">
+            <div><strong>Исполнитель:</strong><br>Зрячих Матвей<br>VoltGroup<div class="sign-line">Подпись</div></div>
+            <div style="text-align: right;"><strong>Заказчик:</strong><br>${clientName}<div class="sign-line">Подпись</div></div>
+        </div></body></html>`;
 
-      if (qty > 0 || priceBase > 0) {
-        let finalPrice = priceBase;
-        let note = '';
-        if (complexCheck?.checked) {
-          finalPrice = priceBase * 1.2;
-          note = ' <small>(сложные условия)</small>';
-        }
-        const sum = qty * finalPrice;
-        offerHTML += `<tr>
-                <td>${rowIdx++}</td>
-                <td>${name}${note}</td>
-                <td>${unit}</td>
-                <td>${qty}</td>
-                <td>${Math.round(finalPrice).toLocaleString('ru-RU')}</td>
-                <td><strong>${sum.toLocaleString('ru-RU')}</strong></td>
-            </tr>`;
-      }
-    });
-
-    const masterBuys = document.getElementById('master-buys-materials').checked;
-    if (masterBuys && totals.materialsTotal > 0) {
-      offerHTML += `<tr><td colspan="6" style="background:#eef2f5; font-weight:bold; text-align:center; padding:10px; color:#0B1120;">МАТЕРИАЛЫ И КОМПЛЕКТУЮЩИЕ</td></tr>`;
-      document.querySelectorAll('#materials-body tr').forEach(r => {
-        const name = r.querySelector('.mat-name').value || 'Материал';
-        const unit = r.querySelector('.mat-unit').value || 'шт.';
-        const price = parseFloat(r.querySelector('.mat-price').value) || 0;
-        const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
-        if (qty > 0 || price > 0) {
-          const sum = price * qty;
-          offerHTML += `<tr>
-                    <td>${rowIdx++}</td>
-                    <td>${name}</td>
-                    <td>${unit}</td>
-                    <td>${qty}</td>
-                    <td>${price.toLocaleString('ru-RU')}</td>
-                    <td><strong>${sum.toLocaleString('ru-RU')}</strong></td>
-                </tr>`;
-        }
-      });
+        const printWindow = window.open('', '_blank', 'width=900,height=900');
+        printWindow.document.write(offerHTML);
+        printWindow.document.close();
     }
 
-    offerHTML += `
-                </tbody>
-            </table>
+    function generateAct() {
+        const totals = calculateTotals();
+        if (totals.grandTotal === 0 && totals.materialsTotal === 0) { alert('Добавьте хотя бы одну позицию'); return; }
+        const clientName = document.getElementById('client-name').value || 'Заказчик';
+        const clientAddr = document.getElementById('client-address').value || 'г. Санкт-Петербург';
+        const date = new Date().toLocaleDateString('ru-RU');
+        const invoiceNum = document.getElementById('invoice-number').value || 'Б/Н';
+        const masterBuys = document.getElementById('master-buys-materials').checked;
 
-            <div class="total-section">
-                <div class="total-row">Стоимость работ: ${totals.worksFinal.toLocaleString('ru-RU')} ₽</div>
-                ${masterBuys ? `<div class="total-row">Стоимость материалов: ${totals.materialsTotal.toLocaleString('ru-RU')} ₽</div>` : ''}
-                ${totals.discountAmount > 0 ? `<div class="total-row" style="color:#d32f2f;">Скидка: -${totals.discountAmount.toLocaleString('ru-RU')} ₽</div>` : ''}
-                <div class="final-price">ИТОГО: ${totals.grandTotal.toLocaleString('ru-RU')} ₽</div>
-            </div>
+        let actHTML = `<!DOCTYPE html><html><head><title>Акт №${invoiceNum}</title>
+        <style>@media print { @page { margin: 15mm; size: A4; } body { -webkit-print-color-adjust: exact; } .no-print { display: none; } }
+        body { font-family: 'Times New Roman', Times, serif; color: #000; max-width: 210mm; margin: 0 auto; padding: 20px; line-height: 1.3; background: #fff; font-size: 12pt; }
+        h1 { text-align: center; font-size: 16pt; font-weight: bold; margin-bottom: 5px; text-transform: uppercase; }
+        .doc-subtitle { text-align: center; font-size: 11pt; margin-bottom: 20px; color: #333; }
+        .header-block { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 11pt; }
+        .header-block div { width: 48%; }
+        .preamble { margin-bottom: 15px; text-align: justify; font-size: 11pt; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 11pt; }
+        th { background: #f0f0f0; border: 1px solid #000; padding: 6px; text-align: center; font-weight: bold; }
+        td { border: 1px solid #000; padding: 6px; vertical-align: top; }
+        td.num { text-align: center; width: 5%; } td.unit { text-align: center; width: 10%; } td.qty { text-align: center; width: 10%; }
+        td.price { text-align: right; width: 15%; } td.sum { text-align: right; width: 15%; font-weight: bold; }
+        .total-section { margin-top: 10px; text-align: right; font-size: 12pt; }
+        .total-line { margin-bottom: 5px; }
+        .grand-total { font-size: 14pt; font-weight: bold; margin-top: 10px; border-top: 2px solid #000; padding-top: 5px; display: inline-block; min-width: 250px; }
+        .legal-text { margin-top: 20px; font-size: 11pt; text-align: justify; }
+        .legal-text ul { margin: 10px 0 10px 20px; padding: 0; }
+        .legal-text li { margin-bottom: 5px; }
+        .signatures { margin-top: 40px; display: flex; justify-content: space-between; font-size: 11pt; page-break-inside: avoid; }
+        .sign-box { width: 45%; }
+        .sign-title { font-weight: bold; margin-bottom: 10px; }
+        .sign-details { margin-bottom: 30px; line-height: 1.4; }
+        .sign-line { border-top: 1px solid #000; margin-top: 10px; padding-top: 5px; text-align: center; font-style: italic; font-size: 10pt; }
+        .controls { text-align: center; margin-bottom: 20px; padding: 15px; background: #f9f9f9; border-radius: 8px; border: 1px dashed #ccc; font-family: sans-serif; }
+        .btn { padding: 10px 20px; background: #00E5FF; color: #0B1120; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin: 5px; font-family: sans-serif; }
+        .btn-close { background: #ccc; color: #333; }</style></head><body>
+        <div class="controls no-print"><h3>📝 Акт приёмки-сдачи работ готов</h3><button class="btn" onclick="window.print()">🖨 Печать / Сохранить PDF</button><button class="btn btn-close" onclick="window.close()">Закрыть</button></div>
+        <h1>Акт приёмки-сдачи выполненных работ</h1>
+        <div class="doc-subtitle">№ ${invoiceNum} от ${date}</div>
+        <div class="header-block">
+            <div><strong>Исполнитель:</strong><br>Зрячих Матвей Олегович<br>(VoltGroup)<br>Плательщик НПД (Самозанятый)<br>ИНН: 591110297727<br>Тел: +7 (905) 208-42-84</div>
+            <div style="text-align: right;"><strong>Заказчик:</strong><br>${clientName}<br>Адрес объекта:<br>${clientAddr}</div>
+        </div>
+        <div class="preamble">Мы, нижеподписавшиеся, Исполнитель <strong>Зрячих М.О.</strong>, с одной стороны, и Заказчик <strong>${clientName}</strong>, с другой стороны, составили настоящий Акт о нижеследующем:</div>
+        <p style="margin-bottom: 10px;"><strong>1. Перечень выполненных работ и оказанных услуг:</strong></p>
+        <table><thead><tr><th class="num">№</th><th>Наименование работ / Услуг</th><th class="unit">Ед. изм.</th><th class="qty">Кол-во</th><th class="price">Цена, ₽</th><th class="sum">Сумма, ₽</th></tr></thead><tbody>`;
 
-            <div class="terms">
-                <h3>Условия выполнения работ:</h3>
-                <ul>
-                    <li><strong>Срок действия предложения:</strong> 3 рабочих дня.</li>
-                    <li><strong>Гарантия:</strong> 12 месяцев на монтажные работы.</li>
-                    <li><strong>Оплата:</strong> 100% предоплата за материалы (при закупке мастером), остаток - после подписания акта приёмки.</li>
-                    <li><strong>Выезд:</strong> Бесплатный выезд для уточнения деталей и финального замера в пределах КАД.</li>
-                    <li>Работы выполняются в соответствии с ПУЭ и СНиП.</li>
-                </ul>
-                <p style="margin-top: 15px; font-style: italic;">
-                    Для согласования даты выезда и начала работ, пожалуйста, подтвердите это предложение ответным сообщением.
-                </p>
-            </div>
+        let rowIdx = 1;
+        allServices.forEach((s, index) => {
+            const state = servicesState[index] || { qty: 0, isComplex: false };
+            if (state.qty > 0) {
+                let price = s.price;
+                let note = state.isComplex ? ' (повыш. сложность)' : '';
+                actHTML += `<tr><td class="num">${rowIdx++}</td><td>${s.name}${note}</td><td class="unit">${s.unit}</td><td class="qty">${state.qty}</td><td class="price">${Math.round(price)}</td><td class="sum">${(state.qty * price).toLocaleString('ru-RU')}</td></tr>`;
+            }
+        });
 
-            <div class="signature-block">
-                <div>
-                    <strong>Исполнитель:</strong><br>
-                    Зрячих Матвей<br>
-                    VoltGroup
-                    <div class="sign-line">Подпись</div>
-                </div>
-                <div style="text-align: right;">
-                    <strong>Заказчик:</strong><br>
-                    ${clientName}
-                    <div class="sign-line">Подпись</div>
-                </div>
-            </div>
-        </body>
-        </html>
-    `;
+        document.querySelectorAll('.custom-work-row').forEach(row => {
+            const name = row.querySelector('.name-input').value || 'Доп. работа';
+            const unit = row.querySelector('.mat-unit').value || 'шт.';
+            const priceBase = parseFloat(row.querySelector('.mat-price').value) || 0;
+            const qty = parseFloat(row.querySelector('.custom-qty-input').value) || 0;
+            const complexCheck = row.querySelector('.custom-complex');
+            if (qty > 0 || priceBase > 0) {
+                let finalPrice = (complexCheck && complexCheck.checked) ? priceBase * 1.2 : priceBase;
+                let note = (complexCheck && complexCheck.checked) ? ' (повыш. сложность)' : '';
+                actHTML += `<tr><td class="num">${rowIdx++}</td><td>${name}${note}</td><td class="unit">${unit}</td><td class="qty">${qty}</td><td class="price">${Math.round(finalPrice)}</td><td class="sum">${(qty * finalPrice).toLocaleString('ru-RU')}</td></tr>`;
+            }
+        });
 
-    const printWindow = window.open('', '_blank', 'width=900,height=900');
-    printWindow.document.write(offerHTML);
-    printWindow.document.close();
-  }
-
-  // --- ГЕНЕРАЦИЯ АКТА ---
-  function generateAct() {
-    const totals = calculateTotals();
-    if (totals.grandTotal === 0 && totals.materialsTotal === 0) {
-      alert('Добавьте хотя бы одну позицию');
-      return;
-    }
-
-    const clientName = document.getElementById('client-name').value || 'Заказчик';
-    const clientAddr = document.getElementById('client-address').value || 'г. Санкт-Петербург';
-    const date = new Date().toLocaleDateString('ru-RU');
-    const invoiceNum = document.getElementById('invoice-number').value || 'Б/Н';
-
-    const masterBuys = document.getElementById('master-buys-materials').checked;
-
-    let actHTML = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Акт №${invoiceNum} | VoltGroup</title>
-            <style>
-                @media print {
-                    @page { margin: 15mm; size: A4; }
-                    body { -webkit-print-color-adjust: exact; }
-                    .no-print { display: none; }
+        if (masterBuys && totals.materialsTotal > 0) {
+            actHTML += `<tr><td colspan="6" style="background:#eef2f5; font-weight:bold; text-align:center; padding:8px;">МАТЕРИАЛЫ И ОБОРУДОВАНИЕ (предоставлены Исполнителем, оплачены Заказчиком ранее)</td></tr>`;
+            document.querySelectorAll('#materials-body tr').forEach(r => {
+                const name = r.querySelector('.mat-name').value || 'Материал';
+                const unit = r.querySelector('.mat-unit').value || 'шт.';
+                const price = parseFloat(r.querySelector('.mat-price').value) || 0;
+                const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
+                if (qty > 0 || price > 0) {
+                    actHTML += `<tr><td class="num">${rowIdx++}</td><td>${name}</td><td class="unit">${unit}</td><td class="qty">${qty}</td><td class="price">${price}</td><td class="sum">${(price * qty).toLocaleString('ru-RU')}</td></tr>`;
                 }
-                body { font-family: 'Times New Roman', Times, serif; color: #000; max-width: 210mm; margin: 0 auto; padding: 20px; line-height: 1.3; background: #fff; font-size: 12pt; }
-
-                h1 { text-align: center; font-size: 16pt; font-weight: bold; margin-bottom: 5px; text-transform: uppercase; }
-                .doc-subtitle { text-align: center; font-size: 11pt; margin-bottom: 20px; color: #333; }
-
-                .header-block { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 11pt; }
-                .header-block div { width: 48%; }
-
-                .preamble { margin-bottom: 15px; text-align: justify; font-size: 11pt; }
-
-                table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 11pt; }
-                th { background: #f0f0f0; border: 1px solid #000; padding: 6px; text-align: center; font-weight: bold; }
-                td { border: 1px solid #000; padding: 6px; vertical-align: top; }
-                td.num { text-align: center; width: 5%; }
-                td.unit { text-align: center; width: 10%; }
-                td.qty { text-align: center; width: 10%; }
-                td.price { text-align: right; width: 15%; }
-                td.sum { text-align: right; width: 15%; font-weight: bold; }
-
-                .total-section { margin-top: 10px; text-align: right; font-size: 12pt; }
-                .total-line { margin-bottom: 5px; }
-                .grand-total { font-size: 14pt; font-weight: bold; margin-top: 10px; border-top: 2px solid #000; padding-top: 5px; display: inline-block; min-width: 250px; }
-
-                .legal-text { margin-top: 20px; font-size: 11pt; text-align: justify; }
-                .legal-text ul { margin: 10px 0 10px 20px; padding: 0; }
-                .legal-text li { margin-bottom: 5px; }
-
-                .signatures { margin-top: 40px; display: flex; justify-content: space-between; font-size: 11pt; page-break-inside: avoid; }
-                .sign-box { width: 45%; }
-                .sign-title { font-weight: bold; margin-bottom: 10px; }
-                .sign-details { margin-bottom: 30px; line-height: 1.4; }
-                .sign-line { border-top: 1px solid #000; margin-top: 10px; padding-top: 5px; text-align: center; font-style: italic; font-size: 10pt; }
-
-                .controls { text-align: center; margin-bottom: 20px; padding: 15px; background: #f9f9f9; border-radius: 8px; border: 1px dashed #ccc; font-family: sans-serif; }
-                .btn { padding: 10px 20px; background: #00E5FF; color: #0B1120; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin: 5px; font-family: sans-serif; }
-                .btn-close { background: #ccc; color: #333; }
-            </style>
-        </head>
-        <body>
-            <div class="controls no-print">
-                <h3>📝 Акт приёмки-сдачи работ готов</h3>
-                <p>Проверьте данные. Нажмите "Печать", чтобы сохранить как PDF или распечатать.</p>
-                <button class="btn" onclick="window.print()">🖨 Печать / Сохранить PDF</button>
-                <button class="btn btn-close" onclick="window.close()">Закрыть</button>
-            </div>
-
-            <h1>Акт приёмки-сдачи выполненных работ</h1>
-            <div class="doc-subtitle">№ ${invoiceNum} от ${date}</div>
-
-            <div class="header-block">
-                <div>
-                    <strong>Исполнитель:</strong><br>
-                    Зрячих Матвей Олегович<br>
-                    (VoltGroup)<br>
-                    Плательщик НПД (Самозанятый)<br>
-                    ИНН: 591110297727<br>
-                    Тел: +7 (905) 208-42-84
-                </div>
-                <div style="text-align: right;">
-                    <strong>Заказчик:</strong><br>
-                    ${clientName}<br>
-                    Адрес объекта:<br>
-                    ${clientAddr}
-                </div>
-            </div>
-
-            <div class="preamble">
-                Мы, нижеподписавшиеся, Исполнитель <strong>Зрячих М.О.</strong>, с одной стороны, и Заказчик <strong>${clientName}</strong>, с другой стороны, составили настоящий Акт о нижеследующем:
-            </div>
-
-            <p style="margin-bottom: 10px;"><strong>1. Перечень выполненных работ и оказанных услуг:</strong></p>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th class="num">№</th>
-                        <th>Наименование работ / Услуг</th>
-                        <th class="unit">Ед. изм.</th>
-                        <th class="qty">Кол-во</th>
-                        <th class="price">Цена, ₽</th>
-                        <th class="sum">Сумма, ₽</th>
-                    </tr>
-                </thead>
-                <tbody>
-    `;
-
-    let rowIdx = 1;
-
-    servicesData.forEach((s, index) => {
-      const state = servicesState[index] || { qty: 0, isComplex: false };
-      const qty = state.qty;
-
-      if (qty > 0) {
-        let price = s.price;
-        let note = '';
-        if (state.isComplex) {
-          price = price * 1.2;
-          note = ' (повыш. сложность)';
+            });
         }
-        const sum = qty * price;
-        actHTML += `<tr>
-                <td class="num">${rowIdx++}</td>
-                <td>${s.name}${note}</td>
-                <td class="unit">${s.unit}</td>
-                <td class="qty">${qty}</td>
-                <td class="price">${Math.round(price)}</td>
-                <td class="sum">${sum.toLocaleString('ru-RU')}</td>
-            </tr>`;
-      }
-    });
 
-    document.querySelectorAll('.custom-work-row').forEach(row => {
-      const name = row.querySelector('.name-input').value || 'Доп. работа';
-      const unit = row.querySelector('.mat-unit').value || 'шт.';
-      const priceBase = parseFloat(row.querySelector('.mat-price').value) || 0;
-      const qty = parseFloat(row.querySelector('.custom-qty-input').value) || 0;
-      const complexCheck = row.querySelector('.custom-complex');
+        actHTML += `</tbody></table>
+        <div class="total-section">
+            <div class="total-line">Стоимость выполненных работ: ${totals.worksFinal.toLocaleString('ru-RU')} ₽</div>
+            ${masterBuys ? `<div class="total-line" style="font-size: 10pt; color: #555;">(Материалы на сумму ${totals.materialsTotal.toLocaleString('ru-RU')} ₽ оплачены ранее)</div>` : ''}
+            ${totals.discountAmount > 0 ? `<div class="total-line" style="color:#d32f2f;">Скидка на работы: -${totals.discountAmount.toLocaleString('ru-RU')} ₽</div>` : ''}
+            <div class="grand-total">ИТОГО К ОПЛАТЕ ЗА РАБОТЫ: ${totals.worksFinal.toLocaleString('ru-RU')} ₽</div>
+        </div>
+        <div class="legal-text">
+            <p><strong>2. Качество и сроки:</strong></p>
+            <ul>
+                <li>Работы выполнены в полном объеме, в срок и с надлежащим качеством.</li>
+                <li>Работы соответствуют требованиям ПУЭ (Правила устройства электроустановок) и СНиП.</li>
+                <li>Заказчик осмотрел результаты работ и претензий к качеству, объему и срокам выполнения не имеет.</li>
+            </ul>
+            <p><strong>3. Гарантийные обязательства:</strong></p>
+            <p>Исполнитель предоставляет гарантию на выполненные монтажные работы сроком на <strong>12 месяцев</strong> с даты подписания настоящего Акта. Гарантия не распространяется на оборудование и материалы (гарантия производителя), а также на повреждения, вызванные неправильной эксплуатацией или действиями третьих лиц.</p>
+        </div>
+        <div class="signatures">
+            <div class="sign-box">
+                <div class="sign-title">ИСПОЛНИТЕЛЬ:</div>
+                <div class="sign-details">Зрячих Матвей Олегович<br>Самозанятый (НПД)<br>ИНН 591110297727</div>
+                <div class="sign-line">Подпись _________________ / М.П.</div>
+            </div>
+            <div class="sign-box" style="text-align: right;">
+                <div class="sign-title">ЗАКАЗЧИК:</div>
+                <div class="sign-details">${clientName}<br>Паспортные данные (по требованию):<br>_________________________</div>
+                <div class="sign-line">Подпись _________________</div>
+            </div>
+        </div></body></html>`;
 
-      if (qty > 0 || priceBase > 0) {
-        let finalPrice = priceBase;
-        let note = '';
-        if (complexCheck?.checked) {
-          finalPrice = priceBase * 1.2;
-          note = ' (повыш. сложность)';
-        }
-        const sum = qty * finalPrice;
-        actHTML += `<tr>
-                <td class="num">${rowIdx++}</td>
-                <td>${name}${note}</td>
-                <td class="unit">${unit}</td>
-                <td class="qty">${qty}</td>
-                <td class="price">${Math.round(finalPrice)}</td>
-                <td class="sum">${sum.toLocaleString('ru-RU')}</td>
-            </tr>`;
-      }
-    });
-
-    if (masterBuys && totals.materialsTotal > 0) {
-      actHTML += `<tr><td colspan="6" style="background:#eef2f5; font-weight:bold; text-align:center; padding:8px;">МАТЕРИАЛЫ И ОБОРУДОВАНИЕ (предоставлены Исполнителем, оплачены Заказчиком ранее)</td></tr>`;
-      document.querySelectorAll('#materials-body tr').forEach(r => {
-        const name = r.querySelector('.mat-name').value || 'Материал';
-        const unit = r.querySelector('.mat-unit').value || 'шт.';
-        const price = parseFloat(r.querySelector('.mat-price').value) || 0;
-        const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
-        if (qty > 0 || price > 0) {
-          const sum = price * qty;
-          actHTML += `<tr>
-                    <td class="num">${rowIdx++}</td>
-                    <td>${name}</td>
-                    <td class="unit">${unit}</td>
-                    <td class="qty">${qty}</td>
-                    <td class="price">${price}</td>
-                    <td class="sum">${sum.toLocaleString('ru-RU')}</td>
-                </tr>`;
-        }
-      });
+        const printWindow = window.open('', '_blank', 'width=900,height=900');
+        printWindow.document.write(actHTML);
+        printWindow.document.close();
     }
 
-    const totalToPayInAct = totals.worksFinal;
-
-    actHTML += `
-                </tbody>
-            </table>
-
-            <div class="total-section">
-                <div class="total-line">Стоимость выполненных работ: ${totals.worksFinal.toLocaleString('ru-RU')} ₽</div>
-                ${masterBuys ? `<div class="total-line" style="font-size: 10pt; color: #555;">(Материалы на сумму ${totals.materialsTotal.toLocaleString('ru-RU')} ₽ оплачены ранее)</div>` : ''}
-                ${totals.discountAmount > 0 ? `<div class="total-line" style="color:#d32f2f;">Скидка на работы: -${totals.discountAmount.toLocaleString('ru-RU')} ₽</div>` : ''}
-                <div class="grand-total">ИТОГО К ОПЛАТЕ ЗА РАБОТЫ: ${totalToPayInAct.toLocaleString('ru-RU')} ₽</div>
-            </div>
-
-            <div class="legal-text">
-                <p><strong>2. Качество и сроки:</strong></p>
-                <ul>
-                    <li>Работы выполнены в полном объеме, в срок и с надлежащим качеством.</li>
-                    <li>Работы соответствуют требованиям ПУЭ (Правила устройства электроустановок) и СНиП.</li>
-                    <li>Заказчик осмотрел результаты работ и претензий к качеству, объему и срокам выполнения не имеет.</li>
-                </ul>
-
-                <p><strong>3. Гарантийные обязательства:</strong></p>
-                <p>Исполнитель предоставляет гарантию на выполненные монтажные работы сроком на <strong>12 месяцев</strong> с даты подписания настоящего Акта. Гарантия не распространяется на оборудование и материалы (гарантия производителя), а также на повреждения, вызванные неправильной эксплуатацией или действиями третьих лиц.</p>
-            </div>
-
-            <div class="signatures">
-                <div class="sign-box">
-                    <div class="sign-title">ИСПОЛНИТЕЛЬ:</div>
-                    <div class="sign-details">
-                        Зрячих Матвей Олегович<br>
-                        Самозанятый (НПД)<br>
-                        ИНН 591110297727
-                    </div>
-                    <div class="sign-line">Подпись _________________ / М.П.</div>
-                </div>
-                <div class="sign-box" style="text-align: right;">
-                    <div class="sign-title">ЗАКАЗЧИК:</div>
-                    <div class="sign-details">
-                        ${clientName}<br>
-                        Паспортные данные (по требованию):<br>
-                        _________________________
-                    </div>
-                    <div class="sign-line">Подпись _________________</div>
-                </div>
-            </div>
-        </body>
-        </html>
-    `;
-
-    const printWindow = window.open('', '_blank', 'width=900,height=900');
-    printWindow.document.write(actHTML);
-    printWindow.document.close();
-  }
-
-  // Инициализация
-  document.addEventListener('DOMContentLoaded', () => {
-    renderServicesByCategory();
-    document.getElementById('estimate-date').valueAsDate = new Date();
-    updateDraftList();
-  });
+    document.addEventListener('DOMContentLoaded', () => {
+        loadPrices().then(success => { if (success) initApp(); });
+    });
 </script>
 </body>
 </html>
