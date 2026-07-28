@@ -783,8 +783,8 @@
         const totals = calculateTotals();
         if (totals.grandTotal === 0 && totals.materialsTotal === 0) { alert('Добавьте хотя бы одну позицию'); return; }
         let invoiceNum = escapeHtml(document.getElementById('invoice-number').value.trim() || `Смета-${new Date().getFullYear()}`);
-        const clientName = escapeHtml(document.getElementById('client-name').value || '—');
-        const clientAddr = escapeHtml(document.getElementById('client-address').value || '—');
+        const clientName = escapeHtml(document.getElementById('client-name').value || '-');
+        const clientAddr = escapeHtml(document.getElementById('client-address').value || '-');
         const pdfDate = escapeHtml(document.getElementById('estimate-date').value || new Date().toLocaleDateString('ru-RU'));
 
         let pdfBodyHTML = '';

@@ -3,97 +3,160 @@ import requests
 import os
 import time
 import traceback
+import json
+import gspread
 
 app = Flask(__name__)
 
-# Получаем данные из переменных окружения
+# --- ПЕРЕМЕННЫЕ ОКРУЖЕНИЯ ---
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
 CHAT_ID = os.environ.get('CHAT_ID')
+SHEET_URL = os.environ.get('SHEET_URL')  # Ссылка на вашу Google Таблицу
+
+# Карта колонок в нашей таблице:
+# 1=ID, 2=progress, 3=stage, 4=total, 5=paid, 6=address
+COLUMNS_MAP = {
+    'progress': 2,
+    'stage': 3,
+    'total': 4,
+    'paid': 5,
+    'address': 6
+}
+
+def get_sheet():
+    """Подключается к Google Таблице по ключу из переменных окружения"""
+    creds_json = os.environ.get('GOOGLE_CREDENTIALS')
+    if not creds_json or not SHEET_URL:
+        raise ValueError("Не настроены переменные GOOGLE_CREDENTIALS или SHEET_URL")
+
+    # Загружаем ключи из JSON-строки
+    creds_dict = json.loads(creds_json)
+    gc = gspread.service_account_from_dict(creds_dict)
+    sh = gc.open_by_url(SHEET_URL)
+    return sh.sheet1
+
+def send_tg_message(chat_id, text):
+    """Отправляет сообщение в Telegram"""
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+    requests.post(url, json={"chat_id": chat_id, "text": text, "parse_mode": "Markdown"})
 
 @app.after_request
 def after_request(response):
-    # Разрешаем CORS (чтобы браузер не блокировал отправку форм)
     response.headers.add('Access-Control-Allow-Origin', '*')
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
     return response
 
-# 1. Маршрут для пробуждения сервера (Render Free Tier)
+# --- 1. МАРШРУТЫ ДЛЯ САЙТА ---
+
 @app.route('/ping', methods=['GET'])
 def ping():
-    print("⏰ Сервер разбужен пингом с фронтенда!")
-    return jsonify({"status": "awake", "msg": "Server is ready"}), 200
+    return jsonify({"status": "awake"}), 200
 
-# 2. Основной маршрут приема заявок
 @app.route('/send-message', methods=['POST', 'OPTIONS'])
 def send_message():
-    # Обрабатываем preflight-запрос от браузера
     if request.method == 'OPTIONS':
         return '', 200
-
     try:
-        # Проверка наличия токенов
-        if not BOT_TOKEN or not CHAT_ID:
-            raise ValueError("BOT_TOKEN или CHAT_ID не настроены на сервере!")
-
         data = request.json
-        print(f"📩 Получены данные: {data}")
-
-        # Извлекаем данные (включая источник)
         name = data.get('name', 'Не указано')
         phone = data.get('phone', 'Не указано')
         service = data.get('service', 'Не указано')
         source = data.get('source', 'Неизвестная страница')
 
-        # Формируем красивое сообщение для Telegram
-        text = f"""
-⚡️ *Новая заявка с сайта VoltGroup!*
-
-👤 *Имя:* {name}
-📞 *Телефон:* {phone}
-🛠 *Задача:* {service}
-📍 *Источник:* `{source}`
-        """
-
-        url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
-        payload = {
-            "chat_id": CHAT_ID,
-            "text": text,
-            "parse_mode": "Markdown"
-        }
-
-        # Логика повторных попыток (Retry) для надежности
-        max_retries = 3
-        last_error = None
-
-        for attempt in range(max_retries):
-            try:
-                print(f"🚀 Попытка #{attempt + 1} отправить в Telegram...")
-                response_tg = requests.post(url, json=payload, timeout=10)
-
-                if response_tg.status_code == 200:
-                    print(f"✅ Успешно отправлено с попытки #{attempt + 1}")
-                    return jsonify({"status": "success"}), 200
-                else:
-                    print(f"⚠️ Telegram вернул код {response_tg.status_code}")
-                    last_error = response_tg.text
-                    break # Если ошибка от самого Телеграма (например, неверный ID), повторять нет смысла
-
-            except requests.exceptions.RequestException as e:
-                print(f"⚠️ Ошибка сети (попытка {attempt + 1}): {e}")
-                last_error = str(e)
-                if attempt == max_retries - 1:
-                    raise
-                time.sleep(2) # Ждем перед следующей попыткой
-
-        raise Exception(f"Не удалось отправить после {max_retries} попыток. Ошибка: {last_error}")
-
+        text = f"⚡️ *Новая заявка!*\n\n👤 Имя: {name}\n📞 Телефон: {phone}\n🛠 Задача: {service}\n📍 Источник: `{source}`"
+        send_tg_message(CHAT_ID, text)
+        return jsonify({"status": "success"}), 200
     except Exception as e:
-        error_trace = traceback.format_exc()
-        print(f"💥 КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
-        print(error_trace)
         return jsonify({"status": "error", "msg": str(e)}), 500
 
+@app.route('/get-status', methods=['GET'])
+def get_status():
+    """Отдает сайту данные по конкретному объекту из Google Таблицы"""
+    obj_id = request.args.get('id')
+    try:
+        ws = get_sheet()
+        # Ищем строку, где в первой колонке находится наш ID
+        cell = ws.find(obj_id, in_column=1)
+        if cell:
+            row_values = ws.row_values(cell.row)
+            # Дополняем пустыми строками, если каких-то данных в таблице еще нет
+            while len(row_values) < 6:
+                row_values.append("")
+
+            data = {
+                "progress": row_values[1],
+                "stage": row_values[2],
+                "total": row_values[3],
+                "paid": row_values[4],
+                "address": row_values[5]
+            }
+            return jsonify({"status": "success", "data": data}), 200
+        else:
+            return jsonify({"status": "error", "msg": "Объект не найден"}), 404
+    except Exception as e:
+        print(f"Ошибка чтения таблицы: {e}")
+        return jsonify({"status": "error", "msg": "Ошибка сервера"}), 500
+
+
+# --- 2. МАРШРУТ ДЛЯ ТЕЛЕГРАМ БОТА (ВЕБХУК) ---
+
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    """Слушает команды из Telegram и записывает их в Google Таблицу"""
+    data = request.json
+
+    if "message" in data and "text" in data["message"]:
+        chat_id = str(data["message"]["chat"]["id"])
+        text = data["message"]["text"].strip()
+
+        # Защита: слушать только вас
+        if chat_id != str(CHAT_ID):
+            return '', 200
+
+        try:
+            ws = get_sheet()
+
+            # КОМАНДА: Создать новый объект (/new 142)
+            if text.startswith('/new '):
+                parts = text.split(' ', 1)
+                obj_id = parts[1].strip()
+
+                # Проверяем, нет ли уже такого ID
+                if ws.find(obj_id, in_column=1):
+                    send_tg_message(chat_id, f"⚠️ Объект {obj_id} уже существует в таблице.")
+                    return '', 200
+
+                # Добавляем новую строку в конец таблицы
+                ws.append_row([obj_id, "0", "Завоз материалов", "0 ₽", "0 ₽", f"Объект №{obj_id}"])
+
+                reply = f"✅ *Объект {obj_id} создан в Google Таблице!*\n\n🔗 Ссылка для клиента:\nhttps://voltgroup-spb.ru/client/index.html?id={obj_id}"
+                send_tg_message(chat_id, reply)
+
+            # КОМАНДА: Обновить объект (/update 142 progress 40)
+            elif text.startswith('/update '):
+                parts = text.split(' ', 3)
+                if len(parts) >= 4:
+                    obj_id = parts[1].strip()
+                    field = parts[2].strip().lower()
+                    value = parts[3].strip()
+
+                    if field not in COLUMNS_MAP:
+                        send_tg_message(chat_id, f"⚠️ Неизвестное поле `{field}`.\nДоступные поля: progress, stage, total, paid, address")
+                        return '', 200
+
+                    cell = ws.find(obj_id, in_column=1)
+                    if cell:
+                        # Обновляем конкретную ячейку
+                        ws.update_cell(cell.row, COLUMNS_MAP[field], value)
+                        send_tg_message(chat_id, f"✅ Таблица обновлена!\nОбъект: {obj_id}\nПоле `{field}` изменено на `{value}`.")
+                    else:
+                        send_tg_message(chat_id, f"⚠️ Ошибка: Объект {obj_id} не найден.")
+
+        except Exception as e:
+            send_tg_message(chat_id, f"💥 Ошибка сервера при работе с таблицей: {e}")
+
+    return '', 200
+
 if __name__ == "__main__":
-    # Для локального запуска
     app.run(debug=True, port=8000)
