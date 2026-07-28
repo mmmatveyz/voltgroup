@@ -69,11 +69,12 @@
         .timeline-item.current .timeline-title { color: var(--primary-install); }
         .timeline-date { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
 
-        /* Сетка фотографий */
-        .photo-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        /* Сетка для нескольких фотографий */
+        .photo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
         .photo-container { width: 100%; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: #111; }
-        .photo-container img { width: 100%; height: auto; display: block; max-height: 350px; object-fit: cover; }
-        .photo-placeholder { padding: 30px; text-align: center; color: var(--text-muted); font-size: 0.9rem; }
+        .photo-container img { width: 100%; height: 160px; display: block; object-fit: cover; transition: transform 0.3s ease; }
+        .photo-container img:hover { transform: scale(1.03); }
+        .photo-placeholder { padding: 30px; text-align: center; color: var(--text-muted); font-size: 0.9rem; grid-column: 1 / -1; }
 
         .finance-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.95rem; }
         .finance-row:last-child { margin-bottom: 0; margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--border-light); font-weight: 700; font-size: 1.1rem; }
@@ -186,19 +187,26 @@
                 document.getElementById('progress-bar').style.width = progress + '%';
                 document.getElementById('progress-text').textContent = progress + '%';
 
-                // Финансы и этап (теперь гарантированно обновляются по точным ID)
+                // Финансы и этап
                 document.getElementById('total-sum').textContent = data.total ? data.total + ' ₽' : '0 ₽';
                 document.getElementById('paid-sum').textContent = data.paid ? data.paid + ' ₽' : '0 ₽';
                 document.getElementById('current-stage-text').textContent = data.stage || 'В работе';
 
-                // Фотография из колонки photo
+                // Динамическая загрузка нескольких фотографий через запятую
                 if (data.photo && data.photo.trim() !== "") {
+                    const photoUrls = data.photo.split(',').map(url => url.trim()).filter(url => url.length > 0);
                     const photoBox = document.getElementById('photo-box');
-                    photoBox.innerHTML = `
-                        <div class="photo-container">
-                            <img src="${data.photo}" alt="Фото с объекта VoltGroup">
-                        </div>
-                    `;
+
+                    if (photoUrls.length > 0) {
+                        photoBox.innerHTML = ''; // Очищаем заглушку
+                        photoUrls.forEach(url => {
+                            photoBox.innerHTML += `
+                                <div class="photo-container">
+                                    <img src="${url}" alt="Фото объекта VoltGroup" loading="lazy">
+                                </div>
+                            `;
+                        });
+                    }
                 }
 
                 // Таймлайн
