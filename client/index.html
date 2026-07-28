@@ -8,11 +8,16 @@
     <style>
         /* Фирменные переменные VoltGroup */
         :root {
-            --bg-dark: #050914; --bg-card: rgba(17, 24, 39, 0.7);
-            --primary-install: #00E5FF; --text-main: #F8FAFC;
-            --text-muted: #94A3B8; --border-light: rgba(255, 255, 255, 0.1);
-            --radius-lg: 16px; --radius-md: 12px;
-            --success: #10B981; --font-main: 'Inter', sans-serif;
+            --bg-dark: #050914;
+            --bg-card: rgba(17, 24, 39, 0.7);
+            --primary-install: #00E5FF;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --border-light: rgba(255, 255, 255, 0.1);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --success: #10B981;
+            --font-main: 'Inter', sans-serif;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); }
@@ -37,16 +42,25 @@
 
         /* Карточки */
         .card {
-            background: var(--bg-card); border: 1px solid var(--border-light);
-            border-radius: var(--radius-lg); padding: 25px; margin-bottom: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 25px;
+            margin-bottom: 20px;
             backdrop-filter: blur(10px);
         }
-        .card h3 { font-size: 1.1rem; margin-bottom: 15px; color: var(--primary-install); border-bottom: 1px solid var(--border-light); padding-bottom: 10px; }
+        .card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--primary-install);
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 10px;
+        }
 
         /* Прогресс бар */
         .progress-header { display: flex; justify-content: space-between; font-weight: 600; margin-bottom: 10px; }
         .progress-track { width: 100%; height: 12px; background: rgba(0,0,0,0.5); border-radius: 10px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--primary-install); box-shadow: 0 0 10px rgba(0,229,255,0.5); transition: width 1s ease; }
+        .progress-fill { height: 100%; background: var(--primary-install); box-shadow: 0 0 10px rgba(0,229,255,0.5); transition: width 1s ease; width: 0%; }
 
         /* Таймлайн (Хронология) */
         .timeline { list-style: none; position: relative; padding-left: 20px; }
@@ -57,7 +71,6 @@
         .timeline-item.done .timeline-marker { background: var(--success); border-color: var(--success); box-shadow: 0 0 8px rgba(16, 185, 129, 0.5); }
         .timeline-item.current .timeline-marker { background: var(--primary-install); border-color: var(--primary-install); box-shadow: 0 0 8px rgba(0, 229, 255, 0.5); }
         .timeline-title { font-weight: 600; font-size: 1rem; color: var(--text-main); }
-        .timeline-item.done .timeline-title { color: var(--text-main); }
         .timeline-item.current .timeline-title { color: var(--primary-install); }
         .timeline-date { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
 
@@ -76,43 +89,43 @@
 <div class="container">
     <div class="header">
         <a href="#" class="logo">Volt<span>Group</span></a>
-        <h1 class="object-title">ЖК "Морская Набережная", кв. 142</h1>
-        <p class="object-id">Договор № 2026/08-14</p>
+        <h1 class="object-title">Загрузка данных объекта...</h1>
+        <p class="object-id">Пожалуйста, подождите</p>
     </div>
 
     <div class="card">
         <div class="progress-header">
             <span>Статус объекта</span>
-            <span style="color: var(--primary-install);">65%</span>
+            <span style="color: var(--primary-install);">0%</span>
         </div>
         <div class="progress-track">
-            <div class="progress-fill" style="width: 65%;"></div>
+            <div class="progress-fill"></div>
         </div>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px; text-align: right;">Обновлено сегодня в 14:30</p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px; text-align: right;">Синхронизировано с базой</p>
     </div>
 
     <div class="card">
         <h3>Хронология работ</h3>
         <ul class="timeline">
-            <li class="timeline-item done">
+            <li class="timeline-item">
                 <div class="timeline-marker"></div>
                 <div class="timeline-title">Завоз материалов и разметка</div>
-                <div class="timeline-date">Выполнено: 12.08.2026</div>
+                <div class="timeline-date">Этап 1</div>
             </li>
-            <li class="timeline-item done">
+            <li class="timeline-item">
                 <div class="timeline-marker"></div>
                 <div class="timeline-title">Черновой монтаж (штробление, кабель)</div>
-                <div class="timeline-date">Выполнено: 20.08.2026</div>
+                <div class="timeline-date">Этап 2</div>
             </li>
-            <li class="timeline-item current">
+            <li class="timeline-item">
                 <div class="timeline-marker"></div>
                 <div class="timeline-title">Сборка и установка электрощита</div>
-                <div class="timeline-date">В процессе (Ориентировочно: 25.08.2026)</div>
+                <div class="timeline-date">Этап 3</div>
             </li>
             <li class="timeline-item">
                 <div class="timeline-marker"></div>
                 <div class="timeline-title">Чистовой монтаж (розетки, свет)</div>
-                <div class="timeline-date">Ожидает окончания отделочных работ</div>
+                <div class="timeline-date">Этап 4</div>
             </li>
         </ul>
     </div>
@@ -120,8 +133,8 @@
     <div class="card">
         <h3>Последние фото с объекта</h3>
         <div class="photo-grid">
-            <div class="photo-item">Фото щита<br>(скоро)</div>
-            <div class="photo-item">Кабельные трассы<br>в коридоре</div>
+            <div class="photo-item">Фото щита<br>(обновляется)</div>
+            <div class="photo-item">Кабельные трассы<br>(обновляется)</div>
         </div>
         <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px;">Все фото скрытых работ сохранены в архиве.</p>
     </div>
@@ -129,20 +142,16 @@
     <div class="card">
         <h3>Финансовый отчет</h3>
         <div class="finance-row">
-            <span style="color: var(--text-muted);">Общая смета (работы + материалы):</span>
-            <span>345 000 ₽</span>
+            <span style="color: var(--text-muted);">Общая смета:</span>
+            <span>—</span>
         </div>
         <div class="finance-row text-green">
-            <span>Аванс за материалы (10.08.26):</span>
-            <span>- 150 000 ₽</span>
-        </div>
-        <div class="finance-row text-green">
-            <span>Оплата 1 этапа (21.08.26):</span>
-            <span>- 80 000 ₽</span>
+            <span>Внесено / Оплачено:</span>
+            <span>—</span>
         </div>
         <div class="finance-row">
-            <span>Остаток к оплате:</span>
-            <span>115 000 ₽</span>
+            <span>Текущий этап:</span>
+            <span id="current-stage-text" style="color: var(--primary-install);">Загрузка...</span>
         </div>
     </div>
 
@@ -150,6 +159,74 @@
         <a href="https://t.me/voltgroup_spb" style="color: var(--text-muted); text-decoration: underline; font-size: 0.9rem;">Связаться с мастером в Telegram</a>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const objectId = urlParams.get('id');
+
+        if (!objectId) {
+            document.querySelector('.container').innerHTML = `
+                <div style="text-align: center; padding: 50px 20px;">
+                    <h2 style="color: #EF4444;">Ошибка доступа</h2>
+                    <p>Не указан номер объекта. Пожалуйста, используйте персональную ссылку из сообщения.</p>
+                </div>
+            `;
+            return;
+        }
+
+        try {
+            // Запрос к вашему Python-серверу на Render
+            const response = await fetch(`https://voltgroup-bot.onrender.com/get-status?id=${objectId}`);
+            const result = await response.json();
+
+            if (result.status === "success") {
+                const data = result.data;
+
+                // Заполняем тексты данными из Google Таблицы
+                document.querySelector('.object-title').textContent = data.address || `Объект №${objectId}`;
+                document.querySelector('.object-id').textContent = `Договор / ID: ${objectId}`;
+
+                // Прогресс бар
+                const progress = parseInt(data.progress) || 0;
+                document.querySelector('.progress-fill').style.width = progress + '%';
+                document.querySelector('.progress-header span:last-child').textContent = progress + '%';
+
+                // Финансы
+                const financeRows = document.querySelectorAll('.card:nth-of-type(4) .finance-row');
+                if (financeRows.length >= 3) {
+                    financeRows[0].querySelector('span:last-child').textContent = data.total || '0 ₽';
+                    financeRows[1].querySelector('span:last-child').textContent = data.paid || '0 ₽';
+                }
+                document.getElementById('current-stage-text').textContent = data.stage || 'В работе';
+
+                // Подсветка этапов таймлайна
+                updateTimeline(progress);
+
+            } else {
+                document.querySelector('.object-title').textContent = "Объект не найден";
+                document.querySelector('.object-id').textContent = "Проверьте правильность ссылки";
+            }
+
+        } catch (error) {
+            console.error("Ошибка загрузки данных объекта:", error);
+            document.querySelector('.object-title').textContent = "Ошибка соединения";
+            document.querySelector('.object-id').textContent = "Не удалось связаться с сервером";
+        }
+    });
+
+    function updateTimeline(progress) {
+        const items = document.querySelectorAll('.timeline-item');
+        items.forEach((item, index) => {
+            item.classList.remove('done', 'current');
+            if (progress >= (index + 1) * 25) {
+                item.classList.add('done');
+            } else if (progress >= index * 25 && progress < (index + 1) * 25) {
+                item.classList.add('current');
+            }
+        });
+    }
+</script>
 
 </body>
 </html>
