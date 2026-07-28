@@ -6,7 +6,6 @@
     <title>Личный кабинет объекта | VoltGroup</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Фирменные переменные VoltGroup */
         :root {
             --bg-dark: #050914;
             --bg-card: rgba(17, 24, 39, 0.7);
@@ -33,14 +32,12 @@
 
         .container { max-width: 600px; margin: 0 auto; }
 
-        /* Шапка */
         .header { text-align: center; margin-bottom: 30px; padding-top: 20px; }
         .logo { color: var(--text-main); font-size: 1.5rem; font-weight: 800; text-decoration: none; margin-bottom: 10px; display: block; }
         .logo span { color: var(--primary-install); }
         .object-title { font-size: 1.2rem; margin-bottom: 5px; }
         .object-id { color: var(--text-muted); font-size: 0.9rem; }
 
-        /* Карточки */
         .card {
             background: var(--bg-card);
             border: 1px solid var(--border-light);
@@ -57,12 +54,10 @@
             padding-bottom: 10px;
         }
 
-        /* Прогресс бар */
         .progress-header { display: flex; justify-content: space-between; font-weight: 600; margin-bottom: 10px; }
         .progress-track { width: 100%; height: 12px; background: rgba(0,0,0,0.5); border-radius: 10px; overflow: hidden; }
         .progress-fill { height: 100%; background: var(--primary-install); box-shadow: 0 0 10px rgba(0,229,255,0.5); transition: width 1s ease; width: 0%; }
 
-        /* Таймлайн (Хронология) */
         .timeline { list-style: none; position: relative; padding-left: 20px; }
         .timeline::before { content: ''; position: absolute; left: 0; top: 5px; bottom: 5px; width: 2px; background: var(--border-light); }
         .timeline-item { position: relative; margin-bottom: 20px; }
@@ -74,11 +69,12 @@
         .timeline-item.current .timeline-title { color: var(--primary-install); }
         .timeline-date { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
 
-        /* Фотоотчет */
-        .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .photo-item { width: 100%; height: 100px; background: #111; border-radius: var(--radius-md); border: 1px solid var(--border-light); display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 0.8rem; text-align: center; }
+        /* Сетка фотографий */
+        .photo-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        .photo-container { width: 100%; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: #111; }
+        .photo-container img { width: 100%; height: auto; display: block; max-height: 350px; object-fit: cover; }
+        .photo-placeholder { padding: 30px; text-align: center; color: var(--text-muted); font-size: 0.9rem; }
 
-        /* Финансы */
         .finance-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.95rem; }
         .finance-row:last-child { margin-bottom: 0; margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--border-light); font-weight: 700; font-size: 1.1rem; }
         .text-green { color: var(--success); }
@@ -96,10 +92,10 @@
     <div class="card">
         <div class="progress-header">
             <span>Статус объекта</span>
-            <span style="color: var(--primary-install);">0%</span>
+            <span style="color: var(--primary-install);" id="progress-text">0%</span>
         </div>
         <div class="progress-track">
-            <div class="progress-fill"></div>
+            <div class="progress-fill" id="progress-bar"></div>
         </div>
         <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px; text-align: right;">Синхронизировано с базой</p>
     </div>
@@ -131,23 +127,22 @@
     </div>
 
     <div class="card">
-        <h3>Последние фото с объекта</h3>
-        <div class="photo-grid">
-            <div class="photo-item">Фото щита<br>(обновляется)</div>
-            <div class="photo-item">Кабельные трассы<br>(обновляется)</div>
+        <h3>Фотоотчет с объекта</h3>
+        <div class="photo-grid" id="photo-box">
+            <div class="photo-placeholder">Фотографии с объекта скоро появятся здесь.</div>
         </div>
-        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px;">Все фото скрытых работ сохранены в архиве.</p>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px;">Все фото скрытых работ зафиксированы.</p>
     </div>
 
     <div class="card">
         <h3>Финансовый отчет</h3>
         <div class="finance-row">
             <span style="color: var(--text-muted);">Общая смета:</span>
-            <span>—</span>
+            <span id="total-sum">—</span>
         </div>
         <div class="finance-row text-green">
             <span>Внесено / Оплачено:</span>
-            <span>—</span>
+            <span id="paid-sum">—</span>
         </div>
         <div class="finance-row">
             <span>Текущий этап:</span>
@@ -176,31 +171,37 @@
         }
 
         try {
-            // Запрос к вашему Python-серверу на Render
             const response = await fetch(`https://voltgroup-bot.onrender.com/get-status?id=${objectId}`);
             const result = await response.json();
 
             if (result.status === "success") {
                 const data = result.data;
 
-                // Заполняем тексты данными из Google Таблицы
+                // Заголовок и адрес
                 document.querySelector('.object-title').textContent = data.address || `Объект №${objectId}`;
                 document.querySelector('.object-id').textContent = `Договор / ID: ${objectId}`;
 
                 // Прогресс бар
                 const progress = parseInt(data.progress) || 0;
-                document.querySelector('.progress-fill').style.width = progress + '%';
-                document.querySelector('.progress-header span:last-child').textContent = progress + '%';
+                document.getElementById('progress-bar').style.width = progress + '%';
+                document.getElementById('progress-text').textContent = progress + '%';
 
-                // Финансы
-                const financeRows = document.querySelectorAll('.card:nth-of-type(4) .finance-row');
-                if (financeRows.length >= 3) {
-                    financeRows[0].querySelector('span:last-child').textContent = data.total || '0 ₽';
-                    financeRows[1].querySelector('span:last-child').textContent = data.paid || '0 ₽';
-                }
+                // Финансы и этап (теперь гарантированно обновляются по точным ID)
+                document.getElementById('total-sum').textContent = data.total ? data.total + ' ₽' : '0 ₽';
+                document.getElementById('paid-sum').textContent = data.paid ? data.paid + ' ₽' : '0 ₽';
                 document.getElementById('current-stage-text').textContent = data.stage || 'В работе';
 
-                // Подсветка этапов таймлайна
+                // Фотография из колонки photo
+                if (data.photo && data.photo.trim() !== "") {
+                    const photoBox = document.getElementById('photo-box');
+                    photoBox.innerHTML = `
+                        <div class="photo-container">
+                            <img src="${data.photo}" alt="Фото с объекта VoltGroup">
+                        </div>
+                    `;
+                }
+
+                // Таймлайн
                 updateTimeline(progress);
 
             } else {

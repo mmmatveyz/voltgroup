@@ -14,13 +14,14 @@ CHAT_ID = os.environ.get('CHAT_ID')
 SHEET_URL = os.environ.get('SHEET_URL')  # Ссылка на вашу Google Таблицу
 
 # Карта колонок в нашей таблице:
-# 1=ID, 2=progress, 3=stage, 4=total, 5=paid, 6=address
+# Карта колонок: 1=ID, 2=progress, 3=stage, 4=total, 5=paid, 6=address, 7=photo
 COLUMNS_MAP = {
     'progress': 2,
     'stage': 3,
     'total': 4,
     'paid': 5,
-    'address': 6
+    'address': 6,
+    'photo': 7
 }
 
 def get_sheet():
@@ -72,16 +73,13 @@ def send_message():
 
 @app.route('/get-status', methods=['GET'])
 def get_status():
-    """Отдает сайту данные по конкретному объекту из Google Таблицы"""
     obj_id = request.args.get('id')
     try:
         ws = get_sheet()
-        # Ищем строку, где в первой колонке находится наш ID
         cell = ws.find(obj_id, in_column=1)
         if cell:
             row_values = ws.row_values(cell.row)
-            # Дополняем пустыми строками, если каких-то данных в таблице еще нет
-            while len(row_values) < 6:
+            while len(row_values) < 7:
                 row_values.append("")
 
             data = {
@@ -89,7 +87,8 @@ def get_status():
                 "stage": row_values[2],
                 "total": row_values[3],
                 "paid": row_values[4],
-                "address": row_values[5]
+                "address": row_values[5],
+                "photo": row_values[6]
             }
             return jsonify({"status": "success", "data": data}), 200
         else:
