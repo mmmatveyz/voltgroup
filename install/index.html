@@ -6,15 +6,14 @@
     <title>Install | Электромонтаж в СПб - VoltGroup</title>
     <meta name="description" content="Профессиональный электромонтаж квартир и домов в Санкт-Петербурге. Гарантия 12 месяцев, прозрачные цены.">
 
-    <!-- Favicon & PWA -->
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
     <link rel="manifest" href="../manifest.json">
 
-    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-
-    <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
         (function(m,e,t,r,i,k,a){
             m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -26,11 +25,6 @@
         ym(108492681, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/108492681" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
-
-
-
-    <!-- CSS -->
     <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
@@ -38,9 +32,9 @@
 <header class="header">
     <div class="container nav-container">
         <a href="../index.html" class="logo">
-            <img src="../assets/images/logo-voltgroup.png" alt="VoltGroup Logo">
+            <img src="../assets/images/logo-voltgroup.png" alt="VoltGroup Logo" width="160" height="40">
         </a>
-        <button class="mobile-toggle" aria-label="Меню">☰</button>
+        <button class="mobile-toggle" aria-label="Меню" type="button">☰</button>
         <nav class="nav-links">
             <a href="../install/" class="active">Install</a>
             <a href="../engineering/">Engineering</a>
@@ -77,11 +71,11 @@
             <form id="leadForm" class="form-box">
                 <div class="form-group">
                     <label class="form-label">Имя</label>
-                    <input type="text" name="name" class="form-input" required>
+                    <input type="text" name="name" class="form-input" placeholder="Иван" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Телефон</label>
-                    <input type="tel" name="phone" class="form-input" required>
+                    <input type="tel" name="phone" class="form-input" placeholder="+7 (999) 000-00-00" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Задача</label>
@@ -95,7 +89,7 @@
                 <div class="form-group" style="display: flex; align-items: flex-start; gap: 10px; margin-top: 15px;">
                     <input type="checkbox" id="privacy-consent-main" required style="margin-top: 4px; width: 18px; height: 18px; accent-color: var(--primary-install); cursor: pointer;">
                     <label for="privacy-consent-main" style="font-size: 0.85rem; color: var(--text-muted); cursor: pointer; line-height: 1.4;">
-                        Я даю согласие на обработку <a href="./privacy.html" target="_blank" style="color: var(--primary-install); text-decoration: underline;">персональных данных</a>
+                        Я даю согласие на обработку <a href="../privacy.html" target="_blank" style="color: var(--primary-install); text-decoration: underline;">персональных данных</a>
                     </label>
                 </div>
                 <button type="submit" class="btn btn-primary" style="width:100%;">Отправить</button>
@@ -108,16 +102,17 @@
 <footer class="footer">
     <div class="container">
         <div class="footer-grid">
-            <!-- Блок 1: Бренд -->
             <div>
                 <h4>⚡ VoltGroup</h4>
                 <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
-                    Энергия решений.<br>Электрика и автоматизация в СПб.
+                    Энергия решений.<br>Электрика и автоматизация в СПб и ЛО.
                 </p>
-                <a href="https://vk.com/voltgroup_spb" style="color: var(--primary-install); font-weight: 600;">@voltgroup_spb</a>
+                <div style="display: flex; gap: 15px; font-size: 0.9rem;">
+                    <a href="https://vk.com/voltgroup_spb" target="_blank" style="color: var(--primary-install); font-weight: 600;">VK</a>
+                    <a href="https://t.me/voltgroup_spb" target="_blank" style="color: var(--primary-install); font-weight: 600;">Telegram</a>
+                </div>
             </div>
 
-            <!-- Блок 2: Навигация (ИСПРАВЛЕНЫ ПУТИ для вложенной папки) -->
             <div class="footer-links">
                 <h4>Навигация</h4>
                 <a href="../install/">Install</a>
@@ -127,7 +122,6 @@
                 <a href="../contacts/">Контакты</a>
             </div>
 
-            <!-- Блок 3: Документы (ИСПРАВЛЕНЫ ПУТИ) -->
             <div class="footer-links">
                 <h4>Документы</h4>
                 <a href="../privacy.html">Политика конфиденциальности</a>
@@ -135,12 +129,11 @@
                 <a href="../cookies.html">Cookies</a>
             </div>
 
-            <!-- Блок 4: Контакты -->
             <div>
                 <h4>Контакты</h4>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;">📞 +7 (905) 208-42-84</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;">📞 <a href="tel:+79052084284" style="color: inherit; text-decoration: none;">+7 (905) 208-42-84</a></p>
                 <p style="color: var(--text-muted); font-size: 0.9rem;">🕒 Пн–Сб: 9:00–21:00</p>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">📍 Санкт-Петербург</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">📍 Санкт-Петербург и ЛО</p>
             </div>
         </div>
         <div class="copyright">
@@ -150,15 +143,25 @@
 </footer>
 
 <script>
+    // Хелпер экранирования строк
+    function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
     // Mobile Menu
     const mobileToggle = document.querySelector('.mobile-toggle');
     const navLinks = document.querySelector('.nav-links');
-    if(mobileToggle) {
+    if (mobileToggle && navLinks) {
         mobileToggle.addEventListener('click', () => {
             navLinks.classList.toggle('open');
             mobileToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
         });
-        // Закрываем меню при клике на ссылку
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('open');
@@ -177,9 +180,19 @@
         let html = '';
         if (d.install && d.install.categories) {
             d.install.categories.forEach(c => {
-                html += `<div class="price-category"><h3>${c.name}</h3><table class="price-table"><thead><tr><th>Услуга</th><th>Ед.</th><th>Цена</th></tr></thead><tbody>`;
+                html += `<div class="price-category">
+                        <h3>${escapeHtml(c.name)}</h3>
+                        <table class="price-table">
+                            <thead>
+                                <tr><th>Услуга</th><th>Ед.</th><th>Цена</th></tr>
+                            </thead>
+                            <tbody>`;
                 c.items.forEach(i => {
-                    html += `<tr><td>${i.service}</td><td>${i.unit}</td><td class="price-value">${i.price.toLocaleString('ru-RU')} ₽</td></tr>`;
+                    html += `<tr>
+                            <td>${escapeHtml(i.service)}</td>
+                            <td>${escapeHtml(i.unit)}</td>
+                            <td class="price-value">${Number(i.price).toLocaleString('ru-RU')} ₽</td>
+                        </tr>`;
                 });
                 html += `</tbody></table></div>`;
             });
@@ -197,12 +210,21 @@
                 </div>`;
     });
 
-    // Form Submission
+    // Form Submission & Auto-ping
     const leadForm = document.getElementById('leadForm');
-    if(leadForm){
+    let hasPinged = false;
+
+    if (leadForm) {
+        leadForm.addEventListener('focusin', () => {
+            if (!hasPinged) {
+                hasPinged = true;
+                fetch('https://voltgroup-bot.onrender.com/ping', { method: 'GET' }).catch(() => {});
+            }
+        });
+
         leadForm.addEventListener('submit', async e => {
             e.preventDefault();
-            const btn = e.target.querySelector('button');
+            const btn = e.target.querySelector('button[type="submit"]');
             const status = document.getElementById('formStatus');
             const formData = new FormData(e.target);
             formData.append('source', 'install_page');
@@ -210,6 +232,7 @@
             btn.disabled = true;
             btn.textContent = 'Отправка...';
             status.style.display = 'block';
+            status.style.color = 'var(--text-muted)';
             status.textContent = '⏳ Отправляем...';
 
             try {
@@ -218,15 +241,15 @@
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(Object.fromEntries(formData))
                 });
-                if(res.ok){
+                if (res.ok) {
                     status.textContent = '✅ Заявка отправлена!';
                     status.style.color = '#10B981';
                     e.target.reset();
                 } else {
                     throw new Error('Ошибка сервера');
                 }
-            } catch(err) {
-                status.textContent = '❌ Ошибка. Напишите в VK.';
+            } catch (err) {
+                status.textContent = '❌ Ошибка отправки. Напишите нам в VK или Telegram.';
                 status.style.color = '#EF4444';
             } finally {
                 btn.disabled = false;

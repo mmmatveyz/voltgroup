@@ -6,19 +6,25 @@ import traceback
 
 app = Flask(__name__)
 
-# Получаем данные из переменных окружения (безопасно!)
-# Если переменная не задана, используем значения по умолчанию (для тестов)
+# Получаем данные из переменных окружения
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
 CHAT_ID = os.environ.get('CHAT_ID')
 
 @app.after_request
 def after_request(response):
-    # Разрешаем CORS для твоего сайта на GitHub Pages
+    # Разрешаем CORS (чтобы браузер не блокировал отправку форм)
     response.headers.add('Access-Control-Allow-Origin', '*')
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
     return response
 
+# 1. Маршрут для пробуждения сервера (Render Free Tier)
+@app.route('/ping', methods=['GET'])
+def ping():
+    print("⏰ Сервер разбужен пингом с фронтенда!")
+    return jsonify({"status": "awake", "msg": "Server is ready"}), 200
+
+# 2. Основной маршрут приема заявок
 @app.route('/send-message', methods=['POST', 'OPTIONS'])
 def send_message():
     # Обрабатываем preflight-запрос от браузера
@@ -26,21 +32,27 @@ def send_message():
         return '', 200
 
     try:
+        # Проверка наличия токенов
+        if not BOT_TOKEN or not CHAT_ID:
+            raise ValueError("BOT_TOKEN или CHAT_ID не настроены на сервере!")
+
         data = request.json
         print(f"📩 Получены данные: {data}")
 
+        # Извлекаем данные (включая источник)
         name = data.get('name', 'Не указано')
         phone = data.get('phone', 'Не указано')
         service = data.get('service', 'Не указано')
-        comment = data.get('comment', 'Нет')
+        source = data.get('source', 'Неизвестная страница')
 
+        # Формируем красивое сообщение для Telegram
         text = f"""
 ⚡️ *Новая заявка с сайта VoltGroup!*
 
 👤 *Имя:* {name}
 📞 *Телефон:* {phone}
 🛠 *Задача:* {service}
-💬 *Комментарий:* {comment}
+📍 *Источник:* `{source}`
         """
 
         url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
@@ -65,7 +77,7 @@ def send_message():
                 else:
                     print(f"⚠️ Telegram вернул код {response_tg.status_code}")
                     last_error = response_tg.text
-                    break # Если ошибка от самого Телеграма, повторять нет смысла
+                    break # Если ошибка от самого Телеграма (например, неверный ID), повторять нет смысла
 
             except requests.exceptions.RequestException as e:
                 print(f"⚠️ Ошибка сети (попытка {attempt + 1}): {e}")

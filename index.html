@@ -4,15 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VoltGroup | Энергия решений - Электрика и автоматизация в СПб</title>
-    <meta name="description" content="Профессиональный электромонтаж, умный дом и промышленная автоматизация в Санкт-Петербурге.">
+    <meta name="description" content="Профессиональный электромонтаж, умный дом и промышленная автоматизация в Санкт-Петербурге. Гарантия, договор, честные цены.">
+
+    <meta property="og:title" content="VoltGroup — Электромонтаж и автоматизация в СПб">
+    <meta property="og:description" content="Профессиональный электромонтаж, умный дом и промышленная автоматизация в Санкт-Петербурге.">
     <meta property="og:image" content="./assets/images/og-main.jpg">
+    <meta property="og:type" content="website">
+
     <link rel="icon" type="image/x-icon" href="./favicon.ico">
     <link rel="manifest" href="./manifest.json">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="./static/css/style.css">
 
-
-    <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
         (function(m,e,t,r,i,k,a){
             m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -24,19 +31,15 @@
         ym(108492681, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/108492681" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
-
-
-
 </head>
 <body>
 
 <header class="header">
     <div class="container nav-container">
         <a href="./index.html" class="logo">
-            <img src="./assets/images/logo-voltgroup.png" alt="VoltGroup Logo">
+            <img src="./assets/images/logo-voltgroup.png" alt="VoltGroup Logo" width="160" height="40">
         </a>
-        <button class="mobile-toggle" aria-label="Меню">☰</button>
+        <button class="mobile-toggle" aria-label="Меню" type="button">☰</button>
         <nav class="nav-links">
             <a href="./install/">Install</a>
             <a href="./engineering/">Engineering</a>
@@ -48,11 +51,10 @@
 </header>
 
 <main>
-    <!-- Hero Section -->
     <section class="hero">
         <div class="container fade-in">
             <h1>Профессиональный электромонтаж<br><span>и автоматизация</span> в СПб</h1>
-            <p class="hero-subtitle">Энергия решений - от розетки до умного дома. Промышленный опыт, честные цены, гарантия 12 месяцев.</p>
+            <p class="hero-subtitle">Энергия решений — от розетки до умного дома. Промышленный опыт, честные цены, официальная гарантия.</p>
             <div class="hero-actions">
                 <a href="./install/" class="btn btn-primary">Электромонтаж (Install)</a>
                 <a href="./engineering/" class="btn btn-secondary">Инженерия (Engineering)</a>
@@ -60,7 +62,6 @@
         </div>
     </section>
 
-    <!-- Services Section -->
     <section id="services" class="section">
         <div class="container">
             <h2 class="fade-in">Наши <span>услуги</span></h2>
@@ -73,7 +74,7 @@
                         </svg>
                     </div>
                     <h3>Для дома</h3>
-                    <p>Розетки, проводка, щиты.</p>
+                    <p>Проводка в новостройках, вторичке, замена щитов, розетки и освещение.</p>
                 </div>
 
                 <div class="card fade-in" style="transition-delay: 0.1s;">
@@ -85,7 +86,7 @@
                         </svg>
                     </div>
                     <h3>Умный дом</h3>
-                    <p>Сценарии, Алиса, датчики.</p>
+                    <p>Автоматизация, сценарии, управление со смартфона, интеграция с Я.Алисой.</p>
                 </div>
 
                 <div class="card fade-in" style="transition-delay: 0.2s;">
@@ -97,14 +98,21 @@
                         </svg>
                     </div>
                     <h3>Для бизнеса</h3>
-                    <p>Щиты автоматики, станки.</p>
+                    <p>Сборка щитов автоматики, диагностика и ремонт металлорежущих станков.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- WHY CHOOSE US (НОВОЕ) -->
-    <section id="why" class="section" style="background: rgba(255,255,255,0.02);">
+    <section class="section" style="background: rgba(0, 229, 255, 0.02); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);">
+        <div class="container fade-in" style="text-align: center;">
+            <h2>Качество в <span>деталях</span></h2>
+            <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 25px;">Посмотрите примеры собранных щитов, разводки кабеля и реализованных систем автоматизации в нашем портфолио.</p>
+            <a href="./works.html" class="btn btn-outline">Смотреть галерею объектов →</a>
+        </div>
+    </section>
+
+    <section id="why" class="section">
         <div class="container">
             <h2 class="fade-in">Почему выбирают <span>VoltGroup</span></h2>
             <div class="why-grid">
@@ -119,34 +127,33 @@
                     <div class="feature-check">✔</div>
                     <div>
                         <h4>Идеальная чистота</h4>
-                        <p style="font-size: 0.9rem; color: var(--text-muted);">Штроборез с пылесосом, лазерный уровень. Убираю за собой. Ваш ремонт останется целым.</p>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">Штроборез с пылесосом, лазерный уровень. Убираем за собой. Ваш объект останется в чистоте.</p>
                     </div>
                 </div>
                 <div class="feature-item fade-in">
                     <div class="feature-check">✔</div>
                     <div>
                         <h4>Официально</h4>
-                        <p style="font-size: 0.9rem; color: var(--text-muted);">Договор подряда, акт приёмки, чек из «Мой налог». Гарантия 12 месяцев по закону.</p>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">Договор подряда, акт приёмки, чек из «Мой налог». Гарантия на выполненные работы.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- HOW WE WORK (НОВОЕ) -->
-    <section id="process" class="section">
+    <section id="process" class="section" style="background: rgba(255,255,255,0.02);">
         <div class="container">
             <h2 class="fade-in">Как мы <span>работаем</span></h2>
             <div class="process-steps">
                 <div class="step fade-in">
                     <div class="step-num">1</div>
                     <h4>Заявка</h4>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">Пишете в VK или на сайте. Отвечаю за 15 мин.</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Оставляете заявку на сайте или в мессенджере.</p>
                 </div>
                 <div class="step fade-in">
                     <div class="step-num">2</div>
                     <h4>Выезд</h4>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">Осмотр объекта, замеры, консультация.</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Осмотр объекта в СПб и ЛО, замеры и консультация.</p>
                 </div>
                 <div class="step fade-in">
                     <div class="step-num">3</div>
@@ -156,69 +163,68 @@
                 <div class="step fade-in">
                     <div class="step-num">4</div>
                     <h4>Монтаж</h4>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">Работа по ПУЭ, фотоотчеты, уборка.</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Работа строго по ПУЭ, фотоотчеты, чистота.</p>
                 </div>
                 <div class="step fade-in">
                     <div class="step-num">5</div>
                     <h4>Сдача</h4>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">Подписываем акт, выдаю чек и гарантию.</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Подписываем акт, выдаем чек и гарантию.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ (НОВОЕ) -->
-    <section id="faq" class="section" style="background: rgba(255,255,255,0.02);">
+    <section id="faq" class="section">
         <div class="container">
             <h2 class="fade-in">Частые <span>вопросы</span></h2>
             <div class="accordion fade-in" style="max-width: 800px; margin: 0 auto;">
                 <div class="accordion-item">
-                    <button class="accordion-btn">Работаете ли вы официально?</button>
+                    <button class="accordion-btn" type="button">Работаете ли вы официально?</button>
                     <div class="accordion-content">
-                        <p>Да. Я зарегистрирован как плательщик НПД (самозанятый). Заключаю договор подряда, выдаю акт выполненных работ и чек из приложения ФНС «Мой налог».</p>
+                        <p>Да. Работаем официально в статусе плательщика НПД (самозанятый). Заключаем договор подряда, выдаем акт выполненных работ и официальный чек ФНС.</p>
                     </div>
                 </div>
                 <div class="accordion-item">
-                    <button class="accordion-btn">Что входит в гарантию 12 месяцев?</button>
+                    <button class="accordion-btn" type="button">Что входит в гарантию на работы?</button>
                     <div class="accordion-content">
-                        <p>Бесплатное устранение дефектов монтажа по моей вине: плохой контакт, ошибка в схеме, несоблюдение ПУЭ. На материалы действует гарантия от производителя.</p>
+                        <p>Устранение дефектов монтажа по нашей вине (контакты, схемы, ПУЭ). На устанавливаемое оборудование действует официальная гарантия от производителей.</p>
                     </div>
                 </div>
                 <div class="accordion-item">
-                    <button class="accordion-btn">Как рассчитывается стоимость?</button>
+                    <button class="accordion-btn" type="button">Как рассчитывается стоимость?</button>
                     <div class="accordion-content">
-                        <p>Базовые работы оцениваются по фиксированному прайсу. Сложные или индивидуальные задачи — после осмотра объекта. Смета согласовывается до старта работ. Предоплата берется только за материалы (100%), работы оплачиваются после приёмки.</p>
+                        <p>Вы можете самостоятельно рассчитать смету в нашем <a href="./estimate.html" style="color: var(--primary-install);">онлайн-калькуляторе</a>. Итоговая цена фиксируется в договоре до начала работ. Предоплата берется только за материалы (100%), работы оплачиваются по факту приёмки.</p>
                     </div>
                 </div>
                 <div class="accordion-item">
-                    <button class="accordion-btn">Делаете ли вы умный дом «под ключ»?</button>
+                    <button class="accordion-btn" type="button">Делаете ли вы умный дом «под ключ»?</button>
                     <div class="accordion-content">
-                        <p>Да. Я проектирую схемы, подбираю оборудование, монтирую, настраиваю сценарии и обучаю пользованию. Интегрирую системы с Я.Алисой, HomeKit и локальными контроллерами.</p>
+                        <p>Да. Проектируем схемы, подбираем оборудование, монтируем, настраиваем сценарии и интегрируем с Я.Алисой, HomeKit и контроллерами (Wirenboard, Aqara и др.).</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Form -->
     <section id="contact" class="section contact-section">
         <div class="container">
             <h2 class="fade-in">Оставьте <span>заявку</span></h2>
             <form id="leadForm" class="form-box fade-in">
                 <div class="form-group">
                     <label class="form-label">Ваше имя</label>
-                    <input type="text" name="name" class="form-input" required>
+                    <input type="text" name="name" class="form-input" placeholder="Иван" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Телефон</label>
-                    <input type="tel" name="phone" class="form-input" required>
+                    <input type="tel" name="phone" class="form-input" placeholder="+7 (999) 000-00-00" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Тип задачи</label>
                     <select name="service" class="form-input">
                         <option>Замена проводки</option>
                         <option>Сборка щита</option>
-                        <option>Диагностика станка</option>
+                        <option>Монтаж «Умного дома»</option>
+                        <option>Диагностика станка / Автоматика</option>
                         <option>Другое</option>
                     </select>
                 </div>
@@ -241,9 +247,12 @@
             <div>
                 <h4>⚡ VoltGroup</h4>
                 <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
-                    Энергия решений.<br>Электрика и автоматизация в СПб.
+                    Энергия решений.<br>Электрика и автоматизация в СПб и ЛО.
                 </p>
-                <a href="https://vk.com/voltgroup_spb" style="color: var(--primary-install); font-weight: 600;">@voltgroup_spb</a>
+                <div style="display: flex; gap: 15px; font-size: 0.9rem;">
+                    <a href="https://vk.com/voltgroup_spb" target="_blank" style="color: var(--primary-install); font-weight: 600;">VK</a>
+                    <a href="https://t.me/voltgroup_spb" target="_blank" style="color: var(--primary-install); font-weight: 600;">Telegram</a>
+                </div>
             </div>
             <div class="footer-links">
                 <h4>Навигация</h4>
@@ -261,9 +270,9 @@
             </div>
             <div>
                 <h4>Контакты</h4>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;">📞 +7 (905) 208-42-84</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;">📞 <a href="tel:+79052084284" style="color: inherit; text-decoration: none;">+7 (905) 208-42-84</a></p>
                 <p style="color: var(--text-muted); font-size: 0.9rem;">🕒 Пн–Сб: 9:00–21:00</p>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">📍 Санкт-Петербург</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">📍 Санкт-Петербург и ЛО</p>
             </div>
         </div>
         <div class="copyright">
@@ -273,10 +282,10 @@
 </footer>
 
 <script>
-    // Mobile Menu
+    // 1. Мобильное меню
     const mobileToggle = document.querySelector('.mobile-toggle');
     const navLinks = document.querySelector('.nav-links');
-    if(mobileToggle) {
+    if (mobileToggle && navLinks) {
         mobileToggle.addEventListener('click', () => {
             navLinks.classList.toggle('open');
             mobileToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
@@ -287,22 +296,41 @@
         }));
     }
 
-    // Accordion Logic (НОВОЕ)
+    // 2. Логика Аккордеона (FAQ) - Сворачиваем соседние блоки при открытии
     document.querySelectorAll('.accordion-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            btn.classList.toggle('active');
             const content = btn.nextElementSibling;
-            if (content.style.maxHeight) {
-                content.style.maxHeight = null;
-            } else {
+            const isOpen = btn.classList.contains('active');
+
+            // Закрываем все открытые аккордеоны
+            document.querySelectorAll('.accordion-btn').forEach(otherBtn => {
+                otherBtn.classList.remove('active');
+                if (otherBtn.nextElementSibling) {
+                    otherBtn.nextElementSibling.style.maxHeight = null;
+                }
+            });
+
+            // Если кликнутый был закрыт — открываем его
+            if (!isOpen) {
+                btn.classList.add('active');
                 content.style.maxHeight = content.scrollHeight + "px";
             }
         });
     });
 
-    // Form Submission
+    // 3. Предварительный «пинг» сервера при клике на форму (чтобы разбудить Render.com)
     const leadForm = document.getElementById('leadForm');
+    let hasPinged = false;
+
     if (leadForm) {
+        leadForm.addEventListener('focusin', () => {
+            if (!hasPinged) {
+                hasPinged = true;
+                fetch('https://voltgroup-bot.onrender.com/ping', { method: 'GET' }).catch(() => {});
+            }
+        });
+
+        // Отправка формы
         leadForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = this.querySelector('button[type="submit"]');
@@ -313,7 +341,8 @@
             btn.disabled = true;
             btn.textContent = 'Отправка...';
             status.style.display = 'block';
-            status.textContent = '⏳ Отправляем...';
+            status.style.color = 'var(--text-muted)';
+            status.textContent = '⏳ Отправляем заявку...';
 
             try {
                 const res = await fetch('https://voltgroup-bot.onrender.com/send-message', {
@@ -321,15 +350,16 @@
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(data)
                 });
+
                 if (res.ok) {
-                    status.textContent = '✅ Заявка отправлена!';
+                    status.textContent = '✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.';
                     status.style.color = '#10B981';
                     this.reset();
                 } else {
                     throw new Error('Ошибка сервера');
                 }
             } catch (err) {
-                status.textContent = '❌ Ошибка. Напишите в VK.';
+                status.textContent = '❌ Ошибка отправки. Пожалуйста, напишите нам в VK или Telegram.';
                 status.style.color = '#EF4444';
             } finally {
                 btn.disabled = false;
@@ -338,20 +368,13 @@
         });
     }
 
-    // Fade In Animation
+    // 4. Плавное появление элементов (Fade In)
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(e => {
             if (e.isIntersecting) e.target.classList.add('visible');
         });
     }, { threshold: 0.1 });
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-    // Service Worker ОТКЛЮЧЕН для разработки
-    /*
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(console.error));
-    }
-    */
 </script>
 </body>
 </html>
