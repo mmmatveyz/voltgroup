@@ -20,6 +20,52 @@
 
     <link rel="stylesheet" href="./static/css/style.css">
 
+    <style>
+        /* Плавающий виджет рейтинга Яндекс Карт */
+        .ya-rating-floating {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+            background: rgba(17, 24, 39, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 4px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .ya-rating-floating:hover {
+            transform: translateY(-3px);
+            border-color: rgba(0, 229, 255, 0.5);
+            box-shadow: 0 12px 30px rgba(0, 229, 255, 0.2);
+        }
+
+        .ya-rating-floating iframe {
+            display: block;
+            border: none;
+            overflow: hidden;
+            background: transparent;
+        }
+
+        @media (max-width: 768px) {
+            .ya-rating-floating {
+                bottom: 12px;
+                right: 12px;
+                transform: scale(0.85);
+                transform-origin: bottom right;
+            }
+            .ya-rating-floating:hover {
+                transform: scale(0.85) translateY(-2px);
+            }
+        }
+    </style>
+
     <script type="text/javascript">
         (function(m,e,t,r,i,k,a){
             m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -275,14 +321,18 @@
                 <p style="color: var(--text-muted); font-size: 0.9rem;">📍 Санкт-Петербург и ЛО</p>
             </div>
         </div>
+
         <div class="copyright">
             © 2026 VoltGroup. Все права защищены.
         </div>
     </div>
 </footer>
 
+<div class="ya-rating-floating">
+    <iframe src="https://yandex.ru/sprav/widget/rating-badge/98496429753?type=rating&theme=dark" width="150" height="50" frameborder="0" scrolling="no"></iframe>
+</div>
+
 <script>
-    // 1. Мобильное меню
     const mobileToggle = document.querySelector('.mobile-toggle');
     const navLinks = document.querySelector('.nav-links');
     if (mobileToggle && navLinks) {
@@ -296,13 +346,11 @@
         }));
     }
 
-    // 2. Логика Аккордеона (FAQ) - Сворачиваем соседние блоки при открытии
     document.querySelectorAll('.accordion-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const content = btn.nextElementSibling;
             const isOpen = btn.classList.contains('active');
 
-            // Закрываем все открытые аккордеоны
             document.querySelectorAll('.accordion-btn').forEach(otherBtn => {
                 otherBtn.classList.remove('active');
                 if (otherBtn.nextElementSibling) {
@@ -310,7 +358,6 @@
                 }
             });
 
-            // Если кликнутый был закрыт - открываем его
             if (!isOpen) {
                 btn.classList.add('active');
                 content.style.maxHeight = content.scrollHeight + "px";
@@ -318,7 +365,6 @@
         });
     });
 
-    // 3. Предварительный «пинг» сервера при клике на форму (чтобы разбудить Render.com)
     const leadForm = document.getElementById('leadForm');
     let hasPinged = false;
 
@@ -330,7 +376,6 @@
             }
         });
 
-        // Отправка формы
         leadForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = this.querySelector('button[type="submit"]');
@@ -368,7 +413,6 @@
         });
     }
 
-    // 4. Плавное появление элементов (Fade In)
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(e => {
             if (e.isIntersecting) e.target.classList.add('visible');
