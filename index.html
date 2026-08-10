@@ -16,9 +16,38 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="./static/css/style.css">
+    <link rel="stylesheet" href="./static/css/style.css?v=2.0">
+
+    <style>
+        /* Локальные стили для бегущей строки */
+        .ticker {
+            overflow: hidden;
+            border-block: 1px solid var(--border-light);
+            background: rgba(255, 255, 255, 0.02);
+            position: relative;
+            z-index: 1;
+            margin: 40px 0;
+        }
+        .ticker-track {
+            display: flex;
+            width: max-content;
+            animation: tick 26s linear infinite;
+            padding: 14px 0;
+        }
+        .ticker-track span {
+            font-family: var(--font-heading);
+            font-size: 0.8rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            padding: 0 20px;
+            white-space: nowrap;
+        }
+        .ticker-track span i { color: var(--volt-yellow); font-style: normal; }
+        @keyframes tick { to { transform: translateX(-50%); } }
+    </style>
 
     <script type="text/javascript">
         (function(m,e,t,r,i,k,a){
@@ -51,16 +80,62 @@
 </header>
 
 <main>
-    <section class="hero">
-        <div class="container fade-in">
-            <h1>Профессиональный электромонтаж<br><span>и автоматизация</span> в СПб</h1>
-            <p class="hero-subtitle">Энергия решений - от розетки до умного дома. Промышленный опыт, честные цены, официальная гарантия.</p>
+    <section class="hero container fade-in">
+        <div class="hero-left">
+            <span class="badge-status">
+                <span class="dot"></span> СПб и ЛО · Пн–Сб 9:00–21:00
+            </span>
+            <h1>Профессиональный электромонтаж<br><span style="color: var(--primary-install);">и автоматизация</span></h1>
+            <p class="hero-subtitle">Энергия решений - от розетки до Умного Дома. Промышленный опыт, честные цены, официальная гарантия.</p>
             <div class="hero-actions">
                 <a href="./install/" class="btn btn-primary">Электромонтаж (Install)</a>
                 <a href="./engineering/" class="btn btn-secondary">Инженерия (Engineering)</a>
             </div>
         </div>
+
+        <div class="hero-board">
+            <div class="board-header">
+                <span>ЩИТ VOLT-01</span>
+                <span style="color: var(--text-muted); font-size: 0.78rem;">
+                    <i style="display:inline-block; width:7px; height:7px; background:#10B981; border-radius:50%; box-shadow: 0 0 8px #10B981;"></i> 220 В · 50 Гц
+                </span>
+            </div>
+
+            <div class="board-row">
+                <span>Освещение <small>группа 1</small></span>
+                <label class="switch"><input type="checkbox" checked disabled><span class="slider"></span></label>
+            </div>
+            <div class="board-row">
+                <span>Розетки <small>группа 2</small></span>
+                <label class="switch"><input type="checkbox" checked disabled><span class="slider"></span></label>
+            </div>
+            <div class="board-row">
+                <span>Умный дом <small>Wirenboard · Алиса</small></span>
+                <label class="switch"><input type="checkbox" id="sw-smart" checked><span class="slider cyan"></span></label>
+            </div>
+            <div class="board-row">
+                <span>Автоматика станка <small>пром. линия</small></span>
+                <label class="switch"><input type="checkbox" id="sw-auto" checked><span class="slider purple"></span></label>
+            </div>
+
+            <div class="board-footer">
+                <span>Текущая нагрузка:</span>
+                <strong id="live-load" style="color: var(--volt-yellow);">3.8 кВт</strong>
+            </div>
+        </div>
     </section>
+
+    <div class="ticker">
+        <div class="ticker-track" id="tickTrack">
+            <span>Электромонтаж <i>⚡</i></span>
+            <span>Сборка щитов <i>⚡</i></span>
+            <span>Умный дом <i>⚡</i></span>
+            <span>Замена проводки <i>⚡</i></span>
+            <span>Диагностика станков <i>⚡</i></span>
+            <span>Автоматизация <i>⚡</i></span>
+            <span>Работа по ПУЭ <i>⚡</i></span>
+        </div>
+    </div>
 
     <section id="services" class="section">
         <div class="container">
@@ -68,7 +143,7 @@
             <div class="grid-3">
                 <div class="card fade-in">
                     <div class="card-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                             <polyline points="9 22 9 12 15 12 15 22"></polyline>
                         </svg>
@@ -78,11 +153,10 @@
                 </div>
 
                 <div class="card fade-in" style="transition-delay: 0.1s;">
-                    <div class="card-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 2a10 10 0 1 0 10 10H12V2z"></path>
-                            <path d="M12 2a10 10 0 0 1 10 10"></path>
-                            <circle cx="12" cy="12" r="3"></circle>
+                    <div class="card-icon" style="background: rgba(123, 97, 255, 0.1); border-color: rgba(123, 97, 255, 0.3); color: var(--primary-eng);">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="7" y="7" width="10" height="10" rx="2"></rect>
+                            <path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"></path>
                         </svg>
                     </div>
                     <h3>Умный дом</h3>
@@ -90,8 +164,8 @@
                 </div>
 
                 <div class="card fade-in" style="transition-delay: 0.2s;">
-                    <div class="card-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <div class="card-icon" style="background: rgba(255, 214, 10, 0.1); border-color: rgba(255, 214, 10, 0.3); color: var(--volt-yellow);">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-2-2H4L2 8v12z"></path>
                             <path d="M12 12v6"></path>
                             <path d="M9 15h6"></path>
@@ -104,71 +178,66 @@
         </div>
     </section>
 
-    <section class="section" style="background: rgba(0, 229, 255, 0.02); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);">
-        <div class="container fade-in" style="text-align: center;">
+    <section class="section" style="background: var(--bg-panel); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); position: relative; padding: 0;">
+        <div class="hazard-border"></div>
+        <div class="container fade-in" style="text-align: center; padding: 60px 20px;">
             <h2>Качество в <span>деталях</span></h2>
             <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 25px;">Посмотрите примеры собранных щитов, разводки кабеля и реализованных систем автоматизации в нашем портфолио.</p>
-            <a href="./works.html" class="btn btn-outline">Смотреть галерею объектов →</a>
+            <a href="./works.html" class="btn btn-volt">Смотреть галерею объектов →</a>
         </div>
     </section>
 
     <section id="why" class="section">
         <div class="container">
             <h2 class="fade-in">Почему выбирают <span>VoltGroup</span></h2>
-            <div class="why-grid">
-                <div class="feature-item fade-in">
-                    <div class="feature-check">✔</div>
-                    <div>
-                        <h4>Прозрачная смета</h4>
-                        <p style="font-size: 0.9rem; color: var(--text-muted);">Цена фиксируется ДО начала работ. Никаких скрытых платежей и «сюрпризов» в процессе.</p>
-                    </div>
+            <div class="grid-3">
+                <div class="card fade-in">
+                    <span style="font-family: var(--font-heading); font-size: 1.8rem; color: var(--primary-install); display: block; margin-bottom: 10px;">01</span>
+                    <h3>Прозрачная смета</h3>
+                    <p style="font-size: 0.92rem;">Цена фиксируется ДО начала работ. Никаких скрытых платежей и «сюрпризов» в процессе.</p>
                 </div>
-                <div class="feature-item fade-in">
-                    <div class="feature-check">✔</div>
-                    <div>
-                        <h4>Идеальная чистота</h4>
-                        <p style="font-size: 0.9rem; color: var(--text-muted);">Штроборез с пылесосом, лазерный уровень. Убираем за собой. Ваш объект останется в чистоте.</p>
-                    </div>
+                <div class="card fade-in" style="transition-delay: 0.1s;">
+                    <span style="font-family: var(--font-heading); font-size: 1.8rem; color: var(--primary-eng); display: block; margin-bottom: 10px;">02</span>
+                    <h3>Идеальная чистота</h3>
+                    <p style="font-size: 0.92rem;">Штроборез с пылесосом, лазерный уровень. Убираем за собой - ваш объект остаётся чистым.</p>
                 </div>
-                <div class="feature-item fade-in">
-                    <div class="feature-check">✔</div>
-                    <div>
-                        <h4>Официально</h4>
-                        <p style="font-size: 0.9rem; color: var(--text-muted);">Договор подряда, акт приёмки, чек из «Мой налог». Гарантия на выполненные работы.</p>
-                    </div>
+                <div class="card fade-in" style="transition-delay: 0.2s;">
+                    <span style="font-family: var(--font-heading); font-size: 1.8rem; color: var(--volt-yellow); display: block; margin-bottom: 10px;">03</span>
+                    <h3>Официально</h3>
+                    <p style="font-size: 0.92rem;">Договор подряда, акт приёмки, чек из «Мой налог». Гарантия на выполненные работы.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="process" class="section" style="background: rgba(255,255,255,0.02);">
+    <section id="process" class="section" style="background: rgba(255,255,255,0.01);">
         <div class="container">
             <h2 class="fade-in">Как мы <span>работаем</span></h2>
-            <div class="process-steps">
-                <div class="step fade-in">
-                    <div class="step-num">1</div>
-                    <h4>Заявка</h4>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">Оставляете заявку на сайте или в мессенджере.</p>
+            <div class="grid-3" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+                <div class="card fade-in" style="padding: 20px; text-align: center;">
+                    <div style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--primary-install); margin-bottom: 8px;">1</div>
+                    <h4 style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 6px;">Заявка</h4>
+                    <p style="font-size: 0.85rem;">Оставляете заявку на сайте или в мессенджере.</p>
                 </div>
-                <div class="step fade-in">
-                    <div class="step-num">2</div>
-                    <h4>Выезд</h4>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">Осмотр объекта в СПб и ЛО, замеры и консультация.</p>
+                <div class="card fade-in" style="padding: 20px; text-align: center; transition-delay: 0.05s;">
+                    <div style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--primary-install); margin-bottom: 8px;">2</div>
+                    <h4 style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 6px;">Выезд</h4>
+                    <p style="font-size: 0.85rem;">Осмотр объекта в СПб и ЛО, замеры и консультация.</p>
                 </div>
-                <div class="step fade-in">
-                    <div class="step-num">3</div>
-                    <h4>Смета</h4>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">Фиксируем цену и сроки. Подписываем договор.</p>
+                <div class="card fade-in" style="padding: 20px; text-align: center; transition-delay: 0.1s;">
+                    <div style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--primary-install); margin-bottom: 8px;">3</div>
+                    <h4 style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 6px;">Смета</h4>
+                    <p style="font-size: 0.85rem;">Фиксируем цену и сроки. Подписываем договор.</p>
                 </div>
-                <div class="step fade-in">
-                    <div class="step-num">4</div>
-                    <h4>Монтаж</h4>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">Работа строго по ПУЭ, фотоотчеты, чистота.</p>
+                <div class="card fade-in" style="padding: 20px; text-align: center; transition-delay: 0.15s;">
+                    <div style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--primary-install); margin-bottom: 8px;">4</div>
+                    <h4 style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 6px;">Монтаж</h4>
+                    <p style="font-size: 0.85rem;">Работа строго по ПУЭ, фотоотчеты, чистота.</p>
                 </div>
-                <div class="step fade-in">
-                    <div class="step-num">5</div>
-                    <h4>Сдача</h4>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">Подписываем акт, выдаем чек и гарантию.</p>
+                <div class="card fade-in" style="padding: 20px; text-align: center; transition-delay: 0.2s;">
+                    <div style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--primary-install); margin-bottom: 8px;">5</div>
+                    <h4 style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 6px;">Сдача</h4>
+                    <p style="font-size: 0.85rem;">Подписываем акт, выдаем чек и гарантию.</p>
                 </div>
             </div>
         </div>
@@ -208,35 +277,50 @@
 
     <section id="contact" class="section contact-section">
         <div class="container">
-            <h2 class="fade-in">Оставьте <span>заявку</span></h2>
-            <form id="leadForm" class="form-box fade-in">
-                <div class="form-group">
-                    <label class="form-label">Ваше имя</label>
-                    <input type="text" name="name" class="form-input" placeholder="Иван" required>
+            <div class="card fade-in" style="padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+                <div>
+                    <span class="badge-status">
+                        <span class="dot"></span> Пн–Сб 9:00–21:00 · Выезд по СПб и ЛО
+                    </span>
+                    <h2 style="text-align: left; margin-bottom: 15px;">Оставьте <span style="color: var(--primary-install);">заявку</span></h2>
+                    <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+                        Ответим в течение 15 минут, подробно проконсультируем, рассчитаем предварительную смету и зафиксируем цену ДО начала работ.
+                    </p>
+                    <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--border-light);">
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;">Прямой номер инженера:</p>
+                        <a href="tel:+79052084284" style="font-family: var(--font-heading); font-size: 1.3rem; color: var(--volt-yellow); font-weight: 700; text-decoration: none;">+7 (905) 208-42-84</a>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Телефон</label>
-                    <input type="tel" name="phone" class="form-input" placeholder="+7 (999) 000-00-00" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Тип задачи</label>
-                    <select name="service" class="form-input">
-                        <option>Замена проводки</option>
-                        <option>Сборка щита</option>
-                        <option>Монтаж «Умного дома»</option>
-                        <option>Диагностика станка / Автоматика</option>
-                        <option>Другое</option>
-                    </select>
-                </div>
-                <div class="form-group" style="display: flex; align-items: flex-start; gap: 10px; margin-top: 15px;">
-                    <input type="checkbox" id="privacy-consent-main" required style="margin-top: 4px; width: 18px; height: 18px; accent-color: var(--primary-install); cursor: pointer;">
-                    <label for="privacy-consent-main" style="font-size: 0.85rem; color: var(--text-muted); cursor: pointer; line-height: 1.4;">
-                        Я даю согласие на обработку <a href="./privacy.html" target="_blank" style="color: var(--primary-install); text-decoration: underline;">персональных данных</a>
-                    </label>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Получить расчёт</button>
-                <p id="formStatus" style="margin-top: 15px; text-align: center; display: none;"></p>
-            </form>
+
+                <form id="leadForm" style="display: grid; gap: 16px;">
+                    <div class="form-group" style="margin: 0;">
+                        <label class="form-label">Ваше имя</label>
+                        <input type="text" name="name" class="form-input" placeholder="Иван" required>
+                    </div>
+                    <div class="form-group" style="margin: 0;">
+                        <label class="form-label">Телефон</label>
+                        <input type="tel" name="phone" class="form-input" placeholder="+7 (999) 000-00-00" required>
+                    </div>
+                    <div class="form-group" style="margin: 0;">
+                        <label class="form-label">Тип задачи</label>
+                        <select name="service" class="form-input">
+                            <option>Замена проводки / Черновой монтаж</option>
+                            <option>Сборка и монтаж электрощита</option>
+                            <option>Монтаж «Умного дома»</option>
+                            <option>Диагностика станка / Автоматика</option>
+                            <option>Другое</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: center; gap: 12px; margin-top: 5px;">
+                        <input type="checkbox" id="privacy-consent-main" required style="width: 18px; height: 18px; accent-color: var(--primary-install); cursor: pointer; flex-shrink: 0;">
+                        <label for="privacy-consent-main" style="font-size: 0.82rem; color: var(--text-muted); cursor: pointer; line-height: 1.4;">
+                            Даю согласие на обработку <a href="./privacy.html" target="_blank" style="color: var(--primary-install); text-decoration: underline;">персональных данных</a>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-volt" style="width: 100%; justify-content: center; margin-top: 10px;">Получить расчёт ⚡</button>
+                    <p id="formStatus" style="margin-top: 10px; text-align: center; display: none; font-weight: 600;"></p>
+                </form>
+            </div>
         </div>
     </section>
 </main>
@@ -281,8 +365,32 @@
     </div>
 </footer>
 
+<div class="ya-rating-floating">
+    <iframe src="https://yandex.ru/sprav/widget/rating-badge/98496429753?type=rating&theme=dark" width="150" height="50" frameborder="0"></iframe>
+</div>
+
 <script>
-    // 1. Мобильное меню
+    // 1. Бегущая строка (дублирование для бесшовности)
+    const track = document.getElementById('tickTrack');
+    if (track) { track.innerHTML += track.innerHTML; }
+
+    // 2. Оживление нагрузки анимированного щитка
+    const loadEl = document.getElementById('live-load');
+    const swSmart = document.getElementById('sw-smart');
+    const swAuto = document.getElementById('sw-auto');
+
+    function updateLoad() {
+        let base = 1.2;
+        if (swSmart && swSmart.checked) base += 1.4;
+        if (swAuto && swAuto.checked) base += 1.8;
+        base += Math.random() * 0.3;
+        if (loadEl) loadEl.textContent = base.toFixed(1) + ' кВт';
+    }
+    setInterval(updateLoad, 2200);
+    if(swSmart) swSmart.addEventListener('change', updateLoad);
+    if(swAuto) swAuto.addEventListener('change', updateLoad);
+
+    // 3. Мобильное меню
     const mobileToggle = document.querySelector('.mobile-toggle');
     const navLinks = document.querySelector('.nav-links');
     if (mobileToggle && navLinks) {
@@ -296,13 +404,12 @@
         }));
     }
 
-    // 2. Логика Аккордеона (FAQ) - Сворачиваем соседние блоки при открытии
+    // 4. Логика Аккордеона (FAQ)
     document.querySelectorAll('.accordion-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const content = btn.nextElementSibling;
             const isOpen = btn.classList.contains('active');
 
-            // Закрываем все открытые аккордеоны
             document.querySelectorAll('.accordion-btn').forEach(otherBtn => {
                 otherBtn.classList.remove('active');
                 if (otherBtn.nextElementSibling) {
@@ -310,7 +417,6 @@
                 }
             });
 
-            // Если кликнутый был закрыт - открываем его
             if (!isOpen) {
                 btn.classList.add('active');
                 content.style.maxHeight = content.scrollHeight + "px";
@@ -318,7 +424,7 @@
         });
     });
 
-    // 3. Предварительный «пинг» сервера при клике на форму (чтобы разбудить Render.com)
+    // 5. Отправка формы и пинг сервера (Render.com)
     const leadForm = document.getElementById('leadForm');
     let hasPinged = false;
 
@@ -330,7 +436,6 @@
             }
         });
 
-        // Отправка формы
         leadForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = this.querySelector('button[type="submit"]');
@@ -363,12 +468,12 @@
                 status.style.color = '#EF4444';
             } finally {
                 btn.disabled = false;
-                btn.textContent = 'Получить расчёт';
+                btn.textContent = 'Получить расчёт ⚡';
             }
         });
     }
 
-    // 4. Плавное появление элементов (Fade In)
+    // 6. Плавное появление элементов
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(e => {
             if (e.isIntersecting) e.target.classList.add('visible');

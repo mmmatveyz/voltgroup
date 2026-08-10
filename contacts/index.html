@@ -12,9 +12,99 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/style.css?v=2.0">
+
+    <style>
+        .contact-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+        .contact-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            text-align: center;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        .contact-card::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-install), transparent);
+            opacity: 0;
+            transition: var(--transition);
+        }
+        .contact-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(0, 229, 255, 0.4);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45);
+        }
+        .contact-card:hover::after { opacity: 1; }
+        .contact-icon {
+            width: 56px;
+            height: 56px;
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.5rem;
+            color: var(--primary-install);
+        }
+        .contact-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+        .contact-card a.main-link {
+            color: var(--primary-install);
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            margin: 6px 0;
+            font-family: var(--font-heading);
+            transition: var(--transition);
+        }
+        .contact-card a.main-link:hover {
+            color: #ffffff;
+            text-shadow: 0 0 10px var(--primary-install);
+        }
+        .messenger-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .messenger-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-light);
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.92rem;
+        }
+        .messenger-btn:hover {
+            border-color: var(--primary-install);
+            color: var(--primary-install);
+        }
+    </style>
 
     <script type="text/javascript">
         (function(m,e,t,r,i,k,a){
@@ -27,59 +117,6 @@
         ym(108492681, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/108492681" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <style>
-        /* Дополнительные стили для страницы контактов */
-        .contact-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
-        .contact-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-lg);
-            padding: 30px;
-            text-align: center;
-            transition: var(--transition);
-        }
-        .contact-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary-install);
-            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.1);
-        }
-        .contact-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-        .contact-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            color: var(--text-main);
-        }
-        .contact-card a {
-            color: var(--primary-install);
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-block;
-            margin: 6px 0;
-            transition: var(--transition);
-        }
-        .contact-card a:hover {
-            text-decoration: underline;
-        }
-        .contact-card p {
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-        .messenger-links {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            align-items: center;
-        }
-    </style>
 </head>
 <body>
 
@@ -100,44 +137,47 @@
 </header>
 
 <main>
-    <section class="hero" style="padding-top: 120px; padding-bottom: 40px;">
-        <div class="container">
-            <h1>Контакты</h1>
-            <p class="hero-subtitle">Свяжитесь с нами удобным способом. Отвечаем оперативно.</p>
-            <div class="hero-actions" style="gap: 15px; flex-wrap: wrap;">
-                <a href="tel:+79052084284" class="btn btn-primary">📞 Позвонить</a>
-                <a href="https://t.me/voltgroup_spb" target="_blank" class="btn btn-outline">✈️ Telegram</a>
-                <a href="https://vk.com/voltgroup_spb" target="_blank" class="btn btn-outline">🔹 ВКонтакте</a>
-            </div>
+    <section class="hero container fade-in" style="padding-top: 150px; display: block; text-align: left;">
+        <span class="badge-status">
+            <span class="dot"></span> На связи · Пн–Сб 9:00–21:00
+        </span>
+        <h1>Свяжитесь с <span style="color: var(--primary-install);">VoltGroup</span></h1>
+        <p class="hero-subtitle" style="max-width: 600px;">
+            Отвечаем оперативно. Звоните для вызова мастера, присылайте фото электрощитов или проекты для быстрой оценки сметы.
+        </p>
+        <div class="hero-actions" style="gap: 14px; flex-wrap: wrap;">
+            <a href="tel:+79052084284" class="btn btn-primary">📞 Позвонить ⚡</a>
+            <a href="https://t.me/voltgroup_spb" target="_blank" class="btn btn-outline">✈️ Telegram</a>
+            <a href="https://vk.com/voltgroup_spb" target="_blank" class="btn btn-outline">🔹 ВКонтакте</a>
         </div>
     </section>
 
-    <section class="section" style="padding-bottom: 80px;">
+    <section class="section" style="padding-top: 20px; padding-bottom: 90px;">
         <div class="container">
             <div class="contact-cards">
-                <div class="contact-card">
+                <div class="contact-card fade-in">
                     <div class="contact-icon">📞</div>
                     <h3>Телефон</h3>
-                    <a href="tel:+79052084284" style="font-size: 1.3rem;">+7 (905) 208-42-84</a>
-                    <p style="font-size: 0.9rem; margin-top: 10px; color: var(--text-main);">Пн–Сб: 9:00–21:00</p>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Звоните для консультации и вызова мастера</p>
+                    <a href="tel:+79052084284" class="main-link">+7 (905) 208-42-84</a>
+                    <p style="font-size: 0.9rem; margin-top: 8px; color: var(--text-main); font-weight: 600;">Пн–Сб: 9:00–21:00</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 6px;">Звоните для подробной консультации и выезда специалиста</p>
                 </div>
 
-                <div class="contact-card">
-                    <div class="contact-icon">📍</div>
+                <div class="contact-card fade-in" style="transition-delay: 0.1s;">
+                    <div class="contact-icon" style="background: rgba(255, 214, 10, 0.1); border-color: rgba(255, 214, 10, 0.3); color: var(--volt-yellow);">📍</div>
                     <h3>Локация и Выезд</h3>
-                    <p style="font-size: 1.1rem; margin-bottom: 10px; color: var(--text-main);">Санкт-Петербург и ЛО</p>
-                    <p style="font-size: 0.9rem;">Выезд на объект для замера и консультации - <strong>бесплатно</strong> в пределах КАД</p>
+                    <p style="font-size: 1.15rem; font-family: var(--font-heading); margin-bottom: 8px; color: var(--text-main);">Санкт-Петербург и ЛО</p>
+                    <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">Выезд на замер и технический осмотр объекта - <strong style="color: var(--volt-yellow);">бесплатно</strong> при заключении договора</p>
                 </div>
 
-                <div class="contact-card">
-                    <div class="contact-icon">💬</div>
+                <div class="contact-card fade-in" style="transition-delay: 0.2s;">
+                    <div class="contact-icon" style="background: rgba(123, 97, 255, 0.1); border-color: rgba(123, 97, 255, 0.3); color: var(--primary-eng);">💬</div>
                     <h3>Мессенджеры</h3>
                     <div class="messenger-links">
-                        <a href="https://t.me/voltgroup_spb" target="_blank">Telegram: @voltgroup_spb</a>
-                        <a href="https://vk.com/voltgroup_spb" target="_blank">ВКонтакте: @voltgroup_spb</a>
+                        <a href="https://t.me/voltgroup_spb" target="_blank" class="messenger-btn">✈️ Telegram: @voltgroup_spb</a>
+                        <a href="https://vk.com/voltgroup_spb" target="_blank" class="messenger-btn">🔹 ВКонтакте: @voltgroup_spb</a>
                     </div>
-                    <p style="font-size: 0.9rem; margin-top: 10px;">Присылайте фото щитов или проект для быстрой оценки сметы</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 12px;">Присылайте фото помещений или схем для быстрого предрасчета</p>
                 </div>
             </div>
         </div>
@@ -188,7 +228,7 @@
 </footer>
 
 <script>
-    // Mobile Menu
+    // 1. Mobile Menu
     const mobileToggle = document.querySelector('.mobile-toggle');
     const navLinks = document.querySelector('.nav-links');
     if (mobileToggle && navLinks) {
@@ -203,6 +243,14 @@
             });
         });
     }
+
+    // 2. Плавное появление элементов (Fade In)
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) e.target.classList.add('visible');
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>

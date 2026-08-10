@@ -12,7 +12,9 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="./static/css/style.css?v=2.0">
 
     <script type="text/javascript">
         (function(m,e,t,r,i,k,a){
@@ -25,156 +27,78 @@
         ym(108492681, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/108492681" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+
     <style>
-        :root {
-            --bg-dark: #050914; --bg-card: rgba(17, 24, 39, 0.7); --primary: #00E5FF;
-            --primary-glow: rgba(0, 229, 255, 0.4); --text-main: #F8FAFC; --text-muted: #94A3B8;
-            --border-light: rgba(255, 255, 255, 0.1); --radius-lg: 16px; --radius-md: 12px;
-            --font-main: 'Inter', system-ui, -apple-system, sans-serif;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); --danger: #EF4444; --success: #10B981;
-        }
-        html { overflow-x: hidden !important; width: 100%; position: relative; }
-        body { overflow-x: hidden !important; width: 100%; max-width: 100vw; position: relative; margin: 0; padding: 0; }
-        img, video, iframe, svg { max-width: 100%; height: auto; display: block; }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-main); }
-        body {
-            background-color: var(--bg-dark);
-            background-image: radial-gradient(circle at 50% 0%, #1a2c4e 0%, var(--bg-dark) 60%);
-            color: var(--text-main); line-height: 1.6; padding-bottom: 60px;
-            display: flex; flex-direction: column; min-height: 100vh;
-        }
-        .container { max-width: 1000px; margin: 0 auto; padding: 20px; width: 100%; }
-        .header {
-            position: sticky; top: 0; left: 0; width: 100%; z-index: 1000;
-            background: rgba(5, 9, 20, 0.85); backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-light); padding: 15px 0;
-        }
-        .nav-container { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px; text-decoration: none; }
-        .logo img { height: 40px; width: auto; }
-        .nav-links { display: flex; gap: 30px; align-items: center; }
-        .nav-links a { font-size: 0.95rem; font-weight: 500; opacity: 0.8; text-decoration: none; color: var(--text-main); transition: var(--transition); }
-        .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--primary); }
-        .mobile-toggle { display: none; background: none; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; }
-        main { flex-grow: 1; padding-top: 40px; }
-        h1 { font-size: clamp(1.5rem, 4vw, 2rem); color: var(--text-main); margin-bottom: 5px; }
-        .subtitle { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 30px; }
-        .card-box {
-            background: var(--bg-card); border: 1px solid var(--border-light); border-radius: var(--radius-lg);
-            padding: 25px; margin-bottom: 25px; backdrop-filter: blur(10px);
-        }
+        .calc-header { margin-bottom: 25px; }
+        .calc-header h1 { margin-bottom: 8px; }
         .client-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
-        .input-group label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px; }
-        .client-info input, .category-select, .draft-input, .draft-select {
-            width: 100%; padding: 12px; border-radius: var(--radius-md); border: 1px solid var(--border-light);
-            background: rgba(0,0,0,0.3); color: var(--text-main); font-size: 1rem; transition: var(--transition);
-        }
-        .client-info input:focus, .category-select:focus, .draft-input:focus, .draft-select:focus {
-            outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,229,255,0.1);
-        }
-        .section-selector { display: flex; gap: 10px; margin-bottom: 15px; }
+
+        .section-selector { display: flex; gap: 12px; }
         .section-selector button {
-            padding: 10px 20px; border-radius: 30px; border: 2px solid var(--border-light);
-            background: transparent; color: var(--text-muted); font-weight: 600; cursor: pointer;
-            transition: var(--transition); font-size: 0.95rem;
+            padding: 12px 24px; border-radius: 12px; border: 1px solid var(--border-light);
+            background: rgba(255, 255, 255, 0.02); color: var(--text-muted); font-weight: 700; cursor: pointer;
+            transition: var(--transition); font-size: 0.95rem; font-family: var(--font-heading);
         }
-        .section-selector button.active { border-color: var(--primary); color: var(--primary); background: rgba(0, 229, 255, 0.1); }
-        .section-selector button:hover { transform: translateY(-2px); }
-        .section-selector button:first-child.active { border-color: #00E5FF; color: #00E5FF; }
-        .section-selector button:last-child.active { border-color: #7B61FF; color: #7B61FF; }
-        .category-selector { margin-bottom: 20px; }
-        .category-selector label { display: block; margin-bottom: 8px; color: var(--primary); font-weight: 600; }
-        .table-wrapper {
-            overflow-x: auto; margin-bottom: 20px; background: var(--bg-card);
-            border-radius: var(--radius-lg); border: 1px solid var(--border-light); backdrop-filter: blur(10px);
-        }
-        table { width: 100%; border-collapse: collapse; min-width: 600px; }
-        th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid var(--border-light); font-size: 0.95rem; }
-        th { background: rgba(255,255,255,0.03); color: var(--primary); font-weight: 600; white-space: nowrap; }
-        tr:last-child td { border-bottom: none; }
-        .qty-wrapper { display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .section-selector button.active { border-color: var(--primary-install); color: #050914; background: var(--primary-install); box-shadow: 0 0 15px rgba(0, 229, 255, 0.3); }
+        .section-selector button#btn-eng.active { border-color: var(--primary-eng); color: #ffffff; background: var(--primary-eng); box-shadow: 0 0 15px rgba(123, 97, 255, 0.3); }
+
+        .qty-wrapper { display: flex; align-items: center; justify-content: center; gap: 6px; }
         .qty-btn {
-            width: 32px; height: 32px; border-radius: 6px; border: 1px solid var(--border-light);
-            background: rgba(0,0,0,0.3); color: var(--text-main); font-size: 1.2rem;
+            width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border-light);
+            background: rgba(255,255,255,0.04); color: var(--text-main); font-size: 1.1rem; font-weight: 700;
             cursor: pointer; display: flex; align-items: center; justify-content: center;
             transition: var(--transition); user-select: none; padding: 0;
         }
-        .qty-btn:hover { background: var(--primary); color: #000; border-color: var(--primary); }
-        .qty-btn:active { transform: scale(0.95); }
+        .qty-btn:hover { background: var(--primary-install); color: #050914; border-color: var(--primary-install); }
         .qty-input-stepper {
-            width: 60px !important; text-align: center; padding: 5px; border: 1px solid var(--border-light);
-            background: rgba(0,0,0,0.3); color: var(--text-main); border-radius: 6px; font-size: 1rem;
-            -moz-appearance: textfield;
+            width: 60px !important; text-align: center; padding: 6px; border: 1px solid var(--border-light);
+            background: var(--bg-panel); color: var(--text-main); border-radius: 8px; font-size: 0.95rem; font-weight: 600;
         }
-        .qty-input-stepper::-webkit-outer-spin-button, .qty-input-stepper::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-        .complexity-check { display: flex; align-items: center; gap: 5px; font-size: 0.85rem; color: var(--text-muted); cursor: pointer; }
-        .complexity-check input { accent-color: var(--primary); width: 16px; height: 16px; cursor: pointer; }
+
+        .complexity-check { display: flex; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--text-muted); cursor: pointer; }
+        .complexity-check input { accent-color: var(--volt-yellow); width: 16px; height: 16px; cursor: pointer; }
         .complexity-badge {
-            font-size: 0.75rem; background: rgba(239, 68, 68, 0.2); color: #fca5a5;
-            padding: 2px 6px; border-radius: 4px; margin-left: 5px; display: none;
+            font-size: 0.75rem; background: rgba(255, 214, 10, 0.15); color: var(--volt-yellow);
+            padding: 2px 6px; border-radius: 4px; display: none; font-weight: 700;
         }
         .complexity-check input:checked + span + .complexity-badge { display: inline-block; }
+
         .summary {
             background: var(--bg-card); padding: 30px; border-radius: var(--radius-lg);
-            margin: 30px 0; border: 1px solid var(--border-light); backdrop-filter: blur(10px);
+            margin: 30px 0; border: 1px solid var(--border-light); backdrop-filter: blur(12px);
+            position: relative; overflow: hidden;
         }
-        .summary-row { display: flex; justify-content: space-between; margin-bottom: 10px; color: var(--text-muted); font-size: 1.1rem; }
+        .summary::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, var(--primary-install), var(--volt-yellow));
+        }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 12px; color: var(--text-muted); font-size: 1.05rem; }
         .summary-total {
-            display: flex; justify-content: space-between; font-size: 1.6rem; font-weight: 700;
-            border-top: 2px solid var(--border-light); padding-top: 15px; color: var(--primary); margin-top: 15px;
+            display: flex; justify-content: space-between; font-size: 1.6rem; font-weight: 900;
+            border-top: 1px solid var(--border-light); padding-top: 18px; color: var(--primary-install); margin-top: 18px;
+            font-family: var(--font-heading);
         }
+
         .discount-block {
-            display: flex; gap: 10px; align-items: center; margin: 15px 0; padding: 10px;
-            background: rgba(239, 68, 68, 0.1); border-radius: var(--radius-md); border: 1px solid rgba(239, 68, 68, 0.2);
+            display: flex; gap: 10px; align-items: center; margin: 15px 0; padding: 12px;
+            background: rgba(239, 68, 68, 0.08); border-radius: var(--radius-md); border: 1px solid rgba(239, 68, 68, 0.2);
         }
         .discount-block input {
-            width: 100px; padding: 8px; border-radius: 6px; border: 1px solid var(--border-light);
-            background: rgba(0,0,0,0.3); color: var(--text-main);
+            width: 110px; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-light);
+            background: var(--bg-panel); color: var(--text-main); font-weight: 600;
         }
-        .actions { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
-        .btn {
-            padding: 12px 24px; border-radius: 50px; font-weight: 600; cursor: pointer; border: none;
-            font-size: 1rem; transition: var(--transition); text-decoration: none;
-            display: inline-flex; align-items: center; justify-content: center;
-        }
-        .btn-primary { background: var(--primary); color: #000; box-shadow: 0 0 20px var(--primary-glow); }
-        .btn-primary:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 0 30px var(--primary-glow); }
-        .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
-        .btn-outline:hover { background: var(--primary); color: #000; }
-        .btn-remove { background: transparent; border: none; color: var(--danger); cursor: pointer; font-size: 1.2rem; padding: 4px; opacity: 0.7; }
-        .btn-remove:hover { opacity: 1; }
-        .purchase-toggle {
-            display: flex; align-items: center; gap: 10px; margin: 20px 0; padding: 12px;
-            background: rgba(0, 229, 255, 0.05); border-radius: var(--radius-md); border: 1px solid rgba(0, 229, 255, 0.2);
-        }
-        .purchase-toggle label { cursor: pointer; color: var(--text-main); font-weight: 600; user-select: none; }
-        .purchase-toggle input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; }
-        .footer { background: #02040a; border-top: 1px solid var(--border-light); padding: 60px 0 30px; margin-top: auto; }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
-        .footer h4 { color: var(--text-main); margin-bottom: 20px; font-size: 1.1rem; }
-        .footer-links a { display: block; margin-bottom: 10px; color: var(--text-muted); font-size: 0.95rem; text-decoration: none; }
-        .footer-links a:hover { color: var(--primary); }
-        .copyright { text-align: center; color: #555; font-size: 0.9rem; border-top: 1px solid #111; padding-top: 20px; }
 
-        @media (max-width: 768px) {
-            .header { padding: 10px 0; }
-            .nav-container { padding: 0 15px; }
-            .nav-links {
-                position: fixed; top: 80px; right: 0; transform: translateX(100%);
-                width: 85%; max-width: 320px; height: calc(100vh - 160px);
-                background: rgba(5, 9, 20, 0.98); backdrop-filter: blur(15px);
-                border-radius: 20px 0 0 20px; border-left: 1px solid var(--border-light);
-                box-shadow: -5px 0 20px rgba(0,0,0,0.4); flex-direction: column;
-                justify-content: center; align-items: center; gap: 30px; padding: 20px;
-                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1001;
-                overflow-y: auto; overflow-x: hidden;
-            }
-            .nav-links.open { transform: translateX(0); }
-            .mobile-toggle { display: block; z-index: 1002; font-size: 1.8rem; }
-            .client-info { grid-template-columns: 1fr; }
-            .actions { flex-direction: column; }
-            .btn { width: 100%; }
+        .purchase-toggle {
+            display: flex; align-items: center; gap: 12px; margin: 25px 0; padding: 16px;
+            background: rgba(0, 229, 255, 0.03); border-radius: var(--radius-md); border: 1px solid rgba(0, 229, 255, 0.2);
         }
+        .purchase-toggle label { cursor: pointer; color: var(--text-main); font-weight: 600; user-select: none; font-size: 0.95rem; }
+        .purchase-toggle input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary-install); cursor: pointer; }
+
+        .actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 25px; }
+
+        .btn-remove { background: transparent; border: none; color: var(--danger); cursor: pointer; font-size: 1.2rem; padding: 4px; opacity: 0.7; transition: var(--transition); }
+        .btn-remove:hover { opacity: 1; transform: scale(1.1); }
     </style>
 </head>
 <body>
@@ -196,102 +120,111 @@
 </header>
 
 <main>
-    <div class="container">
-        <h1>⚡ Калькулятор сметы</h1>
-        <p class="subtitle">Предварительный расчёт стоимости работ и материалов</p>
+    <div class="container" style="padding-top: 130px;">
+        <div class="calc-header fade-in">
+            <span class="badge-status">
+                <span class="dot"></span> Онлайн-расчёт сметы 2026
+            </span>
+            <h1>⚡ Калькулятор <span style="color: var(--primary-install);">Сметы</span></h1>
+            <p class="subtitle">Предварительный расчёт стоимости электромонтажных работ и материалов VoltGroup</p>
+        </div>
 
-        <div class="card-box">
+        <div class="card fade-in" style="margin-bottom: 25px;">
             <div class="client-info">
-                <div class="input-group"><label>Имя заказчика</label><input type="text" id="client-name" placeholder="Иванов И.И."></div>
-                <div class="input-group"><label>Адрес объекта</label><input type="text" id="client-address" placeholder="СПб, ул. Ленина..."></div>
-                <div class="input-group"><label>Дата</label><input type="date" id="estimate-date"></div>
-                <div class="input-group"><label>№ Сметы / КП</label><input type="text" id="invoice-number" placeholder="Напр. КП-01"></div>
+                <div class="form-group"><label class="form-label">Имя заказчика</label><input type="text" id="client-name" class="form-input" placeholder="Иванов И.И."></div>
+                <div class="form-group"><label class="form-label">Адрес объекта</label><input type="text" id="client-address" class="form-input" placeholder="СПб, ул. Ленина..."></div>
+                <div class="form-group"><label class="form-label">Дата</label><input type="date" id="estimate-date" class="form-input"></div>
+                <div class="form-group"><label class="form-label">№ Сметы / КП</label><input type="text" id="invoice-number" class="form-input" placeholder="Напр. КП-01"></div>
             </div>
         </div>
 
-        <div class="card-box" style="padding: 15px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
-            <input type="text" id="draft-name" class="draft-input" placeholder="Название черновика..." style="flex-grow: 1;">
-            <button class="btn btn-outline" type="button" onclick="saveDraft()" style="padding: 10px 15px; font-size: 0.9rem;">💾 Сохранить</button>
-            <select id="draft-select" class="draft-select" onchange="loadDraft()" style="width: auto; min-width: 150px;"><option value="">📂 Загрузить...</option></select>
-            <button class="btn btn-outline" type="button" onclick="deleteDraft()" style="padding: 10px 15px; font-size: 0.9rem; color: var(--danger); border-color: var(--danger);">🗑</button>
-            <button class="btn btn-outline" type="button" onclick="exportDraftToFile()" style="padding: 10px 15px; font-size: 0.9rem; border-color: #F59E0B; color: #F59E0B;">💾 Скачать файл</button>
-            <label class="btn btn-outline" style="padding: 10px 15px; font-size: 0.9rem; cursor: pointer; border-color: var(--success); color: var(--success);">
-                📂 Загрузить файл <input type="file" id="import-file-input" accept=".json" style="display: none;" onchange="importDraftFromFile(this)">
+        <div class="card fade-in" style="padding: 18px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 25px;">
+            <input type="text" id="draft-name" class="form-input" placeholder="Название черновика..." style="flex-grow: 1; min-width: 180px;">
+            <button class="btn btn-outline" type="button" onclick="saveDraft()" style="padding: 10px 16px; font-size: 0.88rem;">💾 Сохранить</button>
+            <select id="draft-select" class="form-input" onchange="loadDraft()" style="width: auto; min-width: 150px;"><option value="">📂 Загрузить...</option></select>
+            <button class="btn btn-outline" type="button" onclick="deleteDraft()" style="padding: 10px 14px; font-size: 0.88rem; color: var(--danger); border-color: var(--danger);">🗑</button>
+            <button class="btn btn-outline" type="button" onclick="exportDraftToFile()" style="padding: 10px 16px; font-size: 0.88rem; border-color: var(--volt-yellow); color: var(--volt-yellow);">💾 Файл JSON</button>
+            <label class="btn btn-outline" style="padding: 10px 16px; font-size: 0.88rem; cursor: pointer; border-color: var(--success); color: var(--success);">
+                📂 Импорт <input type="file" id="import-file-input" accept=".json" style="display: none;" onchange="importDraftFromFile(this)">
             </label>
         </div>
 
-        <div class="card-box" style="padding: 15px;">
+        <div class="card fade-in" style="padding: 16px; margin-bottom: 25px;">
             <div class="section-selector">
-                <button id="btn-install" type="button" class="active" onclick="switchSection('install')">⚡ Install</button>
-                <button id="btn-eng" type="button" onclick="switchSection('engineering')">🏭 Engineering</button>
+                <button id="btn-install" type="button" class="active" onclick="switchSection('install')">⚡ Install (Электромонтаж)</button>
+                <button id="btn-eng" type="button" onclick="switchSection('engineering')">🏭 Engineering (Автоматика)</button>
             </div>
         </div>
 
-        <div class="category-selector card-box">
-            <label for="category-select">Выберите категорию работ:</label>
-            <select id="category-select" class="category-select" onchange="renderServices()"><option value="all">Все работы</option></select>
+        <div class="card fade-in" style="margin-bottom: 25px;">
+            <label for="category-select" class="form-label" style="color: var(--primary-install); font-weight: 700;">Выберите категорию работ:</label>
+            <select id="category-select" class="form-input" onchange="renderServices()"><option value="all">Все работы</option></select>
         </div>
 
-        <div class="table-wrapper">
-            <table>
-                <thead><tr><th>Наименование работ</th><th>Ед.</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th>Условия</th><th></th></tr></thead>
-                <tbody id="services-body"></tbody>
-            </table>
-            <div style="padding: 15px; text-align: center; border-top: 1px solid var(--border-light);">
-                <button class="btn btn-outline" type="button" onclick="addCustomWorkRow()" style="padding: 8px 16px; font-size: 0.9rem;">➕ Добавить свою позицию</button>
+        <div class="card fade-in" style="padding: 0; overflow: hidden; margin-bottom: 25px;">
+            <div class="table-responsive">
+                <table class="price-table">
+                    <thead><tr><th>Наименование работ</th><th>Ед.</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th>Условия</th><th></th></tr></thead>
+                    <tbody id="services-body"></tbody>
+                </table>
+            </div>
+            <div style="padding: 16px; text-align: center; border-top: 1px solid var(--border-light); background: rgba(255,255,255,0.01);">
+                <button class="btn btn-outline" type="button" onclick="addCustomWorkRow()" style="padding: 10px 20px; font-size: 0.9rem;">➕ Добавить свою позицию</button>
             </div>
         </div>
 
-        <div class="purchase-toggle">
+        <div class="purchase-toggle fade-in">
             <input type="checkbox" id="master-buys-materials" checked onchange="calculateTotals()">
-            <label for="master-buys-materials">Материалы закупает Мастер (входят в итоговую сумму)</label>
+            <label for="master-buys-materials">Материалы закупает Мастер (входят в итоговую сумму сметы)</label>
         </div>
 
-        <div class="table-wrapper">
-            <div style="padding: 12px 15px; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center;">
-                <span style="color: var(--primary); font-weight: 600;">📦 Материалы (добавляются вручную)</span>
-                <button class="btn btn-outline" type="button" onclick="addMaterialRow()" style="padding: 4px 10px; font-size: 0.8rem;">+ Вручную</button>
+        <div class="card fade-in" style="padding: 0; overflow: hidden; margin-bottom: 30px;">
+            <div style="padding: 14px 20px; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center;">
+                <span style="color: var(--primary-install); font-weight: 700; font-family: var(--font-heading); font-size: 0.9rem;">📦 Материалы (добавляются вручную)</span>
+                <button class="btn btn-outline" type="button" onclick="addMaterialRow()" style="padding: 6px 14px; font-size: 0.82rem;">+ Вручную</button>
             </div>
-            <table>
-                <thead><tr><th>Наименование</th><th>Ед.</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th></th></tr></thead>
-                <tbody id="materials-body"></tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="price-table">
+                    <thead><tr><th>Наименование</th><th>Ед.</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th></th></tr></thead>
+                    <tbody id="materials-body"></tbody>
+                </table>
+            </div>
         </div>
 
-        <div class="summary">
-            <div class="summary-row"><span>Стоимость работ:</span><span id="services-total-display">0 ₽</span></div>
+        <div class="summary fade-in">
+            <div class="summary-row"><span>Стоимость работ:</span><strong id="services-total-display" style="color: var(--text-main);">0 ₽</strong></div>
             <div class="discount-block">
                 <label for="discount-input" style="color: var(--text-muted); font-size: 0.9rem;">Скидка:</label>
                 <input type="text" id="discount-input" placeholder="0 ₽ или %" oninput="calculateTotals()">
-                <span id="discount-value-display" style="color: var(--danger); font-weight: 600; margin-left: auto;">-0 ₽</span>
+                <span id="discount-value-display" style="color: var(--danger); font-weight: 700; margin-left: auto;">-0 ₽</span>
             </div>
-            <div class="summary-row" style="font-weight: bold; color: var(--text-main);"><span>Итого за работы:</span><span id="works-subtotal-display">0 ₽</span></div>
-            <div class="summary-row" id="materials-summary-row"><span>Стоимость материалов:</span><span id="materials-total-display">0 ₽</span></div>
+            <div class="summary-row" style="font-weight: 700; color: var(--text-main);"><span>Итого за работы:</span><strong id="works-subtotal-display">0 ₽</strong></div>
+            <div class="summary-row" id="materials-summary-row"><span>Стоимость материалов:</span><strong id="materials-total-display" style="color: var(--text-main);">0 ₽</strong></div>
             <div class="summary-total"><span>К ОПЛАТЕ:</span><span id="grand-total">0 ₽</span></div>
-            <div style="margin-top: 15px; text-align: center; font-size: 0.9rem; color: var(--text-muted);">
-                Это предварительная оценка. Точная стоимость фиксируется в договоре после осмотра.<br>
-                <a href="./contacts/" style="color: var(--primary); text-decoration: underline;">Заказать бесплатный выезд →</a>
+            <div style="margin-top: 18px; text-align: center; font-size: 0.9rem; color: var(--text-muted);">
+                Это предварительная оценка. Точная стоимость фиксируется в договоре после осмотра объектов.<br>
+                <a href="./contacts/" style="color: var(--primary-install); text-decoration: underline; font-weight: 600;">Заказать бесплатный выезд →</a>
             </div>
         </div>
 
-        <div class="actions">
+        <div class="actions fade-in">
             <button class="btn btn-primary" type="button" onclick="generatePDF()">📄 Скачать смету (PDF)</button>
-            <button class="btn btn-primary" type="button" onclick="generateCommercialOffer()" style="background: var(--success); color: white; box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);">📄 Сформировать КП</button>
-            <button class="btn btn-outline" type="button" onclick="generateAct()" style="border-color: #F59E0B; color: #F59E0B;">📝 Сформировать Акт</button>
-            <button class="btn btn-outline" type="button" onclick="clearForm()">🗑 Очистить всё</button>
+            <button class="btn btn-secondary" type="button" onclick="generateCommercialOffer()">📄 Сформировать КП</button>
+            <button class="btn btn-volt" type="button" onclick="generateAct()">📝 Сформировать Акт</button>
+            <button class="btn btn-outline" type="button" onclick="clearForm()" style="color: var(--danger); border-color: rgba(239, 68, 68, 0.4);">🗑 Очистить всё</button>
         </div>
     </div>
 </main>
 
-<footer class="footer">
+<footer class="footer" style="margin-top: 80px;">
     <div class="container">
         <div class="footer-grid">
             <div>
                 <h4>⚡ VoltGroup</h4>
                 <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">Энергия решений.<br>Электрика и автоматизация в СПб и ЛО.</p>
                 <div style="display: flex; gap: 15px; font-size: 0.9rem;">
-                    <a href="https://vk.com/voltgroup_spb" target="_blank" style="color: var(--primary); font-weight: 600;">VK</a>
-                    <a href="https://t.me/voltgroup_spb" target="_blank" style="color: var(--primary); font-weight: 600;">Telegram</a>
+                    <a href="https://vk.com/voltgroup_spb" target="_blank" style="color: var(--primary-install); font-weight: 600;">VK</a>
+                    <a href="https://t.me/voltgroup_spb" target="_blank" style="color: var(--primary-install); font-weight: 600;">Telegram</a>
                 </div>
             </div>
             <div class="footer-links">
@@ -422,7 +355,6 @@
         const tbody = document.getElementById('services-body');
         tbody.innerHTML = '';
 
-        // Фильтруем сохраняя точные исходные индексы в глобальном allServices
         let filteredWithIndices = allServices
             .map((service, originalIndex) => ({ service, originalIndex }))
             .filter(item => item.service.section === currentSection);
@@ -443,9 +375,9 @@
             const tr = document.createElement('tr');
             tr.dataset.index = index;
             tr.innerHTML = `
-                <td>${escapeHtml(service.name)}</td>
-                <td>${escapeHtml(service.unit)}</td>
-                <td>${Number(service.price).toLocaleString('ru-RU')} ₽</td>
+                <td style="font-weight: 600;">${escapeHtml(service.name)}</td>
+                <td style="color: var(--text-muted);">${escapeHtml(service.unit)}</td>
+                <td style="white-space: nowrap;">${Number(service.price).toLocaleString('ru-RU')} ₽</td>
                 <td>
                   <div class="qty-wrapper">
                     <button class="qty-btn" type="button" onclick="changeQty(${index}, -1)">−</button>
@@ -453,7 +385,7 @@
                     <button class="qty-btn" type="button" onclick="changeQty(${index}, 1)">+</button>
                   </div>
                 </td>
-                <td id="sum-${index}" style="text-align:center; font-weight:600;">${(savedState.qty * (savedState.isComplex ? service.price * 1.2 : service.price)).toLocaleString('ru-RU')} ₽</td>
+                <td id="sum-${index}" style="text-align:center; font-weight:700; color: var(--primary-install); white-space: nowrap;">${(savedState.qty * (savedState.isComplex ? service.price * 1.2 : service.price)).toLocaleString('ru-RU')} ₽</td>
                 <td>
                   <label class="complexity-check">
                     <input type="checkbox" id="complex-${index}" ${savedState.isComplex ? 'checked' : ''} onchange="handleServiceChange(${index}, document.getElementById('qty-${index}').value)">
@@ -502,9 +434,9 @@
         row.classList.add('custom-work-row');
         const uniqueId = 'custom-' + Date.now();
         row.innerHTML = `
-            <td><input type="text" class="name-input" placeholder="Название работы"></td>
-            <td><input type="text" class="mat-unit" value="шт." style="width:50px;"></td>
-            <td><input type="number" class="mat-price" placeholder="0" min="0" onchange="calculateTotals()" style="width:70px;"></td>
+            <td><input type="text" class="form-input name-input" placeholder="Название работы" style="padding: 6px 10px;"></td>
+            <td><input type="text" class="form-input mat-unit" value="шт." style="width:50px; padding: 6px;"></td>
+            <td><input type="number" class="form-input mat-price" placeholder="0" min="0" onchange="calculateTotals()" style="width:80px; padding: 6px;"></td>
             <td>
                 <div class="qty-wrapper">
                   <button class="qty-btn" type="button" onclick="changeCustomQty(this, -1)">−</button>
@@ -512,7 +444,7 @@
                   <button class="qty-btn" type="button" onclick="changeCustomQty(this, 1)">+</button>
                 </div>
             </td>
-            <td style="text-align:center; font-weight:600;">0 ₽</td>
+            <td style="text-align:center; font-weight:700; color: var(--primary-install);">0 ₽</td>
             <td>
                 <label class="complexity-check">
                   <input type="checkbox" class="custom-complex" onchange="calculateTotals()">
@@ -538,11 +470,11 @@
         const matBody = document.getElementById('materials-body');
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td><input type="text" class="mat-name" value="${escapeHtml(name)}" placeholder="Материал"></td>
-            <td><input type="text" class="mat-unit" value="шт." style="width:50px;"></td>
-            <td><input type="number" class="mat-price" value="${price}" placeholder="0" min="0" onchange="calculateTotals()" style="width:70px;"></td>
-            <td><input type="number" class="mat-qty" value="${qty}" placeholder="0" min="0" onchange="calculateTotals()" style="width:60px;"></td>
-            <td style="text-align:center; font-weight:600;">0 ₽</td>
+            <td><input type="text" class="form-input mat-name" value="${escapeHtml(name)}" placeholder="Материал" style="padding: 6px 10px;"></td>
+            <td><input type="text" class="form-input mat-unit" value="шт." style="width:50px; padding: 6px;"></td>
+            <td><input type="number" class="form-input mat-price" value="${price}" placeholder="0" min="0" onchange="calculateTotals()" style="width:80px; padding: 6px;"></td>
+            <td><input type="number" class="form-input mat-qty" value="${qty}" placeholder="0" min="0" onchange="calculateTotals()" style="width:65px; padding: 6px;"></td>
+            <td style="text-align:center; font-weight:700; color: var(--primary-install);">0 ₽</td>
             <td style="text-align:center;"><button class="btn-remove" type="button" onclick="this.closest('tr').remove(); calculateTotals()">✕</button></td>
         `;
         matBody.appendChild(row);
@@ -610,7 +542,6 @@
         return { servicesTotal, discountAmount, discountPercent, worksFinal, materialsTotal, materialsToPay, grandTotal };
     }
 
-    // Единый сборщик данных с формы (DRY)
     function getFormData() {
         calculateTotals();
         return {
@@ -864,7 +795,6 @@
         }
     }
 
-    // Безопасная генерация Коммерческого Предложения
     function generateCommercialOffer() {
         const totals = calculateTotals();
         if (totals.grandTotal === 0 && totals.materialsTotal === 0) { alert('Добавьте хотя бы одну позицию'); return; }
@@ -970,7 +900,6 @@
         }
     }
 
-    // Безопасная генерация Акта
     function generateAct() {
         const totals = calculateTotals();
         if (totals.grandTotal === 0 && totals.materialsTotal === 0) { alert('Добавьте хотя бы одну позицию'); return; }
@@ -1099,6 +1028,14 @@
                 calculateTotals();
             }
         });
+
+        // Плавное появление элементов
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) e.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
     });
 </script>
 </body>

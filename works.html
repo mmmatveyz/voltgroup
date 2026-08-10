@@ -12,7 +12,9 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="./static/css/style.css?v=2.0">
 
     <script type="text/javascript">
         (function(m,e,t,r,i,k,a){
@@ -25,13 +27,12 @@
         ym(108492681, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/108492681" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <link rel="stylesheet" href="./static/css/style.css">
 
     <style>
-        /* Стили для галереи */
+        /* Стили для галереи портфолио */
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 25px;
             margin-top: 30px;
         }
@@ -42,35 +43,52 @@
             overflow: hidden;
             cursor: pointer;
             transition: var(--transition);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+        .gallery-item::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-install), transparent);
+            opacity: 0;
+            transition: var(--transition);
         }
         .gallery-item:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary-install);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            transform: translateY(-6px);
+            border-color: rgba(0, 229, 255, 0.4);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45);
         }
+        .gallery-item:hover::after { opacity: 1; }
+
         .gallery-img {
             width: 100%;
-            height: 200px;
+            height: 220px;
             object-fit: cover;
-            background: #111;
+            background: #090d16;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--text-muted);
             font-size: 0.9rem;
+            border-bottom: 1px solid var(--border-light);
         }
         .gallery-content {
-            padding: 20px;
+            padding: 22px;
         }
         .gallery-content h3 {
-            font-size: 1.1rem;
-            margin-bottom: 8px;
+            font-family: var(--font-heading);
+            font-size: 1.05rem;
+            margin-bottom: 10px;
             color: var(--text-main);
+            text-transform: uppercase;
         }
         .gallery-content p {
-            font-size: 0.9rem;
-            margin-bottom: 12px;
+            font-size: 0.92rem;
+            margin-bottom: 16px;
             color: var(--text-muted);
+            line-height: 1.5;
         }
         .gallery-badges {
             display: flex;
@@ -78,21 +96,23 @@
             gap: 8px;
         }
         .badge {
-            background: rgba(0, 229, 255, 0.15);
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid rgba(0, 229, 255, 0.3);
             color: var(--primary-install);
-            padding: 4px 10px;
-            border-radius: 20px;
+            padding: 4px 12px;
+            border-radius: 99px;
             font-size: 0.75rem;
-            font-weight: 600;
+            font-weight: 700;
         }
 
-        /* Lightbox */
+        /* Lightbox просмотрщик */
         .lightbox {
             display: none;
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
+            background: rgba(5, 9, 20, 0.95);
+            backdrop-filter: blur(15px);
             z-index: 2000;
             justify-content: center;
             align-items: center;
@@ -101,17 +121,19 @@
         .lightbox.active { display: flex; }
         .lightbox-content {
             background: var(--bg-card);
+            border: 1px solid var(--border-light);
             border-radius: var(--radius-lg);
             max-width: 900px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
             position: relative;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7);
         }
         .lightbox-close {
             position: absolute;
             top: 15px; right: 20px;
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             color: var(--text-main);
             cursor: pointer;
             z-index: 10;
@@ -120,28 +142,41 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.06);
+            border: 1px solid var(--border-light);
             border-radius: 50%;
             transition: var(--transition);
         }
         .lightbox-close:hover {
-            background: rgba(255,255,255,0.2);
+            background: var(--primary-install);
+            color: #050914;
             transform: rotate(90deg);
         }
         .lightbox-img {
             width: 100%;
             max-height: 60vh;
             object-fit: contain;
-            background: #000;
+            background: #02040a;
             display: block;
+            border-bottom: 1px solid var(--border-light);
         }
         .lightbox-info { padding: 25px; }
-        .lightbox-info h3 { margin-bottom: 10px; color: var(--text-main); }
-        .lightbox-info p { margin-bottom: 15px; color: var(--text-muted); }
+        .lightbox-info h3 {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: var(--text-main);
+            text-transform: uppercase;
+        }
+        .lightbox-info p {
+            margin-bottom: 18px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
 
         @media (max-width: 768px) {
             .lightbox-content { max-height: 100vh; }
-            .lightbox-img { max-height: 50vh; }
+            .lightbox-img { max-height: 48vh; }
         }
     </style>
 </head>
@@ -164,17 +199,20 @@
 </header>
 
 <main>
-    <section class="hero" style="padding-top: 120px;">
-        <div class="container">
-            <h1>Наши работы</h1>
-            <p class="hero-subtitle">Реальные примеры электромонтажа и автоматизации. От замены розеток до сложных щитов.</p>
-        </div>
+    <section class="hero container fade-in" style="padding-top: 150px; display: block; text-align: left;">
+        <span class="badge-status">
+            <span class="dot"></span> Галерея выполненных объектов
+        </span>
+        <h1>Портфолио <span style="color: var(--primary-install);">VoltGroup</span></h1>
+        <p class="hero-subtitle" style="max-width: 680px;">
+            Реальные примеры электромонтажа, сборки силовых щитов и автоматизации в СПб и Ленинградской области.
+        </p>
     </section>
 
-    <section class="section">
+    <section class="section" style="padding-top: 10px;">
         <div class="container">
             <div id="loading-text" style="text-align: center; padding: 60px 20px; color: var(--text-muted); font-size: 1.1rem;">
-                Загрузка портфолио...
+                ⏳ Загрузка портфолио...
             </div>
             <div id="gallery" class="gallery-grid" style="display: none;"></div>
         </div>
@@ -232,7 +270,7 @@
 </footer>
 
 <script>
-    // Хелпер экранирования строк
+    // 1. Хелпер экранирования строк
     function escapeHtml(str) {
         if (!str) return '';
         return String(str)
@@ -243,7 +281,7 @@
             .replace(/'/g, '&#039;');
     }
 
-    // Mobile Menu
+    // 2. Mobile Menu
     const mobileToggle = document.querySelector('.mobile-toggle');
     const navLinks = document.querySelector('.nav-links');
     if (mobileToggle && navLinks) {
@@ -257,7 +295,7 @@
         }));
     }
 
-    // Load Gallery
+    // 3. Загрузка данных галереи
     const loadingText = document.getElementById('loading-text');
     const gallery = document.getElementById('gallery');
 
@@ -271,7 +309,7 @@
         gallery.style.display = 'grid';
 
         if (!data || data.length === 0) {
-            gallery.innerHTML = '<p style="text-align:center;color:var(--text-muted); grid-column: 1/-1; padding: 60px;">Портфолио пока пустое</p>';
+            gallery.innerHTML = '<p style="text-align:center; color:var(--text-muted); grid-column: 1/-1; padding: 60px;">Портфолио пока пустое</p>';
             return;
         }
 
@@ -303,13 +341,13 @@
             });
         });
 
-        // Анимация появления
+        // Каскадная анимация появления элементов
         setTimeout(() => {
             document.querySelectorAll('.gallery-item').forEach((el, index) => {
                 el.style.opacity = '0';
                 el.style.transform = 'translateY(20px)';
                 setTimeout(() => {
-                    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
                     el.style.opacity = '1';
                     el.style.transform = 'translateY(0)';
                 }, index * 80);
@@ -319,7 +357,7 @@
         .catch(err => {
         console.error('Gallery error:', err);
         loadingText.innerHTML = `
-                <div style="padding: 60px 20px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-light); max-width: 600px; margin: 0 auto;">
+                <div style="padding: 60px 20px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-light); max-width: 600px; margin: 0 auto; text-align: center;">
                     <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 20px;">
                         ⚠️ Не удалось загрузить портфолио
                     </p>
@@ -328,7 +366,7 @@
             `;
     });
 
-    // Lightbox Functions
+    // 4. Функции управления Lightbox
     function openLightbox(img, title, desc, badges) {
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
@@ -355,7 +393,7 @@
         }, 300);
     }
 
-    // Закрытие lightbox
+    // 5. Обработчики закрытия Lightbox
     const lightboxClose = document.getElementById('lightbox-close');
     const lightboxEl = document.getElementById('lightbox');
 
@@ -368,11 +406,21 @@
         });
     }
 
-    // Закрытие по Escape
+    // Закрытие по клавише Escape
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             closeLightbox();
         }
+    });
+
+    // 6. Плавное появление элементов
+    document.addEventListener('DOMContentLoaded', () => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) e.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
     });
 </script>
 </body>

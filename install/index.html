@@ -12,7 +12,37 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../static/css/style.css?v=2.0">
+
+    <style>
+        .ticker {
+            overflow: hidden;
+            border-block: 1px solid var(--border-light);
+            background: rgba(255, 255, 255, 0.02);
+            position: relative;
+            z-index: 1;
+            margin: 20px 0 50px;
+        }
+        .ticker-track {
+            display: flex;
+            width: max-content;
+            animation: tick 26s linear infinite;
+            padding: 12px 0;
+        }
+        .ticker-track span {
+            font-family: var(--font-heading);
+            font-size: 0.78rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            padding: 0 20px;
+            white-space: nowrap;
+        }
+        .ticker-track span i { color: var(--primary-install); font-style: normal; }
+        @keyframes tick { to { transform: translateX(-50%); } }
+    </style>
 
     <script type="text/javascript">
         (function(m,e,t,r,i,k,a){
@@ -25,7 +55,6 @@
         ym(108492681, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/108492681" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
 
@@ -46,55 +75,87 @@
 </header>
 
 <main>
-    <section class="hero" style="padding-top: 120px;">
-        <div class="container">
-            <h1 style="color: var(--primary-install);">VoltGroup Install</h1>
-            <p class="hero-subtitle">Профессиональный электромонтаж квартир и домов. Гарантия 12 месяцев.</p>
-            <div class="hero-actions">
-                <a href="../estimate.html" class="btn btn-primary">Открыть калькулятор</a>
-            </div>
+    <section class="hero container fade-in" style="padding-top: 150px; display: block; text-align: left;">
+        <span class="badge-status">
+            <span class="dot"></span> Электромонтаж по ПУЭ · СПб и ЛО
+        </span>
+        <h1><span style="color: var(--primary-install);">VOLTGROUP</span> INSTALL</h1>
+        <p class="hero-subtitle" style="max-width: 680px;">
+            Профессиональный электромонтаж квартир, загородных домов и офисных помещений.
+            Сборка щитов, черновой монтаж, чистовая установка и тепловизионный контроль с гарантией 12 месяцев.
+        </p>
+        <div class="hero-actions">
+            <a href="../estimate.html" class="btn btn-primary">Рассчитать стоимость в калькуляторе ⚡</a>
+            <a href="#contact" class="btn btn-outline">Оставить заявку</a>
         </div>
     </section>
 
-    <section class="section">
+    <div class="ticker">
+        <div class="ticker-track" id="tickTrack">
+            <span>Разводка кабеля <i>⚡</i></span>
+            <span>Сборка силовых щитов <i>⚡</i></span>
+            <span>Штробление без пыли <i>⚡</i></span>
+            <span>Установка розеток <i>⚡</i></span>
+            <span>Тепловизионный контроль <i>⚡</i></span>
+            <span>Работа по ГОСТ и ПУЭ <i>⚡</i></span>
+        </div>
+    </div>
+
+    <section class="section" style="padding-top: 20px;">
         <div class="container">
-            <h2>Прайс-лист</h2>
-            <div id="install-prices">
-                <p style="text-align: center; color: var(--text-muted);">Загрузка прайса...</p>
+            <h2 class="fade-in">Прайс-лист на <span>электромонтаж</span></h2>
+            <div id="install-prices" class="fade-in">
+                <p style="text-align: center; color: var(--text-muted);">⏳ Загрузка прайс-листа...</p>
             </div>
         </div>
     </section>
 
     <section id="contact" class="section contact-section">
         <div class="container">
-            <h2>Оставить заявку</h2>
-            <form id="leadForm" class="form-box">
-                <div class="form-group">
-                    <label class="form-label">Имя</label>
-                    <input type="text" name="name" class="form-input" placeholder="Иван" required>
+            <div class="card fade-in" style="padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+                <div>
+                    <span class="badge-status">
+                        <span class="dot"></span> Расчет сметы за 15 минут
+                    </span>
+                    <h2 style="text-align: left; margin-bottom: 15px;">Заказать <span style="color: var(--primary-install);">электромонтаж</span></h2>
+                    <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+                        Оставьте заявку на замер или расчет объекта. Выезжаем по Санкт-Петербургу и ЛО с профессиональным штроборезом и пылесосами.
+                    </p>
+                    <div style="padding: 16px; background: rgba(0, 229, 255, 0.04); border: 1px dashed rgba(0, 229, 255, 0.2); border-radius: 12px;">
+                        <p style="font-size: 0.88rem; color: var(--text-main); font-weight: 600;">⚡ Фиксированная смета</p>
+                        <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Стоимость работ прописывается в договоре и не меняется в процессе.</p>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Телефон</label>
-                    <input type="tel" name="phone" class="form-input" placeholder="+7 (999) 000-00-00" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Задача</label>
-                    <select name="service" class="form-input">
-                        <option>Монтаж проводки</option>
-                        <option>Сборка щита</option>
-                        <option>Умный дом</option>
-                        <option>Другое</option>
-                    </select>
-                </div>
-                <div class="form-group" style="display: flex; align-items: flex-start; gap: 10px; margin-top: 15px;">
-                    <input type="checkbox" id="privacy-consent-main" required style="margin-top: 4px; width: 18px; height: 18px; accent-color: var(--primary-install); cursor: pointer;">
-                    <label for="privacy-consent-main" style="font-size: 0.85rem; color: var(--text-muted); cursor: pointer; line-height: 1.4;">
-                        Я даю согласие на обработку <a href="../privacy.html" target="_blank" style="color: var(--primary-install); text-decoration: underline;">персональных данных</a>
-                    </label>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width:100%;">Отправить</button>
-                <p id="formStatus" style="margin-top:15px;text-align:center;display:none;"></p>
-            </form>
+
+                <form id="leadForm" style="display: grid; gap: 16px;">
+                    <div class="form-group" style="margin: 0;">
+                        <label class="form-label">Ваше имя</label>
+                        <input type="text" name="name" class="form-input" placeholder="Иван" required>
+                    </div>
+                    <div class="form-group" style="margin: 0;">
+                        <label class="form-label">Телефон</label>
+                        <input type="tel" name="phone" class="form-input" placeholder="+7 (999) 000-00-00" required>
+                    </div>
+                    <div class="form-group" style="margin: 0;">
+                        <label class="form-label">Задача</label>
+                        <select name="service" class="form-input">
+                            <option>Монтаж проводки под ключ</option>
+                            <option>Сборка и монтаж электрощита</option>
+                            <option>Поиск неисправности / Диагностика</option>
+                            <option>Чистовая установка электрики</option>
+                            <option>Другое</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: center; gap: 12px; margin-top: 5px;">
+                        <input type="checkbox" id="privacy-consent-main" required style="width: 18px; height: 18px; accent-color: var(--primary-install); cursor: pointer; flex-shrink: 0;">
+                        <label for="privacy-consent-main" style="font-size: 0.82rem; color: var(--text-muted); cursor: pointer; line-height: 1.4;">
+                            Даю согласие на обработку <a href="../privacy.html" target="_blank" style="color: var(--primary-install); text-decoration: underline;">персональных данных</a>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">Получить расчёт ⚡</button>
+                    <p id="formStatus" style="margin-top: 10px; text-align: center; display: none; font-weight: 600;"></p>
+                </form>
+            </div>
         </div>
     </section>
 </main>
@@ -143,7 +204,11 @@
 </footer>
 
 <script>
-    // Хелпер экранирования строк
+    // 1. Бегущая строка
+    const track = document.getElementById('tickTrack');
+    if (track) { track.innerHTML += track.innerHTML; }
+
+    // 2. Хелпер экранирования строк
     function escapeHtml(str) {
         if (!str) return '';
         return String(str)
@@ -154,7 +219,7 @@
             .replace(/'/g, '&#039;');
     }
 
-    // Mobile Menu
+    // 3. Mobile Menu
     const mobileToggle = document.querySelector('.mobile-toggle');
     const navLinks = document.querySelector('.nav-links');
     if (mobileToggle && navLinks) {
@@ -170,7 +235,7 @@
         });
     }
 
-    // Load Prices from JSON
+    // 4. Загрузка прайс-листа из JSON
     fetch('../static/data/prices.json')
         .then(r => {
         if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -180,21 +245,22 @@
         let html = '';
         if (d.install && d.install.categories) {
             d.install.categories.forEach(c => {
-                html += `<div class="price-category">
-                        <h3>${escapeHtml(c.name)}</h3>
-                        <table class="price-table">
-                            <thead>
-                                <tr><th>Услуга</th><th>Ед.</th><th>Цена</th></tr>
-                            </thead>
-                            <tbody>`;
+                html += `<div class="price-category card" style="margin-bottom: 30px;">
+                            <h3>${escapeHtml(c.name)}</h3>
+                            <div class="table-responsive">
+                            <table class="price-table">
+                                <thead>
+                                    <tr><th>Услуга</th><th>Ед.</th><th>Цена</th></tr>
+                                </thead>
+                                <tbody>`;
                 c.items.forEach(i => {
                     html += `<tr>
-                            <td>${escapeHtml(i.service)}</td>
-                            <td>${escapeHtml(i.unit)}</td>
-                            <td class="price-value">${Number(i.price).toLocaleString('ru-RU')} ₽</td>
-                        </tr>`;
+                                <td>${escapeHtml(i.service)}</td>
+                                <td style="color: var(--text-muted);">${escapeHtml(i.unit)}</td>
+                                <td class="price-value">${Number(i.price).toLocaleString('ru-RU')} ₽</td>
+                            </tr>`;
                 });
-                html += `</tbody></table></div>`;
+                html += `</tbody></table></div></div>`;
             });
             document.getElementById('install-prices').innerHTML = html;
         } else {
@@ -210,7 +276,7 @@
                 </div>`;
     });
 
-    // Form Submission & Auto-ping
+    // 5. Отправка формы и автопинг
     const leadForm = document.getElementById('leadForm');
     let hasPinged = false;
 
@@ -242,7 +308,7 @@
                     body: JSON.stringify(Object.fromEntries(formData))
                 });
                 if (res.ok) {
-                    status.textContent = '✅ Заявка отправлена!';
+                    status.textContent = '✅ Заявка отправлена! Свяжемся с вами в ближайшее время.';
                     status.style.color = '#10B981';
                     e.target.reset();
                 } else {
@@ -253,10 +319,18 @@
                 status.style.color = '#EF4444';
             } finally {
                 btn.disabled = false;
-                btn.textContent = 'Отправить';
+                btn.textContent = 'Получить расчёт ⚡';
             }
         });
     }
+
+    // 6. Плавное появление
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) e.target.classList.add('visible');
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>

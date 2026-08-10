@@ -4,101 +4,156 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Личный кабинет объекта | VoltGroup</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --bg-dark: #050914;
-            --bg-card: rgba(17, 24, 39, 0.7);
+            --bg-card: rgba(15, 23, 42, 0.75);
             --primary-install: #00E5FF;
+            --primary-eng: #7B61FF;
+            --volt-yellow: #FFD60A;
             --text-main: #F8FAFC;
             --text-muted: #94A3B8;
-            --border-light: rgba(255, 255, 255, 0.1);
-            --radius-lg: 16px;
+            --border-light: rgba(255, 255, 255, 0.08);
+            --radius-lg: 18px;
             --radius-md: 12px;
             --success: #10B981;
-            --font-main: 'Inter', sans-serif;
+            --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-heading: 'Unbounded', sans-serif;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background-color: var(--bg-dark);
-            background-image: radial-gradient(circle at 50% 0%, #1a2c4e 0%, var(--bg-dark) 60%);
+            background-image:
+            radial-gradient(800px 500px at 85% -10%, rgba(0, 229, 255, 0.08), transparent 60%),
+            radial-gradient(800px 500px at 5% 20%, rgba(255, 214, 10, 0.05), transparent 60%),
+            linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
             color: var(--text-main);
+            font-family: var(--font-main);
             line-height: 1.6;
             padding: 20px;
             min-height: 100vh;
         }
 
-        .container { max-width: 600px; margin: 0 auto; }
+        .container { max-width: 620px; margin: 0 auto; }
 
         .header { text-align: center; margin-bottom: 30px; padding-top: 20px; }
-        .logo { color: var(--text-main); font-size: 1.5rem; font-weight: 800; text-decoration: none; margin-bottom: 10px; display: block; }
+        .logo {
+            font-family: var(--font-heading);
+            color: var(--text-main);
+            font-size: 1.4rem;
+            font-weight: 900;
+            text-decoration: none;
+            margin-bottom: 15px;
+            display: inline-block;
+            letter-spacing: -0.02em;
+        }
         .logo span { color: var(--primary-install); }
-        .object-title { font-size: 1.2rem; margin-bottom: 5px; }
+        .object-title { font-family: var(--font-heading); font-size: 1.25rem; margin-bottom: 6px; text-transform: uppercase; }
         .object-id { color: var(--text-muted); font-size: 0.9rem; }
+
+        .badge-status {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+            color: var(--primary-install); border: 1px solid rgba(0, 229, 255, 0.3);
+            border-radius: 99px; padding: 5px 14px; margin-bottom: 15px;
+        }
+        .badge-status .dot {
+            width: 7px; height: 7px; border-radius: 50%; background: var(--success);
+            box-shadow: 0 0 10px var(--success);
+            animation: blink 1.6s infinite;
+        }
+        @keyframes blink { 50% { opacity: 0.3; } }
 
         .card {
             background: var(--bg-card);
             border: 1px solid var(--border-light);
             border-radius: var(--radius-lg);
-            padding: 25px;
+            padding: 24px;
             margin-bottom: 20px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+        .card::after {
+            content: ""; position: absolute; top: 0; left: 0; right: 0;
+            height: 2px; background: linear-gradient(90deg, var(--primary-install), transparent);
         }
         .card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 15px;
+            font-family: var(--font-heading);
+            font-size: 0.95rem;
+            margin-bottom: 16px;
             color: var(--primary-install);
             border-bottom: 1px solid var(--border-light);
             padding-bottom: 10px;
+            text-transform: uppercase;
         }
 
-        .progress-header { display: flex; justify-content: space-between; font-weight: 600; margin-bottom: 10px; }
-        .progress-track { width: 100%; height: 12px; background: rgba(0,0,0,0.5); border-radius: 10px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--primary-install); box-shadow: 0 0 10px rgba(0,229,255,0.5); transition: width 1s ease; width: 0%; }
+        .progress-header { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 12px; font-family: var(--font-heading); font-size: 0.9rem; }
+        .progress-track { width: 100%; height: 12px; background: rgba(0,0,0,0.6); border-radius: 10px; overflow: hidden; border: 1px solid var(--border-light); }
+        .progress-fill { height: 100%; background: var(--primary-install); box-shadow: 0 0 12px var(--primary-install); transition: width 1s ease; width: 0%; }
 
         .timeline { list-style: none; position: relative; padding-left: 20px; }
         .timeline::before { content: ''; position: absolute; left: 0; top: 5px; bottom: 5px; width: 2px; background: var(--border-light); }
         .timeline-item { position: relative; margin-bottom: 20px; }
         .timeline-item:last-child { margin-bottom: 0; }
-        .timeline-marker { position: absolute; left: -25px; top: 4px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg-dark); border: 2px solid var(--text-muted); z-index: 1; }
-        .timeline-item.done .timeline-marker { background: var(--success); border-color: var(--success); box-shadow: 0 0 8px rgba(16, 185, 129, 0.5); }
-        .timeline-item.current .timeline-marker { background: var(--primary-install); border-color: var(--primary-install); box-shadow: 0 0 8px rgba(0, 229, 255, 0.5); }
-        .timeline-title { font-weight: 600; font-size: 1rem; color: var(--text-main); }
-        .timeline-item.current .timeline-title { color: var(--primary-install); }
+        .timeline-marker { position: absolute; left: -25px; top: 4px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg-dark); border: 2px solid var(--text-muted); z-index: 1; transition: all 0.3s ease; }
+        .timeline-item.done .timeline-marker { background: var(--success); border-color: var(--success); box-shadow: 0 0 10px var(--success); }
+        .timeline-item.current .timeline-marker { background: var(--primary-install); border-color: var(--primary-install); box-shadow: 0 0 10px var(--primary-install); }
+        .timeline-title { font-weight: 600; font-size: 0.98rem; color: var(--text-main); }
+        .timeline-item.current .timeline-title { color: var(--primary-install); font-weight: 700; }
         .timeline-date { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
 
-        /* Сетка для нескольких фотографий */
-        .photo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
-        .photo-container { width: 100%; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: #111; }
+        /* Сетка для фотографий */
+        .photo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+        .photo-container { width: 100%; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-light); background: #0b1120; }
         .photo-container img { width: 100%; height: 160px; display: block; object-fit: cover; transition: transform 0.3s ease; }
-        .photo-container img:hover { transform: scale(1.03); }
+        .photo-container img:hover { transform: scale(1.04); }
         .photo-placeholder { padding: 30px; text-align: center; color: var(--text-muted); font-size: 0.9rem; grid-column: 1 / -1; }
 
-        .finance-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.95rem; }
-        .finance-row:last-child { margin-bottom: 0; margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--border-light); font-weight: 700; font-size: 1.1rem; }
+        .finance-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.95rem; }
+        .finance-row:last-child { margin-bottom: 0; margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--border-light); font-weight: 700; font-size: 1.05rem; }
         .text-green { color: var(--success); }
+
+        .btn-tg {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 12px 24px; border-radius: 12px; background: rgba(0, 229, 255, 0.1);
+            border: 1px solid rgba(0, 229, 255, 0.3); color: var(--primary-install);
+            font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease;
+        }
+        .btn-tg:hover { background: var(--primary-install); color: #050914; box-shadow: 0 0 20px rgba(0, 229, 255, 0.4); }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="header">
-        <a href="#" class="logo">Volt<span>Group</span></a>
+        <a href="../index.html" class="logo">VOLT<span>GROUP</span></a>
+        <div>
+            <span class="badge-status"><span class="dot"></span> ТРЕКЕР ОБЪЕКТА</span>
+        </div>
         <h1 class="object-title">Загрузка данных объекта...</h1>
         <p class="object-id">Пожалуйста, подождите</p>
     </div>
 
     <div class="card">
         <div class="progress-header">
-            <span>Статус объекта</span>
+            <span>Статус готовности</span>
             <span style="color: var(--primary-install);" id="progress-text">0%</span>
         </div>
         <div class="progress-track">
             <div class="progress-fill" id="progress-bar"></div>
         </div>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px; text-align: right;">Синхронизировано с базой</p>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px; text-align: right;">Синхронизировано с базой VoltGroup</p>
     </div>
 
     <div class="card">
@@ -132,18 +187,18 @@
         <div class="photo-grid" id="photo-box">
             <div class="photo-placeholder">Фотографии с объекта скоро появятся здесь.</div>
         </div>
-        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px;">Все фото скрытых работ зафиксированы.</p>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 12px;">Все скрытые работы зафиксированы.</p>
     </div>
 
     <div class="card">
         <h3>Финансовый отчет</h3>
         <div class="finance-row">
             <span style="color: var(--text-muted);">Общая смета:</span>
-            <span id="total-sum">—</span>
+            <span id="total-sum" style="font-weight: 600;">—</span>
         </div>
         <div class="finance-row text-green">
             <span>Внесено / Оплачено:</span>
-            <span id="paid-sum">—</span>
+            <span id="paid-sum" style="font-weight: 700;">—</span>
         </div>
         <div class="finance-row">
             <span>Текущий этап:</span>
@@ -152,7 +207,7 @@
     </div>
 
     <div style="text-align: center; margin-top: 30px; margin-bottom: 20px;">
-        <a href="https://t.me/voltgroup_spb" style="color: var(--text-muted); text-decoration: underline; font-size: 0.9rem;">Связаться с мастером в Telegram</a>
+        <a href="https://t.me/voltgroup_spb" target="_blank" class="btn-tg">✈️ Связаться с мастером в Telegram</a>
     </div>
 </div>
 
@@ -163,9 +218,9 @@
 
         if (!objectId) {
             document.querySelector('.container').innerHTML = `
-                <div style="text-align: center; padding: 50px 20px;">
-                    <h2 style="color: #EF4444;">Ошибка доступа</h2>
-                    <p>Не указан номер объекта. Пожалуйста, используйте персональную ссылку из сообщения.</p>
+                <div style="text-align: center; padding: 50px 20px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-light); margin-top: 40px;">
+                    <h2 style="color: #EF4444; font-family: var(--font-heading); font-size: 1.2rem; margin-bottom: 10px;">ОШИБКА ДОСТУПА</h2>
+                    <p style="color: var(--text-muted);">Не указан номер объекта. Пожалуйста, используйте персональную ссылку из сообщения.</p>
                 </div>
             `;
             return;
