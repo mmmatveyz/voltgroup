@@ -26,6 +26,13 @@
             .hero-title-break { display: block; }
         }
 
+        .hero h1 {
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            -webkit-hyphens: auto;
+            hyphens: auto;
+        }
+
         .ticker {
             overflow: hidden;
             border-block: 1px solid var(--border-light);
@@ -52,7 +59,7 @@
         .ticker-track span i { color: var(--volt-yellow); font-style: normal; }
         @keyframes tick { to { transform: translateX(-50%); } }
 
-        /* ИСПРАВЛЕНО: Контактная карточка — используем класс, брейкпоинт унифицирован с основным CSS */
+        /* Оптимизация карточки формы для мобильных устройств */
         .contact-grid-card {
             padding: 40px;
             display: grid;
@@ -90,6 +97,8 @@
 </head>
 <body>
 
+<div class="nav-overlay" id="navOverlay"></div>
+
 <header class="header">
     <div class="container nav-container">
         <a href="./index.html" class="logo">
@@ -103,8 +112,6 @@
             <a href="./works.html">Работы</a>
             <a href="./contacts/" class="btn btn-outline" style="padding: 8px 20px; font-size: 0.9rem;">Контакты</a>
         </nav>
-        <!-- ИСПРАВЛЕНО: Добавлен затемняющий оверлей для мобильного меню -->
-        <div class="nav-overlay"></div>
     </div>
 </header>
 
@@ -242,7 +249,7 @@
     <section id="process" class="section" style="background: rgba(255,255,255,0.01);">
         <div class="container">
             <h2 class="fade-in">Как мы <span>работаем</span></h2>
-            <div class="grid-3" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+            <div class="grid-3">
                 <div class="card fade-in" style="padding: 20px; text-align: center;">
                     <div style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--primary-install); margin-bottom: 8px;">1</div>
                     <h4 style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 6px;">Заявка</h4>
@@ -399,9 +406,11 @@
 </div>
 
 <script>
+    // 1. Бегущая строка
     const track = document.getElementById('tickTrack');
     if (track) { track.innerHTML += track.innerHTML; }
 
+    // 2. Оживление нагрузки щитка
     const loadEl = document.getElementById('live-load');
     const swSmart = document.getElementById('sw-smart');
     const swAuto = document.getElementById('sw-auto');
@@ -417,16 +426,16 @@
     if(swSmart) swSmart.addEventListener('change', updateLoad);
     if(swAuto) swAuto.addEventListener('change', updateLoad);
 
-    /* ИСПРАВЛЕНО: Мобильное меню с оверлеем и блокировкой скролла body */
+    // 3. Мобильное меню (Исправлен скрипт взаимодействия с оверлеем)
     const mobileToggle = document.querySelector('.mobile-toggle');
     const navLinks = document.querySelector('.nav-links');
-    const navOverlay = document.querySelector('.nav-overlay');
+    const navOverlay = document.getElementById('navOverlay');
 
     function closeMobileMenu() {
-        navLinks.classList.remove('open');
+        if (navLinks) navLinks.classList.remove('open');
         if (navOverlay) navOverlay.classList.remove('active');
         document.body.style.overflow = '';
-        mobileToggle.textContent = '☰';
+        if (mobileToggle) mobileToggle.textContent = '☰';
     }
 
     if (mobileToggle && navLinks) {
@@ -437,13 +446,11 @@
             mobileToggle.textContent = isOpen ? '✕' : '☰';
         });
 
-        // Закрытие по клику на ссылки меню
         document.querySelectorAll('.nav-links a').forEach(l => l.addEventListener('click', closeMobileMenu));
-
-        // Закрытие по клику на оверлей
         if (navOverlay) navOverlay.addEventListener('click', closeMobileMenu);
     }
 
+    // 4. Аккордеон
     document.querySelectorAll('.accordion-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const content = btn.nextElementSibling;
@@ -463,6 +470,7 @@
         });
     });
 
+    // 5. Форма
     const leadForm = document.getElementById('leadForm');
     let hasPinged = false;
 
