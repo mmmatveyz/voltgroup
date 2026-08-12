@@ -71,6 +71,8 @@
             <a href="../works.html">Работы</a>
             <a href="../contacts/" class="btn btn-outline" style="padding: 8px 20px; font-size: 0.9rem;">Контакты</a>
         </nav>
+        <!-- ИСПРАВЛЕНО: Добавлен затемняющий оверлей для мобильного меню -->
+        <div class="nav-overlay"></div>
     </div>
 </header>
 
@@ -112,7 +114,8 @@
 
     <section id="contact" class="section contact-section">
         <div class="container">
-            <div class="card fade-in" style="padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+            <!-- ИСПРАВЛЕНО: Убраны inline-стили grid, добавлен класс contact-grid-card -->
+            <div class="card fade-in contact-grid-card">
                 <div>
                     <span class="badge-status">
                         <span class="dot"></span> Расчет сметы за 15 минут
@@ -219,20 +222,33 @@
             .replace(/'/g, '&#039;');
     }
 
-    // 3. Mobile Menu
+    // ИСПРАВЛЕНО: Мобильное меню с оверлеем и блокировкой скролла body
     const mobileToggle = document.querySelector('.mobile-toggle');
     const navLinks = document.querySelector('.nav-links');
+    const navOverlay = document.querySelector('.nav-overlay');
+
+    function closeMobileMenu() {
+        navLinks.classList.remove('open');
+        if (navOverlay) navOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+        mobileToggle.textContent = '☰';
+    }
+
     if (mobileToggle && navLinks) {
         mobileToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('open');
-            mobileToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+            const isOpen = navLinks.classList.toggle('open');
+            if (navOverlay) navOverlay.classList.toggle('active', isOpen);
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+            mobileToggle.textContent = isOpen ? '✕' : '☰';
         });
+
+        // Закрытие по клику на ссылки меню
         document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('open');
-                mobileToggle.textContent = '☰';
-            });
+            link.addEventListener('click', closeMobileMenu);
         });
+
+        // Закрытие по клику на оверлей
+        if (navOverlay) navOverlay.addEventListener('click', closeMobileMenu);
     }
 
     // 4. Загрузка прайс-листа из JSON

@@ -21,7 +21,11 @@
     <link rel="stylesheet" href="./static/css/style.css?v=2.0">
 
     <style>
-        /* Локальные стили для бегущей строки */
+        .hero-title-break { display: inline; }
+        @media (min-width: 993px) {
+            .hero-title-break { display: block; }
+        }
+
         .ticker {
             overflow: hidden;
             border-block: 1px solid var(--border-light);
@@ -47,6 +51,29 @@
         }
         .ticker-track span i { color: var(--volt-yellow); font-style: normal; }
         @keyframes tick { to { transform: translateX(-50%); } }
+
+        /* ИСПРАВЛЕНО: Контактная карточка — используем класс, брейкпоинт унифицирован с основным CSS */
+        .contact-grid-card {
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .ticker { margin: 25px 0; }
+            .contact-grid-card {
+                padding: 20px !important;
+                grid-template-columns: 1fr !important;
+                gap: 25px !important;
+            }
+            .board-row span {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+            }
+        }
     </style>
 
     <script type="text/javascript">
@@ -76,6 +103,8 @@
             <a href="./works.html">Работы</a>
             <a href="./contacts/" class="btn btn-outline" style="padding: 8px 20px; font-size: 0.9rem;">Контакты</a>
         </nav>
+        <!-- ИСПРАВЛЕНО: Добавлен затемняющий оверлей для мобильного меню -->
+        <div class="nav-overlay"></div>
     </div>
 </header>
 
@@ -85,8 +114,8 @@
             <span class="badge-status">
                 <span class="dot"></span> СПб и ЛО · Пн–Сб 9:00–21:00
             </span>
-            <h1>Профессиональный электромонтаж<br><span style="color: var(--primary-install);">и автоматизация</span></h1>
-            <p class="hero-subtitle">Энергия решений - от розетки до Умного Дома. Промышленный опыт, честные цены, официальная гарантия.</p>
+            <h1>Профессиональный электромонтаж <span class="hero-title-break"></span><span style="color: var(--primary-install);">и автоматизация</span></h1>
+            <p class="hero-subtitle">Энергия решений — от розетки до Умного Дома. Промышленный опыт, честные цены, официальная гарантия.</p>
             <div class="hero-actions">
                 <a href="./install/" class="btn btn-primary">Электромонтаж (Install)</a>
                 <a href="./engineering/" class="btn btn-secondary">Инженерия (Engineering)</a>
@@ -180,7 +209,7 @@
 
     <section class="section" style="background: var(--bg-panel); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); position: relative; padding: 0;">
         <div class="hazard-border"></div>
-        <div class="container fade-in" style="text-align: center; padding: 60px 20px;">
+        <div class="container fade-in" style="text-align: center; padding: 50px 20px;">
             <h2>Качество в <span>деталях</span></h2>
             <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 25px;">Посмотрите примеры собранных щитов, разводки кабеля и реализованных систем автоматизации в нашем портфолио.</p>
             <a href="./works.html" class="btn btn-volt">Смотреть галерею объектов →</a>
@@ -199,7 +228,7 @@
                 <div class="card fade-in" style="transition-delay: 0.1s;">
                     <span style="font-family: var(--font-heading); font-size: 1.8rem; color: var(--primary-eng); display: block; margin-bottom: 10px;">02</span>
                     <h3>Идеальная чистота</h3>
-                    <p style="font-size: 0.92rem;">Штроборез с пылесосом, лазерный уровень. Убираем за собой - ваш объект остаётся чистым.</p>
+                    <p style="font-size: 0.92rem;">Штроборез с пылесосом, лазерный уровень. Убираем за собой — ваш объект остаётся чистым.</p>
                 </div>
                 <div class="card fade-in" style="transition-delay: 0.2s;">
                     <span style="font-family: var(--font-heading); font-size: 1.8rem; color: var(--volt-yellow); display: block; margin-bottom: 10px;">03</span>
@@ -213,7 +242,7 @@
     <section id="process" class="section" style="background: rgba(255,255,255,0.01);">
         <div class="container">
             <h2 class="fade-in">Как мы <span>работаем</span></h2>
-            <div class="grid-3" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+            <div class="grid-3" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
                 <div class="card fade-in" style="padding: 20px; text-align: center;">
                     <div style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--primary-install); margin-bottom: 8px;">1</div>
                     <h4 style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 6px;">Заявка</h4>
@@ -277,7 +306,7 @@
 
     <section id="contact" class="section contact-section">
         <div class="container">
-            <div class="card fade-in" style="padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+            <div class="card fade-in contact-grid-card">
                 <div>
                     <span class="badge-status">
                         <span class="dot"></span> Пн–Сб 9:00–21:00 · Выезд по СПб и ЛО
@@ -311,8 +340,8 @@
                             <option>Другое</option>
                         </select>
                     </div>
-                    <div class="form-group" style="display: flex; align-items: center; gap: 12px; margin-top: 5px;">
-                        <input type="checkbox" id="privacy-consent-main" required style="width: 18px; height: 18px; accent-color: var(--primary-install); cursor: pointer; flex-shrink: 0;">
+                    <div class="form-group" style="display: flex; align-items: flex-start; gap: 10px; margin-top: 5px;">
+                        <input type="checkbox" id="privacy-consent-main" required style="margin-top: 3px; width: 18px; height: 18px; accent-color: var(--primary-install); cursor: pointer; flex-shrink: 0;">
                         <label for="privacy-consent-main" style="font-size: 0.82rem; color: var(--text-muted); cursor: pointer; line-height: 1.4;">
                             Даю согласие на обработку <a href="./privacy.html" target="_blank" style="color: var(--primary-install); text-decoration: underline;">персональных данных</a>
                         </label>
@@ -370,11 +399,9 @@
 </div>
 
 <script>
-    // 1. Бегущая строка (дублирование для бесшовности)
     const track = document.getElementById('tickTrack');
     if (track) { track.innerHTML += track.innerHTML; }
 
-    // 2. Оживление нагрузки анимированного щитка
     const loadEl = document.getElementById('live-load');
     const swSmart = document.getElementById('sw-smart');
     const swAuto = document.getElementById('sw-auto');
@@ -390,21 +417,33 @@
     if(swSmart) swSmart.addEventListener('change', updateLoad);
     if(swAuto) swAuto.addEventListener('change', updateLoad);
 
-    // 3. Мобильное меню
+    /* ИСПРАВЛЕНО: Мобильное меню с оверлеем и блокировкой скролла body */
     const mobileToggle = document.querySelector('.mobile-toggle');
     const navLinks = document.querySelector('.nav-links');
-    if (mobileToggle && navLinks) {
-        mobileToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('open');
-            mobileToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
-        });
-        document.querySelectorAll('.nav-links a').forEach(l => l.addEventListener('click', () => {
-            navLinks.classList.remove('open');
-            mobileToggle.textContent = '☰';
-        }));
+    const navOverlay = document.querySelector('.nav-overlay');
+
+    function closeMobileMenu() {
+        navLinks.classList.remove('open');
+        if (navOverlay) navOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+        mobileToggle.textContent = '☰';
     }
 
-    // 4. Логика Аккордеона (FAQ)
+    if (mobileToggle && navLinks) {
+        mobileToggle.addEventListener('click', () => {
+            const isOpen = navLinks.classList.toggle('open');
+            if (navOverlay) navOverlay.classList.toggle('active', isOpen);
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+            mobileToggle.textContent = isOpen ? '✕' : '☰';
+        });
+
+        // Закрытие по клику на ссылки меню
+        document.querySelectorAll('.nav-links a').forEach(l => l.addEventListener('click', closeMobileMenu));
+
+        // Закрытие по клику на оверлей
+        if (navOverlay) navOverlay.addEventListener('click', closeMobileMenu);
+    }
+
     document.querySelectorAll('.accordion-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const content = btn.nextElementSibling;
@@ -424,7 +463,6 @@
         });
     });
 
-    // 5. Отправка формы и пинг сервера (Render.com)
     const leadForm = document.getElementById('leadForm');
     let hasPinged = false;
 
@@ -473,7 +511,6 @@
         });
     }
 
-    // 6. Плавное появление элементов
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(e => {
             if (e.isIntersecting) e.target.classList.add('visible');
