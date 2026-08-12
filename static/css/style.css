@@ -106,11 +106,11 @@ h1, h2, h3, h4, .logo {
 }
 
 h1 {
-    font-size: clamp(1.6rem, 3.1vw, 2.75rem);
-    line-height: 1.18;
+    font-size: clamp(1.25rem, 3.6vw, 3.2rem);
+    line-height: 1.15;
     margin-bottom: 20px;
     text-transform: uppercase;
-    /* Полностью убираем дефисные разрывы слов */
+    /* Убираем дефисные разрывы слов */
     hyphens: none !important;
     -webkit-hyphens: none !important;
     word-break: normal !important;
@@ -224,12 +224,11 @@ p { color: var(--text-muted); font-size: 1.05rem; }
 }
 @keyframes blink { 50% { opacity: 0.3; } }
 
-/* === КОМПАКТНЫЙ ЩИТОК В HERO === */
+/* === ЩИТОК В HERO === */
 .hero-board {
     background: linear-gradient(180deg, #111827, #090d16);
     border: 1px solid var(--border-light);
-    border-radius: 20px;
-    padding: 20px;
+    border-radius: 20px; padding: 20px;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
     position: relative;
     width: 340px; /* Строгая компактная ширина */
@@ -395,8 +394,45 @@ textarea.form-input { resize: vertical; min-height: 110px; }
     backdrop-filter: blur(10px);
 }
 
+
+/* === УНИВЕРСАЛЬНЫЕ ОТСТУПЫ ПОД ФИКСИРОВАННУЮ ШАПКУ === */
+
+/* На ПК: делаем отступ сверху не менее 140px для первого блока main */
+main > section:first-child,
+main > .container:first-child,
+.hero {
+    padding-top: 140px !important;
+}
+
+/* На планшетах (до 992px) */
+@media (max-width: 992px) {
+    main > section:first-child,
+    main > .container:first-child,
+    .hero {
+        padding-top: 120px !important;
+    }
+}
+
+/* На смартфонах (до 768px): шапка становится чуть более компактной */
+@media (max-width: 768px) {
+    main > section:first-child,
+    main > .container:first-child,
+    .hero {
+        padding-top: 100px !important;
+    }
+}
+
+/* На совсем узких смартфонах (до 380px) */
+@media (max-width: 380px) {
+    main > section:first-child,
+    main > .container:first-child,
+    .hero {
+        padding-top: 90px !important;
+    }
+}
+
 /* ==========================================================================
-   📱 МОБИЛЬНЫЕ СТИЛИ (ЭКРАНЫ МЕНЕЕ 992px И 768px)
+   📱 МОБИЛЬНЫЕ СТИЛИ (ЭКРАНЫ МЕНЕЕ 992px, 768px И 480px)
    ========================================================================== */
 
 @media (max-width: 992px) {
@@ -410,7 +446,7 @@ textarea.form-input { resize: vertical; min-height: 110px; }
 }
 
 @media (max-width: 768px) {
-    .container { padding: 0 15px; }
+    .container { padding: 0 12px; }
     .section { padding: 45px 0; }
 
     /* Шапка и Мобильное меню */
@@ -444,7 +480,7 @@ textarea.form-input { resize: vertical; min-height: 110px; }
     .contact-grid-card,
     .contact-section .card {
         grid-template-columns: 1fr !important;
-        padding: 22px !important;
+        padding: 20px !important;
         gap: 22px !important;
     }
 
@@ -473,16 +509,34 @@ textarea.form-input { resize: vertical; min-height: 110px; }
 }
 
 @media (max-width: 480px) {
-    h1 { font-size: 1.5rem; }
+    h1 {
+        font-size: clamp(1.2rem, 6.2vw, 1.55rem) !important;
+        line-height: 1.2 !important;
+    }
     h2 { font-size: 1.25rem; margin-bottom: 22px; }
 
     .logo img { height: 32px; }
-    .badge-status { font-size: 0.72rem; padding: 4px 10px; }
-    .hero-board { padding: 16px; }
-    .board-row { font-size: 0.82rem; padding: 8px 10px; flex-wrap: wrap; }
+    .badge-status {
+        font-size: 0.68rem;
+        padding: 4px 8px;
+        max-width: 100%;
+        white-space: normal;
+        line-height: 1.3;
+    }
+
+    .hero-board {
+        padding: 14px !important;
+        box-sizing: border-box;
+    }
+    .board-row {
+        font-size: 0.8rem;
+        padding: 8px 10px;
+        flex-wrap: nowrap;
+        gap: 6px;
+    }
 
     .card { padding: 18px; }
-    .btn { padding: 12px 18px; font-size: 0.9rem; }
+    .btn { padding: 12px 16px; font-size: 0.88rem; }
 
     .hero-actions .btn,
     .actions .btn,
@@ -501,10 +555,12 @@ textarea.form-input { resize: vertical; min-height: 110px; }
     }
 }
 
-@media (max-width: 360px) {
-    .container { padding: 0 10px; }
-    .card { padding: 14px; }
-    .contact-grid-card { padding: 16px; }
+@media (max-width: 380px) {
+    .container { padding: 0 10px !important; }
+    .card { padding: 14px !important; }
+    .contact-grid-card { padding: 16px !important; }
+    .board-row span { font-size: 0.75rem !important; }
+    .board-row small { font-size: 0.65rem !important; }
     .price-table th, .price-table td { padding: 8px 5px; font-size: 0.8rem; }
 }
 

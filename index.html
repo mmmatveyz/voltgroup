@@ -21,18 +21,6 @@
     <link rel="stylesheet" href="./static/css/style.css?v=2.0">
 
     <style>
-        .hero-title-break { display: inline; }
-        @media (min-width: 993px) {
-            .hero-title-break { display: block; }
-        }
-
-        .hero h1 {
-            overflow-wrap: break-word;
-            word-wrap: break-word;
-            -webkit-hyphens: auto;
-            hyphens: auto;
-        }
-
         .ticker {
             overflow: hidden;
             border-block: 1px solid var(--border-light);
@@ -59,7 +47,12 @@
         .ticker-track span i { color: var(--volt-yellow); font-style: normal; }
         @keyframes tick { to { transform: translateX(-50%); } }
 
-        /* Оптимизация карточки формы для мобильных устройств */
+        /* Локальные стили адаптивности Hero под малые дисплеи */
+        .title-fit {
+            display: inline-block;
+            max-width: 100%;
+        }
+
         .contact-grid-card {
             padding: 40px;
             display: grid;
@@ -79,6 +72,13 @@
                 display: flex;
                 flex-direction: column;
                 gap: 2px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .hero-title {
+                font-size: clamp(1.2rem, 5.8vw, 1.45rem) !important;
+                line-height: 1.2 !important;
             }
         }
     </style>
@@ -121,8 +121,11 @@
             <span class="badge-status">
                 <span class="dot"></span> СПб и ЛО · Пн–Сб 9:00–21:00
             </span>
-            <h1>Профессиональный электромонтаж <span class="hero-title-break"></span><span style="color: var(--primary-install);">и автоматизация</span></h1>
-            <p class="hero-subtitle">Энергия решений — от розетки до Умного Дома. Промышленный опыт, честные цены, официальная гарантия.</p>
+            <h1 class="hero-title">
+                <span class="title-fit">Профессиональный</span><br>
+                электромонтаж <span style="color: var(--primary-install);">и автоматизация</span>
+            </h1>
+            <p class="hero-subtitle">Энергия решений - от розетки до Умного Дома. Промышленный опыт, честные цены, официальная гарантия.</p>
             <div class="hero-actions">
                 <a href="./install/" class="btn btn-primary">Электромонтаж (Install)</a>
                 <a href="./engineering/" class="btn btn-secondary">Инженерия (Engineering)</a>
@@ -235,7 +238,7 @@
                 <div class="card fade-in" style="transition-delay: 0.1s;">
                     <span style="font-family: var(--font-heading); font-size: 1.8rem; color: var(--primary-eng); display: block; margin-bottom: 10px;">02</span>
                     <h3>Идеальная чистота</h3>
-                    <p style="font-size: 0.92rem;">Штроборез с пылесосом, лазерный уровень. Убираем за собой — ваш объект остаётся чистым.</p>
+                    <p style="font-size: 0.92rem;">Штроборез с пылесосом, лазерный уровень. Убираем за собой - ваш объект остаётся чистым.</p>
                 </div>
                 <div class="card fade-in" style="transition-delay: 0.2s;">
                     <span style="font-family: var(--font-heading); font-size: 1.8rem; color: var(--volt-yellow); display: block; margin-bottom: 10px;">03</span>
@@ -426,7 +429,7 @@
     if(swSmart) swSmart.addEventListener('change', updateLoad);
     if(swAuto) swAuto.addEventListener('change', updateLoad);
 
-    // 3. Мобильное меню (Исправлен скрипт взаимодействия с оверлеем)
+    // 3. Мобильное меню
     const mobileToggle = document.querySelector('.mobile-toggle');
     const navLinks = document.querySelector('.nav-links');
     const navOverlay = document.getElementById('navOverlay');
