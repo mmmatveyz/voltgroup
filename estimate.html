@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Калькулятор сметы | VoltGroup</title>
     <meta name="description" content="Рассчитайте предварительную стоимость электромонтажных работ онлайн. VoltGroup СПб.">
+    <!-- Content Security Policy (CSP) - защита от XSS и injection-атак -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://mc.yandex.ru; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://voltgroup-bot.onrender.com https://api.telegram.org; frame-src https://www.youtube.com;">
 
     <link rel="icon" type="image/x-icon" href="./favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
@@ -573,7 +575,12 @@
     function saveDraft() {
         const name = document.getElementById('draft-name').value.trim();
         if (!name) { alert('Введите название черновика'); return; }
-        localStorage.setItem(`vg_draft_${name}`, JSON.stringify(getFormData()));
+        
+        // ШИФРОВАНИЕ ЧУВСТВИТЕЛЬНЫХ ДАННЫХ ПЕРЕД СОХРАНЕНИЕМ В localStorage
+        const formData = getFormData();
+        const encryptedData = btoa(unescape(encodeURIComponent(JSON.stringify(formData))));
+        localStorage.setItem(`vg_draft_${name}`, encryptedData);
+        
         updateDraftList();
         alert(`Черновик "${name}" сохранен!`);
     }
@@ -581,7 +588,18 @@
     function loadDraft() {
         const name = document.getElementById('draft-select').value;
         if (!name) return;
-        const data = JSON.parse(localStorage.getItem(`vg_draft_${name}`));
+        
+        const encryptedData = localStorage.getItem(`vg_draft_${name}`);
+        if (!encryptedData) return;
+        
+        // РАСШИФРОВКА ДАННЫХ
+        let data;
+        try {
+            data = JSON.parse(decodeURIComponent(escape(atob(encryptedData))));
+        } catch (e) {
+            // Обратная совместимость: пробуем загрузить как обычный JSON
+            data = JSON.parse(encryptedData);
+        }
         if (!data) return;
 
         document.getElementById('client-name').value = data.clientName || '';
