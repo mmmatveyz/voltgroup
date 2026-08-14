@@ -3,6 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' https://mc.yandex.ru https://yastatic.net;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com;
+        img-src 'self' data: https: http: https://mc.yandex.ru;
+        connect-src 'self' https://voltgroup-bot.onrender.com https://mc.yandex.ru https://*.yandex.ru;
+        frame-src 'self';
+    ">
+
     <title>Портфолио | VoltGroup - Примеры работ</title>
     <meta name="description" content="Реальные примеры электромонтажа и автоматизации от VoltGroup. Фото, описания, детали работ.">
 
@@ -182,6 +193,8 @@
 </head>
 <body>
 
+<div class="nav-overlay" id="navOverlay"></div>
+
 <header class="header">
     <div class="container nav-container">
         <a href="./index.html" class="logo">
@@ -270,32 +283,31 @@
 </footer>
 
 <script>
-    // 1. Хелпер экранирования строк
-    function escapeHtml(str) {
-        if (!str) return '';
-        return String(str)
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;');
-    }
-
-    // 2. Mobile Menu
+    // 1. Mobile Menu с темным оверлеем
     const mobileToggle = document.querySelector('.mobile-toggle');
     const navLinks = document.querySelector('.nav-links');
-    if (mobileToggle && navLinks) {
-        mobileToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('open');
-            mobileToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
-        });
-        document.querySelectorAll('.nav-links a').forEach(l => l.addEventListener('click', () => {
-            navLinks.classList.remove('open');
-            mobileToggle.textContent = '☰';
-        }));
+    const navOverlay = document.getElementById('navOverlay');
+
+    function closeMobileMenu() {
+        if (navLinks) navLinks.classList.remove('open');
+        if (navOverlay) navOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+        if (mobileToggle) mobileToggle.textContent = '☰';
     }
 
-    // 3. Загрузка данных галереи
+    if (mobileToggle && navLinks) {
+        mobileToggle.addEventListener('click', () => {
+            const isOpen = navLinks.classList.toggle('open');
+            if (navOverlay) navOverlay.classList.toggle('active', isOpen);
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+            mobileToggle.textContent = isOpen ? '✕' : '☰';
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(l => l.addEventListener('click', closeMobileMenu));
+        if (navOverlay) navOverlay.addEventListener('click', closeMobileMenu);
+    }
+
+    // 2. Безопасная загрузка и рендеринг данных галереи
     const loadingText = document.getElementById('loading-text');
     const gallery = document.getElementById('gallery');
 
@@ -309,39 +321,63 @@
         gallery.style.display = 'grid';
 
         if (!data || data.length === 0) {
-            gallery.innerHTML = '<p style="text-align:center; color:var(--text-muted); grid-column: 1/-1; padding: 60px;">Портфолио пока пустое</p>';
+            gallery.textContent = '';
+            const emptyP = document.createElement('p');
+            emptyP.style.cssText = 'text-align:center; color:var(--text-muted); grid-column: 1/-1; padding: 60px;';
+            emptyP.textContent = 'Портфолио пока пустое';
+            gallery.appendChild(emptyP);
             return;
         }
 
-        gallery.innerHTML = data.map((item, index) => {
-            const title = escapeHtml(item.title);
-            const desc = escapeHtml(item.description);
-            const badges = (item.badges || []).map(b => `<span class="badge">${escapeHtml(b)}</span>`).join('');
-            const imgPath = encodeURI(item.image);
+        gallery.textContent = ''; // Безопасная очистка
 
-            return `
-                    <div class="gallery-item" data-index="${index}">
-                        <div class="gallery-img" style="background-image: url('${imgPath}'); background-size: cover; background-position: center;"></div>
-                        <div class="gallery-content">
-                            <h3>${title}</h3>
-                            <p>${desc}</p>
-                            <div class="gallery-badges">
-                                ${badges}
-                            </div>
-                        </div>
-                    </div>
-                `;
-        }).join('');
+        data.forEach((item, index) => {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'gallery-item';
+            itemDiv.dataset.index = index;
 
-        // Добавляем обработчики клика на каждую карточку
-        document.querySelectorAll('.gallery-item').forEach((item, index) => {
-            item.addEventListener('click', () => {
-                const obj = data[index];
-                openLightbox(obj.image, obj.title, obj.description, obj.badges || []);
+            const imgDiv = document.createElement('div');
+            imgDiv.className = 'gallery-img';
+            if (item.image) {
+                imgDiv.style.backgroundImage = `url('${encodeURI(item.image)}')`;
+                imgDiv.style.backgroundSize = 'cover';
+                imgDiv.style.backgroundPosition = 'center';
+            }
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'gallery-content';
+
+            const titleH3 = document.createElement('h3');
+            titleH3.textContent = item.title || '';
+
+            const descP = document.createElement('p');
+            descP.textContent = item.description || '';
+
+            const badgesDiv = document.createElement('div');
+            badgesDiv.className = 'gallery-badges';
+
+            (item.badges || []).forEach(b => {
+                const badgeSpan = document.createElement('span');
+                badgeSpan.className = 'badge';
+                badgeSpan.textContent = b;
+                badgesDiv.appendChild(badgeSpan);
             });
+
+            contentDiv.appendChild(titleH3);
+            contentDiv.appendChild(descP);
+            contentDiv.appendChild(badgesDiv);
+
+            itemDiv.appendChild(imgDiv);
+            itemDiv.appendChild(contentDiv);
+
+            itemDiv.addEventListener('click', () => {
+                openLightbox(item.image, item.title, item.description, item.badges || []);
+            });
+
+            gallery.appendChild(itemDiv);
         });
 
-        // Каскадная анимация появления элементов
+        // Анимация появления элементов
         setTimeout(() => {
             document.querySelectorAll('.gallery-item').forEach((el, index) => {
                 el.style.opacity = '0';
@@ -356,17 +392,27 @@
     })
         .catch(err => {
         console.error('Gallery error:', err);
-        loadingText.innerHTML = `
-                <div style="padding: 60px 20px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-light); max-width: 600px; margin: 0 auto; text-align: center;">
-                    <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 20px;">
-                        ⚠️ Не удалось загрузить портфолио
-                    </p>
-                    <a href="./contacts/" class="btn btn-primary">Связаться с нами</a>
-                </div>
-            `;
+        loadingText.textContent = '';
+
+        const errCard = document.createElement('div');
+        errCard.style.cssText = "padding: 60px 20px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-light); max-width: 600px; margin: 0 auto; text-align: center;";
+
+        const errP = document.createElement('p');
+        errP.style.cssText = "color: var(--text-muted); font-size: 1.1rem; margin-bottom: 20px;";
+        errP.textContent = "⚠️ Не удалось загрузить портфолио";
+
+        const errBtn = document.createElement('a');
+        errBtn.href = "./contacts/";
+        errBtn.className = "btn btn-primary";
+        errBtn.textContent = "Связаться с нами";
+
+        errCard.appendChild(errP);
+        errCard.appendChild(errBtn);
+        loadingText.appendChild(errCard);
+        loadingText.style.display = 'block';
     });
 
-    // 4. Функции управления Lightbox
+    // 3. Безопасные функции управления Lightbox
     function openLightbox(img, title, desc, badges) {
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
@@ -374,10 +420,17 @@
         const lightboxDesc = document.getElementById('lightbox-desc');
         const lightboxBadges = document.getElementById('lightbox-badges');
 
-        lightboxImg.src = img || '';
+        lightboxImg.src = img ? encodeURI(img) : '';
         lightboxTitle.textContent = title || '';
         lightboxDesc.textContent = desc || '';
-        lightboxBadges.innerHTML = (badges || []).map(b => `<span class="badge">${escapeHtml(b)}</span>`).join('');
+
+        lightboxBadges.textContent = ''; // Очистка
+        (badges || []).forEach(b => {
+            const badgeSpan = document.createElement('span');
+            badgeSpan.className = 'badge';
+            badgeSpan.textContent = b;
+            lightboxBadges.appendChild(badgeSpan);
+        });
 
         lightbox.classList.add('active');
         document.body.style.overflow = 'hidden';
@@ -393,7 +446,7 @@
         }, 300);
     }
 
-    // 5. Обработчики закрытия Lightbox
+    // 4. Обработчики закрытия Lightbox
     const lightboxClose = document.getElementById('lightbox-close');
     const lightboxEl = document.getElementById('lightbox');
 
@@ -406,14 +459,13 @@
         });
     }
 
-    // Закрытие по клавише Escape
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             closeLightbox();
         }
     });
 
-    // 6. Плавное появление элементов
+    // 5. Плавное появление элементов
     document.addEventListener('DOMContentLoaded', () => {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(e => {
