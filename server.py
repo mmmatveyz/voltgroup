@@ -5,44 +5,8 @@ import time
 import traceback
 import json
 import gspread
-from functools import wraps
-from collections import defaultdict
-import threading
 
 app = Flask(__name__)
-
-# --- RATE LIMITING (защита от спама) ---
-# Ограничение: не более 5 запросов в минуту с одного IP для /send-message
-rate_limit_store = defaultdict(list)
-rate_limit_lock = threading.Lock()
-RATE_LIMIT_WINDOW = 60  # окно в секундах
-RATE_LIMIT_MAX_REQUESTS = 5  # макс. запросов в окно
-
-def rate_limit(max_requests=RATE_LIMIT_MAX_REQUESTS, window=RATE_LIMIT_WINDOW):
-    """Декоратор для ограничения частоты запросов"""
-    def decorator(f):
-        @wraps(f)
-        def wrapped(*args, **kwargs):
-            ip = request.remote_addr or 'unknown'
-            current_time = time.time()
-            
-            with rate_limit_lock:
-                # Очищаем старые записи за пределами окна
-                rate_limit_store[ip] = [t for t in rate_limit_store[ip] if current_time - t < window]
-                
-                # Проверяем лимит
-                if len(rate_limit_store[ip]) >= max_requests:
-                    return jsonify({
-                        "status": "error",
-                        "msg": f"Слишком много запросов. Попробуйте через {window} секунд."
-                    }), 429
-                
-                # Записываем текущий запрос
-                rate_limit_store[ip].append(current_time)
-            
-            return f(*args, **kwargs)
-        return wrapped
-    return decorator
 
 # --- ПЕРЕМЕННЫЕ ОКРУЖЕНИЯ ---
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
@@ -79,15 +43,9 @@ def send_tg_message(chat_id, text):
 
 @app.after_request
 def after_request(response):
-    # Ограничиваем CORS только доверенным доменом
-    response.headers.add('Access-Control-Allow-Origin', 'https://voltgroup-spb.ru')
+    response.headers.add('Access-Control-Allow-Origin', '*')
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
-    # Security-заголовки для защиты от атак
-    response.headers.add('X-Frame-Options', 'DENY')  # Защита от clickjacking
-    response.headers.add('X-Content-Type-Options', 'nosniff')  # Запрет MIME-sniffing
-    response.headers.add('X-XSS-Protection', '1; mode=block')  # XSS-фильтр браузера
-    response.headers.add('Strict-Transport-Security', 'max-age=31536000; includeSubDomains')  # HSTS
     return response
 
 # --- 1. МАРШРУТЫ ДЛЯ САЙТА ---
@@ -97,7 +55,6 @@ def ping():
     return jsonify({"status": "awake"}), 200
 
 @app.route('/send-message', methods=['POST', 'OPTIONS'])
-@rate_limit(max_requests=5, window=60)  # Не более 5 запросов в минуту с одного IP
 def send_message():
     if request.method == 'OPTIONS':
         return '', 200
@@ -201,6 +158,4 @@ def webhook():
     return '', 200
 
 if __name__ == "__main__":
-    # ВНИМАНИЕ: debug=False обязателен в продакшене!
-    # Для локальной разработки можно установить debug=True
-    app.run(debug=False, port=8000)
+    app.run(debug=True, port=8000)
