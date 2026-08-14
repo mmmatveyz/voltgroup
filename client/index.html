@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Личный кабинет объекта | VoltGroup</title>
+    <!-- Content Security Policy (CSP) - защита от XSS и injection-атак -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://mc.yandex.ru; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://voltgroup-bot.onrender.com https://api.telegram.org; frame-src https://www.youtube.com;">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -255,11 +257,17 @@
                     if (photoUrls.length > 0) {
                         photoBox.innerHTML = ''; // Очищаем заглушку
                         photoUrls.forEach(url => {
-                            photoBox.innerHTML += `
-                                <div class="photo-container">
-                                    <img src="${url}" alt="Фото объекта VoltGroup" loading="lazy">
-                                </div>
-                            `;
+                            // БЕЗОПАСНОЕ СОЗДАНИЕ ЭЛЕМЕНТОВ — защита от XSS
+                            const container = document.createElement('div');
+                            container.className = 'photo-container';
+                            
+                            const img = document.createElement('img');
+                            img.src = url;
+                            img.alt = 'Фото объекта VoltGroup';
+                            img.loading = 'lazy';
+                            
+                            container.appendChild(img);
+                            photoBox.appendChild(container);
                         });
                     }
                 }
