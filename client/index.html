@@ -3,6 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline';
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com;
+        img-src 'self' data: https: http:;
+        connect-src 'self' https://voltgroup-bot.onrender.com;
+        frame-src 'self';
+    ">
+
     <title>Личный кабинет объекта | VoltGroup</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,6 +33,7 @@
             --radius-lg: 18px;
             --radius-md: 12px;
             --success: #10B981;
+            --vk-blue: #0077FF;
             --font-main: 'Inter', system-ui, -apple-system, sans-serif;
             --font-heading: 'Unbounded', sans-serif;
         }
@@ -124,13 +136,47 @@
         .finance-row:last-child { margin-bottom: 0; margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--border-light); font-weight: 700; font-size: 1.05rem; }
         .text-green { color: var(--success); }
 
-        .btn-tg {
+        /* Блок кнопок связи */
+        .contacts-wrapper { display: flex; flex-direction: column; gap: 12px; margin-top: 30px; margin-bottom: 20px; }
+        .contacts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+        .btn-contact {
             display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-            padding: 12px 24px; border-radius: 12px; background: rgba(0, 229, 255, 0.1);
-            border: 1px solid rgba(0, 229, 255, 0.3); color: var(--primary-install);
-            font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease;
+            padding: 12px 18px; border-radius: 12px;
+            font-weight: 700; font-size: 0.88rem; text-decoration: none; transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        /* Telegram */
+        .btn-tg {
+            background: rgba(0, 229, 255, 0.1);
+            border-color: rgba(0, 229, 255, 0.3);
+            color: var(--primary-install);
+            grid-column: 1 / -1; /* Основная широкая кнопка */
+            font-size: 0.95rem;
+            padding: 14px 24px;
         }
         .btn-tg:hover { background: var(--primary-install); color: #050914; box-shadow: 0 0 20px rgba(0, 229, 255, 0.4); }
+
+        /* VK */
+        .btn-vk {
+            background: rgba(0, 119, 255, 0.12);
+            border-color: rgba(0, 119, 255, 0.35);
+            color: #3894FF;
+        }
+        .btn-vk:hover { background: var(--vk-blue); color: #FFFFFF; box-shadow: 0 0 18px rgba(0, 119, 255, 0.4); }
+
+        /* Телефон */
+        .btn-phone {
+            background: rgba(255, 214, 10, 0.1);
+            border-color: rgba(255, 214, 10, 0.3);
+            color: var(--volt-yellow);
+        }
+        .btn-phone:hover { background: var(--volt-yellow); color: #050914; box-shadow: 0 0 18px rgba(255, 214, 10, 0.4); }
+
+        @media (max-width: 480px) {
+            .contacts-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -206,8 +252,18 @@
         </div>
     </div>
 
-    <div style="text-align: center; margin-top: 30px; margin-bottom: 20px;">
-        <a href="https://t.me/voltgroup_spb" target="_blank" class="btn-tg">✈️ Связаться с мастером в Telegram</a>
+    <div class="contacts-wrapper">
+        <a href="https://t.me/voltgroup_spb" target="_blank" class="btn-contact btn-tg">
+            ✈️ Написать мастеру в Telegram
+        </a>
+        <div class="contacts-grid">
+            <a href="https://vk.com/voltgroup_spb" target="_blank" class="btn-contact btn-vk">
+                💬 Группа ВКонтакте
+            </a>
+            <a href="tel:+7 (905) 208-42-84" class="btn-contact btn-phone">
+                📞 Позвонить
+            </a>
+        </div>
     </div>
 </div>
 
@@ -217,12 +273,23 @@
         const objectId = urlParams.get('id');
 
         if (!objectId) {
-            document.querySelector('.container').innerHTML = `
-                <div style="text-align: center; padding: 50px 20px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-light); margin-top: 40px;">
-                    <h2 style="color: #EF4444; font-family: var(--font-heading); font-size: 1.2rem; margin-bottom: 10px;">ОШИБКА ДОСТУПА</h2>
-                    <p style="color: var(--text-muted);">Не указан номер объекта. Пожалуйста, используйте персональную ссылку из сообщения.</p>
-                </div>
-            `;
+            const container = document.querySelector('.container');
+            container.textContent = ''; // Безопасное очищение
+
+            const errCard = document.createElement('div');
+            errCard.style.cssText = "text-align: center; padding: 50px 20px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-light); margin-top: 40px;";
+
+            const errTitle = document.createElement('h2');
+            errTitle.style.cssText = "color: #EF4444; font-family: var(--font-heading); font-size: 1.2rem; margin-bottom: 10px;";
+            errTitle.textContent = "ОШИБКА ДОСТУПА";
+
+            const errText = document.createElement('p');
+            errText.style.color = "var(--text-muted)";
+            errText.textContent = "Не указан номер объекта. Пожалуйста, используйте персональную ссылку из сообщения.";
+
+            errCard.appendChild(errTitle);
+            errCard.appendChild(errText);
+            container.appendChild(errCard);
             return;
         }
 
@@ -233,7 +300,7 @@
             if (result.status === "success") {
                 const data = result.data;
 
-                // Заголовок и адрес
+                // Заголовок и адрес (Безопасная установка текста)
                 document.querySelector('.object-title').textContent = data.address || `Объект №${objectId}`;
                 document.querySelector('.object-id').textContent = `Договор / ID: ${objectId}`;
 
@@ -247,19 +314,33 @@
                 document.getElementById('paid-sum').textContent = data.paid ? data.paid + ' ₽' : '0 ₽';
                 document.getElementById('current-stage-text').textContent = data.stage || 'В работе';
 
-                // Динамическая загрузка нескольких фотографий через запятую
+                // БЕЗОПАСНАЯ динамическая загрузка фотографий (Защита от XSS)
                 if (data.photo && data.photo.trim() !== "") {
                     const photoUrls = data.photo.split(',').map(url => url.trim()).filter(url => url.length > 0);
                     const photoBox = document.getElementById('photo-box');
 
                     if (photoUrls.length > 0) {
-                        photoBox.innerHTML = ''; // Очищаем заглушку
+                        photoBox.textContent = ''; // Безопасная очистка элементов
+
                         photoUrls.forEach(url => {
-                            photoBox.innerHTML += `
-                                <div class="photo-container">
-                                    <img src="${url}" alt="Фото объекта VoltGroup" loading="lazy">
-                                </div>
-                            `;
+                            try {
+                                const parsedUrl = new URL(url);
+                                // Проверка безопасного протокола (http или https)
+                                if (parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:') {
+                                    const photoContainer = document.createElement('div');
+                                    photoContainer.className = 'photo-container';
+
+                                    const img = document.createElement('img');
+                                    img.src = parsedUrl.href;
+                                    img.alt = 'Фото объекта VoltGroup';
+                                    img.loading = 'lazy';
+
+                                    photoContainer.appendChild(img);
+                                    photoBox.appendChild(photoContainer);
+                                }
+                            } catch (e) {
+                                console.error('Пропущен некорректный URL фото:', url);
+                            }
                         });
                     }
                 }

@@ -3,6 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' https://mc.yandex.ru https://yastatic.net;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com;
+        img-src 'self' data: https: http: https://mc.yandex.ru;
+        connect-src 'self' https://voltgroup-bot.onrender.com https://mc.yandex.ru https://*.yandex.ru;
+        frame-src 'self';
+    ">
+
     <title>Engineering | Промышленная автоматизация - VoltGroup</title>
     <meta name="description" content="Диагностика и ремонт металлорежущих станков, восстановление релейных схем и ЧПУ в Санкт-Петербурге.">
 
@@ -130,15 +141,15 @@
                 <form id="leadForm" style="display: grid; gap: 16px;">
                     <div class="form-group" style="margin: 0;">
                         <label class="form-label">Ваше имя</label>
-                        <input type="text" name="name" class="form-input" placeholder="Иван" required>
+                        <input type="text" name="name" class="form-input" placeholder="Иван" required maxlength="100">
                     </div>
                     <div class="form-group" style="margin: 0;">
                         <label class="form-label">Телефон</label>
-                        <input type="tel" name="phone" class="form-input" placeholder="+7 (999) 000-00-00" required>
+                        <input type="tel" name="phone" class="form-input" placeholder="+7 (999) 000-00-00" required maxlength="30">
                     </div>
                     <div class="form-group" style="margin: 0;">
                         <label class="form-label">Оборудование / Задача</label>
-                        <input type="text" name="service" class="form-input" placeholder="Например: Станок 16К20, ЧПУ Fanuc">
+                        <input type="text" name="service" class="form-input" placeholder="Например: Станок 16К20, ЧПУ Fanuc" maxlength="200">
                     </div>
                     <div class="form-group" style="display: flex; align-items: center; gap: 12px; margin-top: 5px;">
                         <input type="checkbox" id="privacy-consent-main" required style="width: 18px; height: 18px; accent-color: var(--primary-eng); cursor: pointer; flex-shrink: 0;">
@@ -198,9 +209,27 @@
 </footer>
 
 <script>
-    // 1. Бегущая строка
+    // Санитизация строк
+    function sanitizeInput(str) {
+        if (typeof str !== 'string') return '';
+        return str.replace(/[&<>"']/g, function(m) {
+            return {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            }[m];
+        });
+    }
+
+    // 1. Безопасная бегущая строка (клонирование клонов)
     const track = document.getElementById('tickTrack');
-    if (track) { track.innerHTML += track.innerHTML; }
+    if (track) {
+        Array.from(track.children).forEach(child => {
+            track.appendChild(child.cloneNode(true));
+        });
+    }
 
     // 2. Хелпер экранирования строк HTML
     function escapeHtml(str) {
@@ -213,13 +242,13 @@
             .replace(/'/g, '&#039;');
     }
 
-    // 3. Mobile Menu
+    // 3. Mobile Menu (Безопасный вывод)
     const mobileToggle = document.querySelector('.mobile-toggle');
     const navLinks = document.querySelector('.nav-links');
     if (mobileToggle && navLinks) {
         mobileToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('open');
-            mobileToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+            const isOpen = navLinks.classList.toggle('open');
+            mobileToggle.textContent = isOpen ? '✕' : '☰';
         });
 
         document.querySelectorAll('.nav-links a').forEach(link => {
@@ -241,35 +270,52 @@
         if (d.engineering && d.engineering.categories) {
             d.engineering.categories.forEach(c => {
                 html += `<div class="price-category card" style="margin-bottom: 30px;">
-                            <h3 style="border-color:var(--primary-eng);">${escapeHtml(c.name)}</h3>
-                            <div class="table-responsive">
-                            <table class="price-table">
-                                <thead>
-                                    <tr><th>Услуга</th><th>Описание</th><th>Цена</th></tr>
-                                </thead>
-                                <tbody>`;
+                                <h3 style="border-color:var(--primary-eng);">${escapeHtml(c.name)}</h3>
+                                <div class="table-responsive">
+                                <table class="price-table">
+                                    <thead>
+                                        <tr><th>Услуга</th><th>Описание</th><th>Цена</th></tr>
+                                    </thead>
+                                    <tbody>`;
                 c.items.forEach(i => {
                     const unitText = (i.unit && i.unit !== 'работа') ? escapeHtml(i.unit) : '';
                     html += `<tr>
-                                <td style="font-weight: 600;">${escapeHtml(i.service)}</td>
-                                <td style="font-size:0.9rem; color:var(--text-muted);">${escapeHtml(i.desc || '-')}</td>
-                                <td class="price-value" style="color:var(--primary-eng);">${Number(i.price).toLocaleString('ru-RU')} ₽ ${unitText}</td>
-                            </tr>`;
+                                    <td style="font-weight: 600;">${escapeHtml(i.service)}</td>
+                                    <td style="font-size:0.9rem; color:var(--text-muted);">${escapeHtml(i.desc || '-')}</td>
+                                    <td class="price-value" style="color:var(--primary-eng);">${Number(i.price).toLocaleString('ru-RU')} ₽ ${unitText}</td>
+                                </tr>`;
                 });
                 html += `</tbody></table></div></div>`;
             });
             document.getElementById('eng-prices').innerHTML = html;
         } else {
-            document.getElementById('eng-prices').innerHTML = '<p style="text-align:center;color:var(--text-muted);">Раздел Engineering не найден в прайсе.</p>';
+            document.getElementById('eng-prices').textContent = '';
+            const p = document.createElement('p');
+            p.style.cssText = 'text-align:center; color:var(--text-muted);';
+            p.textContent = 'Раздел Engineering не найден в прайсе.';
+            document.getElementById('eng-prices').appendChild(p);
         }
     })
         .catch(err => {
         console.error('Ошибка загрузки прайса:', err);
-        document.getElementById('eng-prices').innerHTML = `
-                <div style="text-align:center; padding:40px; background:var(--bg-card); border-radius:var(--radius-lg); border:1px solid var(--border-light);">
-                    <p style="color:var(--danger); margin-bottom:15px;">⚠️ Не удалось загрузить прайс-лист</p>
-                    <a href="../contacts/" class="btn btn-secondary">Связаться с нами напрямую</a>
-                </div>`;
+        const container = document.getElementById('eng-prices');
+        container.textContent = '';
+
+        const errDiv = document.createElement('div');
+        errDiv.style.cssText = "text-align:center; padding:40px; background:var(--bg-card); border-radius:var(--radius-lg); border:1px solid var(--border-light);";
+
+        const errP = document.createElement('p');
+        errP.style.cssText = "color:var(--danger); margin-bottom:15px;";
+        errP.textContent = "⚠️ Не удалось загрузить прайс-лист";
+
+        const errLink = document.createElement('a');
+        errLink.href = "../contacts/";
+        errLink.className = "btn btn-secondary";
+        errLink.textContent = "Связаться с нами напрямую";
+
+        errDiv.appendChild(errP);
+        errDiv.appendChild(errLink);
+        container.appendChild(errDiv);
     });
 
     // 5. Отправка формы и автопинг
@@ -288,8 +334,14 @@
             e.preventDefault();
             const btn = e.target.querySelector('button[type="submit"]');
             const status = document.getElementById('formStatus');
-            const formData = new FormData(e.target);
-            formData.append('source', 'engineering_page');
+
+            const rawData = Object.fromEntries(new FormData(e.target));
+            const data = {
+                name: sanitizeInput(rawData.name),
+                phone: sanitizeInput(rawData.phone),
+                service: sanitizeInput(rawData.service || 'Диагностика оборудования'),
+                source: 'engineering_page'
+            };
 
             btn.disabled = true;
             btn.textContent = 'Отправка...';
@@ -301,7 +353,7 @@
                 const res = await fetch('https://voltgroup-bot.onrender.com/send-message', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(Object.fromEntries(formData))
+                    body: JSON.stringify(data)
                 });
                 if (res.ok) {
                     status.textContent = '✅ Заявка отправлена! Инженер свяжется с вами в ближайшее время.';

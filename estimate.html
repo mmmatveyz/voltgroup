@@ -3,6 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' https://mc.yandex.ru https://yastatic.net;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com;
+        img-src 'self' data: https: http: https://mc.yandex.ru;
+        connect-src 'self' https://voltgroup-bot.onrender.com https://mc.yandex.ru https://*.yandex.ru;
+        frame-src 'self';
+    ">
+
     <title>Калькулятор сметы | VoltGroup</title>
     <meta name="description" content="Рассчитайте предварительную стоимость электромонтажных работ онлайн. VoltGroup СПб.">
 
@@ -103,6 +114,8 @@
 </head>
 <body>
 
+<div class="nav-overlay" id="navOverlay"></div>
+
 <header class="header">
     <div class="container nav-container">
         <a href="./index.html" class="logo">
@@ -131,15 +144,15 @@
 
         <div class="card fade-in" style="margin-bottom: 25px;">
             <div class="client-info">
-                <div class="form-group"><label class="form-label">Имя заказчика</label><input type="text" id="client-name" class="form-input" placeholder="Иванов И.И."></div>
-                <div class="form-group"><label class="form-label">Адрес объекта</label><input type="text" id="client-address" class="form-input" placeholder="СПб, ул. Ленина..."></div>
+                <div class="form-group"><label class="form-label">Имя заказчика</label><input type="text" id="client-name" class="form-input" placeholder="Иванов И.И." maxlength="100"></div>
+                <div class="form-group"><label class="form-label">Адрес объекта</label><input type="text" id="client-address" class="form-input" placeholder="СПб, ул. Ленина..." maxlength="200"></div>
                 <div class="form-group"><label class="form-label">Дата</label><input type="date" id="estimate-date" class="form-input"></div>
-                <div class="form-group"><label class="form-label">№ Сметы / КП</label><input type="text" id="invoice-number" class="form-input" placeholder="Напр. КП-01"></div>
+                <div class="form-group"><label class="form-label">№ Сметы / КП</label><input type="text" id="invoice-number" class="form-input" placeholder="Напр. КП-01" maxlength="50"></div>
             </div>
         </div>
 
         <div class="card fade-in" style="padding: 18px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 25px;">
-            <input type="text" id="draft-name" class="form-input" placeholder="Название черновика..." style="flex-grow: 1; min-width: 180px;">
+            <input type="text" id="draft-name" class="form-input" placeholder="Название черновика..." style="flex-grow: 1; min-width: 180px;" maxlength="100">
             <button class="btn btn-outline" type="button" onclick="saveDraft()" style="padding: 10px 16px; font-size: 0.88rem;">💾 Сохранить</button>
             <select id="draft-select" class="form-input" onchange="loadDraft()" style="width: auto; min-width: 150px;"><option value="">📂 Загрузить...</option></select>
             <button class="btn btn-outline" type="button" onclick="deleteDraft()" style="padding: 10px 14px; font-size: 0.88rem; color: var(--danger); border-color: var(--danger);">🗑</button>
@@ -195,7 +208,7 @@
             <div class="summary-row"><span>Стоимость работ:</span><strong id="services-total-display" style="color: var(--text-main);">0 ₽</strong></div>
             <div class="discount-block">
                 <label for="discount-input" style="color: var(--text-muted); font-size: 0.9rem;">Скидка:</label>
-                <input type="text" id="discount-input" placeholder="0 ₽ или %" oninput="calculateTotals()">
+                <input type="text" id="discount-input" placeholder="0 ₽ или %" oninput="calculateTotals()" maxlength="20">
                 <span id="discount-value-display" style="color: var(--danger); font-weight: 700; margin-left: auto;">-0 ₽</span>
             </div>
             <div class="summary-row" style="font-weight: 700; color: var(--text-main);"><span>Итого за работы:</span><strong id="works-subtotal-display">0 ₽</strong></div>
@@ -264,16 +277,29 @@
             .replace(/'/g, '&#039;');
     }
 
+    // Мобильное меню с темным оверлеем
     const mobileToggle = document.querySelector('.mobile-toggle');
     const navLinks = document.querySelector('.nav-links');
+    const navOverlay = document.getElementById('navOverlay');
+
+    function closeMobileMenu() {
+        if (navLinks) navLinks.classList.remove('open');
+        if (navOverlay) navOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+        if (mobileToggle) mobileToggle.textContent = '☰';
+    }
+
     if (mobileToggle && navLinks) {
         mobileToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('open');
-            mobileToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+            const isOpen = navLinks.classList.toggle('open');
+            if (navOverlay) navOverlay.classList.toggle('active', isOpen);
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+            mobileToggle.textContent = isOpen ? '✕' : '☰';
         });
         document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => { navLinks.classList.remove('open'); mobileToggle.textContent = '☰'; });
+            link.addEventListener('click', closeMobileMenu);
         });
+        if (navOverlay) navOverlay.addEventListener('click', closeMobileMenu);
     }
 
     let allServices = [];
@@ -310,7 +336,15 @@
         })
             .catch(err => {
             console.error('❌ Ошибка загрузки prices.json:', err);
-            document.getElementById('services-body').innerHTML = `<tr><td colspan="7" style="text-align:center; padding:30px; color:var(--danger);">❌ Не удалось загрузить прайс-лист. Проверьте файл <strong>static/data/prices.json</strong>.</td></tr>`;
+            const tbody = document.getElementById('services-body');
+            tbody.textContent = '';
+            const tr = document.createElement('tr');
+            const td = document.createElement('td');
+            td.colSpan = 7;
+            td.style.cssText = "text-align:center; padding:30px; color:var(--danger);";
+            td.textContent = "❌ Не удалось загрузить прайс-лист. Проверьте файл static/data/prices.json.";
+            tr.appendChild(td);
+            tbody.appendChild(tr);
             return false;
         });
     }
@@ -332,10 +366,22 @@
 
     function updateCategoryOptions() {
         const select = document.getElementById('category-select');
+        select.textContent = ''; // Безопасная очистка
+
+        const optAll = document.createElement('option');
+        optAll.value = 'all';
+        optAll.textContent = 'Все работы';
+        select.appendChild(optAll);
+
         const cats = new Set();
         allServices.filter(s => s.section === currentSection).forEach(s => cats.add(s.category));
-        select.innerHTML = '<option value="all">Все работы</option>';
-        cats.forEach(cat => { select.innerHTML += `<option value="${escapeHtml(cat)}">${escapeHtml(cat)}</option>`; });
+
+        cats.forEach(cat => {
+            const opt = document.createElement('option');
+            opt.value = cat;
+            opt.textContent = cat;
+            select.appendChild(opt);
+        });
     }
 
     function switchSection(section) {
@@ -353,7 +399,7 @@
         const selectedCat = document.getElementById('category-select').value;
         currentCategory = selectedCat;
         const tbody = document.getElementById('services-body');
-        tbody.innerHTML = '';
+        tbody.textContent = ''; // Безопасная очистка
 
         let filteredWithIndices = allServices
             .map((service, originalIndex) => ({ service, originalIndex }))
@@ -364,7 +410,13 @@
         }
 
         if (filteredWithIndices.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:20px; color:var(--text-muted);">В этой категории пока нет работ</td></tr>';
+            const tr = document.createElement('tr');
+            const td = document.createElement('td');
+            td.colSpan = 7;
+            td.style.cssText = "text-align:center; padding:20px; color:var(--text-muted);";
+            td.textContent = "В этой категории пока нет работ";
+            tr.appendChild(td);
+            tbody.appendChild(tr);
             calculateTotals();
             return;
         }
@@ -434,8 +486,8 @@
         row.classList.add('custom-work-row');
         const uniqueId = 'custom-' + Date.now();
         row.innerHTML = `
-            <td><input type="text" class="form-input name-input" placeholder="Название работы" style="padding: 6px 10px;"></td>
-            <td><input type="text" class="form-input mat-unit" value="шт." style="width:50px; padding: 6px;"></td>
+            <td><input type="text" class="form-input name-input" placeholder="Название работы" style="padding: 6px 10px;" maxlength="150"></td>
+            <td><input type="text" class="form-input mat-unit" value="шт." style="width:50px; padding: 6px;" maxlength="20"></td>
             <td><input type="number" class="form-input mat-price" placeholder="0" min="0" onchange="calculateTotals()" style="width:80px; padding: 6px;"></td>
             <td>
                 <div class="qty-wrapper">
@@ -470,8 +522,8 @@
         const matBody = document.getElementById('materials-body');
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td><input type="text" class="form-input mat-name" value="${escapeHtml(name)}" placeholder="Материал" style="padding: 6px 10px;"></td>
-            <td><input type="text" class="form-input mat-unit" value="шт." style="width:50px; padding: 6px;"></td>
+            <td><input type="text" class="form-input mat-name" value="${escapeHtml(name)}" placeholder="Материал" style="padding: 6px 10px;" maxlength="150"></td>
+            <td><input type="text" class="form-input mat-unit" value="шт." style="width:50px; padding: 6px;" maxlength="20"></td>
             <td><input type="number" class="form-input mat-price" value="${price}" placeholder="0" min="0" onchange="calculateTotals()" style="width:80px; padding: 6px;"></td>
             <td><input type="number" class="form-input mat-qty" value="${qty}" placeholder="0" min="0" onchange="calculateTotals()" style="width:65px; padding: 6px;"></td>
             <td style="text-align:center; font-weight:700; color: var(--primary-install);">0 ₽</td>
@@ -609,7 +661,7 @@
             });
         }
 
-        document.getElementById('materials-body').innerHTML = '';
+        document.getElementById('materials-body').textContent = ''; // Очистка
         if (data.materials) data.materials.forEach(m => addMaterialRow(m.name, m.price, m.qty));
 
         renderServices();
@@ -628,12 +680,21 @@
 
     function updateDraftList() {
         const select = document.getElementById('draft-select');
-        select.innerHTML = '<option value="">📂 Загрузить...</option>';
+        select.textContent = ''; // Очистка
+
+        const optDefault = document.createElement('option');
+        optDefault.value = '';
+        optDefault.textContent = '📂 Загрузить...';
+        select.appendChild(optDefault);
+
         for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);
             if (key.startsWith('vg_draft_')) {
                 const draftName = key.replace('vg_draft_', '');
-                select.innerHTML += `<option value="${escapeHtml(draftName)}">${escapeHtml(draftName)}</option>`;
+                const opt = document.createElement('option');
+                opt.value = draftName;
+                opt.textContent = draftName;
+                select.appendChild(opt);
             }
         }
     }
@@ -648,7 +709,7 @@
         document.getElementById('master-buys-materials').checked = true;
         document.getElementById('discount-input').value = '';
         document.querySelectorAll('.custom-work-row').forEach(r => r.remove());
-        document.getElementById('materials-body').innerHTML = '';
+        document.getElementById('materials-body').textContent = '';
         renderServices();
         calculateTotals();
     }
@@ -695,7 +756,7 @@
                         lastRow.querySelector('.custom-complex').checked = w.complex;
                     });
                 }
-                document.getElementById('materials-body').innerHTML = '';
+                document.getElementById('materials-body').textContent = '';
                 if (data.materials) data.materials.forEach(m => addMaterialRow(m.name, m.price, m.qty));
                 renderServices();
                 calculateTotals();

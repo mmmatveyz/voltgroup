@@ -3,6 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' https://mc.yandex.ru https://yastatic.net;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com;
+        img-src 'self' data: https: http: https://mc.yandex.ru;
+        connect-src 'self' https://voltgroup-bot.onrender.com https://mc.yandex.ru https://*.yandex.ru;
+        frame-src 'self';
+    ">
+
     <title>Контакты | VoltGroup</title>
     <meta name="description" content="Контактная информация VoltGroup. Телефон, адрес, мессенджеры для связи и консультаций в СПб и ЛО.">
 
@@ -228,13 +239,13 @@
 </footer>
 
 <script>
-    // 1. Mobile Menu
+    // 1. Mobile Menu (Безопасное переключение текста)
     const mobileToggle = document.querySelector('.mobile-toggle');
     const navLinks = document.querySelector('.nav-links');
     if (mobileToggle && navLinks) {
         mobileToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('open');
-            mobileToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+            const isOpen = navLinks.classList.toggle('open');
+            mobileToggle.textContent = isOpen ? '✕' : '☰';
         });
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {

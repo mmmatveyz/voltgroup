@@ -3,6 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' https://mc.yandex.ru https://yastatic.net;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com;
+        img-src 'self' data: https: http: https://mc.yandex.ru;
+        connect-src 'self' https://voltgroup-bot.onrender.com https://mc.yandex.ru https://*.yandex.ru;
+        frame-src 'self' https://yandex.ru;
+    ">
+
     <title>VoltGroup | Энергия решений - Электрика и автоматизация в СПб</title>
     <meta name="description" content="Профессиональный электромонтаж, умный дом и промышленная автоматизация в Санкт-Петербурге. Гарантия, договор, честные цены.">
 
@@ -334,11 +345,11 @@
                 <form id="leadForm" style="display: grid; gap: 16px;">
                     <div class="form-group" style="margin: 0;">
                         <label class="form-label">Ваше имя</label>
-                        <input type="text" name="name" class="form-input" placeholder="Иван" required>
+                        <input type="text" name="name" class="form-input" placeholder="Иван" required maxlength="100">
                     </div>
                     <div class="form-group" style="margin: 0;">
                         <label class="form-label">Телефон</label>
-                        <input type="tel" name="phone" class="form-input" placeholder="+7 (999) 000-00-00" required>
+                        <input type="tel" name="phone" class="form-input" placeholder="+7 (999) 000-00-00" required maxlength="30">
                     </div>
                     <div class="form-group" style="margin: 0;">
                         <label class="form-label">Тип задачи</label>
@@ -409,9 +420,27 @@
 </div>
 
 <script>
-    // 1. Бегущая строка
+    // Вспомогательная функция для безопасности
+    function sanitizeInput(str) {
+        if (typeof str !== 'string') return '';
+        return str.replace(/[&<>"']/g, function(m) {
+            return {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            }[m];
+        });
+    }
+
+    // 1. Безопасная бегущая строка (клонирование вместо innerHTML)
     const track = document.getElementById('tickTrack');
-    if (track) { track.innerHTML += track.innerHTML; }
+    if (track) {
+        Array.from(track.children).forEach(child => {
+            track.appendChild(child.cloneNode(true));
+        });
+    }
 
     // 2. Оживление нагрузки щитка
     const loadEl = document.getElementById('live-load');
@@ -468,12 +497,14 @@
 
             if (!isOpen) {
                 btn.classList.add('active');
-                content.style.maxHeight = content.scrollHeight + "px";
+                if (content) {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
             }
         });
     });
 
-    // 5. Форма
+    // 5. Форма обратной связи
     const leadForm = document.getElementById('leadForm');
     let hasPinged = false;
 
@@ -489,8 +520,16 @@
             e.preventDefault();
             const btn = this.querySelector('button[type="submit"]');
             const status = document.getElementById('formStatus');
-            const data = Object.fromEntries(new FormData(this));
-            data.source = 'main_site';
+
+            const rawData = Object.fromEntries(new FormData(this));
+
+            // Очищаем входные данные
+            const data = {
+                name: sanitizeInput(rawData.name),
+                phone: sanitizeInput(rawData.phone),
+                service: sanitizeInput(rawData.service),
+                source: 'main_site'
+            };
 
             btn.disabled = true;
             btn.textContent = 'Отправка...';
