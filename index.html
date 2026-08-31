@@ -11,7 +11,7 @@
         font-src 'self' https://fonts.gstatic.com;
         img-src 'self' data: https: http: https://mc.yandex.ru;
         connect-src 'self' https://voltgroup-bot.onrender.com https://mc.yandex.ru https://*.yandex.ru https://*.yandex.net wss://mc.yandex.ru wss://*.yandex.ru;
-        frame-src 'self' https://yandex.ru;
+        frame-src 'self' https://yandex.ru https://*.yandex.ru https://*.yandex.md https://mc.yandex.md;
     ">
 
     <title>VoltGroup | Энергия решений - Электрика и автоматизация в СПб</title>
@@ -22,8 +22,82 @@
     <meta property="og:image" content="./assets/images/og-main.jpg">
     <meta property="og:type" content="website">
 
-    <link rel="icon" type="image/x-icon" href="./favicon.ico">
-    <link rel="manifest" href="./manifest.json">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="icon-192.png">
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Микроразметка Schema.org (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": ["LocalBusiness", "Electrician"],
+      "name": "VoltGroup",
+      "alternateName": "ВольтГрупп",
+      "description": "Профессиональный электромонтаж, умный дом и промышленная автоматизация в Санкт-Петербурге и Ленинградской области.",
+      "url": "https://voltgroup-spb.ru",
+      "telephone": "+7-905-208-42-84",
+      "priceRange": "₽₽",
+      "image": "https://voltgroup-spb.ru/assets/images/og-main.jpg",
+      "logo": "https://voltgroup-spb.ru/assets/images/logo-voltgroup.png",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Санкт-Петербург",
+        "addressRegion": "Ленинградская область",
+        "addressCountry": "RU"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 59.9342802,
+        "longitude": 30.3350986
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          "opens": "09:00",
+          "closes": "21:00"
+        }
+      ],
+      "sameAs": [
+        "https://vk.com/voltgroup_spb",
+        "https://t.me/voltgroup_spb"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Услуги электромонтажа и автоматизации",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Электромонтаж в квартирах и коттеджах"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Сборка электрощитов и автоматики"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Монтаж и настройка умного дома"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Ремонт и диагностика промышленного оборудования"
+            }
+          }
+        ]
+      }
+    }
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -349,7 +423,7 @@
                     </div>
                     <div class="form-group" style="margin: 0;">
                         <label class="form-label">Телефон</label>
-                        <input type="tel" name="phone" class="form-input" placeholder="+7 (999) 000-00-00" required maxlength="30">
+                        <input type="tel" name="phone" class="form-input" placeholder="+7 (___) ___-__-__" required autocomplete="tel" pattern="(\+7|8)[\s\-]?[0-9\(\)\s\-]{10,18}" title="Формат: +7 (999) 000-00-00">
                     </div>
                     <div class="form-group" style="margin: 0;">
                         <label class="form-label">Тип задачи</label>
@@ -504,6 +578,86 @@
         });
     });
 
+    // Маска и валидация номера телефона (+7 (___) ___-__-__)
+    function initPhoneMask(input) {
+        if (!input) return;
+
+        function formatPhone(val) {
+            let digits = val.replace(/\D/g, '');
+            if (!digits) return '';
+
+            // Нормализуем первую цифру (8 или 7 меняем на +7)
+            if (digits[0] === '7' || digits[0] === '8') {
+                digits = digits.substring(1);
+            } else if (digits[0] === '9') {
+                // Если начали вводить с 9 (например 9991234567)
+                // оставляем как есть
+            } else {
+                // Другие коды
+                digits = digits.substring(1);
+            }
+
+            let res = '+7';
+            if (digits.length > 0) {
+                res += ' (' + digits.substring(0, 3);
+            }
+            if (digits.length >= 4) {
+                res += ') ' + digits.substring(3, 6);
+            }
+            if (digits.length >= 7) {
+                res += '-' + digits.substring(6, 8);
+            }
+            if (digits.length >= 9) {
+                res += '-' + digits.substring(8, 10);
+            }
+            return res;
+        }
+
+        input.addEventListener('input', function(e) {
+            const cursor = this.selectionStart;
+            const prevLen = this.value.length;
+            const formatted = formatPhone(this.value);
+            this.value = formatted;
+
+            if (this.classList.contains('is-invalid')) {
+                const digits = this.value.replace(/\D/g, '');
+                if (digits.length === 11) {
+                    this.classList.remove('is-invalid');
+                }
+            }
+        });
+
+        input.addEventListener('focus', function() {
+            if (!this.value) {
+                this.value = '+7 (';
+            }
+        });
+
+        input.addEventListener('blur', function() {
+            if (this.value === '+7 (' || this.value === '+7' || this.value === '+') {
+                this.value = '';
+                this.classList.remove('is-invalid');
+            } else {
+                const digits = this.value.replace(/\D/g, '');
+                if (digits.length < 11) {
+                    this.classList.add('is-invalid');
+                } else {
+                    this.classList.remove('is-invalid');
+                }
+            }
+        });
+
+        input.addEventListener('keydown', function(e) {
+            // Если нажат Backspace при длине <= 4 ('+7 ('), очищаем поле
+            if (e.key === 'Backspace' && this.value.length <= 4) {
+                this.value = '';
+            }
+        });
+    }
+
+    const phoneInput = document.querySelector('input[name="phone"]');
+    initPhoneMask(phoneInput);
+
     // 5. Форма обратной связи
     const leadForm = document.getElementById('leadForm');
     let hasPinged = false;
@@ -520,13 +674,30 @@
             e.preventDefault();
             const btn = this.querySelector('button[type="submit"]');
             const status = document.getElementById('formStatus');
+            const phoneEl = this.querySelector('input[name="phone"]');
 
             const rawData = Object.fromEntries(new FormData(this));
+            const phoneVal = (rawData.phone || '').trim();
+            const digits = phoneVal.replace(/\D/g, '');
+
+            // Проверка корректности телефона (11 цифр: 7XXXXXXXXXX)
+            if (digits.length !== 11) {
+                if (phoneEl) {
+                    phoneEl.classList.add('is-invalid');
+                    phoneEl.focus();
+                }
+                status.style.display = 'block';
+                status.style.color = '#EF4444';
+                status.textContent = '⚠️ Пожалуйста, введите полный номер телефона: +7 (XXX) XXX-XX-XX';
+                return;
+            } else if (phoneEl) {
+                phoneEl.classList.remove('is-invalid');
+            }
 
             // Очищаем входные данные
             const data = {
                 name: sanitizeInput(rawData.name),
-                phone: sanitizeInput(rawData.phone),
+                phone: sanitizeInput(phoneVal),
                 service: sanitizeInput(rawData.service),
                 source: 'main_site'
             };
@@ -548,6 +719,7 @@
                     status.textContent = '✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.';
                     status.style.color = '#10B981';
                     this.reset();
+                    if (phoneEl) phoneEl.classList.remove('is-invalid');
                 } else {
                     throw new Error('Ошибка сервера');
                 }

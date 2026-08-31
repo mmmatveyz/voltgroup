@@ -11,15 +11,44 @@
         font-src 'self' https://fonts.gstatic.com;
         img-src 'self' data: https: http: https://mc.yandex.ru;
         connect-src 'self' https://voltgroup-bot.onrender.com https://mc.yandex.ru https://*.yandex.ru https://*.yandex.net wss://mc.yandex.ru wss://*.yandex.ru;
-        frame-src 'self' https://yandex.ru;
+        frame-src 'self' https://yandex.ru https://*.yandex.ru https://*.yandex.md https://mc.yandex.md;
     ">
 
     <title>Контакты | VoltGroup</title>
     <meta name="description" content="Контактная информация VoltGroup. Телефон, адрес, мессенджеры для связи и консультаций в СПб и ЛО.">
 
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../icon-192.png">
     <link rel="manifest" href="../manifest.json">
+
+    <!-- Микроразметка Schema.org (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": ["LocalBusiness", "Electrician"],
+      "name": "VoltGroup",
+      "url": "https://voltgroup-spb.ru/contacts/",
+      "telephone": "+7-905-208-42-84",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Санкт-Петербург",
+        "addressRegion": "Ленинградская область",
+        "addressCountry": "RU"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          "opens": "09:00",
+          "closes": "21:00"
+        }
+      ],
+      "sameAs": [
+        "https://vk.com/voltgroup_spb",
+        "https://t.me/voltgroup_spb"
+      ]
+    }
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

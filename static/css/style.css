@@ -344,6 +344,7 @@ input:checked + .slider.purple:before { background-color: var(--primary-eng); bo
 }
 select.form-input option { background-color: #0e141b; color: var(--text-main); }
 .form-input:focus { outline: none; border-color: var(--primary-install); box-shadow: 0 0 0 3px rgba(0,229,255,0.15); }
+.form-input.is-invalid { border-color: var(--danger) !important; box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2) !important; }
 textarea.form-input { resize: vertical; min-height: 110px; }
 
 /* Двухколоночная карточка формы на ДЕСКТОПЕ */
