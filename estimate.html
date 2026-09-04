@@ -17,6 +17,35 @@
     <title>Калькулятор сметы | VoltGroup</title>
     <meta name="description" content="Рассчитайте предварительную стоимость электромонтажных работ онлайн. VoltGroup СПб.">
 
+    <link rel="canonical" href="https://voltgroup-spb.ru/estimate.html">
+    <meta property="og:title" content="Онлайн-калькулятор сметы электромонтажа | VoltGroup">
+    <meta property="og:description" content="Интерактивный расчет сметы на электромонтажные работы, материалы и оборудование в СПб с выгрузкой в PDF.">
+    <meta property="og:image" content="https://voltgroup-spb.ru/assets/images/og-main.jpg">
+    <meta property="og:url" content="https://voltgroup-spb.ru/estimate.html">
+    <meta property="og:type" content="website">
+
+    <!-- Микроразметка Schema.org (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Онлайн-калькулятор сметы электромонтажа | VoltGroup",
+      "description": "Интерактивный расчет сметы на электромонтажные работы, материалы и оборудование в СПб с выгрузкой в PDF.",
+      "url": "https://voltgroup-spb.ru/estimate.html",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "VoltGroup",
+        "url": "https://voltgroup-spb.ru"
+      },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "Главная", "item": "https://voltgroup-spb.ru/"},
+          {"@type": "ListItem", "position": 2, "name": "Калькулятор сметы", "item": "https://voltgroup-spb.ru/estimate.html"}
+        ]
+      }
+    }
+    </script>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="icon-192.png">
     <link rel="manifest" href="manifest.json">
@@ -25,7 +54,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="./static/css/style.css?v=2.0">
+    <link rel="stylesheet" href="./static/css/style.css?v=2.1">
 
     <script type="text/javascript">
         (function(m,e,t,r,i,k,a){
@@ -188,6 +217,93 @@
                 padding: 14px 20px;
             }
         }
+
+        /* Выпадающее меню документов */
+        .dropdown-docs {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-menu-docs {
+            display: none;
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            min-width: 270px;
+            background: rgba(10, 16, 30, 0.98);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.7);
+            padding: 8px;
+            z-index: 1000;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        .dropdown-menu-docs.show {
+            display: block;
+        }
+        .dropdown-item {
+            width: 100%;
+            text-align: left;
+            padding: 10px 14px;
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-main);
+            box-sizing: border-box;
+        }
+        .dropdown-item:hover {
+            background: rgba(0, 229, 255, 0.1);
+            color: var(--primary-install);
+        }
+        .dropdown-divider {
+            height: 1px;
+            background: var(--border-light);
+            margin: 6px 0;
+        }
+        @media (max-width: 768px) {
+            .dropdown-docs {
+                width: 100%;
+            }
+            .dropdown-docs .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .dropdown-menu-docs {
+                position: static;
+                transform: none;
+                width: 100%;
+                margin-top: 8px;
+                box-shadow: none;
+            }
+        }
+
+        /* Поля свободного ввода в смете */
+        .price-table input.form-input {
+            background: #090e15 !important;
+            color: #f8fafc !important;
+            border: 1px solid rgba(0, 229, 255, 0.28) !important;
+            border-radius: 8px !important;
+            font-size: 0.9rem !important;
+            transition: var(--transition);
+        }
+        .price-table input.form-input:focus {
+            outline: none !important;
+            border-color: var(--primary-install) !important;
+            background: #0d1520 !important;
+            box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.3) !important;
+        }
+        .price-table input.form-input::placeholder {
+            color: rgba(148, 163, 184, 0.5) !important;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -311,9 +427,19 @@
         <div class="actions fade-in">
             <button class="btn btn-primary" type="button" onclick="copyEstimateToClipboard()" style="background: linear-gradient(135deg, var(--primary-install), #00b4d8); color: #050914;">📋 Скопировать для мессенджера</button>
             <button class="btn btn-primary" type="button" onclick="generatePDF()">📄 Скачать смету (PDF)</button>
-            <button class="btn btn-secondary" type="button" onclick="generateCommercialOffer()">📄 Сформировать КП</button>
-            <button class="btn btn-volt" type="button" onclick="generateAct()">📝 Сформировать Акт</button>
-            <button class="btn btn-outline" type="button" onclick="clearForm()" style="color: var(--danger); border-color: rgba(239, 68, 68, 0.4);">🗑 Очистить всё</button>
+            <div class="dropdown-docs" id="docsDropdownContainer">
+                <button class="btn btn-secondary" type="button" onclick="toggleDocsMenu(event)" style="display: inline-flex; align-items: center; gap: 8px;">
+                    📑 Оформить документы <span style="font-size: 0.75rem;">▲</span>
+                </button>
+                <div class="dropdown-menu-docs" id="dropdownDocsMenu">
+                    <button type="button" class="dropdown-item" onclick="generateContract(); toggleDocsMenu(event);">📝 Договор подряда (ГК РФ)</button>
+                    <button type="button" class="dropdown-item" onclick="generateCommercialOffer(); toggleDocsMenu(event);">📄 Коммерческое предложение</button>
+                    <button type="button" class="dropdown-item" onclick="generateAct(); toggleDocsMenu(event);">📋 Акт сдачи-приёмки</button>
+                    <div class="dropdown-divider"></div>
+                    <button type="button" class="dropdown-item" onclick="exportToExcel(); toggleDocsMenu(event);">📊 Выгрузить в Excel (.csv)</button>
+                </div>
+            </div>
+            <button class="btn btn-outline" type="button" onclick="clearForm()" style="color: var(--danger); border-color: rgba(239, 68, 68, 0.4);">🗑 Очистить</button>
         </div>
     </div>
 </main>
@@ -325,8 +451,8 @@
                 <h4>⚡ VoltGroup</h4>
                 <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">Энергия решений.<br>Электрика и автоматизация в СПб и ЛО.</p>
                 <div style="display: flex; gap: 15px; font-size: 0.9rem;">
-                    <a href="https://vk.com/voltgroup_spb" target="_blank" style="color: var(--primary-install); font-weight: 600;">VK</a>
-                    <a href="https://t.me/voltgroup_spb" target="_blank" style="color: var(--primary-install); font-weight: 600;">Telegram</a>
+                    <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color: var(--primary-install); font-weight: 600;">VK</a>
+                    <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color: var(--primary-install); font-weight: 600;">Telegram</a>
                 </div>
             </div>
             <div class="footer-links">
@@ -512,7 +638,19 @@
         renderServices();
     }
 
-    function renderServices() {
+    function renderServices(preserveCustom = true) {
+        // Сохраняем пользовательские позиции перед обновлением каталога
+        let existingCustomWorks = [];
+        if (preserveCustom) {
+            existingCustomWorks = Array.from(document.querySelectorAll('.custom-work-row')).map(row => ({
+                name: row.querySelector('.name-input') ? row.querySelector('.name-input').value : '',
+                unit: row.querySelector('.mat-unit') ? row.querySelector('.mat-unit').value : 'шт.',
+                price: row.querySelector('.mat-price') ? row.querySelector('.mat-price').value : '',
+                qty: row.querySelector('.custom-qty-input') ? row.querySelector('.custom-qty-input').value : 1,
+                complex: row.querySelector('.custom-complex') ? row.querySelector('.custom-complex').checked : false
+            }));
+        }
+
         const selectedCat = document.getElementById('category-select').value;
         currentCategory = selectedCat;
         const tbody = document.getElementById('services-body');
@@ -533,7 +671,7 @@
             });
         }
 
-        if (filteredWithIndices.length === 0) {
+        if (filteredWithIndices.length === 0 && existingCustomWorks.length === 0) {
             const tr = document.createElement('tr');
             const td = document.createElement('td');
             td.colSpan = 7;
@@ -557,7 +695,7 @@
                 <td>
                   <div class="qty-wrapper">
                     <button class="qty-btn" type="button" onclick="changeQty(${index}, -1)">−</button>
-                    <input type="number" class="qty-input-stepper" id="qty-${index}" min="0" step="0.5" value="${savedState.qty}" onchange="handleServiceChange(${index}, this.value)">
+                    <input type="number" class="qty-input-stepper" id="qty-${index}" min="0" step="0.5" value="${savedState.qty}" oninput="handleServiceChange(${index}, this.value)" onchange="handleServiceChange(${index}, this.value)">
                     <button class="qty-btn" type="button" onclick="changeQty(${index}, 1)">+</button>
                   </div>
                 </td>
@@ -573,6 +711,15 @@
             `;
             tbody.appendChild(tr);
         });
+
+        // Восстанавливаем добавленные вручную работы
+        existingCustomWorks.forEach(cw => {
+            const qty = parseFloat(cw.qty) || 0;
+            if (!showOnlySelected || qty > 0) {
+                addCustomWorkRow(cw.name, cw.price, cw.qty, cw.unit, cw.complex, false);
+            }
+        });
+
         calculateTotals();
     }
 
@@ -604,33 +751,51 @@
         calculateTotals();
     }
 
-    function addCustomWorkRow() {
+    function addCustomWorkRow(name = '', price = '', qty = 1, unit = 'шт.', isComplex = false, shouldFocus = true) {
         const tbody = document.getElementById('services-body');
         const row = document.createElement('tr');
         row.classList.add('custom-work-row');
-        const uniqueId = 'custom-' + Date.now();
+        const uniqueId = 'custom-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
+        const priceVal = (price !== '' && price !== 0 && price !== null && price !== undefined) ? price : '';
+        const qtyVal = (qty !== '' && qty !== null && qty !== undefined) ? qty : 1;
+
         row.innerHTML = `
-            <td><input type="text" class="form-input name-input" placeholder="Название работы" style="padding: 6px 10px;" maxlength="150"></td>
-            <td><input type="text" class="form-input mat-unit" value="шт." style="width:50px; padding: 6px;" maxlength="20"></td>
-            <td><input type="number" class="form-input mat-price" placeholder="0" min="0" onchange="calculateTotals()" style="width:80px; padding: 6px;"></td>
+            <td>
+                <input type="text" class="form-input name-input" value="${escapeHtml(name)}" placeholder="Название работы..." style="padding: 7px 10px;" maxlength="150" oninput="calculateTotals()" onkeydown="handleInputKeyNav(event, this, 'price')">
+            </td>
+            <td>
+                <input type="text" class="form-input mat-unit" value="${escapeHtml(unit || 'шт.')}" style="width:50px; padding: 7px;" maxlength="20">
+            </td>
+            <td>
+                <input type="number" class="form-input mat-price" value="${priceVal}" placeholder="0" min="0" oninput="calculateTotals()" onfocus="this.select()" onkeydown="handleInputKeyNav(event, this, 'qty')" style="width:85px; padding: 7px;">
+            </td>
             <td>
                 <div class="qty-wrapper">
                   <button class="qty-btn" type="button" onclick="changeCustomQty(this, -1)">−</button>
-                  <input type="number" class="qty-input-stepper custom-qty-input" id="${uniqueId}" placeholder="0" min="0" onchange="calculateTotals()">
+                  <input type="number" class="qty-input-stepper custom-qty-input" id="${uniqueId}" value="${qtyVal}" placeholder="1" min="0" step="0.5" oninput="calculateTotals()" onfocus="this.select()">
                   <button class="qty-btn" type="button" onclick="changeCustomQty(this, 1)">+</button>
                 </div>
             </td>
-            <td style="text-align:center; font-weight:700; color: var(--primary-install);">0 ₽</td>
+            <td style="text-align:center; font-weight:700; color: var(--primary-install); white-space: nowrap;">0 ₽</td>
             <td>
                 <label class="complexity-check">
-                  <input type="checkbox" class="custom-complex" onchange="calculateTotals()">
+                  <input type="checkbox" class="custom-complex" ${isComplex ? 'checked' : ''} onchange="calculateTotals()">
                   <span>Сложно</span>
                   <span class="complexity-badge">+20%</span>
                 </label>
             </td>
-            <td style="text-align:center;"><button class="btn-remove" type="button" onclick="this.closest('tr').remove(); calculateTotals()">✕</button></td>
+            <td style="text-align:center;"><button class="btn-remove" type="button" title="Удалить строку" onclick="this.closest('tr').remove(); calculateTotals()">✕</button></td>
         `;
         tbody.appendChild(row);
+
+        if (shouldFocus) {
+            const input = row.querySelector('.name-input');
+            if (input) {
+                input.focus();
+                input.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+        calculateTotals();
     }
 
     function changeCustomQty(btn, delta) {
@@ -642,18 +807,53 @@
         calculateTotals();
     }
 
-    function addMaterialRow(name = '', price = 0, qty = 0) {
+    function addMaterialRow(name = '', price = '', qty = 1, unit = 'шт.', shouldFocus = true) {
         const matBody = document.getElementById('materials-body');
         const row = document.createElement('tr');
+        const priceVal = (price !== '' && price !== 0 && price !== null && price !== undefined) ? price : '';
+        const qtyVal = (qty !== '' && qty !== null && qty !== undefined) ? qty : 1;
+
         row.innerHTML = `
-            <td><input type="text" class="form-input mat-name" value="${escapeHtml(name)}" placeholder="Материал" style="padding: 6px 10px;" maxlength="150"></td>
-            <td><input type="text" class="form-input mat-unit" value="шт." style="width:50px; padding: 6px;" maxlength="20"></td>
-            <td><input type="number" class="form-input mat-price" value="${price}" placeholder="0" min="0" onchange="calculateTotals()" style="width:80px; padding: 6px;"></td>
-            <td><input type="number" class="form-input mat-qty" value="${qty}" placeholder="0" min="0" onchange="calculateTotals()" style="width:65px; padding: 6px;"></td>
-            <td style="text-align:center; font-weight:700; color: var(--primary-install);">0 ₽</td>
-            <td style="text-align:center;"><button class="btn-remove" type="button" onclick="this.closest('tr').remove(); calculateTotals()">✕</button></td>
+            <td>
+                <input type="text" class="form-input mat-name" value="${escapeHtml(name)}" placeholder="Наименование материала..." style="padding: 7px 10px;" maxlength="150" oninput="calculateTotals()" onkeydown="handleInputKeyNav(event, this, 'price')">
+            </td>
+            <td>
+                <input type="text" class="form-input mat-unit" value="${escapeHtml(unit || 'шт.')}" style="width:50px; padding: 7px;" maxlength="20">
+            </td>
+            <td>
+                <input type="number" class="form-input mat-price" value="${priceVal}" placeholder="0" min="0" oninput="calculateTotals()" onfocus="this.select()" onkeydown="handleInputKeyNav(event, this, 'qty')" style="width:85px; padding: 7px;">
+            </td>
+            <td>
+                <input type="number" class="form-input mat-qty" value="${qtyVal}" placeholder="1" min="0" step="0.5" oninput="calculateTotals()" onfocus="this.select()" style="width:65px; padding: 7px;">
+            </td>
+            <td style="text-align:center; font-weight:700; color: var(--primary-install); white-space: nowrap;">0 ₽</td>
+            <td style="text-align:center;"><button class="btn-remove" type="button" title="Удалить строку" onclick="this.closest('tr').remove(); calculateTotals()">✕</button></td>
         `;
         matBody.appendChild(row);
+
+        if (shouldFocus) {
+            const input = row.querySelector('.mat-name');
+            if (input) {
+                input.focus();
+                input.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+        calculateTotals();
+    }
+
+    function handleInputKeyNav(e, currentInput, targetType) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const row = currentInput.closest('tr');
+            if (!row) return;
+            if (targetType === 'price') {
+                const priceEl = row.querySelector('.mat-price');
+                if (priceEl) { priceEl.focus(); priceEl.select(); }
+            } else if (targetType === 'qty') {
+                const qtyEl = row.querySelector('.custom-qty-input') || row.querySelector('.mat-qty');
+                if (qtyEl) { qtyEl.focus(); qtyEl.select(); }
+            }
+        }
     }
 
     function calculateTotals() {
@@ -774,23 +974,20 @@
         document.getElementById('category-select').value = data.currentCategory || 'all';
         currentCategory = data.currentCategory || 'all';
 
+        renderServices(false);
+
         document.querySelectorAll('.custom-work-row').forEach(r => r.remove());
-        if (data.customWorks) {
+        if (data.customWorks && Array.isArray(data.customWorks)) {
             data.customWorks.forEach(w => {
-                addCustomWorkRow();
-                const lastRow = document.querySelector('.custom-work-row:last-child');
-                lastRow.querySelector('.name-input').value = w.name;
-                lastRow.querySelector('.mat-unit').value = w.unit;
-                lastRow.querySelector('.mat-price').value = w.price;
-                lastRow.querySelector('.custom-qty-input').value = w.qty;
-                lastRow.querySelector('.custom-complex').checked = w.complex;
+                addCustomWorkRow(w.name, w.price, w.qty, w.unit, w.complex, false);
             });
         }
 
         document.getElementById('materials-body').textContent = ''; // Очистка
-        if (data.materials) data.materials.forEach(m => addMaterialRow(m.name, m.price, m.qty));
+        if (data.materials && Array.isArray(data.materials)) {
+            data.materials.forEach(m => addMaterialRow(m.name, m.price, m.qty, m.unit, false));
+        }
 
-        renderServices();
         calculateTotals();
     }
 
@@ -836,7 +1033,7 @@
         document.getElementById('discount-input').value = '';
         document.querySelectorAll('.custom-work-row').forEach(r => r.remove());
         document.getElementById('materials-body').textContent = '';
-        renderServices();
+        renderServices(false);
         calculateTotals();
     }
 
@@ -870,21 +1067,18 @@
                 if (data.currentSection) switchSection(data.currentSection);
                 document.getElementById('category-select').value = data.currentCategory || 'all';
                 currentCategory = data.currentCategory || 'all';
+                renderServices(false);
+
                 document.querySelectorAll('.custom-work-row').forEach(r => r.remove());
-                if (data.customWorks) {
+                if (data.customWorks && Array.isArray(data.customWorks)) {
                     data.customWorks.forEach(w => {
-                        addCustomWorkRow();
-                        const lastRow = document.querySelector('.custom-work-row:last-child');
-                        lastRow.querySelector('.name-input').value = w.name;
-                        lastRow.querySelector('.mat-unit').value = w.unit;
-                        lastRow.querySelector('.mat-price').value = w.price;
-                        lastRow.querySelector('.custom-qty-input').value = w.qty;
-                        lastRow.querySelector('.custom-complex').checked = w.complex;
+                        addCustomWorkRow(w.name, w.price, w.qty, w.unit, w.complex, false);
                     });
                 }
                 document.getElementById('materials-body').textContent = '';
-                if (data.materials) data.materials.forEach(m => addMaterialRow(m.name, m.price, m.qty));
-                renderServices();
+                if (data.materials && Array.isArray(data.materials)) {
+                    data.materials.forEach(m => addMaterialRow(m.name, m.price, m.qty, m.unit, false));
+                }
                 calculateTotals();
                 alert('✅ Черновик успешно загружен!');
             } catch (err) {
@@ -896,314 +1090,606 @@
         input.value = '';
     }
 
-    // Безопасная генерация PDF
+    // Безопасная генерация PDF (Смета)
     function generatePDF() {
         const totals = calculateTotals();
         if (totals.grandTotal === 0 && totals.materialsTotal === 0) { alert('Добавьте хотя бы одну позицию'); return; }
         let invoiceNum = escapeHtml(document.getElementById('invoice-number').value.trim() || `Смета-${new Date().getFullYear()}`);
-        const clientName = escapeHtml(document.getElementById('client-name').value || '-');
-        const clientAddr = escapeHtml(document.getElementById('client-address').value || '-');
-        const pdfDate = escapeHtml(document.getElementById('estimate-date').value || new Date().toLocaleDateString('ru-RU'));
+        const clientName = escapeHtml(document.getElementById('client-name').value.trim() || 'Заказчик');
+        const clientAddr = escapeHtml(document.getElementById('client-address').value.trim() || 'г. Санкт-Петербург');
+        const dateRaw = document.getElementById('estimate-date').value;
+        const pdfDate = dateRaw ? new Date(dateRaw).toLocaleDateString('ru-RU') : new Date().toLocaleDateString('ru-RU');
+        const masterBuys = document.getElementById('master-buys-materials').checked;
 
-        let pdfBodyHTML = '';
+        let worksHTML = '';
         let rowIdx = 1;
 
         allServices.forEach((s, index) => {
             const state = servicesState[index] || { qty: 0, isComplex: false };
             if (state.qty > 0) {
-                let price = s.price;
+                let price = state.isComplex ? s.price * 1.2 : s.price;
                 let note = state.isComplex ? ' (коэф. сложности)' : '';
-                pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${escapeHtml(s.name)}${note}</td><td>${escapeHtml(s.unit)}</td><td>${state.qty}</td><td>${Math.round(price)} ₽</td><td>${(state.qty * price).toLocaleString('ru-RU')} ₽</td></tr>`;
+                worksHTML += `<tr><td style="text-align:center;">${rowIdx++}</td><td>${escapeHtml(s.name)}${note}</td><td style="text-align:center;">${escapeHtml(s.unit)}</td><td style="text-align:center;">${state.qty}</td><td style="text-align:right;">${Math.round(price).toLocaleString('ru-RU')} ₽</td><td style="text-align:right;">${Math.round(state.qty * price).toLocaleString('ru-RU')} ₽</td></tr>`;
             }
         });
 
         document.querySelectorAll('.custom-work-row').forEach(row => {
-            const name = escapeHtml(row.querySelector('.name-input').value || 'Доп. работа');
-            const unit = escapeHtml(row.querySelector('.mat-unit').value || 'шт.');
+            const name = escapeHtml((row.querySelector('.name-input').value || 'Доп. работа').trim());
+            const unit = escapeHtml((row.querySelector('.mat-unit').value || 'шт.').trim());
             const priceBase = parseFloat(row.querySelector('.mat-price').value) || 0;
             const qty = parseFloat(row.querySelector('.custom-qty-input').value) || 0;
             const complexCheck = row.querySelector('.custom-complex');
             if (qty > 0 || priceBase > 0) {
                 let finalPrice = (complexCheck && complexCheck.checked) ? priceBase * 1.2 : priceBase;
                 let note = (complexCheck && complexCheck.checked) ? ' (коэф. сложности)' : '';
-                pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${name}${note}</td><td>${unit}</td><td>${qty}</td><td>${Math.round(finalPrice)} ₽</td><td>${(qty * finalPrice).toLocaleString('ru-RU')} ₽</td></tr>`;
+                worksHTML += `<tr><td style="text-align:center;">${rowIdx++}</td><td>${name}${note}</td><td style="text-align:center;">${unit}</td><td style="text-align:center;">${qty}</td><td style="text-align:right;">${Math.round(finalPrice).toLocaleString('ru-RU')} ₽</td><td style="text-align:right;">${Math.round(qty * finalPrice).toLocaleString('ru-RU')} ₽</td></tr>`;
             }
         });
 
         const matRows = document.querySelectorAll('#materials-body tr');
-        let hasMaterials = false;
-        matRows.forEach(r => { if ((parseFloat(r.querySelector('.mat-qty').value) || 0) > 0) hasMaterials = true; });
+        let materialsHTML = '';
+        let mIdx = 1;
+        matRows.forEach(r => {
+            const name = escapeHtml((r.querySelector('.mat-name').value || 'Материал').trim());
+            const unit = escapeHtml((r.querySelector('.mat-unit').value || 'шт.').trim());
+            const price = parseFloat(r.querySelector('.mat-price').value) || 0;
+            const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
+            if (qty > 0 || price > 0) {
+                materialsHTML += `<tr><td style="text-align:center;">${mIdx++}</td><td>${name}</td><td style="text-align:center;">${unit}</td><td style="text-align:center;">${qty}</td><td style="text-align:right;">${Math.round(price).toLocaleString('ru-RU')} ₽</td><td style="text-align:right;">${Math.round(price * qty).toLocaleString('ru-RU')} ₽</td></tr>`;
+            }
+        });
 
-        if (hasMaterials) {
-            pdfBodyHTML += `<tr><td colspan="6" style="background:#f0f0f0; font-weight:bold; text-align:center; padding:8px; border:1px solid #ccc;">МАТЕРИАЛЫ</td></tr>`;
-            matRows.forEach(r => {
-                const name = escapeHtml(r.querySelector('.mat-name').value || 'Материал');
-                const unit = escapeHtml(r.querySelector('.mat-unit').value || 'шт.');
-                const price = parseFloat(r.querySelector('.mat-price').value) || 0;
-                const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
-                if (qty > 0 || price > 0) {
-                    pdfBodyHTML += `<tr><td>${rowIdx++}</td><td>${name}</td><td>${unit}</td><td>${qty}</td><td>${price} ₽</td><td>${(price * qty).toLocaleString('ru-RU')} ₽</td></tr>`;
-                }
-            });
-        }
+        const printHTML = `<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Смета № ${invoiceNum} - VoltGroup</title>
+    <style>
+        @page { size: A4 portrait; margin: 8mm 10mm; }
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 8.5pt; color: #000 !important; line-height: 1.35; background: #fff; margin: 0; padding: 10px 15px; }
+        .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 10px; }
+        .logo-box { font-size: 16pt; font-weight: 800; color: #000; letter-spacing: -0.5px; }
+        .logo-box span { color: #0284c7; }
+        @media print { .logo-box span { color: #000; } }
+        .tagline { font-size: 8pt; color: #333; margin-top: 2px; }
+        .contractor-info { text-align: right; font-size: 8pt; line-height: 1.3; color: #000; }
+        .doc-title { text-align: center; margin: 10px 0 8px 0; }
+        .doc-title h1 { font-size: 11.5pt; text-transform: uppercase; margin: 0 0 2px 0; font-weight: 800; letter-spacing: 0.5px; color: #000; }
+        .doc-title .doc-date { font-size: 8.5pt; color: #333; }
+        .client-info { background: #f8fafc; border: 1px solid #000; border-radius: 4px; padding: 6px 10px; margin-bottom: 8px; font-size: 8.5pt; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; color: #000; }
+        .table-title { font-weight: 700; font-size: 9pt; margin: 8px 0 4px 0; text-transform: uppercase; letter-spacing: 0.3px; color: #000; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 8.5pt; border: 1px solid #000; }
+        th, td { border: 1px solid #000 !important; padding: 4px 6px; color: #000 !important; }
+        th { background: #e5e7eb !important; font-weight: 700; color: #000 !important; text-align: center; }
+        .totals-card { margin-top: 8px; border-top: 2px solid #000; padding-top: 6px; text-align: right; page-break-inside: avoid; }
+        .total-line { display: flex; justify-content: flex-end; gap: 20px; font-size: 8.5pt; margin-bottom: 2px; color: #000; }
+        .total-line.discount { color: #000; font-weight: 700; }
+        .total-line.grand { font-size: 11.5pt; font-weight: 800; color: #000; margin-top: 4px; border-top: 1px dashed #000; padding-top: 4px; }
+        .notes-block { margin-top: 10px; background: #f8fafc; border: 1px solid #666; border-left: 3px solid #000; padding: 6px 10px; font-size: 7.5pt; color: #000; line-height: 1.35; page-break-inside: avoid; }
+        .notes-block p { margin: 2px 0; }
+        .signatures { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 14px; font-size: 8.5pt; color: #000; page-break-inside: avoid; }
+        .sign-box { line-height: 1.3; }
+        .sign-line { margin-top: 20px; border-top: 1px solid #000; padding-top: 2px; font-style: italic; font-size: 8pt; text-align: center; color: #000; }
+        .controls { text-align: center; margin-bottom: 12px; padding: 8px; background: #f8fafc; border: 1px dashed #94a3b8; border-radius: 6px; font-family: sans-serif; }
+        .btn { padding: 8px 18px; background: #00E5FF; color: #050914; border: 1px solid #00b4d8; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px; margin: 3px; }
+        .btn-close { background: #e2e8f0; border-color: #cbd5e1; color: #334155; }
+        @media print { .no-print { display: none !important; } body { padding: 0 !important; margin: 0 !important; } }
+    </style>
+</head>
+<body>
+    <div class="controls no-print">
+        <h3 style="margin: 0 0 6px 0;">📄 Смета готова к печати</h3>
+        <button class="btn" onclick="window.print()">🖨 Печать / Сохранить в PDF</button>
+        <button class="btn btn-close" onclick="window.close()">Закрыть</button>
+    </div>
 
-        const printHTML = `<!DOCTYPE html><html><head><title>Смета №${invoiceNum}</title>
-        <style>@media print { @page { margin: 10mm; size: A4; } body { -webkit-print-color-adjust: exact; } .no-print { display: none; } }
-        body { font-family: Arial, sans-serif; padding: 0; color: #000; max-width: 210mm; margin: 0 auto; font-size: 12px; }
-        h2 { text-align: center; margin: 0 0 15px 0; font-size: 18px; text-transform: uppercase; }
-        .header { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 2px solid #000; padding-bottom: 10px; }
-        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
-        th, td { border: 1px solid #000; padding: 6px 8px; text-align: left; }
-        th { background: #eee; font-weight: bold; }
-        .total-block { margin: 20px 0; border-top: 2px solid #000; padding-top: 10px; text-align: right; }
-        .total-row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 13px; }
-        .total-final { font-size: 16px; font-weight: bold; margin-top: 10px; }
-        .signature { margin-top: 40px; display: flex; justify-content: space-between; font-size: 12px; }
-        .footer { margin-top: 30px; font-size: 10px; color: #555; text-align: center; border-top: 1px solid #ddd; padding-top: 10px; }
-        .controls { text-align: center; margin: 20px; padding: 15px; background: #f9f9f9; border-radius: 8px; border: 1px dashed #ccc; }
-        .btn { padding: 10px 20px; margin: 5px; background: #00E5FF; color: #000; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }</style></head><body>
-        <div class="controls no-print"><h3>Предпросмотр печати</h3><button class="btn" onclick="window.print()">🖨 Печать / Сохранить PDF</button><button class="btn" onclick="window.close()" style="background:#ccc;">Закрыть</button></div>
-        <h2>Смета № ${invoiceNum}</h2>
-        <div class="header"><div><strong>Заказчик:</strong> ${clientName}<br><strong>Адрес:</strong> ${clientAddr}</div><div style="text-align:right;"><strong>Дата:</strong> ${pdfDate}<br><strong>Исполнитель:</strong> Зрячих М.О. (НПД)</div></div>
-        <table><thead><tr><th style="width:30px">№</th><th>Наименование</th><th style="width:50px">Ед.</th><th style="width:50px">Кол-во</th><th style="width:70px">Цена</th><th style="width:80px">Сумма</th></tr></thead><tbody>${pdfBodyHTML}</tbody></table>
-        <div class="total-block">
-            <div class="total-row"><span>Итого работы:</span><span>${totals.worksFinal.toLocaleString('ru-RU')} ₽</span></div>
-            ${totals.discountAmount > 0 ? `<div class="total-row" style="color:#d32f2f;"><span>Скидка:</span><span>-${totals.discountAmount.toLocaleString('ru-RU')} ₽</span></div>` : ''}
-            ${document.getElementById('master-buys-materials').checked ? `<div class="total-row"><span>Материалы:</span><span>${totals.materialsTotal.toLocaleString('ru-RU')} ₽</span></div>` : ''}
-            <div class="total-final"><span>ИТОГО К ОПЛАТЕ:</span><span>${totals.grandTotal.toLocaleString('ru-RU')} ₽</span></div>
+    <div class="header">
+        <div>
+            <div class="logo-box">⚡ Volt<span>Group</span></div>
+            <div class="tagline">Профессиональный электромонтаж в Санкт-Петербурге и ЛО</div>
         </div>
-        <div class="signature"><div>Заказчик: _______________ / _______________ /</div><div>Исполнитель: _______________ / Матвей Зрячих /</div></div>
-        <div class="footer">⚡ VoltGroup | Энергия решений | Самозанятый (НПД)<br>Гарантия на работы: 12 месяцев.</div></body></html>`;
+        <div class="contractor-info">
+            <strong>Исполнитель:</strong> Зрячих Матвей Олегович<br>
+            Статус: Плательщик НПД (самозанятый)<br>
+            ИНН: 591110297727 | Тел: +7 (905) 208-42-84<br>
+            Сайт: voltgroup-spb.ru
+        </div>
+    </div>
 
-        const printWindow = window.open('', '_blank', 'width=900,height=900');
+    <div class="doc-title">
+        <h1>СМЕТА НА ЭЛЕКТРОМОНТАЖНЫЕ РАБОТЫ № ${invoiceNum}</h1>
+        <div class="doc-date">от «${pdfDate}» г.</div>
+    </div>
+
+    <div class="client-info">
+        <div><strong>Заказчик:</strong> ${clientName}</div>
+        <div><strong>Адрес объекта:</strong> ${clientAddr}</div>
+    </div>
+
+    <div class="table-title">1. Электромонтажные работы</div>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 4%;">№</th>
+                <th>Наименование работ / услуг</th>
+                <th style="width: 8%;">Ед.</th>
+                <th style="width: 8%;">Кол-во</th>
+                <th style="width: 14%;">Цена, ₽</th>
+                <th style="width: 14%;">Сумма, ₽</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${worksHTML}
+        </tbody>
+    </table>
+
+    ${materialsHTML ? `
+    <div class="table-title">2. Материалы и комплектующие ${masterBuys ? '(закупка Исполнителем)' : '(обеспечивает Заказчик)'}</div>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 4%;">№</th>
+                <th>Наименование материала</th>
+                <th style="width: 8%;">Ед.</th>
+                <th style="width: 8%;">Кол-во</th>
+                <th style="width: 14%;">Цена, ₽</th>
+                <th style="width: 14%;">Сумма, ₽</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${materialsHTML}
+        </tbody>
+    </table>` : ''}
+
+    <div class="totals-card">
+        <div class="total-line"><span>Стоимость работ:</span><span>${totals.worksFinal.toLocaleString('ru-RU')} ₽</span></div>
+        ${totals.discountAmount > 0 ? `<div class="total-line discount"><span>Скидка:</span><span>-${totals.discountAmount.toLocaleString('ru-RU')} ₽</span></div>` : ''}
+        ${totals.materialsTotal > 0 ? `<div class="total-line"><span>Материалы:</span><span>${totals.materialsTotal.toLocaleString('ru-RU')} ₽${!masterBuys ? ' (закупка заказчиком)' : ''}</span></div>` : ''}
+        <div class="total-line grand"><span>ИТОГО К ОПЛАТЕ:</span><span>${totals.grandTotal.toLocaleString('ru-RU')} ₽</span></div>
+    </div>
+
+    <div class="notes-block">
+        <p>• Гарантия на выполненные электромонтажные работы: <strong>12 месяцев</strong> с момента сдачи-приёмки.</p>
+        <p>• Работы выполняются в строгом соответствии с Правилами устройства электроустановок (ПУЭ 7-е изд.) и СП 256.1325800.2016.</p>
+        <p>• Применяется технология беспылевого штробления с использованием промышленного пылесоса.</p>
+        <p>• Оплата производится в соответствии с ФЗ № 422-ФЗ с предоставлением фискального чека из приложения «Мой налог».</p>
+    </div>
+
+    <div class="signatures">
+        <div class="sign-box">
+            <strong>Исполнитель:</strong><br>
+            Зрячих Матвей Олегович<br>
+            ИНН 591110297727 | VoltGroup
+            <div class="sign-line">/ Зрячих М.О. / М.П.</div>
+        </div>
+        <div class="sign-box" style="text-align: right;">
+            <strong>Заказчик:</strong><br>
+            ${clientName}<br>
+            ${clientAddr}
+            <div class="sign-line">/ ____________________ /</div>
+        </div>
+    </div>
+</body>
+</html>`;
+
+        const printWindow = window.open('', '_blank');
         if (printWindow) {
+            printWindow.document.open();
             printWindow.document.write(printHTML);
             printWindow.document.close();
+        } else {
+            alert('Пожалуйста, разрешите всплывающие окна для печати сметы.');
         }
     }
 
     function generateCommercialOffer() {
         const totals = calculateTotals();
         if (totals.grandTotal === 0 && totals.materialsTotal === 0) { alert('Добавьте хотя бы одну позицию'); return; }
-        const clientName = escapeHtml(document.getElementById('client-name').value || 'Уважаемый Заказчик');
-        const clientAddr = escapeHtml(document.getElementById('client-address').value || 'г. Санкт-Петербург');
-        const date = new Date().toLocaleDateString('ru-RU');
-        const invoiceNum = escapeHtml(document.getElementById('invoice-number').value || 'Б/Н');
+        const clientName = escapeHtml(document.getElementById('client-name').value.trim() || 'Уважаемый Заказчик');
+        const clientAddr = escapeHtml(document.getElementById('client-address').value.trim() || 'г. Санкт-Петербург');
+        const dateRaw = document.getElementById('estimate-date').value;
+        const date = dateRaw ? new Date(dateRaw).toLocaleDateString('ru-RU') : new Date().toLocaleDateString('ru-RU');
+        const invoiceNum = escapeHtml(document.getElementById('invoice-number').value.trim() || 'КП-' + new Date().getFullYear());
+        const masterBuys = document.getElementById('master-buys-materials').checked;
 
-        let offerHTML = `<!DOCTYPE html><html><head><title>КП №${invoiceNum}</title>
-        <style>@media print { @page { margin: 15mm; size: A4; } body { -webkit-print-color-adjust: exact; } .no-print { display: none; } }
-        body { font-family: 'Arial', sans-serif; color: #333; max-width: 210mm; margin: 0 auto; padding: 20px; line-height: 1.5; background: #fff; }
-        .header { border-bottom: 3px solid #00E5FF; padding-bottom: 15px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 28px; font-weight: 800; color: #0B1120; letter-spacing: -1px; }
-        .logo span { color: #00E5FF; }
-        .company-info { text-align: right; font-size: 13px; color: #555; line-height: 1.4; }
-        h1 { font-size: 22px; text-transform: uppercase; margin-bottom: 5px; color: #0B1120; border-left: 5px solid #00E5FF; padding-left: 10px; }
-        .subtitle { font-size: 14px; color: #666; margin-bottom: 30px; margin-left: 15px; }
-        .client-block { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #e9ecef; }
-        .client-block strong { color: #0B1120; display: block; margin-bottom: 5px; }
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
-        th { background: #0B1120; color: white; padding: 12px 10px; text-align: left; font-weight: 600; }
-        td { border-bottom: 1px solid #dee2e6; padding: 10px; }
-        tr:nth-child(even) { background-color: #f8f9fa; }
-        .total-section { margin-top: 40px; text-align: right; page-break-inside: avoid; }
-        .total-row { font-size: 16px; margin-bottom: 8px; color: #555; }
-        .final-price { font-size: 24px; font-weight: 800; color: #0B1120; margin-top: 15px; border-top: 2px solid #00E5FF; padding-top: 15px; display: inline-block; min-width: 200px; }
-        .terms { margin-top: 50px; font-size: 13px; color: #666; border-top: 1px solid #eee; padding-top: 20px; page-break-inside: avoid; }
-        .terms h3 { font-size: 14px; color: #0B1120; margin-bottom: 10px; }
-        .terms ul { padding-left: 20px; margin-bottom: 15px; }
-        .terms li { margin-bottom: 5px; }
-        .signature-block { margin-top: 60px; display: flex; justify-content: space-between; font-size: 14px; }
-        .sign-line { border-top: 1px solid #333; width: 200px; margin-top: 30px; text-align: center; padding-top: 5px; font-size: 12px; color: #777; }
-        .controls { text-align: center; margin-bottom: 20px; padding: 15px; background: #f0f0f0; border-radius: 8px; border: 1px dashed #ccc; }
-        .btn { padding: 12px 25px; background: #00E5FF; color: #0B1120; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 16px; margin: 5px; transition: 0.2s; }
-        .btn:hover { background: #00B8D4; }
-        .btn-close { background: #ccc; color: #333; }</style></head><body>
-        <div class="controls no-print"><h3>📄 Коммерческое предложение готово</h3><button class="btn" onclick="window.print()">💾 Сохранить КП (PDF)</button><button class="btn btn-close" onclick="window.close()">Закрыть</button></div>
-        <div class="header"><div class="logo">⚡ Volt<span>Group</span></div><div class="company-info"><strong>Исполнитель:</strong> Зрячих Матвей<br>Статус: Самозанятый (НПД)<br>ИНН: 591110297727<br>Тел: +7 (905) 208-42-84</div></div>
-        <h1>Коммерческое предложение № ${invoiceNum}</h1>
-        <div class="subtitle">на выполнение электромонтажных работ</div>
-        <div class="client-block"><strong>Заказчик:</strong> ${clientName}<br><strong>Адрес объекта:</strong> ${clientAddr}<br><strong>Дата составления:</strong> ${date}</div>
-        <table><thead><tr><th style="width:5%">№</th><th>Наименование работ / Услуг</th><th style="width:10%">Ед.</th><th style="width:10%">Кол-во</th><th style="width:15%">Цена, ₽</th><th style="width:15%">Сумма, ₽</th></tr></thead><tbody>`;
-
+        let worksHTML = '';
         let rowIdx = 1;
+
         allServices.forEach((s, index) => {
             const state = servicesState[index] || { qty: 0, isComplex: false };
             if (state.qty > 0) {
-                let price = s.price;
-                let note = state.isComplex ? ' <small>(сложные условия)</small>' : '';
-                offerHTML += `<tr><td>${rowIdx++}</td><td>${escapeHtml(s.name)}${note}</td><td>${escapeHtml(s.unit)}</td><td>${state.qty}</td><td>${Math.round(price).toLocaleString('ru-RU')}</td><td><strong>${(state.qty * price).toLocaleString('ru-RU')}</strong></td></tr>`;
+                let price = state.isComplex ? s.price * 1.2 : s.price;
+                let note = state.isComplex ? ' <small style="color:#000; font-weight:600;">(коэф. сложности +20%)</small>' : '';
+                worksHTML += `<tr><td style="text-align:center;">${rowIdx++}</td><td>${escapeHtml(s.name)}${note}</td><td style="text-align:center;">${escapeHtml(s.unit)}</td><td style="text-align:center;">${state.qty}</td><td style="text-align:right;">${Math.round(price).toLocaleString('ru-RU')} ₽</td><td style="text-align:right; font-weight:600;">${Math.round(state.qty * price).toLocaleString('ru-RU')} ₽</td></tr>`;
             }
         });
 
         document.querySelectorAll('.custom-work-row').forEach(row => {
-            const name = escapeHtml(row.querySelector('.name-input').value || 'Доп. работа');
-            const unit = escapeHtml(row.querySelector('.mat-unit').value || 'шт.');
+            const name = escapeHtml((row.querySelector('.name-input').value || 'Доп. работа').trim());
+            const unit = escapeHtml((row.querySelector('.mat-unit').value || 'шт.').trim());
             const priceBase = parseFloat(row.querySelector('.mat-price').value) || 0;
             const qty = parseFloat(row.querySelector('.custom-qty-input').value) || 0;
             const complexCheck = row.querySelector('.custom-complex');
             if (qty > 0 || priceBase > 0) {
                 let finalPrice = (complexCheck && complexCheck.checked) ? priceBase * 1.2 : priceBase;
-                let note = (complexCheck && complexCheck.checked) ? ' <small>(сложные условия)</small>' : '';
-                offerHTML += `<tr><td>${rowIdx++}</td><td>${name}${note}</td><td>${unit}</td><td>${qty}</td><td>${Math.round(finalPrice).toLocaleString('ru-RU')}</td><td><strong>${(qty * finalPrice).toLocaleString('ru-RU')}</strong></td></tr>`;
+                let note = (complexCheck && complexCheck.checked) ? ' <small style="color:#000; font-weight:600;">(коэф. сложности +20%)</small>' : '';
+                worksHTML += `<tr><td style="text-align:center;">${rowIdx++}</td><td>${name}${note}</td><td style="text-align:center;">${unit}</td><td style="text-align:center;">${qty}</td><td style="text-align:right;">${Math.round(finalPrice).toLocaleString('ru-RU')} ₽</td><td style="text-align:right; font-weight:600;">${Math.round(qty * finalPrice).toLocaleString('ru-RU')} ₽</td></tr>`;
             }
         });
 
-        const masterBuys = document.getElementById('master-buys-materials').checked;
-        if (masterBuys && totals.materialsTotal > 0) {
-            offerHTML += `<tr><td colspan="6" style="background:#eef2f5; font-weight:bold; text-align:center; padding:10px; color:#0B1120;">МАТЕРИАЛЫ И КОМПЛЕКТУЮЩИЕ</td></tr>`;
-            document.querySelectorAll('#materials-body tr').forEach(r => {
-                const name = escapeHtml(r.querySelector('.mat-name').value || 'Материал');
-                const unit = escapeHtml(r.querySelector('.mat-unit').value || 'шт.');
-                const price = parseFloat(r.querySelector('.mat-price').value) || 0;
-                const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
-                if (qty > 0 || price > 0) {
-                    offerHTML += `<tr><td>${rowIdx++}</td><td>${name}</td><td>${unit}</td><td>${qty}</td><td>${price.toLocaleString('ru-RU')}</td><td><strong>${(price * qty).toLocaleString('ru-RU')}</strong></td></tr>`;
-                }
-            });
-        }
+        const matRows = document.querySelectorAll('#materials-body tr');
+        let materialsHTML = '';
+        let mIdx = 1;
+        matRows.forEach(r => {
+            const name = escapeHtml((r.querySelector('.mat-name').value || 'Материал').trim());
+            const unit = escapeHtml((r.querySelector('.mat-unit').value || 'шт.').trim());
+            const price = parseFloat(r.querySelector('.mat-price').value) || 0;
+            const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
+            if (qty > 0 || price > 0) {
+                materialsHTML += `<tr><td style="text-align:center;">${mIdx++}</td><td>${name}</td><td style="text-align:center;">${unit}</td><td style="text-align:center;">${qty}</td><td style="text-align:right;">${Math.round(price).toLocaleString('ru-RU')} ₽</td><td style="text-align:right; font-weight:600;">${Math.round(price * qty).toLocaleString('ru-RU')} ₽</td></tr>`;
+            }
+        });
 
-        offerHTML += `</tbody></table>
-        <div class="total-section">
-            <div class="total-row">Стоимость работ: ${totals.worksFinal.toLocaleString('ru-RU')} ₽</div>
-            ${masterBuys ? `<div class="total-row">Стоимость материалов: ${totals.materialsTotal.toLocaleString('ru-RU')} ₽</div>` : ''}
-            ${totals.discountAmount > 0 ? `<div class="total-row" style="color:#d32f2f;">Скидка: -${totals.discountAmount.toLocaleString('ru-RU')} ₽</div>` : ''}
-            <div class="final-price">ИТОГО: ${totals.grandTotal.toLocaleString('ru-RU')} ₽</div>
+        const offerHTML = `<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Коммерческое предложение № ${invoiceNum} - VoltGroup</title>
+    <style>
+        @page { size: A4 portrait; margin: 8mm 10mm; }
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #000 !important; max-width: 210mm; margin: 0 auto; padding: 10px 15px; line-height: 1.35; background: #fff; font-size: 8.5pt; }
+        .header { border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: flex-start; }
+        .logo { font-size: 17pt; font-weight: 800; color: #000; letter-spacing: -0.5px; }
+        .logo span { color: #0284c7; }
+        @media print { .logo span { color: #000; } }
+        .tagline { font-size: 8pt; color: #333; margin-top: 2px; }
+        .company-info { text-align: right; font-size: 8pt; color: #000; line-height: 1.3; }
+        h1 { font-size: 11.5pt; text-transform: uppercase; margin: 0 0 2px 0; color: #000; border-left: 3px solid #000; padding-left: 6px; font-weight: 800; }
+        .subtitle { font-size: 8.5pt; color: #333; margin-bottom: 8px; margin-left: 9px; }
+        .client-block { background: #f8fafc; padding: 6px 10px; border-radius: 4px; margin-bottom: 8px; border: 1px solid #000; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; font-size: 8.5pt; color: #000; }
+        .client-block strong { color: #000; }
+        .intro-text { font-size: 8.5pt; color: #000; margin-bottom: 8px; line-height: 1.35; }
+        .table-title { font-weight: 700; font-size: 9pt; margin: 8px 0 4px 0; text-transform: uppercase; color: #000; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 8.5pt; border: 1px solid #000; }
+        th { background: #e5e7eb !important; color: #000000 !important; padding: 5px 6px; text-align: center; font-weight: 700; border: 1px solid #000000 !important; }
+        td { border: 1px solid #000000 !important; padding: 4px 6px; color: #000000 !important; }
+        tr:nth-child(even) { background-color: #f9fafb; }
+        .total-section { margin-top: 8px; text-align: right; page-break-inside: avoid; border-top: 2px solid #000; padding-top: 6px; }
+        .total-row { font-size: 8.5pt; margin-bottom: 2px; color: #000; }
+        .final-price { font-size: 11.5pt; font-weight: 800; color: #000; margin-top: 4px; }
+        .features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; page-break-inside: avoid; }
+        .feature-card { background: #f8fafc; border: 1px solid #666; border-radius: 4px; padding: 5px 8px; font-size: 7.5pt; color: #000; line-height: 1.3; }
+        .feature-card strong { color: #000; display: block; margin-bottom: 1px; font-size: 8pt; }
+        .terms { margin-top: 8px; font-size: 7.5pt; color: #000; border-top: 1px solid #000; padding-top: 6px; page-break-inside: avoid; }
+        .terms h3 { font-size: 8pt; color: #000; margin: 0 0 3px 0; text-transform: uppercase; font-weight: 700; }
+        .terms ul { padding-left: 14px; margin: 0; }
+        .terms li { margin-bottom: 2px; }
+        .signature-block { margin-top: 10px; display: flex; justify-content: space-between; font-size: 8.5pt; color: #000; page-break-inside: avoid; }
+        .sign-col { line-height: 1.3; }
+        .sign-line { border-top: 1px solid #000; width: 200px; margin-top: 18px; text-align: center; padding-top: 2px; font-size: 7.5pt; color: #000; }
+        .controls { text-align: center; margin-bottom: 12px; padding: 8px; background: #f8fafc; border-radius: 6px; border: 1px dashed #94a3b8; font-family: sans-serif; }
+        .btn { padding: 8px 18px; background: #00E5FF; color: #0b1120; border: 1px solid #00b4d8; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px; margin: 3px; }
+        .btn-close { background: #e2e8f0; border-color: #cbd5e1; color: #334155; }
+        @media print { .no-print { display: none !important; } body { padding: 0 !important; margin: 0 !important; } }
+    </style>
+</head>
+<body>
+    <div class="controls no-print">
+        <h3 style="margin: 0 0 6px 0;">📄 Коммерческое предложение готово</h3>
+        <button class="btn" onclick="window.print()">🖨 Распечатать / Сохранить в PDF</button>
+        <button class="btn btn-close" onclick="window.close()">Закрыть</button>
+    </div>
+
+    <div class="header">
+        <div>
+            <div class="logo">⚡ Volt<span>Group</span></div>
+            <div class="tagline">Комплексный электромонтаж квартир, домов и коммерческих объектов</div>
         </div>
-        <div class="terms"><h3>Условия выполнения работ:</h3><ul>
-            <li><strong>Срок действия предложения:</strong> 3 рабочих дня.</li>
-            <li><strong>Гарантия:</strong> 12 месяцев на монтажные работы.</li>
-            <li><strong>Оплата:</strong> 100% предоплата за материалы (при закупке мастером), остаток - после подписания акта приёмки.</li>
-            <li>Работы выполняются в соответствии с ПУЭ и СНиП.</li>
-        </ul></div>
-        <div class="signature-block">
-            <div><strong>Исполнитель:</strong><br>Зрячих Матвей<br>VoltGroup<div class="sign-line">Подпись</div></div>
-            <div style="text-align: right;"><strong>Заказчик:</strong><br>${clientName}<div class="sign-line">Подпись</div></div>
-        </div></body></html>`;
+        <div class="company-info">
+            <strong>Зрячих Матвей Олегович</strong><br>
+            Статус: Плательщик НПД (самозанятый)<br>
+            ИНН: 591110297727 | Тел: +7 (905) 208-42-84<br>
+            Санкт-Петербург и ЛО | voltgroup-spb.ru
+        </div>
+    </div>
 
-        const printWindow = window.open('', '_blank', 'width=900,height=900');
+    <h1>Коммерческое предложение № ${invoiceNum}</h1>
+    <div class="subtitle">на выполнение электромонтажных работ под ключ</div>
+
+    <div class="client-block">
+        <div><strong>Заказчик:</strong> ${clientName}</div>
+        <div><strong>Дата:</strong> «${date}» г.</div>
+        <div><strong>Адрес объекта:</strong> ${clientAddr}</div>
+        <div><strong>Срок действия КП:</strong> 3 рабочих дня</div>
+    </div>
+
+    <div class="intro-text">
+        Предлагаем Вашему вниманию подробный расчет стоимости электромонтажных работ. Все работы выполняются в строгом соответствии с ПУЭ-7 и СП 256.1325800.2016 с применением профессионального инструмента и системы беспылевого штробления.
+    </div>
+
+    <div class="table-title">Перечень и стоимость работ</div>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 4%;">№</th>
+                <th style="text-align: left;">Наименование работ / услуг</th>
+                <th style="width: 8%;">Ед.</th>
+                <th style="width: 8%;">Кол-во</th>
+                <th style="width: 14%; text-align: right;">Цена, ₽</th>
+                <th style="width: 14%; text-align: right;">Сумма, ₽</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${worksHTML}
+        </tbody>
+    </table>
+
+    ${materialsHTML ? `
+    <div class="table-title">Материалы и комплектующие ${masterBuys ? '(закупка Исполнителем)' : '(обеспечивает Заказчик)'}</div>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 4%;">№</th>
+                <th style="text-align: left;">Наименование материала</th>
+                <th style="width: 8%;">Ед.</th>
+                <th style="width: 8%;">Кол-во</th>
+                <th style="width: 14%; text-align: right;">Цена, ₽</th>
+                <th style="width: 14%; text-align: right;">Сумма, ₽</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${materialsHTML}
+        </tbody>
+    </table>` : ''}
+
+    <div class="total-section">
+        <div class="total-row">Стоимость электромонтажных работ: <strong>${totals.worksFinal.toLocaleString('ru-RU')} ₽</strong></div>
+        ${totals.discountAmount > 0 ? `<div class="total-row">Персональная скидка: <strong>-${totals.discountAmount.toLocaleString('ru-RU')} ₽</strong></div>` : ''}
+        ${masterBuys && totals.materialsTotal > 0 ? `<div class="total-row">Стоимость материалов: <strong>${totals.materialsTotal.toLocaleString('ru-RU')} ₽</strong></div>` : ''}
+        <div class="final-price">ИТОГО К ОПЛАТЕ: ${totals.grandTotal.toLocaleString('ru-RU')} ₽</div>
+    </div>
+
+    <div class="features-grid">
+        <div class="feature-card">
+            <strong>🛡 Гарантия 12 месяцев</strong>
+            Официальная гарантия по договору на качество всех электромонтажных соединений и монтаж щита.
+        </div>
+        <div class="feature-card">
+            <strong>💨 Штробление без пыли</strong>
+            Работаем мощным штроборезом с подключением строительного пылесоса — чистота на вашем объекте.
+        </div>
+        <div class="feature-card">
+            <strong>⚡ Надежность по ГОСТ и ПУЭ</strong>
+            Правильный подбор сечений кабеля, негорючий ГОСТ-кабель (ВВГнг-LS), опрессовка гильзами ГМЛ.
+        </div>
+        <div class="feature-card">
+            <strong>📱 Прозрачность и чек НПД</strong>
+            Официальный договор самозанятого, поэтапная оплата, фискальный чек из приложения «Мой налог».
+        </div>
+    </div>
+
+    <div class="terms">
+        <h3>Условия сотрудничества:</h3>
+        <ul>
+            <li><strong>Срок действия цен:</strong> 3 рабочих дня с даты формирования коммерческого предложения.</li>
+            <li><strong>Сроки проведения работ:</strong> согласуются индивидуально при заключении договора (ориентировочно от 2 до 10 рабочих дней).</li>
+            <li><strong>Порядок расчётов:</strong> поэтапная оплата по факту выполнения каждого этапа, либо 100% оплата после подписания акта сдачи-приёмки.</li>
+            <li><strong>Материалы:</strong> при закупке мастером — 100% предоплата по смете с предоставлением кассовых чеков.</li>
+        </ul>
+    </div>
+
+    <div class="signature-block">
+        <div class="sign-col">
+            <strong>Исполнитель:</strong><br>
+            Зрячих Матвей Олегович<br>
+            VoltGroup | ИНН 591110297727
+            <div class="sign-line">/ Зрячих М.О. / М.П.</div>
+        </div>
+        <div class="sign-col" style="text-align: right;">
+            <strong>Заказчик:</strong><br>
+            ${clientName}<br>
+            Согласовано
+            <div class="sign-line" style="margin-left: auto;">/ ____________________ /</div>
+        </div>
+    </div>
+</body>
+</html>`;
+
+        const printWindow = window.open('', '_blank');
         if (printWindow) {
+            printWindow.document.open();
             printWindow.document.write(offerHTML);
             printWindow.document.close();
+        } else {
+            alert('Пожалуйста, разрешите всплывающие окна для формирования КП.');
         }
     }
 
     function generateAct() {
         const totals = calculateTotals();
         if (totals.grandTotal === 0 && totals.materialsTotal === 0) { alert('Добавьте хотя бы одну позицию'); return; }
-        const clientName = escapeHtml(document.getElementById('client-name').value || 'Заказчик');
-        const clientAddr = escapeHtml(document.getElementById('client-address').value || 'г. Санкт-Петербург');
-        const date = new Date().toLocaleDateString('ru-RU');
-        const invoiceNum = escapeHtml(document.getElementById('invoice-number').value || 'Б/Н');
+        const clientName = escapeHtml(document.getElementById('client-name').value.trim() || 'Заказчик');
+        const clientAddr = escapeHtml(document.getElementById('client-address').value.trim() || 'г. Санкт-Петербург');
+        const dateRaw = document.getElementById('estimate-date').value;
+        const date = dateRaw ? new Date(dateRaw).toLocaleDateString('ru-RU') : new Date().toLocaleDateString('ru-RU');
+        const invoiceNum = escapeHtml(document.getElementById('invoice-number').value.trim() || 'А-' + new Date().getFullYear() + '/01');
         const masterBuys = document.getElementById('master-buys-materials').checked;
 
-        let actHTML = `<!DOCTYPE html><html><head><title>Акт №${invoiceNum}</title>
-        <style>@media print { @page { margin: 15mm; size: A4; } body { -webkit-print-color-adjust: exact; } .no-print { display: none; } }
-        body { font-family: 'Times New Roman', Times, serif; color: #000; max-width: 210mm; margin: 0 auto; padding: 20px; line-height: 1.3; background: #fff; font-size: 12pt; }
-        h1 { text-align: center; font-size: 16pt; font-weight: bold; margin-bottom: 5px; text-transform: uppercase; }
-        .doc-subtitle { text-align: center; font-size: 11pt; margin-bottom: 20px; color: #333; }
-        .header-block { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 11pt; }
-        .header-block div { width: 48%; }
-        .preamble { margin-bottom: 15px; text-align: justify; font-size: 11pt; }
-        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 11pt; }
-        th { background: #f0f0f0; border: 1px solid #000; padding: 6px; text-align: center; font-weight: bold; }
-        td { border: 1px solid #000; padding: 6px; vertical-align: top; }
-        td.num { text-align: center; width: 5%; } td.unit { text-align: center; width: 10%; } td.qty { text-align: center; width: 10%; }
-        td.price { text-align: right; width: 15%; } td.sum { text-align: right; width: 15%; font-weight: bold; }
-        .total-section { margin-top: 10px; text-align: right; font-size: 12pt; }
-        .total-line { margin-bottom: 5px; }
-        .grand-total { font-size: 14pt; font-weight: bold; margin-top: 10px; border-top: 2px solid #000; padding-top: 5px; display: inline-block; min-width: 250px; }
-        .legal-text { margin-top: 20px; font-size: 11pt; text-align: justify; }
-        .legal-text ul { margin: 10px 0 10px 20px; padding: 0; }
-        .legal-text li { margin-bottom: 5px; }
-        .signatures { margin-top: 40px; display: flex; justify-content: space-between; font-size: 11pt; page-break-inside: avoid; }
-        .sign-box { width: 45%; }
-        .sign-title { font-weight: bold; margin-bottom: 10px; }
-        .sign-details { margin-bottom: 30px; line-height: 1.4; }
-        .sign-line { border-top: 1px solid #000; margin-top: 10px; padding-top: 5px; text-align: center; font-style: italic; font-size: 10pt; }
-        .controls { text-align: center; margin-bottom: 20px; padding: 15px; background: #f9f9f9; border-radius: 8px; border: 1px dashed #ccc; font-family: sans-serif; }
-        .btn { padding: 10px 20px; background: #00E5FF; color: #0B1120; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin: 5px; font-family: sans-serif; }
-        .btn-close { background: #ccc; color: #333; }</style></head><body>
-        <div class="controls no-print"><h3>📝 Акт приёмки-сдачи работ готов</h3><button class="btn" onclick="window.print()">🖨 Печать / Сохранить PDF</button><button class="btn btn-close" onclick="window.close()">Закрыть</button></div>
-        <h1>Акт приёмки-сдачи выполненных работ</h1>
-        <div class="doc-subtitle">№ ${invoiceNum} от ${date}</div>
-        <div class="header-block">
-            <div><strong>Исполнитель:</strong><br>Зрячих Матвей Олегович<br>(VoltGroup)<br>Плательщик НПД (Самозанятый)<br>ИНН: 591110297727<br>Тел: +7 (905) 208-42-84</div>
-            <div style="text-align: right;"><strong>Заказчик:</strong><br>${clientName}<br>Адрес объекта:<br>${clientAddr}</div>
-        </div>
-        <div class="preamble">Мы, нижеподписавшиеся, Исполнитель <strong>Зрячих М.О.</strong>, с одной стороны, и Заказчик <strong>${clientName}</strong>, с другой стороны, составили настоящий Акт о нижеследующем:</div>
-        <p style="margin-bottom: 10px;"><strong>1. Перечень выполненных работ и оказанных услуг:</strong></p>
-        <table><thead><tr><th class="num">№</th><th>Наименование работ / Услуг</th><th class="unit">Ед. изм.</th><th class="qty">Кол-во</th><th class="price">Цена, ₽</th><th class="sum">Сумма, ₽</th></tr></thead><tbody>`;
-
+        let worksHTML = '';
         let rowIdx = 1;
+
         allServices.forEach((s, index) => {
             const state = servicesState[index] || { qty: 0, isComplex: false };
             if (state.qty > 0) {
-                let price = s.price;
-                let note = state.isComplex ? ' (повыш. сложность)' : '';
-                actHTML += `<tr><td class="num">${rowIdx++}</td><td>${escapeHtml(s.name)}${note}</td><td class="unit">${escapeHtml(s.unit)}</td><td class="qty">${state.qty}</td><td class="price">${Math.round(price)}</td><td class="sum">${(state.qty * price).toLocaleString('ru-RU')}</td></tr>`;
+                let price = state.isComplex ? s.price * 1.2 : s.price;
+                let note = state.isComplex ? ' (коэф. сложности)' : '';
+                worksHTML += `<tr><td style="text-align:center;">${rowIdx++}</td><td>${escapeHtml(s.name)}${note}</td><td style="text-align:center;">${escapeHtml(s.unit)}</td><td style="text-align:center;">${state.qty}</td><td style="text-align:right;">${Math.round(price).toLocaleString('ru-RU')} ₽</td><td style="text-align:right;">${Math.round(state.qty * price).toLocaleString('ru-RU')} ₽</td></tr>`;
             }
         });
 
         document.querySelectorAll('.custom-work-row').forEach(row => {
-            const name = escapeHtml(row.querySelector('.name-input').value || 'Доп. работа');
-            const unit = escapeHtml(row.querySelector('.mat-unit').value || 'шт.');
+            const name = escapeHtml((row.querySelector('.name-input').value || 'Доп. работа').trim());
+            const unit = escapeHtml((row.querySelector('.mat-unit').value || 'шт.').trim());
             const priceBase = parseFloat(row.querySelector('.mat-price').value) || 0;
             const qty = parseFloat(row.querySelector('.custom-qty-input').value) || 0;
             const complexCheck = row.querySelector('.custom-complex');
             if (qty > 0 || priceBase > 0) {
                 let finalPrice = (complexCheck && complexCheck.checked) ? priceBase * 1.2 : priceBase;
-                let note = (complexCheck && complexCheck.checked) ? ' (повыш. сложность)' : '';
-                actHTML += `<tr><td class="num">${rowIdx++}</td><td>${name}${note}</td><td class="unit">${unit}</td><td class="qty">${qty}</td><td class="price">${Math.round(finalPrice)}</td><td class="sum">${(qty * finalPrice).toLocaleString('ru-RU')}</td></tr>`;
+                let note = (complexCheck && complexCheck.checked) ? ' (коэф. сложности)' : '';
+                worksHTML += `<tr><td style="text-align:center;">${rowIdx++}</td><td>${name}${note}</td><td style="text-align:center;">${unit}</td><td style="text-align:center;">${qty}</td><td style="text-align:right;">${Math.round(finalPrice).toLocaleString('ru-RU')} ₽</td><td style="text-align:right;">${Math.round(qty * finalPrice).toLocaleString('ru-RU')} ₽</td></tr>`;
             }
         });
 
-        if (masterBuys && totals.materialsTotal > 0) {
-            actHTML += `<tr><td colspan="6" style="background:#eef2f5; font-weight:bold; text-align:center; padding:8px;">МАТЕРИАЛЫ И ОБОРУДОВАНИЕ (предоставлены Исполнителем, оплачены Заказчиком ранее)</td></tr>`;
-            document.querySelectorAll('#materials-body tr').forEach(r => {
-                const name = escapeHtml(r.querySelector('.mat-name').value || 'Материал');
-                const unit = escapeHtml(r.querySelector('.mat-unit').value || 'шт.');
-                const price = parseFloat(r.querySelector('.mat-price').value) || 0;
-                const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
-                if (qty > 0 || price > 0) {
-                    actHTML += `<tr><td class="num">${rowIdx++}</td><td>${name}</td><td class="unit">${unit}</td><td class="qty">${qty}</td><td class="price">${price}</td><td class="sum">${(price * qty).toLocaleString('ru-RU')}</td></tr>`;
-                }
-            });
-        }
+        const matRows = document.querySelectorAll('#materials-body tr');
+        let materialsHTML = '';
+        let mIdx = 1;
+        matRows.forEach(r => {
+            const name = escapeHtml((r.querySelector('.mat-name').value || 'Материал').trim());
+            const unit = escapeHtml((r.querySelector('.mat-unit').value || 'шт.').trim());
+            const price = parseFloat(r.querySelector('.mat-price').value) || 0;
+            const qty = parseFloat(r.querySelector('.mat-qty').value) || 0;
+            if (qty > 0 || price > 0) {
+                materialsHTML += `<tr><td style="text-align:center;">${mIdx++}</td><td>${name}</td><td style="text-align:center;">${unit}</td><td style="text-align:center;">${qty}</td><td style="text-align:right;">${Math.round(price).toLocaleString('ru-RU')} ₽</td><td style="text-align:right;">${Math.round(price * qty).toLocaleString('ru-RU')} ₽</td></tr>`;
+            }
+        });
 
-        actHTML += `</tbody></table>
-        <div class="total-section">
-            <div class="total-line">Стоимость выполненных работ: ${totals.worksFinal.toLocaleString('ru-RU')} ₽</div>
-            ${masterBuys ? `<div class="total-line" style="font-size: 10pt; color: #555;">(Материалы на сумму ${totals.materialsTotal.toLocaleString('ru-RU')} ₽ оплачены ранее)</div>` : ''}
-            ${totals.discountAmount > 0 ? `<div class="total-line" style="color:#d32f2f;">Скидка на работы: -${totals.discountAmount.toLocaleString('ru-RU')} ₽</div>` : ''}
-            <div class="grand-total">ИТОГО К ОПЛАТЕ ЗА РАБОТЫ: ${totals.worksFinal.toLocaleString('ru-RU')} ₽</div>
-        </div>
-        <div class="legal-text">
-            <p><strong>2. Качество и сроки:</strong></p>
-            <ul>
-                <li>Работы выполнены в полном объеме, в срок и с надлежащим качеством.</li>
-                <li>Работы соответствуют требованиям ПУЭ (Правила устройства электроустановок) и СНиП.</li>
-                <li>Заказчик осмотрел результаты работ и претензий к качеству, объему и срокам выполнения не имеет.</li>
-            </ul>
-            <p><strong>3. Гарантийные обязательства:</strong></p>
-            <p>Исполнитель предоставляет гарантию на выполненные монтажные работы сроком на <strong>12 месяцев</strong> с даты подписания настоящего Акта. Гарантия не распространяется на оборудование и материалы (гарантия производителя), а также на повреждения, вызванные неправильной эксплуатацией или действиями третьих лиц.</p>
-        </div>
-        <div class="signatures">
-            <div class="sign-box">
-                <div class="sign-title">ИСПОЛНИТЕЛЬ:</div>
-                <div class="sign-details">Зрячих Матвей Олегович<br>Самозанятый (НПД)<br>ИНН 591110297727</div>
-                <div class="sign-line">Подпись _________________ / М.П.</div>
-            </div>
-            <div class="sign-box" style="text-align: right;">
-                <div class="sign-title">ЗАКАЗЧИК:</div>
-                <div class="sign-details">${clientName}<br>Паспортные данные (по требованию):<br>_________________________</div>
-                <div class="sign-line">Подпись _________________</div>
-            </div>
-        </div></body></html>`;
+        const actHTML = `<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Акт сдачи-приёмки работ № ${invoiceNum} - VoltGroup</title>
+    <style>
+        @page { size: A4 portrait; margin: 8mm 12mm; }
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        body { font-family: 'Times New Roman', Times, serif; color: #000 !important; max-width: 210mm; margin: 0 auto; padding: 10px 15px; line-height: 1.3; background: #fff; font-size: 9.5pt; }
+        h1 { text-align: center; font-size: 12pt; font-weight: bold; margin: 0 0 3px 0; text-transform: uppercase; color: #000; }
+        .doc-subtitle { text-align: center; font-size: 9.5pt; margin-bottom: 10px; font-weight: bold; color: #000; }
+        .city-date { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; font-size: 9pt; }
+        .preamble { margin-bottom: 8px; text-align: justify; text-indent: 18px; font-size: 9pt; line-height: 1.35; }
+        .clause-title { font-weight: bold; margin-top: 8px; margin-bottom: 4px; font-size: 9pt; }
+        table { width: 100%; border-collapse: collapse; margin: 6px 0 10px 0; font-size: 8.5pt; border: 1px solid #000; }
+        th, td { border: 1px solid #000 !important; padding: 4px 6px; color: #000 !important; }
+        th { background: #e5e7eb !important; text-align: center; font-weight: bold; color: #000 !important; }
+        .totals-block { margin-top: 8px; text-align: right; font-size: 9.5pt; page-break-inside: avoid; }
+        .total-line { margin-bottom: 2px; }
+        .grand-total { font-size: 10.5pt; font-weight: bold; margin-top: 6px; border-top: 2px solid #000; padding-top: 3px; display: inline-block; min-width: 240px; }
+        .legal-text { margin-top: 8px; font-size: 8.5pt; text-align: justify; line-height: 1.3; }
+        .legal-text ol { margin: 4px 0 6px 16px; padding: 0; }
+        .legal-text li { margin-bottom: 3px; }
+        .signatures { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 15px; font-size: 9pt; page-break-inside: avoid; }
+        .sign-box { line-height: 1.3; }
+        .sign-title { font-weight: bold; margin-bottom: 4px; }
+        .sign-line { margin-top: 25px; border-top: 1px solid #000; padding-top: 2px; font-style: italic; font-size: 8.5pt; text-align: center; }
+        .controls { text-align: center; margin-bottom: 12px; padding: 8px; background: #f5f5f5; border-radius: 6px; border: 1px dashed #999; font-family: sans-serif; }
+        .btn { padding: 8px 18px; background: #00E5FF; color: #050914; border: 1px solid #00b4d8; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px; margin: 3px; }
+        .btn-close { background: #ddd; color: #333; }
+        @media print { .no-print { display: none !important; } body { padding: 0 !important; margin: 0 !important; } }
+    </style>
+</head>
+<body>
+    <div class="controls no-print">
+        <h3 style="margin: 0 0 6px 0;">📝 Акт сдачи-приёмки сформирован</h3>
+        <button class="btn" onclick="window.print()">🖨 Распечатать / Сохранить в PDF</button>
+        <button class="btn btn-close" onclick="window.close()">Закрыть</button>
+    </div>
 
-        const printWindow = window.open('', '_blank', 'width=900,height=900');
+    <h1>АКТ СДАЧИ-ПРИЁМКИ ВЫПОЛНЕННЫХ РАБОТ</h1>
+    <div class="doc-subtitle">к Договору подряда № ${invoiceNum}</div>
+
+    <div class="city-date">
+        <span>г. Санкт-Петербург</span>
+        <span>«${date}» г.</span>
+    </div>
+
+    <div class="preamble">
+        Мы, нижеподписавшиеся: гражданин РФ <strong>Зрячих Матвей Олегович</strong> (ИНН 591110297727), применяющий специальный налоговый режим «Налог на профессиональный доход» (самозанятый) в соответствии с Федеральным законом от 27.11.2018 № 422-ФЗ, именуемый в дальнейшем <strong>«Исполнитель»</strong> (Подрядчик), с одной стороны, и гражданин(ка) <strong>${clientName}</strong>, именуемый(ая) в дальнейшем <strong>«Заказчик»</strong>, с другой стороны, совместно именуемые «Стороны», руководствуясь статьей 720 Гражданского кодекса Российской Федерации, составили настоящий Акт о нижеследующем:
+    </div>
+
+    <div class="clause-title">1. Перечень выполненных электромонтажных работ:</div>
+    <div style="font-size: 9.5pt; margin-bottom: 6px;">Адрес объекта: <strong>${clientAddr}</strong></div>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 5%;">№</th>
+                <th>Наименование работ / услуг</th>
+                <th style="width: 10%;">Ед. изм.</th>
+                <th style="width: 10%;">Кол-во</th>
+                <th style="width: 15%;">Цена, ₽</th>
+                <th style="width: 15%;">Сумма, ₽</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${worksHTML}
+        </tbody>
+    </table>
+
+    ${materialsHTML ? `
+    <div class="clause-title">2. Материалы и комплектующие ${masterBuys ? '(предоставлены Исполнителем, оплачены Заказчиком)' : '(предоставлены Заказчиком)'}:</div>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 5%;">№</th>
+                <th>Наименование материала</th>
+                <th style="width: 10%;">Ед. изм.</th>
+                <th style="width: 10%;">Кол-во</th>
+                <th style="width: 15%;">Цена, ₽</th>
+                <th style="width: 15%;">Сумма, ₽</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${materialsHTML}
+        </tbody>
+    </table>` : ''}
+
+    <div class="totals-block">
+        <div class="total-line">Стоимость выполненных работ: <strong>${totals.worksFinal.toLocaleString('ru-RU')} ₽</strong></div>
+        ${totals.discountAmount > 0 ? `<div class="total-line" style="color: #c00;">Скидка: -${totals.discountAmount.toLocaleString('ru-RU')} ₽</div>` : ''}
+        ${masterBuys && totals.materialsTotal > 0 ? `<div class="total-line" style="font-size: 9.5pt; color: #555;">(Материалы на сумму ${totals.materialsTotal.toLocaleString('ru-RU')} ₽ оплачены Заказчиком ранее)</div>` : ''}
+        <div class="grand-total">ИТОГО К ОПЛАТЕ ЗА РАБОТЫ: ${totals.worksFinal.toLocaleString('ru-RU')} рублей.</div>
+    </div>
+
+    <div class="legal-text">
+        <ol>
+            <li>Вышеперечисленные работы выполнены Исполнителем в полном объеме, в установленный срок и с надлежащим качеством, в строгом соответствии с требованиями ПУЭ (Правила устройства электроустановок, 7-е изд.), СП 256.1325800.2016 и условиями Договора.</li>
+            <li>Заказчик произвел детальный осмотр и проверку работоспособности смонтированных кабельных линий, электроустановочных изделий и щитового оборудования. Претензий по объему, качеству и срокам выполнения работ Заказчик к Исполнителю не имеет.</li>
+            <li>Исполнитель предоставляет гарантию на выполненные электромонтажные работы сроком на <strong>12 (двенадцать) месяцев</strong> с даты подписания настоящего Акта. Гарантия не распространяется на естественный износ, дефекты оборудования заводского характера и последствия вмешательства третьих лиц.</li>
+            <li>В соответствии со ст. 14 Федерального закона от 27.11.2018 № 422-ФЗ Исполнитель сформировал и предоставил Заказчику фискальный чек в приложении «Мой налог».</li>
+            <li>Настоящий Акт составлен в двух экземплярах, имеющих равную юридическую силу, по одному для каждой из Сторон.</li>
+        </ol>
+    </div>
+
+    <div class="signatures">
+        <div class="sign-box">
+            <div class="sign-title">ИСПОЛНИТЕЛЬ:</div>
+            Зрячих Матвей Олегович<br>
+            Статус: Плательщик НПД (самозанятый)<br>
+            ИНН: 591110297727<br>
+            Телефон: +7 (905) 208-42-84<br>
+            Электромонтажная группа VoltGroup
+            <div class="sign-line">/ Зрячих М.О. / М.П.</div>
+        </div>
+        <div class="sign-box" style="text-align: right;">
+            <div class="sign-title">ЗАКАЗЧИК:</div>
+            ФИО: ${clientName}<br>
+            Адрес: ${clientAddr}<br>
+            Паспортные данные: _________________________<br>
+            Телефон: _________________________
+            <div class="sign-line">/ ____________________ /</div>
+        </div>
+    </div>
+</body>
+</html>`;
+
+        const printWindow = window.open('', '_blank');
         if (printWindow) {
+            printWindow.document.open();
             printWindow.document.write(actHTML);
             printWindow.document.close();
+        } else {
+            alert('Пожалуйста, разрешите всплывающие окна для печати акта.');
         }
     }
 
@@ -1329,6 +1815,320 @@
             alert('Не удалось скопировать. Пожалуйста, скопируйте вручную.');
         }
         document.body.removeChild(ta);
+    }
+
+    function toggleDocsMenu(event) {
+        if (event) event.stopPropagation();
+        const menu = document.getElementById('dropdownDocsMenu');
+        if (menu) {
+            menu.classList.toggle('show');
+        }
+    }
+
+    document.addEventListener('click', (e) => {
+        const menu = document.getElementById('dropdownDocsMenu');
+        if (menu && menu.classList.contains('show')) {
+            if (!e.target.closest('#docsDropdownContainer')) {
+                menu.classList.remove('show');
+            }
+        }
+    });
+
+    function exportToExcel() {
+        const totals = calculateTotals();
+        if (totals.grandTotal === 0 && totals.materialsTotal === 0) {
+            alert('Смета пуста! Укажите хотя бы одну работу или материал.');
+            return;
+        }
+        const clientName = document.getElementById('client-name').value.trim() || 'Заказчик';
+        const clientAddr = document.getElementById('client-address').value.trim() || 'г. Санкт-Петербург';
+        const invoiceNum = document.getElementById('invoice-number').value.trim() || 'Смета-' + new Date().getFullYear();
+        const date = document.getElementById('estimate-date').value || new Date().toLocaleDateString('ru-RU');
+
+        let csv = '\uFEFF';
+        csv += `Смета VoltGroup;№ ${invoiceNum};Дата:;${date}\r\n`;
+        csv += `Заказчик:;${clientName};Объект:;${clientAddr}\r\n\r\n`;
+        csv += `№;Наименование работ / услуг;Ед. изм.;Кол-во;Цена, руб.;Сложность;Сумма, руб.\r\n`;
+
+        let rowIdx = 1;
+        allServices.forEach((s, index) => {
+            const state = servicesState[index] || { qty: 0, isComplex: false };
+            if (state.qty > 0) {
+                let price = state.isComplex ? s.price * 1.2 : s.price;
+                let complexText = state.isComplex ? '+20%' : 'Базовая';
+                let sum = Math.round(state.qty * price);
+                csv += `${rowIdx++};"${s.name.replace(/"/g, '""')}";${s.unit};${state.qty};${Math.round(price)};${complexText};${sum}\r\n`;
+            }
+        });
+
+        document.querySelectorAll('.custom-work-row').forEach(row => {
+            const name = (row.querySelector('.name-input').value || 'Доп. работа').trim();
+            const unit = (row.querySelector('.mat-unit').value || 'шт.').trim();
+            const priceBase = parseFloat(row.querySelector('.mat-price').value) || 0;
+            const qty = parseFloat(row.querySelector('.custom-qty-input').value) || 0;
+            const complexCheck = row.querySelector('.custom-complex');
+            if (qty > 0 || priceBase > 0) {
+                let finalPrice = (complexCheck && complexCheck.checked) ? priceBase * 1.2 : priceBase;
+                let complexText = (complexCheck && complexCheck.checked) ? '+20%' : 'Базовая';
+                let sum = Math.round(qty * finalPrice);
+                csv += `${rowIdx++};"${name.replace(/"/g, '""')}";${unit};${qty};${Math.round(finalPrice)};${complexText};${sum}\r\n`;
+            }
+        });
+
+        csv += `;;;;;ИТОГО ЗА РАБОТЫ:;${totals.worksFinal}\r\n\r\n`;
+
+        const matRows = document.querySelectorAll('#materials-body tr');
+        let hasMats = false;
+        matRows.forEach(r => { if ((parseFloat(r.querySelector('.mat-qty').value) || 0) > 0) hasMats = true; });
+
+        if (hasMats) {
+            csv += `№;Наименование материалов;Ед. изм.;Кол-во;Цена, руб.;;Сумма, руб.\r\n`;
+            let mIdx = 1;
+            matRows.forEach(row => {
+                const name = (row.querySelector('.mat-name').value || 'Материал').trim();
+                const unit = (row.querySelector('.mat-unit').value || 'шт.').trim();
+                const price = parseFloat(row.querySelector('.mat-price').value) || 0;
+                const qty = parseFloat(row.querySelector('.mat-qty').value) || 0;
+                if (qty > 0 || price > 0) {
+                    csv += `${mIdx++};"${name.replace(/"/g, '""')}";${unit};${qty};${Math.round(price)};;${Math.round(qty * price)}\r\n`;
+                }
+            });
+            csv += `;;;;;ИТОГО МАТЕРИАЛЫ:;${totals.materialsTotal}\r\n\r\n`;
+        }
+
+        csv += `;;;;;К ОПЛАТЕ:;${totals.grandTotal}\r\n`;
+
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `Смета_VoltGroup_${invoiceNum}_${date}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(a.href);
+        showToast('📊 Смета выгружена в Excel (.csv)!');
+    }
+
+    function generateContract() {
+        const totals = calculateTotals();
+        if (totals.grandTotal === 0 && totals.materialsTotal === 0) {
+            alert('Смета пуста! Укажите хотя бы одну работу или материал для формирования договора.');
+            return;
+        }
+
+        const clientName = escapeHtml(document.getElementById('client-name').value.trim() || '____________________');
+        const clientAddr = escapeHtml(document.getElementById('client-address').value.trim() || 'г. Санкт-Петербург, ____________________');
+        const invoiceNum = escapeHtml(document.getElementById('invoice-number').value.trim() || 'Д-' + new Date().getFullYear() + '/01');
+        const dateRaw = document.getElementById('estimate-date').value;
+        const date = dateRaw ? new Date(dateRaw).toLocaleDateString('ru-RU') : new Date().toLocaleDateString('ru-RU');
+        const masterBuys = document.getElementById('master-buys-materials').checked;
+
+        let worksRowsHTML = '';
+        let rowIdx = 1;
+        allServices.forEach((s, index) => {
+            const state = servicesState[index] || { qty: 0, isComplex: false };
+            if (state.qty > 0) {
+                let price = state.isComplex ? s.price * 1.2 : s.price;
+                let note = state.isComplex ? ' (коэф. сложности)' : '';
+                worksRowsHTML += `<tr><td style="text-align:center;">${rowIdx++}</td><td>${escapeHtml(s.name)}${note}</td><td style="text-align:center;">${escapeHtml(s.unit)}</td><td style="text-align:center;">${state.qty}</td><td style="text-align:right;">${Math.round(price).toLocaleString('ru-RU')} ₽</td><td style="text-align:right;">${Math.round(state.qty * price).toLocaleString('ru-RU')} ₽</td></tr>`;
+            }
+        });
+
+        document.querySelectorAll('.custom-work-row').forEach(row => {
+            const name = escapeHtml((row.querySelector('.name-input').value || 'Доп. работа').trim());
+            const unit = escapeHtml((row.querySelector('.mat-unit').value || 'шт.').trim());
+            const priceBase = parseFloat(row.querySelector('.mat-price').value) || 0;
+            const qty = parseFloat(row.querySelector('.custom-qty-input').value) || 0;
+            const complexCheck = row.querySelector('.custom-complex');
+            if (qty > 0 || priceBase > 0) {
+                let finalPrice = (complexCheck && complexCheck.checked) ? priceBase * 1.2 : priceBase;
+                let note = (complexCheck && complexCheck.checked) ? ' (коэф. сложности)' : '';
+                worksRowsHTML += `<tr><td style="text-align:center;">${rowIdx++}</td><td>${name}${note}</td><td style="text-align:center;">${unit}</td><td style="text-align:center;">${qty}</td><td style="text-align:right;">${Math.round(finalPrice).toLocaleString('ru-RU')} ₽</td><td style="text-align:right;">${Math.round(qty * finalPrice).toLocaleString('ru-RU')} ₽</td></tr>`;
+            }
+        });
+
+        const matRows = document.querySelectorAll('#materials-body tr');
+        let matRowsHTML = '';
+        let mIdx = 1;
+        matRows.forEach(row => {
+            const name = escapeHtml((row.querySelector('.mat-name').value || 'Материал').trim());
+            const unit = escapeHtml((row.querySelector('.mat-unit').value || 'шт.').trim());
+            const price = parseFloat(row.querySelector('.mat-price').value) || 0;
+            const qty = parseFloat(row.querySelector('.mat-qty').value) || 0;
+            if (qty > 0 || price > 0) {
+                matRowsHTML += `<tr><td style="text-align:center;">${mIdx++}</td><td>${name}</td><td style="text-align:center;">${unit}</td><td style="text-align:center;">${qty}</td><td style="text-align:right;">${Math.round(price).toLocaleString('ru-RU')} ₽</td><td style="text-align:right;">${Math.round(qty * price).toLocaleString('ru-RU')} ₽</td></tr>`;
+            }
+        });
+
+        const contractWin = window.open('', '_blank');
+        if (!contractWin) {
+            alert('Пожалуйста, разрешите всплывающие окна для печати договора.');
+            return;
+        }
+
+        const contractHTML = `<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Договор подряда № ${invoiceNum} - VoltGroup</title>
+    <style>
+        @page { size: A4 portrait; margin: 10mm 12mm; }
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        body { font-family: 'Times New Roman', serif; font-size: 9.5pt; line-height: 1.35; color: #000 !important; background: #fff; margin: 0; padding: 10px 15px; }
+        h1 { font-size: 12pt; text-align: center; text-transform: uppercase; margin: 0 0 3px 0; font-weight: bold; color: #000; }
+        h2 { font-size: 10pt; text-align: center; margin: 0 0 10px 0; font-weight: normal; color: #000; }
+        .city-date { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; font-size: 9pt; }
+        p { margin: 0 0 6px 0; text-align: justify; text-indent: 18px; font-size: 9pt; }
+        .clause-title { font-weight: bold; margin-top: 8px; margin-bottom: 4px; text-indent: 0; font-size: 9pt; }
+        table { width: 100%; border-collapse: collapse; margin: 8px 0 10px 0; font-size: 8.5pt; border: 1px solid #000; }
+        th, td { border: 1px solid #000 !important; padding: 4px 6px; color: #000 !important; }
+        th { background: #e5e7eb !important; text-align: center; font-weight: bold; color: #000 !important; }
+        .signatures { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 15px; page-break-inside: avoid; }
+        .sign-col { font-size: 9pt; line-height: 1.3; }
+        .sign-line { margin-top: 25px; border-top: 1px solid #000; padding-top: 2px; }
+        .controls { text-align: center; margin-bottom: 12px; padding: 8px; background: #f5f5f5; border: 1px dashed #999; border-radius: 6px; font-family: sans-serif; }
+        .btn { padding: 8px 18px; background: #00E5FF; color: #050914; border: 1px solid #00b4d8; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px; margin: 3px; }
+        .btn-close { background: #ddd; color: #333; }
+        @media print { .no-print { display: none !important; } body { padding: 0 !important; margin: 0 !important; } }
+    </style>
+</head>
+<body>
+    <div class="controls no-print">
+        <h3 style="margin: 0 0 8px 0;">📝 Договор подряда сформирован</h3>
+        <button class="btn" onclick="window.print()">🖨 Распечатать / Сохранить в PDF</button>
+        <button class="btn btn-close" onclick="window.close()">Закрыть</button>
+    </div>
+
+    <h1>ДОГОВОР БЫТОВОГО ПОДРЯДА № ${invoiceNum}</h1>
+    <h2>на выполнение электромонтажных работ</h2>
+
+    <div class="city-date">
+        <span>г. Санкт-Петербург</span>
+        <span>«${date}» г.</span>
+    </div>
+
+    <p>
+        Гражданин РФ <strong>Зрячих Матвей Олегович</strong> (ИНН 591110297727), применяющий специальный налоговый режим «Налог на профессиональный доход» (самозанятый) в соответствии с Федеральным законом от 27.11.2018 № 422-ФЗ, именуемый в дальнейшем <strong>«Подрядчик»</strong>, с одной стороны, и
+    </p>
+    <p>
+        Гражданин(ка) <strong>${clientName}</strong>, именуемый(ая) в дальнейшем <strong>«Заказчик»</strong>, с другой стороны, совместно именуемые «Стороны», руководствуясь Гражданским кодексом Российской Федерации (гл. 37, § 1, 2 ст. 702–739 ГК РФ), заключили настоящий Договор о нижеследующем:
+    </p>
+
+    <div class="clause-title">1. ПРЕДМЕТ ДОГОВОРА</div>
+    <p>1.1. Подрядчик обязуется выполнить по заданию Заказчика комплекс электромонтажных работ на объекте, расположенном по адресу: <strong>${clientAddr}</strong>, в соответствии с Приложением № 1 (Смета работ), являющимся неотъемлемой частью настоящего Договора, а Заказчик обязуется создать Подрядчику необходимые условия для выполнения работ, принять их результат и оплатить обусловленную Договором цену.</p>
+    <p>1.2. Работы выполняются Подрядчиком с соблюдением действующих нормативно-технических требований, правил устройства электроустановок (ПУЭ 7-е изд.), СП 256.1325800.2016, а также норм пожарной безопасности и охраны труда.</p>
+
+    <div class="clause-title">2. СТОИМОСТЬ РАБОТ И ПОРЯДОК РАСЧЁТОВ</div>
+    <p>2.1. Общая стоимость подлежащих выполнению работ по настоящему Договору составляет: <strong>${totals.worksFinal.toLocaleString('ru-RU')} (рублей)</strong>.${totals.discountAmount > 0 ? ` С учётом скидки: ${totals.discountAmount.toLocaleString('ru-RU')} руб.` : ''}</p>
+    <p>2.2. Стоимость материалов ${masterBuys ? 'при закупке Подрядчиком составляет: ' + totals.materialsTotal.toLocaleString('ru-RU') + ' руб. Итоговая цена Договора: <strong>' + totals.grandTotal.toLocaleString('ru-RU') + ' (рублей)</strong>.' : 'не входит в цену Договора и обеспечивается Заказчиком.'} НДС не облагается на основании ч. 8 ст. 2 Федерального закона от 27.11.2018 № 422-ФЗ.</p>
+    <p>2.3. Оплата производится Заказчиком в рублях РФ поэтапно либо в полном объёме по факту завершения работ и подписания двустороннего Акта сдачи-приёмки выполненных работ.</p>
+    <p>2.4. Подрядчик обязуется на каждую полученную сумму оплаты сформировать и передать Заказчику фискальный чек в электронной форме или на бумажном носителе из приложения «Мой налог» в соответствии со ст. 14 Федерального закона № 422-ФЗ.</p>
+
+    <div class="clause-title">3. СРОКИ ВЫПОЛНЕНИЯ РАБОТ</div>
+    <p>3.1. Подрядчик приступает к выполнению работ с момента обеспечения Заказчиком беспрепятственного доступа на объект и наличия точки подключения временного электроснабжения.</p>
+    <p>3.2. Срок завершения работ согласуется Сторонами и может быть соразмерно продлён в случае задержки поставки материалов Заказчиком, отсутствия электроэнергии на объекте либо возникновения непредвиденных скрытых дефектов строительных конструкций.</p>
+
+    <div class="clause-title">4. ПРАВА И ОБЯЗАННОСТИ СТОРОН</div>
+    <p>4.1. <strong>Подрядчик обязан:</strong> выполнить работы качественно и в срок; обеспечить бережное отношение к имуществу Заказчика; применять технологию беспылевого штробления с использованием промышленного пылесоса; незамедлительно предупреждать Заказчика об обстоятельствах, угрожающих годности или прочности результатов работ.</p>
+    <p>4.2. <strong>Заказчик обязан:</strong> предоставить Подрядчику доступ в помещение на согласованное время; предоставить схему расположения скрытых коммуникаций (отопление в полу, водопровод), при их наличии; своевременно принять и оплатить выполненные работы.</p>
+
+    <div class="clause-title">5. ПОРЯДОК СДАЧИ И ПРИЁМКИ РАБОТ</div>
+    <p>5.1. Сдача-приёмка выполненных работ оформляется двусторонним Актом сдачи-приёмки выполненных работ, подписываемым обеими Сторонами.</p>
+    <p>5.2. Заказчик обязан в течение 3 (трёх) рабочих дней с момента предъявления результата работ осмотреть его и при отсутствии претензий подписать Акт либо направить обоснованный письменный отказ с перечнем необходимых доработок.</p>
+
+    <div class="clause-title">6. ГАРАНТИЙНЫЕ ОБЯЗАТЕЛЬСТВА</div>
+    <p>6.1. Гарантийный срок на качество выполненных электромонтажных работ составляет <strong>12 (двенадцать) месяцев</strong> с момента подписания Акта сдачи-приёмки выполненных работ.</p>
+    <p>6.2. Гарантия распространяется на надёжность контактных соединений, расключение распределительных коробок, правильность монтажа кабельных линий и сборку электрощита.</p>
+    <p>6.3. Гарантия не распространяется на заводской брак электроустановочных изделий и оборудования, приобретённых Заказчиком самостоятельно, а также в случаях механических повреждений кабелей третьими лицами при проведении последующих отделочных работ или нарушении правил эксплуатации.</p>
+
+    <div class="clause-title">7. АДРЕСА, РЕКВИЗИТЫ И ПОДПИСИ СТОРОН</div>
+    <div class="signatures">
+        <div class="sign-col">
+            <strong>ПОДРЯДЧИК:</strong><br>
+            Зрячих Матвей Олегович<br>
+            Статус: Плательщик НПД (самозанятый)<br>
+            ИНН: 591110297727<br>
+            Телефон: +7 (905) 208-42-84<br>
+            Электромонтажная группа VoltGroup<br>
+            <div class="sign-line">/ Зрячих М.О. / М.П.</div>
+        </div>
+        <div class="sign-col">
+            <strong>ЗАКАЗЧИК:</strong><br>
+            ФИО: ${clientName}<br>
+            Адрес объекта: ${clientAddr}<br>
+            Паспортные данные: ____________________<br>
+            Телефон: ____________________<br><br>
+            <div class="sign-line">/ ____________________ /</div>
+        </div>
+    </div>
+
+    <div style="page-break-before: always; margin-top: 30px;"></div>
+
+    <h2 style="font-weight: bold; text-align: right; font-size: 10pt; margin-bottom: 10px;">
+        Приложение № 1<br>к Договору подряда № ${invoiceNum}<br>от «${date}» г.
+    </h2>
+    <h1 style="font-size: 12pt; margin-bottom: 15px;">СМЕТА-СПЕЦИФИКАЦИЯ ВЫПОЛНЯЕМЫХ РАБОТ</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 5%;">№</th>
+                <th>Наименование работ</th>
+                <th style="width: 10%;">Ед. изм.</th>
+                <th style="width: 10%;">Кол-во</th>
+                <th style="width: 15%;">Цена, ₽</th>
+                <th style="width: 15%;">Сумма, ₽</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${worksRowsHTML}
+            <tr style="font-weight: bold; background: #f9f9f9;">
+                <td colspan="5" style="text-align: right;">Итого за электромонтажные работы:</td>
+                <td style="text-align: right;">${totals.worksFinal.toLocaleString('ru-RU')} ₽</td>
+            </tr>
+        </tbody>
+    </table>
+
+    ${matRowsHTML ? `
+    <h1 style="font-size: 11pt; margin-top: 20px; margin-bottom: 10px;">Материалы ${masterBuys ? '(закупка Подрядчиком)' : '(обеспечивает Заказчик)'}</h1>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 5%;">№</th>
+                <th>Наименование материала</th>
+                <th style="width: 10%;">Ед. изм.</th>
+                <th style="width: 10%;">Кол-во</th>
+                <th style="width: 15%;">Цена, ₽</th>
+                <th style="width: 15%;">Сумма, ₽</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${matRowsHTML}
+            <tr style="font-weight: bold; background: #f9f9f9;">
+                <td colspan="5" style="text-align: right;">Итого за материалы:</td>
+                <td style="text-align: right;">${totals.materialsTotal.toLocaleString('ru-RU')} ₽</td>
+            </tr>
+        </tbody>
+    </table>` : ''}
+
+    <p style="text-align: right; font-size: 11.5pt; font-weight: bold; margin-top: 15px;">
+        ВСЕГО К ОПЛАТЕ ПО СМЕТЕ: ${totals.grandTotal.toLocaleString('ru-RU')} рублей.
+    </p>
+
+    <div class="signatures" style="margin-top: 30px;">
+        <div class="sign-col">
+            Подрядчик: _______________ / Зрячих М.О. /
+        </div>
+        <div class="sign-col" style="text-align: right;">
+            Заказчик: _______________ / ${clientName} /
+        </div>
+    </div>
+</body>
+</html>`;
+
+        contractWin.document.open();
+        contractWin.document.write(contractHTML);
+        contractWin.document.close();
     }
 
     document.addEventListener('DOMContentLoaded', () => {

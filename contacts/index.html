@@ -14,8 +14,15 @@
         frame-src 'self' https://yandex.ru https://*.yandex.ru https://*.yandex.md https://mc.yandex.md;
     ">
 
-    <title>Контакты | VoltGroup</title>
+    <title>Контакты | VoltGroup Санкт-Петербург</title>
     <meta name="description" content="Контактная информация VoltGroup. Телефон, адрес, мессенджеры для связи и консультаций в СПб и ЛО.">
+    <link rel="canonical" href="https://voltgroup-spb.ru/contacts/">
+
+    <meta property="og:title" content="Контакты | VoltGroup Санкт-Петербург">
+    <meta property="og:description" content="Свяжитесь с VoltGroup: телефон +7 (905) 208-42-84, Telegram, WhatsApp, ВКонтакте. Консультация и выезд инженера в СПб.">
+    <meta property="og:image" content="https://voltgroup-spb.ru/assets/images/og-main.jpg">
+    <meta property="og:url" content="https://voltgroup-spb.ru/contacts/">
+    <meta property="og:type" content="website">
 
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="../icon-192.png">
@@ -54,7 +61,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../static/css/style.css?v=2.0">
+    <link rel="stylesheet" href="../static/css/style.css?v=2.1">
 
     <style>
         .contact-cards {
@@ -175,6 +182,7 @@
         </nav>
     </div>
 </header>
+<div class="nav-overlay" id="navOverlay"></div>
 
 <main>
     <section class="hero container fade-in" style="padding-top: 150px; display: block; text-align: left;">
@@ -187,8 +195,8 @@
         </p>
         <div class="hero-actions" style="gap: 14px; flex-wrap: wrap;">
             <a href="tel:+79052084284" class="btn btn-primary">📞 Позвонить ⚡</a>
-            <a href="https://t.me/voltgroup_spb" target="_blank" class="btn btn-outline">✈️ Telegram</a>
-            <a href="https://vk.com/voltgroup_spb" target="_blank" class="btn btn-outline">🔹 ВКонтакте</a>
+            <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="btn btn-outline">✈️ Telegram</a>
+            <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="btn btn-outline">🔹 ВКонтакте</a>
         </div>
     </section>
 
@@ -214,8 +222,8 @@
                     <div class="contact-icon" style="background: rgba(123, 97, 255, 0.1); border-color: rgba(123, 97, 255, 0.3); color: var(--primary-eng);">💬</div>
                     <h3>Мессенджеры</h3>
                     <div class="messenger-links">
-                        <a href="https://t.me/voltgroup_spb" target="_blank" class="messenger-btn">✈️ Telegram: @voltgroup_spb</a>
-                        <a href="https://vk.com/voltgroup_spb" target="_blank" class="messenger-btn">🔹 ВКонтакте: @voltgroup_spb</a>
+                        <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="messenger-btn">✈️ Telegram: @voltgroup_spb</a>
+                        <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="messenger-btn">🔹 ВКонтакте: @voltgroup_spb</a>
                     </div>
                     <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 12px;">Присылайте фото помещений или схем для быстрого предрасчета</p>
                 </div>
@@ -233,8 +241,8 @@
                     Энергия решений.<br>Электрика и автоматизация в СПб и ЛО.
                 </p>
                 <div style="display: flex; gap: 15px; font-size: 0.9rem;">
-                    <a href="https://vk.com/voltgroup_spb" target="_blank" style="color: var(--primary-install); font-weight: 600;">VK</a>
-                    <a href="https://t.me/voltgroup_spb" target="_blank" style="color: var(--primary-install); font-weight: 600;">Telegram</a>
+                    <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color: var(--primary-install); font-weight: 600;">VK</a>
+                    <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color: var(--primary-install); font-weight: 600;">Telegram</a>
                 </div>
             </div>
 
@@ -271,17 +279,27 @@
     // 1. Mobile Menu (Безопасное переключение текста)
     const mobileToggle = document.querySelector('.mobile-toggle');
     const navLinks = document.querySelector('.nav-links');
+    const navOverlay = document.getElementById('navOverlay');
+
+    function closeMobileMenu() {
+        if (navLinks) navLinks.classList.remove('open');
+        if (navOverlay) navOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+        if (mobileToggle) mobileToggle.textContent = '☰';
+    }
+
     if (mobileToggle && navLinks) {
         mobileToggle.addEventListener('click', () => {
             const isOpen = navLinks.classList.toggle('open');
+            if (navOverlay) navOverlay.classList.toggle('active', isOpen);
+            document.body.style.overflow = isOpen ? 'hidden' : '';
             mobileToggle.textContent = isOpen ? '✕' : '☰';
         });
+
         document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('open');
-                mobileToggle.textContent = '☰';
-            });
+            link.addEventListener('click', closeMobileMenu);
         });
+        if (navOverlay) navOverlay.addEventListener('click', closeMobileMenu);
     }
 
     // 2. Плавное появление элементов (Fade In)

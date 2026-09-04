@@ -15,6 +15,8 @@
     ">
 
     <title>Личный кабинет объекта | VoltGroup</title>
+    <meta name="description" content="Личный кабинет объекта VoltGroup: онлайн-мониторинг этапов электромонтажа, сметы и связь с инженером.">
+    <meta name="robots" content="noindex, nofollow">
 
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="../icon-192.png">
@@ -257,14 +259,14 @@
     </div>
 
     <div class="contacts-wrapper">
-        <a href="https://t.me/voltgroup_spb" target="_blank" class="btn-contact btn-tg">
+        <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="btn-contact btn-tg">
             ✈️ Написать мастеру в Telegram
         </a>
         <div class="contacts-grid">
-            <a href="https://vk.com/voltgroup_spb" target="_blank" class="btn-contact btn-vk">
+            <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="btn-contact btn-vk">
                 💬 Группа ВКонтакте
             </a>
-            <a href="tel:+7 (905) 208-42-84" class="btn-contact btn-phone">
+            <a href="tel:+79052084284" class="btn-contact btn-phone">
                 📞 Позвонить
             </a>
         </div>
@@ -314,8 +316,13 @@
                 document.getElementById('progress-text').textContent = progress + '%';
 
                 // Финансы и этап
-                document.getElementById('total-sum').textContent = data.total ? data.total + ' ₽' : '0 ₽';
-                document.getElementById('paid-sum').textContent = data.paid ? data.paid + ' ₽' : '0 ₽';
+                const formatRub = val => {
+                    if (!val) return '0 ₽';
+                    const cleaned = String(val).replace(/₽/g, '').trim();
+                    return cleaned ? cleaned + ' ₽' : '0 ₽';
+                };
+                document.getElementById('total-sum').textContent = formatRub(data.total);
+                document.getElementById('paid-sum').textContent = formatRub(data.paid);
                 document.getElementById('current-stage-text').textContent = data.stage || 'В работе';
 
                 // БЕЗОПАСНАЯ динамическая загрузка фотографий (Защита от XSS)

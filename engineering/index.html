@@ -16,6 +16,34 @@
 
     <title>Engineering | Промышленная автоматизация - VoltGroup</title>
     <meta name="description" content="Диагностика и ремонт металлорежущих станков, восстановление релейных схем и ЧПУ в Санкт-Петербурге.">
+    <link rel="canonical" href="https://voltgroup-spb.ru/engineering/">
+
+    <meta property="og:title" content="VoltGroup Engineering — Промышленная автоматизация и ЧПУ в СПб">
+    <meta property="og:description" content="Диагностика и ремонт промышленного оборудования, станков с ЧПУ, релейных схем и автоматики в Санкт-Петербурге.">
+    <meta property="og:image" content="https://voltgroup-spb.ru/assets/images/og-main.jpg">
+    <meta property="og:url" content="https://voltgroup-spb.ru/engineering/">
+    <meta property="og:type" content="website">
+
+    <!-- Микроразметка Schema.org (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Промышленная автоматизация и ремонт VoltGroup Engineering",
+      "serviceType": "Диагностика станков с ЧПУ, автоматика, релейные шкафы",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "VoltGroup",
+        "url": "https://voltgroup-spb.ru",
+        "telephone": "+7-905-208-42-84"
+      },
+      "areaServed": {
+        "@type": "City",
+        "name": "Санкт-Петербург"
+      },
+      "url": "https://voltgroup-spb.ru/engineering/"
+    }
+    </script>
 
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="../icon-192.png">
@@ -25,7 +53,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../static/css/style.css?v=2.0">
+    <link rel="stylesheet" href="../static/css/style.css?v=2.1">
 
     <style>
         .ticker {
@@ -84,6 +112,7 @@
         </nav>
     </div>
 </header>
+<div class="nav-overlay" id="navOverlay"></div>
 
 <main>
     <section class="hero container fade-in" style="padding-top: 150px; display: block; text-align: left;">
@@ -154,7 +183,7 @@
                     <div class="form-group" style="display: flex; align-items: center; gap: 12px; margin-top: 5px;">
                         <input type="checkbox" id="privacy-consent-main" required style="width: 18px; height: 18px; accent-color: var(--primary-eng); cursor: pointer; flex-shrink: 0;">
                         <label for="privacy-consent-main" style="font-size: 0.82rem; color: var(--text-muted); cursor: pointer; line-height: 1.4;">
-                            Даю согласие на обработку <a href="../privacy.html" target="_blank" style="color: var(--primary-eng); text-decoration: underline;">персональных данных</a>
+                            Даю согласие на обработку <a href="../privacy.html" target="_blank" rel="noopener" style="color: var(--primary-eng); text-decoration: underline;">персональных данных</a>
                         </label>
                     </div>
                     <button type="submit" class="btn btn-secondary" style="width: 100%; justify-content: center; margin-top: 10px;">Отправить заявку ⚡</button>
@@ -174,8 +203,8 @@
                     Энергия решений.<br>Электрика и автоматизация в СПб и ЛО.
                 </p>
                 <div style="display: flex; gap: 15px; font-size: 0.9rem;">
-                    <a href="https://vk.com/voltgroup_spb" target="_blank" style="color: var(--primary-eng); font-weight: 600;">VK</a>
-                    <a href="https://t.me/voltgroup_spb" target="_blank" style="color: var(--primary-eng); font-weight: 600;">Telegram</a>
+                    <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color: var(--primary-eng); font-weight: 600;">VK</a>
+                    <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color: var(--primary-eng); font-weight: 600;">Telegram</a>
                 </div>
             </div>
 
@@ -245,18 +274,27 @@
     // 3. Mobile Menu (Безопасный вывод)
     const mobileToggle = document.querySelector('.mobile-toggle');
     const navLinks = document.querySelector('.nav-links');
+    const navOverlay = document.getElementById('navOverlay');
+
+    function closeMobileMenu() {
+        if (navLinks) navLinks.classList.remove('open');
+        if (navOverlay) navOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+        if (mobileToggle) mobileToggle.textContent = '☰';
+    }
+
     if (mobileToggle && navLinks) {
         mobileToggle.addEventListener('click', () => {
             const isOpen = navLinks.classList.toggle('open');
+            if (navOverlay) navOverlay.classList.toggle('active', isOpen);
+            document.body.style.overflow = isOpen ? 'hidden' : '';
             mobileToggle.textContent = isOpen ? '✕' : '☰';
         });
 
         document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('open');
-                mobileToggle.textContent = '☰';
-            });
+            link.addEventListener('click', closeMobileMenu);
         });
+        if (navOverlay) navOverlay.addEventListener('click', closeMobileMenu);
     }
 
     // 4. Загрузка прайс-листа из JSON

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,11 +16,15 @@
     ">
 
     <title>VoltGroup | Энергия решений - Электрика и автоматизация в СПб</title>
-    <meta name="description" content="Профессиональный электромонтаж, умный дом и промышленная автоматизация в Санкт-Петербурге. Гарантия, договор, честные цены.">
+    <meta name="description"
+        content="Профессиональный электромонтаж, умный дом и промышленная автоматизация в Санкт-Петербурге. Гарантия, договор, честные цены.">
 
+    <link rel="canonical" href="https://voltgroup-spb.ru/">
     <meta property="og:title" content="VoltGroup - Электромонтаж и автоматизация в СПб">
-    <meta property="og:description" content="Профессиональный электромонтаж, умный дом и промышленная автоматизация в Санкт-Петербурге.">
-    <meta property="og:image" content="./assets/images/og-main.jpg">
+    <meta property="og:description"
+        content="Профессиональный электромонтаж, умный дом и промышленная автоматизация в Санкт-Петербурге.">
+    <meta property="og:image" content="https://voltgroup-spb.ru/assets/images/og-main.jpg">
+    <meta property="og:url" content="https://voltgroup-spb.ru/">
     <meta property="og:type" content="website">
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -101,9 +106,11 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
 
-    <link rel="stylesheet" href="./static/css/style.css?v=2.0">
+    <link rel="stylesheet" href="./static/css/style.css?v=2.1">
 
     <style>
         .ticker {
@@ -114,12 +121,14 @@
             z-index: 1;
             margin: 40px 0;
         }
+
         .ticker-track {
             display: flex;
             width: max-content;
             animation: tick 26s linear infinite;
             padding: 14px 0;
         }
+
         .ticker-track span {
             font-family: var(--font-heading);
             font-size: 0.8rem;
@@ -129,8 +138,17 @@
             padding: 0 20px;
             white-space: nowrap;
         }
-        .ticker-track span i { color: var(--volt-yellow); font-style: normal; }
-        @keyframes tick { to { transform: translateX(-50%); } }
+
+        .ticker-track span i {
+            color: var(--volt-yellow);
+            font-style: normal;
+        }
+
+        @keyframes tick {
+            to {
+                transform: translateX(-50%);
+            }
+        }
 
         /* Локальные стили адаптивности Hero под малые дисплеи */
         .title-fit {
@@ -147,12 +165,16 @@
         }
 
         @media (max-width: 768px) {
-            .ticker { margin: 25px 0; }
+            .ticker {
+                margin: 25px 0;
+            }
+
             .contact-grid-card {
                 padding: 20px !important;
                 grid-template-columns: 1fr !important;
                 gap: 25px !important;
             }
+
             .board-row span {
                 display: flex;
                 flex-direction: column;
@@ -169,576 +191,829 @@
     </style>
 
     <script type="text/javascript">
-        (function(m,e,t,r,i,k,a){
-            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-            m[i].l=1*new Date();
-            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108492681', 'ym');
+        (function (m, e, t, r, i, k, a) {
+            m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
+            m[i].l = 1 * new Date();
+            for (var j = 0; j < document.scripts.length; j++) { if (document.scripts[j].src === r) { return; } }
+            k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+        })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=108492681', 'ym');
 
-        ym(108492681, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+        ym(108492681, 'init', { ssr: true, webvisor: true, clickmap: true, ecommerce: "dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce: true, trackLinks: true });
     </script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/108492681" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <noscript>
+        <div><img src="https://mc.yandex.ru/watch/108492681" style="position:absolute; left:-9999px;" alt="" /></div>
+    </noscript>
 </head>
+
 <body>
 
-<div class="nav-overlay" id="navOverlay"></div>
+    <div class="nav-overlay" id="navOverlay"></div>
 
-<header class="header">
-    <div class="container nav-container">
-        <a href="./index.html" class="logo">
-            <img src="./assets/images/logo-voltgroup.png" alt="VoltGroup Logo" width="160" height="40">
-        </a>
-        <button class="mobile-toggle" aria-label="Меню" type="button">☰</button>
-        <nav class="nav-links">
-            <a href="./install/">Install</a>
-            <a href="./engineering/">Engineering</a>
-            <a href="./estimate.html">Калькулятор</a>
-            <a href="./works.html">Работы</a>
-            <a href="./contacts/" class="btn btn-outline" style="padding: 8px 20px; font-size: 0.9rem;">Контакты</a>
-        </nav>
-    </div>
-</header>
-
-<main>
-    <section class="hero container fade-in">
-        <div class="hero-left">
-            <span class="badge-status">
-                <span class="dot"></span> СПб и ЛО · Пн–Сб 9:00–21:00
-            </span>
-            <h1 class="hero-title">
-                <span class="title-fit">Профессиональный</span><br>
-                электромонтаж <span style="color: var(--primary-install);">и автоматизация</span>
-            </h1>
-            <p class="hero-subtitle">Энергия решений - от розетки до Умного Дома. Промышленный опыт, честные цены, официальная гарантия.</p>
-            <div class="hero-actions">
-                <a href="./install/" class="btn btn-primary">Электромонтаж (Install)</a>
-                <a href="./engineering/" class="btn btn-secondary">Инженерия (Engineering)</a>
-            </div>
-        </div>
-
-        <div class="hero-board">
-            <div class="board-header">
-                <span>ЩИТ VOLT-01</span>
-                <span style="color: var(--text-muted); font-size: 0.78rem;">
-                    <i style="display:inline-block; width:7px; height:7px; background:#10B981; border-radius:50%; box-shadow: 0 0 8px #10B981;"></i> 220 В · 50 Гц
-                </span>
-            </div>
-
-            <div class="board-row">
-                <span>Освещение <small>группа 1</small></span>
-                <label class="switch"><input type="checkbox" checked disabled><span class="slider"></span></label>
-            </div>
-            <div class="board-row">
-                <span>Розетки <small>группа 2</small></span>
-                <label class="switch"><input type="checkbox" checked disabled><span class="slider"></span></label>
-            </div>
-            <div class="board-row">
-                <span>Умный дом <small>Wirenboard · Алиса</small></span>
-                <label class="switch"><input type="checkbox" id="sw-smart" checked><span class="slider cyan"></span></label>
-            </div>
-            <div class="board-row">
-                <span>Автоматика станка <small>пром. линия</small></span>
-                <label class="switch"><input type="checkbox" id="sw-auto" checked><span class="slider purple"></span></label>
-            </div>
-
-            <div class="board-footer">
-                <span>Текущая нагрузка:</span>
-                <strong id="live-load" style="color: var(--volt-yellow);">3.8 кВт</strong>
-            </div>
-        </div>
-    </section>
-
-    <div class="ticker">
-        <div class="ticker-track" id="tickTrack">
-            <span>Электромонтаж <i>⚡</i></span>
-            <span>Сборка щитов <i>⚡</i></span>
-            <span>Умный дом <i>⚡</i></span>
-            <span>Замена проводки <i>⚡</i></span>
-            <span>Диагностика станков <i>⚡</i></span>
-            <span>Автоматизация <i>⚡</i></span>
-            <span>Работа по ПУЭ <i>⚡</i></span>
-        </div>
-    </div>
-
-    <section id="services" class="section">
-        <div class="container">
-            <h2 class="fade-in">Наши <span>услуги</span></h2>
-            <div class="grid-3">
-                <div class="card fade-in">
-                    <div class="card-icon">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                        </svg>
-                    </div>
-                    <h3>Для дома</h3>
-                    <p>Проводка в новостройках, вторичке, замена щитов, розетки и освещение.</p>
-                </div>
-
-                <div class="card fade-in" style="transition-delay: 0.1s;">
-                    <div class="card-icon" style="background: rgba(123, 97, 255, 0.1); border-color: rgba(123, 97, 255, 0.3); color: var(--primary-eng);">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="7" y="7" width="10" height="10" rx="2"></rect>
-                            <path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"></path>
-                        </svg>
-                    </div>
-                    <h3>Умный дом</h3>
-                    <p>Автоматизация, сценарии, управление со смартфона, интеграция с Я.Алисой.</p>
-                </div>
-
-                <div class="card fade-in" style="transition-delay: 0.2s;">
-                    <div class="card-icon" style="background: rgba(255, 214, 10, 0.1); border-color: rgba(255, 214, 10, 0.3); color: var(--volt-yellow);">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-2-2H4L2 8v12z"></path>
-                            <path d="M12 12v6"></path>
-                            <path d="M9 15h6"></path>
-                        </svg>
-                    </div>
-                    <h3>Для бизнеса</h3>
-                    <p>Сборка щитов автоматики, диагностика и ремонт металлорежущих станков.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section" style="background: var(--bg-panel); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); position: relative; padding: 0;">
-        <div class="hazard-border"></div>
-        <div class="container fade-in" style="text-align: center; padding: 50px 20px;">
-            <h2>Качество в <span>деталях</span></h2>
-            <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 25px;">Посмотрите примеры собранных щитов, разводки кабеля и реализованных систем автоматизации в нашем портфолио.</p>
-            <a href="./works.html" class="btn btn-volt">Смотреть галерею объектов →</a>
-        </div>
-    </section>
-
-    <section id="why" class="section">
-        <div class="container">
-            <h2 class="fade-in">Почему выбирают <span>VoltGroup</span></h2>
-            <div class="grid-3">
-                <div class="card fade-in">
-                    <span style="font-family: var(--font-heading); font-size: 1.8rem; color: var(--primary-install); display: block; margin-bottom: 10px;">01</span>
-                    <h3>Прозрачная смета</h3>
-                    <p style="font-size: 0.92rem;">Цена фиксируется ДО начала работ. Никаких скрытых платежей и «сюрпризов» в процессе.</p>
-                </div>
-                <div class="card fade-in" style="transition-delay: 0.1s;">
-                    <span style="font-family: var(--font-heading); font-size: 1.8rem; color: var(--primary-eng); display: block; margin-bottom: 10px;">02</span>
-                    <h3>Идеальная чистота</h3>
-                    <p style="font-size: 0.92rem;">Штроборез с пылесосом, лазерный уровень. Убираем за собой - ваш объект остаётся чистым.</p>
-                </div>
-                <div class="card fade-in" style="transition-delay: 0.2s;">
-                    <span style="font-family: var(--font-heading); font-size: 1.8rem; color: var(--volt-yellow); display: block; margin-bottom: 10px;">03</span>
-                    <h3>Официально</h3>
-                    <p style="font-size: 0.92rem;">Договор подряда, акт приёмки, чек из «Мой налог». Гарантия на выполненные работы.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="process" class="section" style="background: rgba(255,255,255,0.01);">
-        <div class="container">
-            <h2 class="fade-in">Как мы <span>работаем</span></h2>
-            <div class="grid-3">
-                <div class="card fade-in" style="padding: 20px; text-align: center;">
-                    <div style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--primary-install); margin-bottom: 8px;">1</div>
-                    <h4 style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 6px;">Заявка</h4>
-                    <p style="font-size: 0.85rem;">Оставляете заявку на сайте или в мессенджере.</p>
-                </div>
-                <div class="card fade-in" style="padding: 20px; text-align: center; transition-delay: 0.05s;">
-                    <div style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--primary-install); margin-bottom: 8px;">2</div>
-                    <h4 style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 6px;">Выезд</h4>
-                    <p style="font-size: 0.85rem;">Осмотр объекта в СПб и ЛО, замеры и консультация.</p>
-                </div>
-                <div class="card fade-in" style="padding: 20px; text-align: center; transition-delay: 0.1s;">
-                    <div style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--primary-install); margin-bottom: 8px;">3</div>
-                    <h4 style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 6px;">Смета</h4>
-                    <p style="font-size: 0.85rem;">Фиксируем цену и сроки. Подписываем договор.</p>
-                </div>
-                <div class="card fade-in" style="padding: 20px; text-align: center; transition-delay: 0.15s;">
-                    <div style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--primary-install); margin-bottom: 8px;">4</div>
-                    <h4 style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 6px;">Монтаж</h4>
-                    <p style="font-size: 0.85rem;">Работа строго по ПУЭ, фотоотчеты, чистота.</p>
-                </div>
-                <div class="card fade-in" style="padding: 20px; text-align: center; transition-delay: 0.2s;">
-                    <div style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--primary-install); margin-bottom: 8px;">5</div>
-                    <h4 style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 6px;">Сдача</h4>
-                    <p style="font-size: 0.85rem;">Подписываем акт, выдаем чек и гарантию.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="faq" class="section">
-        <div class="container">
-            <h2 class="fade-in">Частые <span>вопросы</span></h2>
-            <div class="accordion fade-in" style="max-width: 800px; margin: 0 auto;">
-                <div class="accordion-item">
-                    <button class="accordion-btn" type="button">Работаете ли вы официально?</button>
-                    <div class="accordion-content">
-                        <p>Да. Работаем официально в статусе плательщика НПД (самозанятый). Заключаем договор подряда, выдаем акт выполненных работ и официальный чек ФНС.</p>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <button class="accordion-btn" type="button">Что входит в гарантию на работы?</button>
-                    <div class="accordion-content">
-                        <p>Устранение дефектов монтажа по нашей вине (контакты, схемы, ПУЭ). На устанавливаемое оборудование действует официальная гарантия от производителей.</p>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <button class="accordion-btn" type="button">Как рассчитывается стоимость?</button>
-                    <div class="accordion-content">
-                        <p>Вы можете самостоятельно рассчитать смету в нашем <a href="./estimate.html" style="color: var(--primary-install);">онлайн-калькуляторе</a>. Итоговая цена фиксируется в договоре до начала работ. Предоплата берется только за материалы (100%), работы оплачиваются по факту приёмки.</p>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <button class="accordion-btn" type="button">Делаете ли вы умный дом «под ключ»?</button>
-                    <div class="accordion-content">
-                        <p>Да. Проектируем схемы, подбираем оборудование, монтируем, настраиваем сценарии и интегрируем с Я.Алисой, HomeKit и контроллерами (Wirenboard, Aqara и др.).</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="section contact-section">
-        <div class="container">
-            <div class="card fade-in contact-grid-card">
-                <div>
-                    <span class="badge-status">
-                        <span class="dot"></span> Пн–Сб 9:00–21:00 · Выезд по СПб и ЛО
-                    </span>
-                    <h2 style="text-align: left; margin-bottom: 15px;">Оставьте <span style="color: var(--primary-install);">заявку</span></h2>
-                    <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
-                        Ответим в течение 15 минут, подробно проконсультируем, рассчитаем предварительную смету и зафиксируем цену ДО начала работ.
-                    </p>
-                    <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--border-light);">
-                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;">Прямой номер инженера:</p>
-                        <a href="tel:+79052084284" style="font-family: var(--font-heading); font-size: 1.3rem; color: var(--volt-yellow); font-weight: 700; text-decoration: none;">+7 (905) 208-42-84</a>
-                    </div>
-                </div>
-
-                <form id="leadForm" style="display: grid; gap: 16px;">
-                    <div class="form-group" style="margin: 0;">
-                        <label class="form-label">Ваше имя</label>
-                        <input type="text" name="name" class="form-input" placeholder="Иван" required maxlength="100">
-                    </div>
-                    <div class="form-group" style="margin: 0;">
-                        <label class="form-label">Телефон</label>
-                        <input type="tel" name="phone" class="form-input" placeholder="+7 (___) ___-__-__" required autocomplete="tel" pattern="(\+7|8)[\s\-]?[0-9\(\)\s\-]{10,18}" title="Формат: +7 (999) 000-00-00">
-                    </div>
-                    <div class="form-group" style="margin: 0;">
-                        <label class="form-label">Тип задачи</label>
-                        <select name="service" class="form-input">
-                            <option>Замена проводки / Черновой монтаж</option>
-                            <option>Сборка и монтаж электрощита</option>
-                            <option>Монтаж «Умного дома»</option>
-                            <option>Диагностика станка / Автоматика</option>
-                            <option>Другое</option>
-                        </select>
-                    </div>
-                    <div class="form-group" style="display: flex; align-items: flex-start; gap: 10px; margin-top: 5px;">
-                        <input type="checkbox" id="privacy-consent-main" required style="margin-top: 3px; width: 18px; height: 18px; accent-color: var(--primary-install); cursor: pointer; flex-shrink: 0;">
-                        <label for="privacy-consent-main" style="font-size: 0.82rem; color: var(--text-muted); cursor: pointer; line-height: 1.4;">
-                            Даю согласие на обработку <a href="./privacy.html" target="_blank" style="color: var(--primary-install); text-decoration: underline;">персональных данных</a>
-                        </label>
-                    </div>
-                    <button type="submit" class="btn btn-volt" style="width: 100%; justify-content: center; margin-top: 10px;">Получить расчёт ⚡</button>
-                    <p id="formStatus" style="margin-top: 10px; text-align: center; display: none; font-weight: 600;"></p>
-                </form>
-            </div>
-        </div>
-    </section>
-</main>
-
-<footer class="footer">
-    <div class="container">
-        <div class="footer-grid">
-            <div>
-                <h4>⚡ VoltGroup</h4>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
-                    Энергия решений.<br>Электрика и автоматизация в СПб и ЛО.
-                </p>
-                <div style="display: flex; gap: 15px; font-size: 0.9rem;">
-                    <a href="https://vk.com/voltgroup_spb" target="_blank" style="color: var(--primary-install); font-weight: 600;">VK</a>
-                    <a href="https://t.me/voltgroup_spb" target="_blank" style="color: var(--primary-install); font-weight: 600;">Telegram</a>
-                </div>
-            </div>
-            <div class="footer-links">
-                <h4>Навигация</h4>
+    <header class="header">
+        <div class="container nav-container">
+            <a href="./index.html" class="logo">
+                <img src="./assets/images/logo-voltgroup.png" alt="VoltGroup Logo" width="160" height="40">
+            </a>
+            <button class="mobile-toggle" aria-label="Меню" type="button">☰</button>
+            <nav class="nav-links">
                 <a href="./install/">Install</a>
                 <a href="./engineering/">Engineering</a>
                 <a href="./estimate.html">Калькулятор</a>
-                <a href="./works.html">Портфолио</a>
-                <a href="./contacts/">Контакты</a>
+                <a href="./works.html">Работы</a>
+                <a href="./contacts/" class="btn btn-outline" style="padding: 8px 20px; font-size: 0.9rem;">Контакты</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero container fade-in">
+            <div class="hero-left">
+                <span class="badge-status">
+                    <span class="dot"></span> СПб и ЛО · Пн–Сб 9:00–21:00
+                </span>
+                <h1 class="hero-title">
+                    <span class="title-fit">Профессиональный</span><br>
+                    электромонтаж <span style="color: var(--primary-install);">и автоматизация</span>
+                </h1>
+                <p class="hero-subtitle">Энергия решений - от розетки до Умного Дома. Промышленный опыт, честные цены,
+                    официальная гарантия.</p>
+                <div class="hero-actions">
+                    <a href="./install/" class="btn btn-primary">Электромонтаж (Install)</a>
+                    <a href="./engineering/" class="btn btn-secondary">Инженерия (Engineering)</a>
+                </div>
             </div>
-            <div class="footer-links">
-                <h4>Документы</h4>
-                <a href="./privacy.html">Политика конфиденциальности</a>
-                <a href="./offer.html">Публичная оферта</a>
-                <a href="./cookies.html">Cookies</a>
+
+            <div class="hero-board">
+                <div class="board-header">
+                    <span>ЩИТ VOLT-01</span>
+                    <span style="color: var(--text-muted); font-size: 0.78rem;">
+                        <i
+                            style="display:inline-block; width:7px; height:7px; background:#10B981; border-radius:50%; box-shadow: 0 0 8px #10B981;"></i>
+                        220 В · 50 Гц
+                    </span>
+                </div>
+
+                <div class="board-row">
+                    <span>Освещение <small>группа 1</small></span>
+                    <label class="switch"><input type="checkbox" checked disabled><span class="slider"></span></label>
+                </div>
+                <div class="board-row">
+                    <span>Розетки <small>группа 2</small></span>
+                    <label class="switch"><input type="checkbox" checked disabled><span class="slider"></span></label>
+                </div>
+                <div class="board-row">
+                    <span>Умный дом <small>Wirenboard · Алиса</small></span>
+                    <label class="switch"><input type="checkbox" id="sw-smart" checked><span
+                            class="slider cyan"></span></label>
+                </div>
+                <div class="board-row">
+                    <span>Автоматика станка <small>пром. линия</small></span>
+                    <label class="switch"><input type="checkbox" id="sw-auto" checked><span
+                            class="slider purple"></span></label>
+                </div>
+
+                <div class="board-footer">
+                    <span>Текущая нагрузка:</span>
+                    <strong id="live-load" style="color: var(--volt-yellow);">3.8 кВт</strong>
+                </div>
             </div>
-            <div>
-                <h4>Контакты</h4>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;">📞 <a href="tel:+79052084284" style="color: inherit; text-decoration: none;">+7 (905) 208-42-84</a></p>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">🕒 Пн–Сб: 9:00–21:00</p>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">📍 Санкт-Петербург и ЛО</p>
+        </section>
+
+        <div class="ticker">
+            <div class="ticker-track" id="tickTrack">
+                <span>Электромонтаж <i>⚡</i></span>
+                <span>Сборка щитов <i>⚡</i></span>
+                <span>Умный дом <i>⚡</i></span>
+                <span>Замена проводки <i>⚡</i></span>
+                <span>Диагностика станков <i>⚡</i></span>
+                <span>Автоматизация <i>⚡</i></span>
+                <span>Работа по ПУЭ <i>⚡</i></span>
             </div>
         </div>
-        <div class="copyright">
-            © 2026 VoltGroup. Все права защищены.
+
+        <section id="services" class="section">
+            <div class="container">
+                <h2 class="fade-in">Наши <span>услуги</span></h2>
+                <div class="grid-3">
+                    <div class="card fade-in">
+                        <div class="card-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                        </div>
+                        <h3>Для дома</h3>
+                        <p>Проводка в новостройках, вторичке, замена щитов, розетки и освещение.</p>
+                    </div>
+
+                    <div class="card fade-in" style="transition-delay: 0.1s;">
+                        <div class="card-icon"
+                            style="background: rgba(123, 97, 255, 0.1); border-color: rgba(123, 97, 255, 0.3); color: var(--primary-eng);">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="7" y="7" width="10" height="10" rx="2"></rect>
+                                <path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"></path>
+                            </svg>
+                        </div>
+                        <h3>Умный дом</h3>
+                        <p>Автоматизация, сценарии, управление со смартфона, интеграция с Я.Алисой.</p>
+                    </div>
+
+                    <div class="card fade-in" style="transition-delay: 0.2s;">
+                        <div class="card-icon"
+                            style="background: rgba(255, 214, 10, 0.1); border-color: rgba(255, 214, 10, 0.3); color: var(--volt-yellow);">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-2-2H4L2 8v12z"></path>
+                                <path d="M12 12v6"></path>
+                                <path d="M9 15h6"></path>
+                            </svg>
+                        </div>
+                        <h3>Для бизнеса</h3>
+                        <p>Сборка щитов автоматики, диагностика и ремонт металлорежущих станков.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- БЛОК: КАЧЕСТВО В ДЕТАЛЯХ -->
+        <section class="section" style="padding: 30px 0 50px;">
+            <div class="container">
+                <div class="quality-banner card fade-in"
+                    style="position: relative; overflow: hidden; padding: 55px 30px; text-align: center; background: linear-gradient(180deg, #0e1626 0%, #070b15 100%); border: 1px solid rgba(255, 214, 10, 0.25); border-radius: var(--radius-lg); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55); margin: 15px 0;">
+                    <div class="hazard-border" style="position: absolute; top: 0; left: 0; right: 0; height: 6px;"></div>
+                    <span class="badge-status" style="color: var(--volt-yellow); border-color: rgba(255, 214, 10, 0.35); margin-bottom: 18px; display: inline-flex;">
+                        <span class="dot" style="background: var(--volt-yellow); box-shadow: 0 0 10px var(--volt-yellow);"></span> Портфолио и стандарты
+                    </span>
+                    <h2 style="margin: 0 auto 16px; font-size: clamp(1.4rem, 3.5vw, 2.2rem); text-transform: uppercase;">
+                        Качество в <span style="color: var(--volt-yellow);">деталях</span>
+                    </h2>
+                    <p style="color: var(--text-muted); max-width: 640px; margin: 0 auto 30px; line-height: 1.6; font-size: 1rem;">
+                        Посмотрите примеры собранных распределительных щитов, аккуратной прокладки кабельных трасс и систем автоматизации в нашем портфолио.
+                    </p>
+                    <a href="./works.html" class="btn btn-volt" style="padding: 16px 36px; font-size: 1.05rem; box-shadow: 0 8px 25px rgba(255, 214, 10, 0.35);">
+                        Смотреть галерею объектов →
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ: НАШИ МАСТЕРА -->
+        <section id="team" class="section">
+            <div class="container">
+                <h2 class="fade-in">Наши <span>мастера</span></h2>
+                <p class="fade-in"
+                    style="text-align: center; color: var(--text-muted); max-width: 620px; margin: -20px auto 35px; font-size: 0.95rem;">
+                    Профильное техническое образование, действующие группы допуска по электробезопасности и
+                    подтверждённый опыт на объектах СПб и ЛО.
+                </p>
+
+                <div class="team-grid">
+                    <!-- Мастер 1: Матвей Зрячих -->
+                    <div class="card team-card fade-in" onclick="openTeamModal('master1')">
+                        <div class="team-avatar-wrapper">
+                            <div class="team-avatar" style="display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: var(--primary-install); border-color: rgba(0, 229, 255, 0.4); box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);">⚡</div>
+                            <span class="team-badge-status" title="6-й (высший) разряд">⚡ 6 разряд</span>
+                        </div>
+                        <h3 class="team-name">Матвей Зрячих</h3>
+                        <div class="team-role" style="color: var(--primary-install);">Инженер-электромонтажник /
+                            Инженер-электроник</div>
+                        <p class="team-desc">Электромонтёр 6 разряда и инженер-электроник. Комплексный электромонтаж
+                            квартир и домов, сборка распределительных щитов, автоматика и диагностика сложного
+                            оборудования.</p>
+                        <button type="button" class="btn btn-outline team-btn"
+                            onclick="openTeamModal('master1'); event.stopPropagation();">Подробнее и образование
+                            →</button>
+                    </div>
+
+                    <!-- Мастер 2: Заглушка (На согласовании) -->
+                    <div class="card team-card fade-in" style="transition-delay: 0.1s;"
+                        onclick="openTeamModal('master2')">
+                        <div class="team-avatar-wrapper">
+                            <div class="team-avatar"
+                                style="display: flex; align-items: center; justify-content: center; font-size: 2.2rem; color: var(--text-muted); border-color: rgba(255,255,255,0.15); box-shadow: none;">
+                                👤</div>
+                            <span class="team-badge-status"
+                                style="border-color: var(--border-light); color: var(--text-muted);">Скоро</span>
+                        </div>
+                        <h3 class="team-name">Специалист VoltGroup</h3>
+                        <div class="team-role" style="color: var(--text-muted);">Инженер / Мастер</div>
+                        <p class="team-desc">Информация об образовании, квалификации и компетенциях мастера находится на
+                            согласовании и скоро появится на сайте.</p>
+                        <button type="button" class="btn btn-outline team-btn"
+                            onclick="openTeamModal('master2'); event.stopPropagation();"
+                            style="opacity: 0.85;">Информация уточняется →</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="why" class="section">
+            <div class="container">
+                <h2 class="fade-in">Почему выбирают <span>VoltGroup</span></h2>
+                <div class="grid-3">
+                    <div class="card fade-in">
+                        <span
+                            style="font-family: var(--font-heading); font-size: 1.8rem; color: var(--primary-install); display: block; margin-bottom: 10px;">01</span>
+                        <h3>Прозрачная смета</h3>
+                        <p style="font-size: 0.92rem;">Цена фиксируется ДО начала работ. Никаких скрытых платежей и
+                            «сюрпризов» в процессе.</p>
+                    </div>
+                    <div class="card fade-in" style="transition-delay: 0.1s;">
+                        <span
+                            style="font-family: var(--font-heading); font-size: 1.8rem; color: var(--primary-eng); display: block; margin-bottom: 10px;">02</span>
+                        <h3>Идеальная чистота</h3>
+                        <p style="font-size: 0.92rem;">Штроборез с пылесосом, лазерный уровень. Убираем за собой - ваш
+                            объект остаётся чистым.</p>
+                    </div>
+                    <div class="card fade-in" style="transition-delay: 0.2s;">
+                        <span
+                            style="font-family: var(--font-heading); font-size: 1.8rem; color: var(--volt-yellow); display: block; margin-bottom: 10px;">03</span>
+                        <h3>Официально</h3>
+                        <p style="font-size: 0.92rem;">Договор подряда, акт приёмки, чек из «Мой налог». Гарантия на
+                            выполненные работы.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="process" class="section" style="background: rgba(255,255,255,0.01);">
+            <div class="container">
+                <h2 class="fade-in">Как мы <span>работаем</span></h2>
+                <div class="grid-3">
+                    <div class="card fade-in" style="padding: 20px; text-align: center;">
+                        <div
+                            style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--primary-install); margin-bottom: 8px;">
+                            1</div>
+                        <h4 style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 6px;">Заявка
+                        </h4>
+                        <p style="font-size: 0.85rem;">Оставляете заявку на сайте или в мессенджере.</p>
+                    </div>
+                    <div class="card fade-in" style="padding: 20px; text-align: center; transition-delay: 0.05s;">
+                        <div
+                            style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--primary-install); margin-bottom: 8px;">
+                            2</div>
+                        <h4 style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 6px;">Выезд</h4>
+                        <p style="font-size: 0.85rem;">Осмотр объекта в СПб и ЛО, замеры и консультация.</p>
+                    </div>
+                    <div class="card fade-in" style="padding: 20px; text-align: center; transition-delay: 0.1s;">
+                        <div
+                            style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--primary-install); margin-bottom: 8px;">
+                            3</div>
+                        <h4 style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 6px;">Смета</h4>
+                        <p style="font-size: 0.85rem;">Фиксируем цену и сроки. Подписываем договор.</p>
+                    </div>
+                    <div class="card fade-in" style="padding: 20px; text-align: center; transition-delay: 0.15s;">
+                        <div
+                            style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--primary-install); margin-bottom: 8px;">
+                            4</div>
+                        <h4 style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 6px;">Монтаж
+                        </h4>
+                        <p style="font-size: 0.85rem;">Работа строго по ПУЭ, фотоотчеты, чистота.</p>
+                    </div>
+                    <div class="card fade-in" style="padding: 20px; text-align: center; transition-delay: 0.2s;">
+                        <div
+                            style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--primary-install); margin-bottom: 8px;">
+                            5</div>
+                        <h4 style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 6px;">Сдача</h4>
+                        <p style="font-size: 0.85rem;">Подписываем акт, выдаем чек и гарантию.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="section">
+            <div class="container">
+                <h2 class="fade-in">Частые <span>вопросы</span></h2>
+                <div class="accordion fade-in" style="max-width: 800px; margin: 0 auto;">
+                    <div class="accordion-item">
+                        <button class="accordion-btn" type="button">Работаете ли вы официально?</button>
+                        <div class="accordion-content">
+                            <p>Да. Работаем официально в статусе плательщика НПД (самозанятый). Заключаем договор
+                                подряда, выдаем акт выполненных работ и официальный чек ФНС.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-btn" type="button">Что входит в гарантию на работы?</button>
+                        <div class="accordion-content">
+                            <p>Устранение дефектов монтажа по нашей вине (контакты, схемы, ПУЭ). На устанавливаемое
+                                оборудование действует официальная гарантия от производителей.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-btn" type="button">Как рассчитывается стоимость?</button>
+                        <div class="accordion-content">
+                            <p>Вы можете самостоятельно рассчитать смету в нашем <a href="./estimate.html"
+                                    style="color: var(--primary-install);">онлайн-калькуляторе</a>. Итоговая цена
+                                фиксируется в договоре до начала работ. Предоплата берется только за материалы (100%),
+                                работы оплачиваются по факту приёмки.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-btn" type="button">Делаете ли вы умный дом «под ключ»?</button>
+                        <div class="accordion-content">
+                            <p>Да. Проектируем схемы, подбираем оборудование, монтируем, настраиваем сценарии и
+                                интегрируем с Я.Алисой, HomeKit и контроллерами (Wirenboard, Aqara и др.).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section contact-section">
+            <div class="container">
+                <div class="card fade-in contact-grid-card">
+                    <div>
+                        <span class="badge-status">
+                            <span class="dot"></span> Пн–Сб 9:00–21:00 · Выезд по СПб и ЛО
+                        </span>
+                        <h2 style="text-align: left; margin-bottom: 15px;">Оставьте <span
+                                style="color: var(--primary-install);">заявку</span></h2>
+                        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+                            Ответим в течение 15 минут, подробно проконсультируем, рассчитаем предварительную смету и
+                            зафиксируем цену ДО начала работ.
+                        </p>
+                        <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--border-light);">
+                            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;">Прямой номер
+                                инженера:</p>
+                            <a href="tel:+79052084284"
+                                style="font-family: var(--font-heading); font-size: 1.3rem; color: var(--volt-yellow); font-weight: 700; text-decoration: none;">+7
+                                (905) 208-42-84</a>
+                        </div>
+                    </div>
+
+                    <form id="leadForm" style="display: grid; gap: 16px;">
+                        <div class="form-group" style="margin: 0;">
+                            <label class="form-label">Ваше имя</label>
+                            <input type="text" name="name" class="form-input" placeholder="Иван" required
+                                maxlength="100">
+                        </div>
+                        <div class="form-group" style="margin: 0;">
+                            <label class="form-label">Телефон</label>
+                            <input type="tel" name="phone" class="form-input" placeholder="+7 (___) ___-__-__" required
+                                autocomplete="tel" pattern="(\+7|8)[\s\-]?[0-9\(\)\s\-]{10,18}"
+                                title="Формат: +7 (999) 000-00-00">
+                        </div>
+                        <div class="form-group" style="margin: 0;">
+                            <label class="form-label">Тип задачи</label>
+                            <select name="service" class="form-input">
+                                <option>Замена проводки / Черновой монтаж</option>
+                                <option>Сборка и монтаж электрощита</option>
+                                <option>Монтаж «Умного дома»</option>
+                                <option>Диагностика станка / Автоматика</option>
+                                <option>Другое</option>
+                            </select>
+                        </div>
+                        <div class="form-group"
+                            style="display: flex; align-items: flex-start; gap: 10px; margin-top: 5px;">
+                            <input type="checkbox" id="privacy-consent-main" required
+                                style="margin-top: 3px; width: 18px; height: 18px; accent-color: var(--primary-install); cursor: pointer; flex-shrink: 0;">
+                            <label for="privacy-consent-main"
+                                style="font-size: 0.82rem; color: var(--text-muted); cursor: pointer; line-height: 1.4;">
+                                Даю согласие на обработку <a href="./privacy.html" target="_blank" rel="noopener noreferrer" style="color: var(--primary-install); text-decoration: underline;">персональных данных</a>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-volt"
+                            style="width: 100%; justify-content: center; margin-top: 10px;">Получить расчёт ⚡</button>
+                        <p id="formStatus"
+                            style="margin-top: 10px; text-align: center; display: none; font-weight: 600;"></p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h4>⚡ VoltGroup</h4>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
+                        Энергия решений.<br>Электрика и автоматизация в СПб и ЛО.
+                    </p>
+                    <div style="display: flex; gap: 15px; font-size: 0.9rem;">
+                        <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer"
+                            style="color: var(--primary-install); font-weight: 600;">VK</a>
+                        <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer"
+                            style="color: var(--primary-install); font-weight: 600;">Telegram</a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Навигация</h4>
+                    <a href="./install/">Install</a>
+                    <a href="./engineering/">Engineering</a>
+                    <a href="./estimate.html">Калькулятор</a>
+                    <a href="./works.html">Портфолио</a>
+                    <a href="./contacts/">Контакты</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Документы</h4>
+                    <a href="./privacy.html">Политика конфиденциальности</a>
+                    <a href="./offer.html">Публичная оферта</a>
+                    <a href="./cookies.html">Cookies</a>
+                </div>
+                <div>
+                    <h4>Контакты</h4>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;">📞 <a
+                            href="tel:+79052084284" style="color: inherit; text-decoration: none;">+7 (905)
+                            208-42-84</a></p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">🕒 Пн–Сб: 9:00–21:00</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">📍 Санкт-Петербург и ЛО</p>
+                </div>
+            </div>
+            <div class="copyright">
+                © 2026 VoltGroup. Все права защищены.
+            </div>
         </div>
+    </footer>
+
+    <div class="ya-rating-floating">
+        <iframe src="https://yandex.ru/sprav/widget/rating-badge/98496429753?type=rating&theme=dark" width="150"
+            height="50" frameborder="0"></iframe>
     </div>
-</footer>
 
-<div class="ya-rating-floating">
-    <iframe src="https://yandex.ru/sprav/widget/rating-badge/98496429753?type=rating&theme=dark" width="150" height="50" frameborder="0"></iframe>
-</div>
+    <script>
+        // Вспомогательная функция для безопасности
+        function sanitizeInput(str) {
+            if (typeof str !== 'string') return '';
+            return str.replace(/[&<>"']/g, function (m) {
+                return {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#039;'
+                }[m];
+            });
+        }
+        const escapeHtml = sanitizeInput;
 
-<script>
-    // Вспомогательная функция для безопасности
-    function sanitizeInput(str) {
-        if (typeof str !== 'string') return '';
-        return str.replace(/[&<>"']/g, function(m) {
-            return {
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#039;'
-            }[m];
+        // 1. Безопасная бегущая строка (клонирование вместо innerHTML)
+        const track = document.getElementById('tickTrack');
+        if (track) {
+            Array.from(track.children).forEach(child => {
+                track.appendChild(child.cloneNode(true));
+            });
+        }
+
+        // 2. Оживление нагрузки щитка
+        const loadEl = document.getElementById('live-load');
+        const swSmart = document.getElementById('sw-smart');
+        const swAuto = document.getElementById('sw-auto');
+
+        function updateLoad() {
+            let base = 1.2;
+            if (swSmart && swSmart.checked) base += 1.4;
+            if (swAuto && swAuto.checked) base += 1.8;
+            base += Math.random() * 0.3;
+            if (loadEl) loadEl.textContent = base.toFixed(1) + ' кВт';
+        }
+        setInterval(updateLoad, 2200);
+        if (swSmart) swSmart.addEventListener('change', updateLoad);
+        if (swAuto) swAuto.addEventListener('change', updateLoad);
+
+        // 3. Мобильное меню
+        const mobileToggle = document.querySelector('.mobile-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.getElementById('navOverlay');
+
+        function closeMobileMenu() {
+            if (navLinks) navLinks.classList.remove('open');
+            if (navOverlay) navOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+            if (mobileToggle) mobileToggle.textContent = '☰';
+        }
+
+        if (mobileToggle && navLinks) {
+            mobileToggle.addEventListener('click', () => {
+                const isOpen = navLinks.classList.toggle('open');
+                if (navOverlay) navOverlay.classList.toggle('active', isOpen);
+                document.body.style.overflow = isOpen ? 'hidden' : '';
+                mobileToggle.textContent = isOpen ? '✕' : '☰';
+            });
+
+            document.querySelectorAll('.nav-links a').forEach(l => l.addEventListener('click', closeMobileMenu));
+            if (navOverlay) navOverlay.addEventListener('click', closeMobileMenu);
+        }
+
+        // 4. Аккордеон
+        document.querySelectorAll('.accordion-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const content = btn.nextElementSibling;
+                const isOpen = btn.classList.contains('active');
+
+                document.querySelectorAll('.accordion-btn').forEach(otherBtn => {
+                    otherBtn.classList.remove('active');
+                    if (otherBtn.nextElementSibling) {
+                        otherBtn.nextElementSibling.style.maxHeight = null;
+                    }
+                });
+
+                if (!isOpen) {
+                    btn.classList.add('active');
+                    if (content) {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+                }
+            });
         });
-    }
 
-    // 1. Безопасная бегущая строка (клонирование вместо innerHTML)
-    const track = document.getElementById('tickTrack');
-    if (track) {
-        Array.from(track.children).forEach(child => {
-            track.appendChild(child.cloneNode(true));
-        });
-    }
+        // Маска и валидация номера телефона (+7 (___) ___-__-__)
+        function initPhoneMask(input) {
+            if (!input) return;
 
-    // 2. Оживление нагрузки щитка
-    const loadEl = document.getElementById('live-load');
-    const swSmart = document.getElementById('sw-smart');
-    const swAuto = document.getElementById('sw-auto');
+            function formatPhone(val) {
+                let digits = val.replace(/\D/g, '');
+                if (!digits) return '';
 
-    function updateLoad() {
-        let base = 1.2;
-        if (swSmart && swSmart.checked) base += 1.4;
-        if (swAuto && swAuto.checked) base += 1.8;
-        base += Math.random() * 0.3;
-        if (loadEl) loadEl.textContent = base.toFixed(1) + ' кВт';
-    }
-    setInterval(updateLoad, 2200);
-    if(swSmart) swSmart.addEventListener('change', updateLoad);
-    if(swAuto) swAuto.addEventListener('change', updateLoad);
+                // Нормализуем первую цифру (8 или 7 меняем на +7)
+                if (digits[0] === '7' || digits[0] === '8') {
+                    digits = digits.substring(1);
+                } else if (digits[0] === '9') {
+                    // Если начали вводить с 9 (например 9991234567)
+                    // оставляем как есть
+                } else {
+                    // Другие коды
+                    digits = digits.substring(1);
+                }
 
-    // 3. Мобильное меню
-    const mobileToggle = document.querySelector('.mobile-toggle');
-    const navLinks = document.querySelector('.nav-links');
-    const navOverlay = document.getElementById('navOverlay');
+                let res = '+7';
+                if (digits.length > 0) {
+                    res += ' (' + digits.substring(0, 3);
+                }
+                if (digits.length >= 4) {
+                    res += ') ' + digits.substring(3, 6);
+                }
+                if (digits.length >= 7) {
+                    res += '-' + digits.substring(6, 8);
+                }
+                if (digits.length >= 9) {
+                    res += '-' + digits.substring(8, 10);
+                }
+                return res;
+            }
 
-    function closeMobileMenu() {
-        if (navLinks) navLinks.classList.remove('open');
-        if (navOverlay) navOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-        if (mobileToggle) mobileToggle.textContent = '☰';
-    }
+            input.addEventListener('input', function (e) {
+                const cursor = this.selectionStart;
+                const prevLen = this.value.length;
+                const formatted = formatPhone(this.value);
+                this.value = formatted;
 
-    if (mobileToggle && navLinks) {
-        mobileToggle.addEventListener('click', () => {
-            const isOpen = navLinks.classList.toggle('open');
-            if (navOverlay) navOverlay.classList.toggle('active', isOpen);
-            document.body.style.overflow = isOpen ? 'hidden' : '';
-            mobileToggle.textContent = isOpen ? '✕' : '☰';
-        });
-
-        document.querySelectorAll('.nav-links a').forEach(l => l.addEventListener('click', closeMobileMenu));
-        if (navOverlay) navOverlay.addEventListener('click', closeMobileMenu);
-    }
-
-    // 4. Аккордеон
-    document.querySelectorAll('.accordion-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const content = btn.nextElementSibling;
-            const isOpen = btn.classList.contains('active');
-
-            document.querySelectorAll('.accordion-btn').forEach(otherBtn => {
-                otherBtn.classList.remove('active');
-                if (otherBtn.nextElementSibling) {
-                    otherBtn.nextElementSibling.style.maxHeight = null;
+                if (this.classList.contains('is-invalid')) {
+                    const digits = this.value.replace(/\D/g, '');
+                    if (digits.length === 11) {
+                        this.classList.remove('is-invalid');
+                    }
                 }
             });
 
-            if (!isOpen) {
-                btn.classList.add('active');
-                if (content) {
-                    content.style.maxHeight = content.scrollHeight + "px";
+            input.addEventListener('focus', function () {
+                if (!this.value) {
+                    this.value = '+7 (';
                 }
-            }
-        });
-    });
+            });
 
-    // Маска и валидация номера телефона (+7 (___) ___-__-__)
-    function initPhoneMask(input) {
-        if (!input) return;
+            input.addEventListener('blur', function () {
+                if (this.value === '+7 (' || this.value === '+7' || this.value === '+') {
+                    this.value = '';
+                    this.classList.remove('is-invalid');
+                } else {
+                    const digits = this.value.replace(/\D/g, '');
+                    if (digits.length < 11) {
+                        this.classList.add('is-invalid');
+                    } else {
+                        this.classList.remove('is-invalid');
+                    }
+                }
+            });
 
-        function formatPhone(val) {
-            let digits = val.replace(/\D/g, '');
-            if (!digits) return '';
-
-            // Нормализуем первую цифру (8 или 7 меняем на +7)
-            if (digits[0] === '7' || digits[0] === '8') {
-                digits = digits.substring(1);
-            } else if (digits[0] === '9') {
-                // Если начали вводить с 9 (например 9991234567)
-                // оставляем как есть
-            } else {
-                // Другие коды
-                digits = digits.substring(1);
-            }
-
-            let res = '+7';
-            if (digits.length > 0) {
-                res += ' (' + digits.substring(0, 3);
-            }
-            if (digits.length >= 4) {
-                res += ') ' + digits.substring(3, 6);
-            }
-            if (digits.length >= 7) {
-                res += '-' + digits.substring(6, 8);
-            }
-            if (digits.length >= 9) {
-                res += '-' + digits.substring(8, 10);
-            }
-            return res;
+            input.addEventListener('keydown', function (e) {
+                // Если нажат Backspace при длине <= 4 ('+7 ('), очищаем поле
+                if (e.key === 'Backspace' && this.value.length <= 4) {
+                    this.value = '';
+                }
+            });
         }
 
-        input.addEventListener('input', function(e) {
-            const cursor = this.selectionStart;
-            const prevLen = this.value.length;
-            const formatted = formatPhone(this.value);
-            this.value = formatted;
+        const phoneInput = document.querySelector('input[name="phone"]');
+        initPhoneMask(phoneInput);
 
-            if (this.classList.contains('is-invalid')) {
-                const digits = this.value.replace(/\D/g, '');
-                if (digits.length === 11) {
-                    this.classList.remove('is-invalid');
+        // 5. Форма обратной связи
+        const leadForm = document.getElementById('leadForm');
+        let hasPinged = false;
+
+        if (leadForm) {
+            leadForm.addEventListener('focusin', () => {
+                if (!hasPinged) {
+                    hasPinged = true;
+                    fetch('https://voltgroup-bot.onrender.com/ping', { method: 'GET' }).catch(() => { });
                 }
-            }
-        });
+            });
 
-        input.addEventListener('focus', function() {
-            if (!this.value) {
-                this.value = '+7 (';
-            }
-        });
+            leadForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const btn = this.querySelector('button[type="submit"]');
+                const status = document.getElementById('formStatus');
+                const phoneEl = this.querySelector('input[name="phone"]');
 
-        input.addEventListener('blur', function() {
-            if (this.value === '+7 (' || this.value === '+7' || this.value === '+') {
-                this.value = '';
-                this.classList.remove('is-invalid');
-            } else {
-                const digits = this.value.replace(/\D/g, '');
-                if (digits.length < 11) {
-                    this.classList.add('is-invalid');
-                } else {
-                    this.classList.remove('is-invalid');
+                const rawData = Object.fromEntries(new FormData(this));
+                const phoneVal = (rawData.phone || '').trim();
+                const digits = phoneVal.replace(/\D/g, '');
+
+                // Проверка корректности телефона (11 цифр: 7XXXXXXXXXX)
+                if (digits.length !== 11) {
+                    if (phoneEl) {
+                        phoneEl.classList.add('is-invalid');
+                        phoneEl.focus();
+                    }
+                    status.style.display = 'block';
+                    status.style.color = '#EF4444';
+                    status.textContent = '⚠️ Пожалуйста, введите полный номер телефона: +7 (XXX) XXX-XX-XX';
+                    return;
+                } else if (phoneEl) {
+                    phoneEl.classList.remove('is-invalid');
                 }
-            }
-        });
 
-        input.addEventListener('keydown', function(e) {
-            // Если нажат Backspace при длине <= 4 ('+7 ('), очищаем поле
-            if (e.key === 'Backspace' && this.value.length <= 4) {
-                this.value = '';
-            }
-        });
-    }
+                // Очищаем входные данные
+                const data = {
+                    name: sanitizeInput(rawData.name),
+                    phone: sanitizeInput(phoneVal),
+                    service: sanitizeInput(rawData.service),
+                    source: 'main_site'
+                };
 
-    const phoneInput = document.querySelector('input[name="phone"]');
-    initPhoneMask(phoneInput);
-
-    // 5. Форма обратной связи
-    const leadForm = document.getElementById('leadForm');
-    let hasPinged = false;
-
-    if (leadForm) {
-        leadForm.addEventListener('focusin', () => {
-            if (!hasPinged) {
-                hasPinged = true;
-                fetch('https://voltgroup-bot.onrender.com/ping', { method: 'GET' }).catch(() => {});
-            }
-        });
-
-        leadForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const btn = this.querySelector('button[type="submit"]');
-            const status = document.getElementById('formStatus');
-            const phoneEl = this.querySelector('input[name="phone"]');
-
-            const rawData = Object.fromEntries(new FormData(this));
-            const phoneVal = (rawData.phone || '').trim();
-            const digits = phoneVal.replace(/\D/g, '');
-
-            // Проверка корректности телефона (11 цифр: 7XXXXXXXXXX)
-            if (digits.length !== 11) {
-                if (phoneEl) {
-                    phoneEl.classList.add('is-invalid');
-                    phoneEl.focus();
-                }
+                btn.disabled = true;
+                btn.textContent = 'Отправка...';
                 status.style.display = 'block';
-                status.style.color = '#EF4444';
-                status.textContent = '⚠️ Пожалуйста, введите полный номер телефона: +7 (XXX) XXX-XX-XX';
-                return;
-            } else if (phoneEl) {
-                phoneEl.classList.remove('is-invalid');
-            }
+                status.style.color = 'var(--text-muted)';
+                status.textContent = '⏳ Отправляем заявку...';
 
-            // Очищаем входные данные
-            const data = {
-                name: sanitizeInput(rawData.name),
-                phone: sanitizeInput(phoneVal),
-                service: sanitizeInput(rawData.service),
-                source: 'main_site'
-            };
+                try {
+                    const res = await fetch('https://voltgroup-bot.onrender.com/send-message', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
 
-            btn.disabled = true;
-            btn.textContent = 'Отправка...';
-            status.style.display = 'block';
-            status.style.color = 'var(--text-muted)';
-            status.textContent = '⏳ Отправляем заявку...';
-
-            try {
-                const res = await fetch('https://voltgroup-bot.onrender.com/send-message', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(data)
-                });
-
-                if (res.ok) {
-                    status.textContent = '✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.';
-                    status.style.color = '#10B981';
-                    this.reset();
-                    if (phoneEl) phoneEl.classList.remove('is-invalid');
-                } else {
-                    throw new Error('Ошибка сервера');
+                    if (res.ok) {
+                        status.textContent = '✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.';
+                        status.style.color = '#10B981';
+                        this.reset();
+                        if (phoneEl) phoneEl.classList.remove('is-invalid');
+                    } else {
+                        throw new Error('Ошибка сервера');
+                    }
+                } catch (err) {
+                    status.textContent = '❌ Ошибка отправки. Пожалуйста, напишите нам в VK или Telegram.';
+                    status.style.color = '#EF4444';
+                } finally {
+                    btn.disabled = false;
+                    btn.textContent = 'Получить расчёт ⚡';
                 }
-            } catch (err) {
-                status.textContent = '❌ Ошибка отправки. Пожалуйста, напишите нам в VK или Telegram.';
-                status.style.color = '#EF4444';
-            } finally {
-                btn.disabled = false;
-                btn.textContent = 'Получить расчёт ⚡';
-            }
-        });
-    }
+            });
+        }
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-            if (e.isIntersecting) e.target.classList.add('visible');
+        // 6. Модальное окно мастеров
+        const teamData = {
+            master1: {
+                name: "Матвей Зрячих",
+                role: "Инженер-электромонтажник, электромонтёр 6 разряда",
+                badge: "⚡ 6 разряд (высший) / Инженер-электроник",
+                themeClass: "",
+                photo: "",
+                education: [
+                    {
+                        title: "Электромонтёр по ремонту электроустановок (6 разряд)",
+                        sub: "Удостоверение о повышении квалификации: монтаж и наладка силовых сетей, распределительных щитов и силовой автоматики"
+                    },
+                    {
+                        title: "Диплом: Инженер-электроник (Инженерный уровень)",
+                        sub: "Профессиональная переподготовка: электронные управляющие системы, микроконтроллеры, промышленная автоматика и оборудование"
+                    },
+                    {
+                        title: "Диплом СПО: Электромонтёр устройств СЦБ (4 разряд)",
+                        sub: "Базовое профильное электротехническое образование: релейные схемы, цепи управления, автоматика и безопасность"
+                    }
+                ],
+                skills: [
+                    "Комплексный электромонтаж под ключ: квартиры, загородные дома и коммерческие помещения по стандартам ПУЭ-7 и ГОСТ",
+                    "Сборка и пусконаладка электрощитов: профессиональная компоновка, маркировка, защита линий и балансировка нагрузок",
+                    "Аккуратный монтаж: лазерная разметка геометрии, беспылевое штробление с пылесосом, надёжная опрессовка соединений",
+                    "Промышленный опыт (4+ года): обслуживание, диагностика и наладка систем ЧПУ (Siemens Sinumerik), станков и частотных приводов",
+                    "Цифровые решения: разработка точных сметных калькуляторов и систем прозрачного расчёта стоимости работ для клиентов"
+                ]
+            },
+            master2: {
+                name: "Специалист VoltGroup",
+                role: "Инженер / Мастер",
+                badge: "⏳ На согласовании",
+                themeClass: "",
+                photo: "",
+                education: [
+                    {
+                        title: "Информация уточняется",
+                        sub: "Профиль мастера находится на согласовании и будет опубликован в ближайшее время."
+                    }
+                ],
+                skills: [
+                    "Профиль мастера в процессе наполнения",
+                    "Скоро здесь появятся дипломы, допуски и подтверждённый опыт работы"
+                ]
+            }
+        };
+
+        function openTeamModal(masterId) {
+            const master = teamData[masterId];
+            if (!master) return;
+
+            const body = document.getElementById('teamModalBody');
+            const isPurple = master.themeClass === 'purple';
+            const colorVar = isPurple ? 'var(--primary-eng)' : 'var(--primary-install)';
+
+            const eduHtml = master.education.map(item => `
+            <div class="modal-edu-card">
+                <div class="modal-edu-title">${escapeHtml(item.title)}</div>
+                <div class="modal-edu-sub">${escapeHtml(item.sub)}</div>
+            </div>
+        `).join('');
+
+            const skillsHtml = master.skills.map(s => `
+            <li>${escapeHtml(s)}</li>
+        `).join('');
+
+            const avatarIcon = masterId === 'master1' ? '⚡' : '👤';
+            const avatarHtml = master.photo
+                ? `<img src="${master.photo}" alt="${escapeHtml(master.name)}" class="modal-master-avatar ${master.themeClass}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="modal-master-avatar ${master.themeClass}" style="display: none; align-items: center; justify-content: center; font-size: 2.2rem; color: ${colorVar};">${avatarIcon}</div>`
+                : `<div class="modal-master-avatar ${master.themeClass}" style="display: flex; align-items: center; justify-content: center; font-size: 2.2rem; color: ${colorVar}; border-color: ${isPurple ? 'rgba(123, 97, 255, 0.4)' : 'rgba(0, 229, 255, 0.4)'};">${avatarIcon}</div>`;
+
+            body.innerHTML = `
+            <div class="modal-master-header">
+                ${avatarHtml}
+                <div>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 4px;">${escapeHtml(master.name)}</h3>
+                    <div style="color: ${colorVar}; font-size: 0.9rem; font-weight: 600; margin-bottom: 6px;">${escapeHtml(master.role)}</div>
+                    <span class="badge-status" style="margin: 0; font-size: 0.72rem; padding: 3px 8px; border-color: ${colorVar}; color: ${colorVar};">
+                        ${escapeHtml(master.badge)}
+                    </span>
+                </div>
+            </div>
+
+            <div class="modal-block">
+                <div class="modal-block-title ${master.themeClass}">🎓 Образование и квалификация</div>
+                ${eduHtml}
+            </div>
+
+            <div class="modal-block">
+                <div class="modal-block-title ${master.themeClass}">🛠 Компетенции и специализация</div>
+                <ul class="modal-list">
+                    ${skillsHtml}
+                </ul>
+            </div>
+
+            <div style="margin-top: 25px; text-align: center;">
+                <a href="#contact" onclick="closeTeamModal()" class="btn ${isPurple ? 'btn-secondary' : 'btn-primary'}" style="width: 100%; justify-content: center;">
+                    Задать вопрос мастеру ⚡
+                </a>
+            </div>
+        `;
+
+            const overlay = document.getElementById('teamModalOverlay');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeTeamModal(e) {
+            if (e && e.target && e.target.id !== 'teamModalOverlay' && !e.target.classList.contains('team-modal-close')) {
+                return;
+            }
+            const overlay = document.getElementById('teamModalOverlay');
+            if (overlay) {
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeTeamModal();
         });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-</script>
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) e.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+
+    <!-- Модальное окно мастера -->
+    <div class="team-modal-overlay" id="teamModalOverlay" onclick="closeTeamModal(event)">
+        <div class="team-modal-content" role="dialog" aria-modal="true">
+            <button type="button" class="team-modal-close" onclick="closeTeamModal()" aria-label="Закрыть">✕</button>
+            <div class="team-modal-body" id="teamModalBody"></div>
+        </div>
+    </div>
+
 </body>
+
 </html>
