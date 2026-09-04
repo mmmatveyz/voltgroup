@@ -653,15 +653,16 @@ input:checked+.slider.purple:before {
 
 .team-badge-status {
     position: absolute;
-    bottom: -4px;
-    right: -6px;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
     font-size: 0.72rem;
     font-weight: 700;
     background: #050914;
     border: 1px solid var(--primary-install);
     color: var(--primary-install);
     border-radius: 12px;
-    padding: 3px 8px;
+    padding: 3px 10px;
     letter-spacing: 0.02em;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
     white-space: nowrap;
