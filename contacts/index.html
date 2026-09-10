@@ -61,7 +61,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../static/css/style.css?v=2.1">
+    <link rel="stylesheet" href="../static/css/style.css?v=2.3">
 
     <style>
         .contact-cards {
@@ -200,7 +200,7 @@
         </div>
     </section>
 
-    <section class="section" style="padding-top: 20px; padding-bottom: 90px;">
+    <section class="section" style="padding-top: 20px; padding-bottom: 40px;">
         <div class="container">
             <div class="contact-cards">
                 <div class="contact-card fade-in">
@@ -227,6 +227,57 @@
                     </div>
                     <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 12px;">Присылайте фото помещений или схем для быстрого предрасчета</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- СЕКЦИЯ ФОРМЫ СВЯЗИ -->
+    <section id="contact" class="section contact-section" style="padding-top: 0; padding-bottom: 90px;">
+        <div class="container">
+            <div class="card fade-in contact-grid-card">
+                <div>
+                    <span class="badge-status">
+                        <span class="dot"></span> Консультация и выезд
+                    </span>
+                    <h2 style="text-align: left; margin-bottom: 15px;">Напишите <span style="color: var(--primary-install);">нам</span></h2>
+                    <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+                        Оставьте заявку на электромонтаж, сборку щита или ремонт автоматики. Ответим в течение 15 минут, сориентируем по стоимости и зафиксируем цену в смете.
+                    </p>
+                    <div style="padding: 16px; background: rgba(0, 229, 255, 0.04); border: 1px dashed rgba(0, 229, 255, 0.2); border-radius: 12px;">
+                        <p style="font-size: 0.88rem; color: var(--text-main); font-weight: 600;">⚡ Официальный договор</p>
+                        <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Фискальный чек ФНС, акт приёмки и гарантия 12 месяцев на все работы.</p>
+                    </div>
+                </div>
+
+                <form id="leadForm" style="display: grid; gap: 16px;">
+                    <div class="form-group" style="margin: 0;">
+                        <label class="form-label">Ваше имя</label>
+                        <input type="text" name="name" class="form-input" placeholder="Иван" required maxlength="100">
+                    </div>
+                    <div class="form-group" style="margin: 0;">
+                        <label class="form-label">Телефон</label>
+                        <input type="tel" name="phone" class="form-input" placeholder="+7 (___) ___-__-__" required autocomplete="tel" pattern="(\+7|8)[\s\-]?[0-9\(\)\s\-]{10,18}" title="Формат: +7 (999) 000-00-00">
+                    </div>
+                    <div class="form-group" style="margin: 0;">
+                        <label class="form-label">Направление / Задача</label>
+                        <input type="hidden" name="service" id="selectedServiceInput" value="Электромонтаж (Install)">
+                        <div class="service-chips-grid">
+                            <button type="button" class="service-chip active" data-val="Электромонтаж (Install)">Электромонтаж</button>
+                            <button type="button" class="service-chip" data-val="Сборка электрощита">Сборка щита</button>
+                            <button type="button" class="service-chip" data-val="Автоматика / Станки (Engineering)">Пром. автоматика</button>
+                            <button type="button" class="service-chip" data-val="Умный дом">Умный дом</button>
+                            <button type="button" class="service-chip" data-val="Другое">Другое</button>
+                        </div>
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: flex-start; gap: 10px; margin-top: 5px;">
+                        <input type="checkbox" id="privacy-consent-main" required style="margin-top: 3px; width: 18px; height: 18px; accent-color: var(--primary-install); cursor: pointer; flex-shrink: 0;">
+                        <label for="privacy-consent-main" style="font-size: 0.82rem; color: var(--text-muted); cursor: pointer; line-height: 1.4;">
+                            Даю согласие на обработку <a href="../privacy.html" target="_blank" rel="noopener noreferrer" style="color: var(--primary-install); text-decoration: underline;">персональных данных</a>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-volt" style="width: 100%; justify-content: center; margin-top: 10px;">Отправить заявку ⚡</button>
+                    <p id="formStatus" style="margin-top: 10px; text-align: center; display: none; font-weight: 600;"></p>
+                </form>
             </div>
         </div>
     </section>
@@ -309,6 +360,172 @@
         });
     }, { threshold: 0.1 });
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // 3. Санитизация ввода
+    function sanitizeInput(str) {
+        if (typeof str !== 'string') return '';
+        return str.replace(/[&<>"']/g, function(m) {
+            return {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            }[m];
+        });
+    }
+
+    // 4. Маска телефона (+7 (___) ___-__-__)
+    function initPhoneMask(input) {
+        if (!input) return;
+
+        function formatPhone(val) {
+            let digits = val.replace(/\D/g, '');
+            if (!digits) return '';
+
+            if (digits[0] === '7' || digits[0] === '8') {
+                digits = digits.substring(1);
+            } else if (digits[0] === '9') {
+                // Ввод без префикса
+            } else {
+                digits = digits.substring(1);
+            }
+
+            let res = '+7';
+            if (digits.length > 0) res += ' (' + digits.substring(0, 3);
+            if (digits.length >= 4) res += ') ' + digits.substring(3, 6);
+            if (digits.length >= 7) res += '-' + digits.substring(6, 8);
+            if (digits.length >= 9) res += '-' + digits.substring(8, 10);
+            return res;
+        }
+
+        input.addEventListener('input', function() {
+            this.value = formatPhone(this.value);
+            if (this.classList.contains('is-invalid')) {
+                const digits = this.value.replace(/\D/g, '');
+                if (digits.length === 11) {
+                    this.classList.remove('is-invalid');
+                }
+            }
+        });
+
+        input.addEventListener('focus', function() {
+            if (!this.value) this.value = '+7 (';
+        });
+
+        input.addEventListener('blur', function() {
+            if (this.value === '+7 (' || this.value === '+7' || this.value === '+') {
+                this.value = '';
+                this.classList.remove('is-invalid');
+            } else {
+                const digits = this.value.replace(/\D/g, '');
+                if (digits.length < 11) {
+                    this.classList.add('is-invalid');
+                } else {
+                    this.classList.remove('is-invalid');
+                }
+            }
+        });
+
+        input.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && this.value.length <= 4) {
+                this.value = '';
+            }
+        });
+    }
+
+    const phoneInput = document.querySelector('input[name="phone"]');
+    initPhoneMask(phoneInput);
+
+    // 5. Переключение чипов
+    const serviceInput = document.getElementById('selectedServiceInput');
+    const serviceChips = document.querySelectorAll('.service-chip');
+    serviceChips.forEach(chip => {
+        chip.addEventListener('click', function () {
+            serviceChips.forEach(c => c.classList.remove('active'));
+            this.classList.add('active');
+            if (serviceInput) {
+                serviceInput.value = this.getAttribute('data-val');
+            }
+        });
+    });
+
+    // 6. Отправка формы
+    const leadForm = document.getElementById('leadForm');
+    let hasPinged = false;
+
+    if (leadForm) {
+        leadForm.addEventListener('focusin', () => {
+            if (!hasPinged) {
+                hasPinged = true;
+                fetch('https://voltgroup-bot.onrender.com/ping', { method: 'GET' }).catch(() => {});
+            }
+        });
+
+        leadForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const btn = this.querySelector('button[type="submit"]');
+            const status = document.getElementById('formStatus');
+            const phoneEl = this.querySelector('input[name="phone"]');
+
+            const rawData = Object.fromEntries(new FormData(this));
+            const phoneVal = (rawData.phone || '').trim();
+            const digits = phoneVal.replace(/\D/g, '');
+
+            if (digits.length !== 11) {
+                if (phoneEl) {
+                    phoneEl.classList.add('is-invalid');
+                    phoneEl.focus();
+                }
+                status.style.display = 'block';
+                status.style.color = '#EF4444';
+                status.textContent = '⚠️ Пожалуйста, введите полный номер телефона: +7 (XXX) XXX-XX-XX';
+                return;
+            } else if (phoneEl) {
+                phoneEl.classList.remove('is-invalid');
+            }
+
+            const data = {
+                name: sanitizeInput(rawData.name),
+                phone: sanitizeInput(phoneVal),
+                service: sanitizeInput(rawData.service || (serviceInput ? serviceInput.value : 'Обращение со страницы контактов')),
+                source: 'contacts_page'
+            };
+
+            btn.disabled = true;
+            btn.textContent = 'Отправка...';
+            status.style.display = 'block';
+            status.style.color = 'var(--text-muted)';
+            status.textContent = '⏳ Отправляем...';
+
+            try {
+                const res = await fetch('https://voltgroup-bot.onrender.com/send-message', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                });
+                if (res.ok) {
+                    status.textContent = '✅ Заявка отправлена! Свяжемся с вами в ближайшее время.';
+                    status.style.color = '#10B981';
+                    this.reset();
+                    if (serviceChips.length > 0) {
+                        serviceChips.forEach(c => c.classList.remove('active'));
+                        serviceChips[0].classList.add('active');
+                        if (serviceInput) serviceInput.value = serviceChips[0].getAttribute('data-val');
+                    }
+                    if (phoneEl) phoneEl.classList.remove('is-invalid');
+                } else {
+                    throw new Error('Ошибка сервера');
+                }
+            } catch (err) {
+                status.textContent = '❌ Ошибка отправки. Напишите нам в VK или Telegram.';
+                status.style.color = '#EF4444';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Отправить заявку ⚡';
+            }
+        });
+    }
 </script>
 </body>
 </html>

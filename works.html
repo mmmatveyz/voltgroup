@@ -53,7 +53,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="./static/css/style.css?v=2.1">
+    <link rel="stylesheet" href="./static/css/style.css?v=2.3">
 
     <script type="text/javascript">
         (function(m,e,t,r,i,k,a){
@@ -213,6 +213,80 @@
             line-height: 1.6;
         }
 
+        /* CTA блок после портфолио */
+        .portfolio-cta-section {
+            padding: 30px 0 80px;
+        }
+        .portfolio-cta-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(9, 13, 22, 0.98) 100%);
+            border: 1px solid rgba(0, 229, 255, 0.25);
+            border-radius: var(--radius-lg);
+            padding: 48px 32px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+        .portfolio-cta-card::before {
+            content: '';
+            position: absolute;
+            top: -120px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 500px;
+            height: 250px;
+            background: radial-gradient(ellipse, rgba(0, 229, 255, 0.15), transparent 70%);
+            pointer-events: none;
+        }
+        .portfolio-cta-card h2 {
+            font-size: clamp(1.35rem, 3vw, 2.1rem);
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+            color: var(--text-main);
+        }
+        .portfolio-cta-card p {
+            max-width: 660px;
+            margin: 0 auto 28px;
+            font-size: 1.02rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .portfolio-cta-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .portfolio-cta-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--primary-install);
+            background: rgba(0, 229, 255, 0.08);
+            border: 1px solid rgba(0, 229, 255, 0.25);
+            padding: 6px 14px;
+            border-radius: 99px;
+            margin-bottom: 18px;
+            font-weight: 700;
+        }
+        @media (max-width: 600px) {
+            .portfolio-cta-card {
+                padding: 36px 20px;
+            }
+            .portfolio-cta-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+            .portfolio-cta-actions .btn {
+                width: 100%;
+            }
+        }
+
         @media (max-width: 768px) {
             .lightbox-content { max-height: 100vh; }
             .lightbox-img { max-height: 48vh; }
@@ -256,6 +330,28 @@
                 ⏳ Загрузка портфолио...
             </div>
             <div id="gallery" class="gallery-grid" style="display: none;"></div>
+        </div>
+    </section>
+
+    <section class="portfolio-cta-section">
+        <div class="container">
+            <div class="portfolio-cta-card">
+                <span class="portfolio-cta-badge">
+                    ⚡ Качественный электромонтаж под ключ
+                </span>
+                <h2>Хотите такой же уровень на своём объекте?</h2>
+                <p>
+                    Составим прозрачную смету и выполним монтаж строго по ГОСТ и СНиП с официальной гарантией 12 месяцев.
+                </p>
+                <div class="portfolio-cta-actions">
+                    <a href="./estimate.html" class="btn btn-volt">
+                        ⚡ Рассчитать в калькуляторе
+                    </a>
+                    <a href="./contacts/#leadForm" class="btn btn-primary">
+                        📞 Вызвать инженера на замер
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 </main>

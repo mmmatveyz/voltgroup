@@ -720,6 +720,7 @@ input:checked+.slider.purple:before {
     transition: opacity 0.3s ease, visibility 0.3s ease;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+    overscroll-behavior: contain;
 }
 
 .team-modal-overlay.active {
@@ -740,6 +741,7 @@ input:checked+.slider.purple:before {
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 229, 255, 0.15);
     transform: scale(0.94) translateY(15px);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overscroll-behavior: contain;
 }
 
 .team-modal-overlay.active .team-modal-content {
@@ -864,7 +866,7 @@ input:checked+.slider.purple:before {
 
 /* FORMS (ДЕСКТОП) */
 .contact-section {
-    background: linear-gradient(180deg, var(--bg-dark) 0%, #0a1020 100%);
+    background: transparent;
 }
 
 .form-box {
@@ -890,7 +892,7 @@ input:checked+.slider.purple:before {
 .form-input {
     width: 100%;
     padding: 14px 16px;
-    background: var(--bg-panel);
+    background: #090e1a;
     border: 1px solid var(--border-light);
     border-radius: var(--radius-md);
     color: var(--text-main);
@@ -907,7 +909,43 @@ select.form-input option {
 .form-input:focus {
     outline: none;
     border-color: var(--primary-install);
-    box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.15);
+    background: #0b1324;
+    box-shadow: 0 0 16px rgba(0, 229, 255, 0.3), inset 0 0 8px rgba(0, 229, 255, 0.08);
+}
+
+.service-chips-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.service-chip {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-light);
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    font-family: var(--font-main);
+    padding: 8px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: var(--transition);
+    user-select: none;
+    line-height: 1.3;
+}
+
+.service-chip:hover {
+    border-color: rgba(0, 229, 255, 0.4);
+    color: var(--text-main);
+    background: rgba(0, 229, 255, 0.05);
+}
+
+.service-chip.active {
+    background: rgba(0, 229, 255, 0.12);
+    border-color: var(--primary-install);
+    color: var(--primary-install);
+    font-weight: 600;
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.25);
 }
 
 .form-input::placeholder,
@@ -1436,3 +1474,667 @@ main>.container:first-child,
     opacity: 1;
     transform: translateY(0);
 }
+
+/* ==========================================================================
+   ОБНОВЛЕННАЯ ВЕРСТКА: УНИКАЛЬНАЯ АРХИТЕКТУРА ДЛЯ КАЖДОГО БЛОКА
+   ========================================================================== */
+
+/* 1. БЕНТО-СЕТКА УСЛУГ */
+.services-bento {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 24px;
+}
+
+.bento-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 24px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.bento-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+}
+
+.bento-install {
+    grid-column: span 7;
+    border-color: rgba(0, 229, 255, 0.2);
+}
+.bento-install:hover {
+    border-color: rgba(0, 229, 255, 0.5);
+    box-shadow: 0 20px 45px -10px rgba(0, 229, 255, 0.2);
+}
+
+.bento-smart {
+    grid-column: span 5;
+    border-color: rgba(0, 229, 255, 0.15);
+}
+.bento-smart:hover {
+    border-color: rgba(0, 229, 255, 0.4);
+}
+
+.bento-eng {
+    grid-column: span 7;
+    background: linear-gradient(145deg, #0e1222 0%, #120d26 100%);
+    border-color: rgba(123, 97, 255, 0.3);
+}
+.bento-eng:hover {
+    border-color: rgba(123, 97, 255, 0.6);
+    box-shadow: 0 20px 45px -10px rgba(123, 97, 255, 0.25);
+}
+
+.bento-calc {
+    grid-column: span 5;
+    background: linear-gradient(145deg, #101524 0%, #17150a 100%);
+    border-color: rgba(255, 214, 10, 0.25);
+}
+.bento-calc:hover {
+    border-color: rgba(255, 214, 10, 0.55);
+    box-shadow: 0 20px 45px -10px rgba(255, 214, 10, 0.2);
+}
+
+.bento-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 99px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    font-family: var(--font-heading);
+    margin-bottom: 16px;
+    width: fit-content;
+}
+.tag-cyan {
+    background: rgba(0, 229, 255, 0.1);
+    color: var(--primary-install);
+    border: 1px solid rgba(0, 229, 255, 0.25);
+}
+.tag-purple {
+    background: rgba(123, 97, 255, 0.15);
+    color: var(--primary-eng);
+    border: 1px solid rgba(123, 97, 255, 0.35);
+}
+.tag-yellow {
+    background: rgba(255, 214, 10, 0.12);
+    color: var(--volt-yellow);
+    border: 1px solid rgba(255, 214, 10, 0.3);
+}
+
+.bento-features {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.bento-features li {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.bento-features li i {
+    color: var(--primary-install);
+    font-style: normal;
+    font-weight: bold;
+}
+
+/* 2. ДИНАМИЧЕСКАЯ ВИТРИНА РАБОТ ("КАЧЕСТВО В ДЕТАЛЯХ") */
+.showcase-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 32px;
+    gap: 20px;
+}
+
+.showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.showcase-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+}
+
+.showcase-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(0, 229, 255, 0.4);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6);
+}
+
+.showcase-img-wrap {
+    width: 100%;
+    height: 220px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    border-bottom: 1px solid var(--border-light);
+    background-color: #070b15;
+    transition: transform 0.4s ease;
+}
+
+.showcase-card:hover .showcase-img-wrap {
+    transform: scale(1.03);
+}
+
+.showcase-badge-new {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: rgba(5, 9, 20, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--volt-yellow);
+    color: var(--volt-yellow);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 99px;
+    font-family: var(--font-heading);
+    box-shadow: 0 0 12px rgba(255, 214, 10, 0.3);
+    z-index: 2;
+}
+
+.showcase-body {
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+}
+
+.showcase-title {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    color: var(--text-main);
+    margin-bottom: 8px;
+    line-height: 1.3;
+}
+
+.showcase-desc {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+.showcase-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.showcase-tag {
+    font-size: 0.72rem;
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-light);
+    color: var(--text-muted);
+}
+
+/* 3. ДИФФЕРЕНЦИРОВАННЫЕ КАРТОЧКИ "ПОЧЕМУ ВЫБИРАЮТ" */
+.why-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.why-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 20px;
+    padding: 34px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.why-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+}
+
+.why-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.why-num {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.why-card-1 {
+    border-top: 2px solid var(--primary-install);
+}
+.why-card-1 .why-num {
+    color: var(--primary-install);
+    text-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
+}
+
+.why-card-2 {
+    border-top: 2px solid var(--primary-eng);
+}
+.why-card-2 .why-num {
+    color: var(--primary-eng);
+    text-shadow: 0 0 20px rgba(123, 97, 255, 0.3);
+}
+
+.why-card-3 {
+    border-top: 2px solid var(--volt-yellow);
+}
+.why-card-3 .why-num {
+    color: var(--volt-yellow);
+    text-shadow: 0 0 20px rgba(255, 214, 10, 0.3);
+}
+
+.why-status-pill {
+    font-size: 0.72rem;
+    font-family: var(--font-heading);
+    padding: 3px 10px;
+    border-radius: 99px;
+    border: 1px solid var(--border-light);
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-muted);
+}
+
+/* 4. ГОРИЗОНТАЛЬНЫЙ ИНЖЕНЕРНЫЙ ТРЕК "КАК МЫ РАБОТАЕМ" */
+.process-track-container {
+    position: relative;
+    padding: 20px 0 10px;
+}
+
+.process-track-line {
+    position: absolute;
+    top: 42px;
+    left: 8%;
+    right: 8%;
+    height: 2px;
+    background: linear-gradient(90deg, #00E5FF 0%, rgba(123, 97, 255, 0.8) 50%, #FFD60A 100%);
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.35);
+    z-index: 1;
+}
+
+.process-track-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.process-track-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease;
+    padding: 0 6px;
+    height: 100%;
+}
+
+.process-track-step:hover {
+    transform: translateY(-4px);
+}
+
+.process-track-node {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #060b17;
+    border: 2px solid var(--primary-install);
+    color: var(--primary-install);
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 16px rgba(0, 229, 255, 0.35);
+    margin-bottom: 22px;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 3;
+}
+
+.process-track-step:hover .process-track-node {
+    background: var(--primary-install);
+    color: #050914;
+    box-shadow: 0 0 25px var(--primary-install);
+    transform: scale(1.08);
+}
+
+.process-track-step:last-child .process-track-node {
+    border-color: var(--volt-yellow);
+    color: var(--volt-yellow);
+    box-shadow: 0 0 16px rgba(255, 214, 10, 0.35);
+}
+
+.process-track-step:last-child:hover .process-track-node {
+    background: var(--volt-yellow);
+    color: #050914;
+    box-shadow: 0 0 25px var(--volt-yellow);
+}
+
+.process-track-title {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    color: var(--text-main);
+    margin-bottom: 8px;
+    line-height: 1.3;
+}
+
+.process-track-text {
+    font-size: 0.84rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 0 auto 16px;
+    max-width: 205px;
+    min-height: 42px; /* Строго одинаковая высота описания для идеальной горизонтальной оси */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.process-track-tag {
+    font-size: 0.72rem;
+    font-family: var(--font-heading);
+    color: var(--primary-install);
+    background: rgba(0, 229, 255, 0.08);
+    border: 1px solid rgba(0, 229, 255, 0.25);
+    padding: 5px 14px;
+    border-radius: 99px;
+    letter-spacing: 0.02em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    margin-top: auto; /* Все теги прижаты строго к единой нижней линии */
+    transition: var(--transition);
+}
+
+.process-track-step:hover .process-track-tag {
+    border-color: var(--primary-install);
+    background: rgba(0, 229, 255, 0.15);
+}
+
+.process-track-step:last-child .process-track-tag {
+    color: var(--volt-yellow);
+    background: rgba(255, 214, 10, 0.08);
+    border-color: rgba(255, 214, 10, 0.25);
+}
+
+.process-track-step:last-child:hover .process-track-tag {
+    border-color: var(--volt-yellow);
+    background: rgba(255, 214, 10, 0.16);
+}
+
+/* 5. ИНЖЕНЕРНОЕ ДОСЬЕ "НАШИ МАСТЕРА" */
+.team-dossier-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.dossier-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 24px;
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.dossier-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+}
+
+.dossier-master-primary {
+    border-color: rgba(0, 229, 255, 0.3);
+    box-shadow: 0 0 30px -10px rgba(0, 229, 255, 0.15);
+}
+.dossier-master-primary:hover {
+    border-color: rgba(0, 229, 255, 0.55);
+}
+
+.dossier-join {
+    background: linear-gradient(145deg, #0b1122 0%, #110e24 100%);
+    border: 1px dashed rgba(123, 97, 255, 0.35);
+}
+
+.dossier-join:hover {
+    border-color: var(--primary-eng);
+    border-style: solid;
+    box-shadow: 0 20px 45px -10px rgba(123, 97, 255, 0.3);
+}
+
+.dossier-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.dossier-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #0e1728;
+    border: 2px solid var(--primary-install);
+    color: var(--primary-install);
+    font-size: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 16px rgba(0, 229, 255, 0.25);
+    flex-shrink: 0;
+}
+
+.dossier-meta h3 {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    margin-bottom: 4px;
+    color: var(--text-main);
+}
+
+.dossier-meta .role {
+    font-size: 0.88rem;
+    color: var(--primary-install);
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.dossier-specs {
+    list-style: none;
+    padding: 0;
+    margin: 18px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.dossier-specs li {
+    font-size: 0.86rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dossier-specs li span {
+    color: var(--primary-install);
+    font-weight: bold;
+}
+
+.dossier-standards {
+    background: linear-gradient(145deg, #0a0e1a 0%, #101422 100%);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ==========================================================================
+   АДАПТИВНОСТЬ НОВЫХ БЛОКОВ НА ПЛАНШЕТАХ И МОБИЛЬНЫХ
+   ========================================================================== */
+@media (max-width: 992px) {
+    .services-bento {
+        grid-template-columns: 1fr;
+    }
+    .bento-install,
+    .bento-smart,
+    .bento-eng,
+    .bento-calc {
+        grid-column: span 1;
+    }
+
+    .showcase-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .why-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .process-track-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .process-track-line {
+        display: none;
+    }
+    .process-track-step {
+        display: grid;
+        grid-template-columns: 46px 1fr;
+        grid-template-rows: auto auto auto;
+        column-gap: 16px;
+        row-gap: 6px;
+        align-items: start;
+        text-align: left;
+        background: var(--bg-card);
+        border: 1px solid var(--border-light);
+        border-radius: 18px;
+        padding: 20px 18px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+        transform: none !important;
+    }
+    .process-track-step::after {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--primary-install), transparent);
+        opacity: 0.6;
+    }
+    .process-track-step:last-child::after {
+        background: linear-gradient(90deg, var(--volt-yellow), transparent);
+    }
+    .process-track-node {
+        grid-column: 1;
+        grid-row: 1 / span 3;
+        margin: 0;
+        width: 44px;
+        height: 44px;
+        font-size: 0.92rem;
+        flex-shrink: 0;
+        align-self: start;
+    }
+    .process-track-title {
+        grid-column: 2;
+        grid-row: 1;
+        font-family: var(--font-heading);
+        font-size: 1.15rem;
+        color: var(--text-main);
+        margin: 0;
+        line-height: 1.25;
+        text-align: left;
+    }
+    .process-track-text {
+        grid-column: 2;
+        grid-row: 2;
+        margin: 2px 0 8px 0;
+        max-width: 100%;
+        min-height: unset;
+        display: block;
+        font-size: 0.88rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+        text-align: left;
+    }
+    .process-track-tag {
+        grid-column: 2;
+        grid-row: 3;
+        margin: 0;
+        align-self: start;
+        justify-self: start;
+        font-size: 0.72rem;
+    }
+
+    @media (max-width: 400px) {
+        .process-track-step {
+            grid-template-columns: 40px 1fr;
+            column-gap: 12px;
+            padding: 16px 14px;
+        }
+        .process-track-node {
+            width: 38px;
+            height: 38px;
+            font-size: 0.85rem;
+        }
+        .process-track-title {
+            font-size: 1.05rem;
+        }
+    }
+
+    .team-dossier-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .showcase-grid {
+        grid-template-columns: 1fr;
+    }
+    .showcase-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .bento-card {
+        padding: 24px 18px;
+    }
+}

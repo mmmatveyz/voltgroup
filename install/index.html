@@ -53,7 +53,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../static/css/style.css?v=2.1">
+    <link rel="stylesheet" href="../static/css/style.css?v=2.3">
 
     <style>
         .ticker {
@@ -121,7 +121,7 @@
         </span>
         <h1><span style="color: var(--primary-install);">VOLTGROUP</span> INSTALL</h1>
         <p class="hero-subtitle" style="max-width: 680px;">
-            Профессиональный электромонтаж квартир, загородных домов и офисных помещений.
+            Профессиональный электромонтаж квартир, коттеджей, офисов и коммерческих помещений.
             Сборка щитов, черновой монтаж, чистовая установка и тепловизионный контроль с гарантией 12 месяцев.
         </p>
         <div class="hero-actions">
@@ -165,6 +165,22 @@
                         <p style="font-size: 0.88rem; color: var(--text-main); font-weight: 600;">⚡ Фиксированная смета</p>
                         <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Стоимость работ прописывается в договоре и не меняется в процессе.</p>
                     </div>
+                    <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--border-light);">
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">Прямой номер инженера:</p>
+                        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+                            <a href="tel:+79052084284"
+                                style="font-family: var(--font-heading); font-size: 1.3rem; color: var(--volt-yellow); font-weight: 700; text-decoration: none;">+7
+                                (905) 208-42-84</a>
+                            <div style="display: flex; gap: 8px;">
+                                <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="padding: 6px 14px; font-size: 0.82rem; border-color: rgba(0, 229, 255, 0.4); color: var(--primary-install);">
+                                    Telegram
+                                </a>
+                                <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="padding: 6px 14px; font-size: 0.82rem; border-color: rgba(123, 97, 255, 0.4); color: var(--primary-eng);">
+                                    VK
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <form id="leadForm" style="display: grid; gap: 16px;">
@@ -177,22 +193,24 @@
                         <input type="tel" name="phone" class="form-input" placeholder="+7 (___) ___-__-__" required autocomplete="tel" pattern="(\+7|8)[\s\-]?[0-9\(\)\s\-]{10,18}" title="Формат: +7 (999) 000-00-00">
                     </div>
                     <div class="form-group" style="margin: 0;">
-                        <label class="form-label">Задача</label>
-                        <select name="service" class="form-input">
-                            <option>Монтаж проводки под ключ</option>
-                            <option>Сборка и монтаж электрощита</option>
-                            <option>Поиск неисправности / Диагностика</option>
-                            <option>Чистовая установка электрики</option>
-                            <option>Другое</option>
-                        </select>
+                        <label class="form-label">Тип задачи</label>
+                        <input type="hidden" name="service" id="selectedServiceInput" value="Монтаж проводки под ключ">
+                        <div class="service-chips-grid">
+                            <button type="button" class="service-chip active" data-val="Монтаж проводки под ключ">Монтаж под ключ</button>
+                            <button type="button" class="service-chip" data-val="Электромонтаж офиса / коммерции">Офис / Коммерция</button>
+                            <button type="button" class="service-chip" data-val="Сборка и монтаж электрощита">Сборка электрощита</button>
+                            <button type="button" class="service-chip" data-val="Чистовая установка электрики">Чистовой монтаж</button>
+                            <button type="button" class="service-chip" data-val="Поиск неисправности / Диагностика">Диагностика</button>
+                            <button type="button" class="service-chip" data-val="Другое">Другое</button>
+                        </div>
                     </div>
-                    <div class="form-group" style="display: flex; align-items: center; gap: 12px; margin-top: 5px;">
-                        <input type="checkbox" id="privacy-consent-main" required style="width: 18px; height: 18px; accent-color: var(--primary-install); cursor: pointer; flex-shrink: 0;">
+                    <div class="form-group" style="display: flex; align-items: flex-start; gap: 10px; margin-top: 5px;">
+                        <input type="checkbox" id="privacy-consent-main" required style="margin-top: 3px; width: 18px; height: 18px; accent-color: var(--primary-install); cursor: pointer; flex-shrink: 0;">
                         <label for="privacy-consent-main" style="font-size: 0.82rem; color: var(--text-muted); cursor: pointer; line-height: 1.4;">
-                            Даю согласие на обработку <a href="../privacy.html" target="_blank" rel="noopener" style="color: var(--primary-install); text-decoration: underline;">персональных данных</a>
+                            Даю согласие на обработку <a href="../privacy.html" target="_blank" rel="noopener noreferrer" style="color: var(--primary-install); text-decoration: underline;">персональных данных</a>
                         </label>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">Получить расчёт ⚡</button>
+                    <button type="submit" class="btn btn-volt" style="width: 100%; justify-content: center; margin-top: 10px;">Получить расчёт ⚡</button>
                     <p id="formStatus" style="margin-top: 10px; text-align: center; display: none; font-weight: 600;"></p>
                 </form>
             </div>
@@ -452,6 +470,19 @@
     const phoneInput = document.querySelector('input[name="phone"]');
     initPhoneMask(phoneInput);
 
+    // 4.1. Выбор типа задачи через чипы
+    const serviceInput = document.getElementById('selectedServiceInput');
+    const serviceChips = document.querySelectorAll('.service-chip');
+    serviceChips.forEach(chip => {
+        chip.addEventListener('click', function () {
+            serviceChips.forEach(c => c.classList.remove('active'));
+            this.classList.add('active');
+            if (serviceInput) {
+                serviceInput.value = this.getAttribute('data-val');
+            }
+        });
+    });
+
     // 5. Безопасная отправка формы и автопинг
     const leadForm = document.getElementById('leadForm');
     let hasPinged = false;
@@ -464,13 +495,13 @@
             }
         });
 
-        leadForm.addEventListener('submit', async e => {
+        leadForm.addEventListener('submit', async function (e) {
             e.preventDefault();
-            const btn = e.target.querySelector('button[type="submit"]');
+            const btn = this.querySelector('button[type="submit"]');
             const status = document.getElementById('formStatus');
-            const phoneEl = e.target.querySelector('input[name="phone"]');
+            const phoneEl = this.querySelector('input[name="phone"]');
 
-            const rawData = Object.fromEntries(new FormData(e.target));
+            const rawData = Object.fromEntries(new FormData(this));
             const phoneVal = (rawData.phone || '').trim();
             const digits = phoneVal.replace(/\D/g, '');
 
@@ -490,7 +521,7 @@
             const data = {
                 name: sanitizeInput(rawData.name),
                 phone: sanitizeInput(phoneVal),
-                service: sanitizeInput(rawData.service || 'Монтаж проводки'),
+                service: sanitizeInput(rawData.service || (serviceInput ? serviceInput.value : 'Монтаж проводки')),
                 source: 'install_page'
             };
 
@@ -509,7 +540,13 @@
                 if (res.ok) {
                     status.textContent = '✅ Заявка отправлена! Свяжемся с вами в ближайшее время.';
                     status.style.color = '#10B981';
-                    e.target.reset();
+                    this.reset();
+                    // Сброс чипов к первому по умолчанию
+                    if (serviceChips.length > 0) {
+                        serviceChips.forEach(c => c.classList.remove('active'));
+                        serviceChips[0].classList.add('active');
+                        if (serviceInput) serviceInput.value = serviceChips[0].getAttribute('data-val');
+                    }
                     if (phoneEl) phoneEl.classList.remove('is-invalid');
                 } else {
                     throw new Error('Ошибка сервера');

@@ -110,7 +110,7 @@
         href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="./static/css/style.css?v=2.2">
+    <link rel="stylesheet" href="./static/css/style.css?v=2.3">
 
     <style>
         .ticker {
@@ -291,193 +291,388 @@
             </div>
         </div>
 
+        <!-- СЕКЦИЯ 1: НАШИ УСЛУГИ (BENTO GRID) -->
         <section id="services" class="section">
             <div class="container">
-                <h2 class="fade-in">Наши <span>услуги</span></h2>
-                <div class="grid-3">
-                    <div class="card fade-in">
-                        <div class="card-icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                            </svg>
+                <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 40px; text-align: center;">
+                    <span class="bento-tag tag-cyan fade-in">КОМПЕТЕНЦИИ VOLTGROUP</span>
+                    <h2 class="fade-in" style="margin-bottom: 12px;">Спектр <span>услуг</span></h2>
+                    <p class="fade-in" style="color: var(--text-muted); max-width: 580px; font-size: 0.95rem; margin: 0;">
+                        От бытового электромонтажа до интеллектуальных систем Умного Дома и промышленной автоматики.
+                    </p>
+                </div>
+
+                <div class="services-bento">
+                    <!-- 1. Жилые & коммерческие объекты (Install) -->
+                    <div class="bento-card bento-install fade-in">
+                        <div>
+                            <span class="bento-tag tag-cyan">01 // INSTALL</span>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.45rem; margin-bottom: 12px; text-transform: uppercase;">
+                                Жилые & коммерческие объекты
+                            </h3>
+                            <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55;">
+                                Силовой электромонтаж квартир, коттеджей, офисов и коммерческих помещений. Сборка распределительных щитов, беспылевое штробление, кабельные трассы и опрессовка соединений гильзами.
+                            </p>
+                            <ul class="bento-features">
+                                <li><i>⚡</i> Негорючий медный кабель ВВГнг-LS (строго по ГОСТ)</li>
+                                <li><i>⚡</i> Балансировка нагрузок фаз, щиты ВРУ/ГРЩ и защита от перепадов напряжения</li>
+                                <li><i>⚡</i> Разводка в лотках, напольные лючки, трековый свет и лазерная геометрия</li>
+                            </ul>
                         </div>
-                        <h3>Для дома</h3>
-                        <p>Проводка в новостройках, вторичке, замена щитов, розетки и освещение.</p>
+                        <div style="padding-top: 20px; border-top: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.8rem; color: var(--primary-install); font-weight: 600;">Гарантия по договору 12 месяцев</span>
+                            <a href="./install/" class="btn btn-primary" style="padding: 10px 20px; font-size: 0.88rem;">В раздел Install →</a>
+                        </div>
                     </div>
 
-                    <div class="card fade-in" style="transition-delay: 0.1s;">
-                        <div class="card-icon"
-                            style="background: rgba(123, 97, 255, 0.1); border-color: rgba(123, 97, 255, 0.3); color: var(--primary-eng);">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <rect x="7" y="7" width="10" height="10" rx="2"></rect>
-                                <path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"></path>
-                            </svg>
+                    <!-- 2. Умный дом (Smart) -->
+                    <div class="bento-card bento-smart fade-in" style="transition-delay: 0.1s;">
+                        <div>
+                            <span class="bento-tag tag-cyan">02 // SMART</span>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 12px; text-transform: uppercase;">
+                                Умный дом
+                            </h3>
+                            <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55;">
+                                Автоматизация квартир и загородных домов: мастер-выключатели, сценарии освещения, климат-контроль, интеграция с Яндекс.Алисой и кранами защиты от протечек.
+                            </p>
+                            <ul class="bento-features">
+                                <li><i>✓</i> Системы на базе Wirenboard и Zigbee</li>
+                                <li><i>✓</i> Управление со смартфона и голосом</li>
+                                <li><i>✓</i> Автономная работа без интернета</li>
+                            </ul>
                         </div>
-                        <h3>Умный дом</h3>
-                        <p>Автоматизация, сценарии, управление со смартфона, интеграция с Я.Алисой.</p>
+                        <div style="padding-top: 20px; border-top: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.8rem; color: var(--text-muted);">Индивидуальный проект</span>
+                            <a href="#contact" class="btn btn-outline" style="padding: 8px 16px; font-size: 0.85rem;">Консультация</a>
+                        </div>
                     </div>
 
-                    <div class="card fade-in" style="transition-delay: 0.2s;">
-                        <div class="card-icon"
-                            style="background: rgba(255, 214, 10, 0.1); border-color: rgba(255, 214, 10, 0.3); color: var(--volt-yellow);">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-2-2H4L2 8v12z"></path>
-                                <path d="M12 12v6"></path>
-                                <path d="M9 15h6"></path>
-                            </svg>
+                    <!-- 3. Онлайн-калькулятор (Расчет стоимости) -->
+                    <div class="bento-card bento-calc fade-in" style="transition-delay: 0.15s;">
+                        <div>
+                            <span class="bento-tag tag-yellow">03 // СМЕТА</span>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 12px; text-transform: uppercase;">
+                                Онлайн-расчёт
+                            </h3>
+                            <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55;">
+                                Рассчитайте точную смету с детализацией по каждой электроточке, погонным метрам штробы и линиям щита без скрытых наценок.
+                            </p>
+                            <div style="margin: 18px 0; padding: 14px 16px; background: rgba(255, 214, 10, 0.05); border: 1px dashed rgba(255, 214, 10, 0.3); border-radius: 14px;">
+                                <div style="font-size: 0.85rem; color: var(--volt-yellow); font-weight: 700; margin-bottom: 4px;">Фиксация цены ДО начала работ</div>
+                                <div style="font-size: 0.78rem; color: var(--text-muted);">Смета прилагается к официальному договору подряда.</div>
+                            </div>
                         </div>
-                        <h3>Для бизнеса</h3>
-                        <p>Сборка щитов автоматики, диагностика и ремонт металлорежущих станков.</p>
+                        <div style="padding-top: 15px; border-top: 1px solid rgba(255, 214, 10, 0.2); text-align: center;">
+                            <a href="./estimate.html" class="btn btn-volt" style="width: 100%; justify-content: center; padding: 12px 20px; font-size: 0.9rem;">
+                                Открыть калькулятор сметы ⚡
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 4. Пром. автоматика & станки (Engineering) -->
+                    <div class="bento-card bento-eng fade-in" style="transition-delay: 0.2s;">
+                        <div>
+                            <span class="bento-tag tag-purple">04 // ENGINEERING</span>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.45rem; margin-bottom: 12px; text-transform: uppercase;">
+                                Пром. автоматика & станки
+                            </h3>
+                            <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55;">
+                                Проектирование и сборка вводно-распределительных щитов (ВРУ/ГРЩ), шкафов релейной автоматики, выездная диагностика промышленного оборудования, электроники станков и частотных приводов.
+                            </p>
+                            <ul class="bento-features">
+                                <li style="color: #cbd5e1;"><i style="color: var(--primary-eng);">⚡</i> Промышленная сборка щитов автоматики по стандартам ПУЭ</li>
+                                <li style="color: #cbd5e1;"><i style="color: var(--primary-eng);">⚡</i> Диагностика цепей управления и модернизация устаревших релейных схем</li>
+                            </ul>
+                        </div>
+                        <div style="padding-top: 20px; border-top: 1px solid rgba(123, 97, 255, 0.25); display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.8rem; color: var(--primary-eng); font-weight: 600;">Работа с юридическими лицами</span>
+                            <a href="./engineering/" class="btn btn-secondary" style="padding: 10px 20px; font-size: 0.88rem;">В раздел Engineering →</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- БЛОК: КАЧЕСТВО В ДЕТАЛЯХ -->
-        <section class="section" style="padding: 30px 0 50px;">
+        <!-- СЕКЦИЯ 2: КАЧЕСТВО В ДЕТАЛЯХ (ДИНАМИЧЕСКАЯ ВИТРИНА РАБОТ С РОТАЦИЕЙ И ПОМЕТКАМИ) -->
+        <section class="section" style="padding: 40px 0 60px;">
             <div class="container">
-                <div class="quality-banner card fade-in"
-                    style="position: relative; overflow: hidden; padding: 55px 30px; text-align: center; background: linear-gradient(180deg, #0e1626 0%, #070b15 100%); border: 1px solid rgba(255, 214, 10, 0.25); border-radius: var(--radius-lg); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55); margin: 15px 0;">
-                    <div class="hazard-border" style="position: absolute; top: 0; left: 0; right: 0; height: 6px;"></div>
-                    <span class="badge-status" style="color: var(--volt-yellow); border-color: rgba(255, 214, 10, 0.35); margin-bottom: 18px; display: inline-flex;">
-                        <span class="dot" style="background: var(--volt-yellow); box-shadow: 0 0 10px var(--volt-yellow);"></span> Портфолио и стандарты
-                    </span>
-                    <h2 style="margin: 0 auto 16px; font-size: clamp(1.4rem, 3.5vw, 2.2rem); text-transform: uppercase;">
-                        Качество в <span style="color: var(--volt-yellow);">деталях</span>
-                    </h2>
-                    <p style="color: var(--text-muted); max-width: 640px; margin: 0 auto 30px; line-height: 1.6; font-size: 1rem;">
-                        Посмотрите примеры собранных распределительных щитов, аккуратной прокладки кабельных трасс и систем автоматизации в нашем портфолио.
-                    </p>
-                    <a href="./works.html" class="btn btn-volt" style="padding: 16px 36px; font-size: 1.05rem; box-shadow: 0 8px 25px rgba(255, 214, 10, 0.35);">
-                        Смотреть галерею объектов →
+                <div class="showcase-header fade-in">
+                    <div>
+                        <span class="bento-tag tag-yellow" style="margin-bottom: 8px;">РЕАЛИЗОВАННЫЕ ОБЪЕКТЫ</span>
+                        <h2 style="margin: 0; text-align: left; text-transform: uppercase;">
+                            Качество в <span style="color: var(--volt-yellow);">деталях</span>
+                        </h2>
+                    </div>
+                    <div style="text-align: right;">
+                        <a href="./works.html" class="btn btn-outline" style="padding: 10px 22px; font-size: 0.88rem;">
+                            Смотреть всю галерею (14 объектов) →
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Контейнер динамической витрины (наполняется скриптом 3 случайными объектами) -->
+                <div class="showcase-grid" id="dynamicShowcaseGrid">
+                    <!-- Резервный статический рендер до срабатывания JS -->
+                    <a href="./works.html" class="showcase-card fade-in">
+                        <div class="showcase-img-wrap" style="background-image: url('./gallery/panel-wiring-07.webp');"></div>
+                        <div class="showcase-body">
+                            <div>
+                                <div class="showcase-title">Сборка распределительного щита с маркировкой</div>
+                                <div class="showcase-desc">Цветовая дифференциация проводов, маркировка каждой линии, опрессовка НШВИ.</div>
+                            </div>
+                            <div class="showcase-tags">
+                                <span class="showcase-tag">Сборка щита</span>
+                                <span class="showcase-tag">ABB</span>
+                                <span class="showcase-tag">Маркировка</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="./works.html" class="showcase-card fade-in" style="transition-delay: 0.1s;">
+                        <div class="showcase-img-wrap" style="background-image: url('./gallery/cable-trays-06.webp');"></div>
+                        <div class="showcase-body">
+                            <div>
+                                <div class="showcase-title">Монтаж кабельных трасс в лотках</div>
+                                <div class="showcase-desc">Строгая геометрия укладки, фиксация хомутами с равным шагом без перехлестов.</div>
+                            </div>
+                            <div class="showcase-tags">
+                                <span class="showcase-tag">Кабельные трассы</span>
+                                <span class="showcase-tag">ГОСТ</span>
+                                <span class="showcase-tag">Силовые линии</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="./works.html" class="showcase-card fade-in" style="transition-delay: 0.2s;">
+                        <div class="showcase-img-wrap" style="background-image: url('./gallery/industrial-cabinet-bauer-11.webp');"></div>
+                        <div class="showcase-body">
+                            <div>
+                                <div class="showcase-title">Модернизация шкафа управления станка</div>
+                                <div class="showcase-desc">Замена устаревшей релейной автоматики на современные компоненты Siemens.</div>
+                            </div>
+                            <div class="showcase-tags">
+                                <span class="showcase-tag">Пром. автоматика</span>
+                                <span class="showcase-tag">Siemens</span>
+                                <span class="showcase-tag">Модернизация</span>
+                            </div>
+                        </div>
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- СЕКЦИЯ: НАШИ МАСТЕРА -->
+        <!-- СЕКЦИЯ 3: НАШИ МАСТЕРА (ИНЖЕНЕРНОЕ ДОСЬЕ И КАРТОЧКА ВТОРОГО МАСТЕРА) -->
         <section id="team" class="section">
             <div class="container">
-                <h2 class="fade-in">Наши <span>мастера</span></h2>
-                <p class="fade-in"
-                    style="text-align: center; color: var(--text-muted); max-width: 620px; margin: -20px auto 35px; font-size: 0.95rem;">
-                    Профильное техническое образование, действующие группы допуска по электробезопасности и
-                    подтверждённый опыт на объектах СПб и ЛО.
-                </p>
+                <div style="text-align: center; margin-bottom: 40px;">
+                    <span class="bento-tag tag-cyan fade-in">КВАЛИФИКАЦИЯ И ДОПУСКИ</span>
+                    <h2 class="fade-in" style="margin-bottom: 12px;">Наши <span>мастера</span></h2>
+                    <p class="fade-in" style="color: var(--text-muted); max-width: 620px; margin: 0 auto; font-size: 0.95rem;">
+                        Профильное техническое образование, действующие группы допуска по электробезопасности и личная ответственность за каждый узел.
+                    </p>
+                </div>
 
-                <div class="team-grid">
-                    <!-- Мастер 1: Матвей Зрячих -->
-                    <div class="card team-card fade-in" onclick="openTeamModal('master1')">
-                        <div class="team-avatar-wrapper">
-                            <div class="team-avatar" style="display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: var(--primary-install); border-color: rgba(0, 229, 255, 0.4); box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);">⚡</div>
-                            <span class="team-badge-status" title="6-й (высший) разряд">⚡ 6 разряд</span>
+                <div class="team-dossier-grid">
+                    <!-- Досье мастера 1: Матвей Зрячих -->
+                    <div class="dossier-card dossier-master-primary fade-in" onclick="openTeamModal('master1')" style="cursor: pointer;">
+                        <div>
+                            <div class="dossier-header">
+                                <div class="dossier-avatar">⚡</div>
+                                <div class="dossier-meta">
+                                    <h3>Матвей Зрячих</h3>
+                                    <div class="role">Инженер-электромонтажник / Инженер-электроник</div>
+                                    <span class="team-badge-status" style="position: static; transform: none; display: inline-block;">
+                                        ⚡ 6-й разряд (высший)
+                                    </span>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 14px;">
+                                Профильное электротехническое образование и опыт в промышленной электронике. Личный контроль стандартов монтажа, проектирование схем защиты и пусконаладка автоматики.
+                            </p>
+                            <ul class="dossier-specs">
+                                <li><span>✓</span> Электромонтёр по ремонту электроустановок (6 разряд)</li>
+                                <li><span>✓</span> Диплом: Инженер-электроник (микроконтроллеры и автоматика)</li>
+                                <li><span>✓</span> Опыт наладки промышленного оборудования (4+ года)</li>
+                            </ul>
                         </div>
-                        <h3 class="team-name">Матвей Зрячих</h3>
-                        <div class="team-role" style="color: var(--primary-install);">Инженер-электромонтажник /
-                            Инженер-электроник</div>
-                        <p class="team-desc">Электромонтёр 6 разряда и инженер-электроник. Комплексный электромонтаж
-                            квартир и домов, сборка распределительных щитов, автоматика и диагностика сложного
-                            оборудования.</p>
-                        <button type="button" class="btn btn-outline team-btn"
-                            onclick="openTeamModal('master1'); event.stopPropagation();">Подробнее и образование
-                            →</button>
+                        <div style="padding-top: 18px; border-top: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.8rem; color: var(--primary-install); font-weight: 600;">Кликните для просмотра дипломов</span>
+                            <button type="button" class="btn btn-outline" style="padding: 8px 18px; font-size: 0.85rem;" onclick="openTeamModal('master1'); event.stopPropagation();">
+                                Подробнее →
+                            </button>
+                        </div>
                     </div>
 
-                    <!-- Мастер 2: Заглушка (На согласовании) -->
-                    <div class="card team-card fade-in" style="transition-delay: 0.1s;"
-                        onclick="openTeamModal('master2')">
-                        <div class="team-avatar-wrapper">
-                            <div class="team-avatar"
-                                style="display: flex; align-items: center; justify-content: center; font-size: 2.2rem; color: var(--text-muted); border-color: rgba(255,255,255,0.15); box-shadow: none;">
-                                👤</div>
-                            <span class="team-badge-status"
-                                style="border-color: var(--border-light); color: var(--text-muted);">Скоро</span>
+                    <!-- Карточка второго мастера (На согласовании / Информация уточняется) -->
+                    <div class="dossier-card dossier-standards fade-in" style="transition-delay: 0.1s; cursor: pointer;" onclick="openTeamModal('master2')">
+                        <div>
+                            <div class="dossier-header">
+                                <div class="dossier-avatar" style="border-color: rgba(255, 255, 255, 0.2); color: var(--text-muted); box-shadow: none;">👤</div>
+                                <div class="dossier-meta">
+                                    <h3>Специалист VoltGroup</h3>
+                                    <div class="role" style="color: var(--text-muted);">Инженер / Мастер</div>
+                                    <span class="team-badge-status" style="position: static; transform: none; display: inline-block; border-color: var(--border-light); color: var(--text-muted);">
+                                        ⏳ На согласовании
+                                    </span>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 16px;">
+                                Информация об образовании, квалификации и компетенциях второго мастера находится на согласовании и скоро появится на сайте.
+                            </p>
+                            <ul class="dossier-specs">
+                                <li><span style="color: var(--text-muted);">●</span> Профиль мастера в процессе наполнения</li>
+                                <li><span style="color: var(--text-muted);">●</span> Подтверждённый опыт работы на объектах СПб и ЛО</li>
+                                <li><span style="color: var(--text-muted);">●</span> Действующая группа допуска по электробезопасности</li>
+                            </ul>
                         </div>
-                        <h3 class="team-name">Специалист VoltGroup</h3>
-                        <div class="team-role" style="color: var(--text-muted);">Инженер / Мастер</div>
-                        <p class="team-desc">Информация об образовании, квалификации и компетенциях мастера находится на
-                            согласовании и скоро появится на сайте.</p>
-                        <button type="button" class="btn btn-outline team-btn"
-                            onclick="openTeamModal('master2'); event.stopPropagation();"
-                            style="opacity: 0.85;">Информация уточняется →</button>
+                        <div style="padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.78rem; color: var(--text-muted);">Скоро появится портфолио</span>
+                            <button type="button" class="btn btn-outline" style="padding: 8px 16px; font-size: 0.82rem; opacity: 0.85;" onclick="openTeamModal('master2'); event.stopPropagation();">
+                                Информация уточняется →
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Карточка 3: Расширение команды / Вакансии -->
+                    <div class="dossier-card dossier-join fade-in" style="transition-delay: 0.2s;">
+                        <div>
+                            <div class="dossier-header">
+                                <div class="dossier-avatar" style="border-color: rgba(123, 97, 255, 0.5); color: var(--primary-eng); box-shadow: 0 0 15px rgba(123, 97, 255, 0.25);">🤝</div>
+                                <div class="dossier-meta">
+                                    <h3>Команда VoltGroup</h3>
+                                    <div class="role" style="color: var(--primary-eng);">Ищем специалистов</div>
+                                    <span class="team-badge-status purple" style="position: static; transform: none; display: inline-block;">
+                                        ⚡ Расширение штата
+                                    </span>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 16px;">
+                                Мы активно растем и приглашаем аккуратных электромонтажников и инженеров на объекты в Санкт-Петербурге и ЛО.
+                            </p>
+                            <ul class="dossier-specs">
+                                <li><span style="color: var(--primary-eng);">✓</span> Сдельная достойная оплата без задержек</li>
+                                <li><span style="color: var(--primary-eng);">✓</span> Профессиональный инструмент и расходники</li>
+                                <li><span style="color: var(--primary-eng);">✓</span> Интересные проекты: от квартир до автоматики</li>
+                            </ul>
+                        </div>
+                        <div style="padding-top: 18px; border-top: 1px solid rgba(123, 97, 255, 0.2); display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.78rem; color: var(--text-muted);">СПб и Ленинградская область</span>
+                            <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="padding: 8px 18px; font-size: 0.85rem; text-decoration: none;">
+                                Написать инженеру →
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- СЕКЦИЯ 4: ПОЧЕМУ ВЫБИРАЮТ (ДИФФЕРЕНЦИРОВАННЫЕ КАРТОЧКИ С АКЦЕНТНЫМИ ЦИФРАМИ) -->
         <section id="why" class="section">
             <div class="container">
-                <h2 class="fade-in">Почему выбирают <span>VoltGroup</span></h2>
-                <div class="grid-3">
-                    <div class="card fade-in">
-                        <span
-                            style="font-family: var(--font-heading); font-size: 1.8rem; color: var(--primary-install); display: block; margin-bottom: 10px;">01</span>
-                        <h3>Прозрачная смета</h3>
-                        <p style="font-size: 0.92rem;">Цена фиксируется ДО начала работ. Никаких скрытых платежей и
-                            «сюрпризов» в процессе.</p>
+                <div style="text-align: center; margin-bottom: 40px;">
+                    <span class="bento-tag tag-yellow fade-in">ФУНДАМЕНТ ДОВЕРИЯ</span>
+                    <h2 class="fade-in" style="margin-bottom: 12px;">Почему выбирают <span>VoltGroup</span></h2>
+                </div>
+
+                <div class="why-grid">
+                    <!-- Преимущество 1 -->
+                    <div class="why-card why-card-1 fade-in">
+                        <div class="why-card-top">
+                            <span class="why-num">01</span>
+                            <span class="why-status-pill">ФИКСИРОВАННАЯ СМЕТА</span>
+                        </div>
+                        <h3 style="font-size: 1.18rem; text-transform: uppercase; margin-bottom: 10px; color: var(--text-main);">
+                            Прозрачная смета
+                        </h3>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; margin: 0;">
+                            Стоимость фиксируется в договоре ДО начала работ. Никаких внезапных доплат и «сюрпризов» на этапе сдачи объекта.
+                        </p>
                     </div>
-                    <div class="card fade-in" style="transition-delay: 0.1s;">
-                        <span
-                            style="font-family: var(--font-heading); font-size: 1.8rem; color: var(--primary-eng); display: block; margin-bottom: 10px;">02</span>
-                        <h3>Идеальная чистота</h3>
-                        <p style="font-size: 0.92rem;">Штроборез с пылесосом, лазерный уровень. Убираем за собой - ваш
-                            объект остаётся чистым.</p>
+
+                    <!-- Преимущество 2 -->
+                    <div class="why-card why-card-2 fade-in" style="transition-delay: 0.1s;">
+                        <div class="why-card-top">
+                            <span class="why-num">02</span>
+                            <span class="why-status-pill">АККУРАТНОСТЬ</span>
+                        </div>
+                        <h3 style="font-size: 1.18rem; text-transform: uppercase; margin-bottom: 10px; color: var(--text-main);">
+                            Идеальная чистота
+                        </h3>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; margin: 0;">
+                            Штробление только с промышленным пылесосом, точная лазерная геометрия, уборка строительного мусора в мешки после каждого этапа.
+                        </p>
                     </div>
-                    <div class="card fade-in" style="transition-delay: 0.2s;">
-                        <span
-                            style="font-family: var(--font-heading); font-size: 1.8rem; color: var(--volt-yellow); display: block; margin-bottom: 10px;">03</span>
-                        <h3>Официально</h3>
-                        <p style="font-size: 0.92rem;">Договор подряда, акт приёмки, чек из «Мой налог». Гарантия на
-                            выполненные работы.</p>
+
+                    <!-- Преимущество 3 -->
+                    <div class="why-card why-card-3 fade-in" style="transition-delay: 0.2s;">
+                        <div class="why-card-top">
+                            <span class="why-num">03</span>
+                            <span class="why-status-pill">ЮРИДИЧЕСКАЯ ЧИСТОТА</span>
+                        </div>
+                        <h3 style="font-size: 1.18rem; text-transform: uppercase; margin-bottom: 10px; color: var(--text-main);">
+                            Официальный договор
+                        </h3>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; margin: 0;">
+                            Договор подряда, подробный акт приёмки, фискальный чек из приложения «Мой налог» и официальная гарантия на монтаж 12 месяцев.
+                        </p>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- СЕКЦИЯ 5: КАК МЫ РАБОТАЕМ (ИНЖЕНЕРНЫЙ ТРЕК) -->
         <section id="process" class="section" style="background: rgba(255,255,255,0.01);">
             <div class="container">
-                <h2 class="fade-in">Как мы <span>работаем</span></h2>
-                <div class="grid-3">
-                    <div class="card fade-in" style="padding: 20px; text-align: center;">
-                        <div
-                            style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--primary-install); margin-bottom: 8px;">
-                            1</div>
-                        <h4 style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 6px;">Заявка
-                        </h4>
-                        <p style="font-size: 0.85rem;">Оставляете заявку на сайте или в мессенджере.</p>
-                    </div>
-                    <div class="card fade-in" style="padding: 20px; text-align: center; transition-delay: 0.05s;">
-                        <div
-                            style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--primary-install); margin-bottom: 8px;">
-                            2</div>
-                        <h4 style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 6px;">Выезд</h4>
-                        <p style="font-size: 0.85rem;">Осмотр объекта в СПб и ЛО, замеры и консультация.</p>
-                    </div>
-                    <div class="card fade-in" style="padding: 20px; text-align: center; transition-delay: 0.1s;">
-                        <div
-                            style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--primary-install); margin-bottom: 8px;">
-                            3</div>
-                        <h4 style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 6px;">Смета</h4>
-                        <p style="font-size: 0.85rem;">Фиксируем цену и сроки. Подписываем договор.</p>
-                    </div>
-                    <div class="card fade-in" style="padding: 20px; text-align: center; transition-delay: 0.15s;">
-                        <div
-                            style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--primary-install); margin-bottom: 8px;">
-                            4</div>
-                        <h4 style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 6px;">Монтаж
-                        </h4>
-                        <p style="font-size: 0.85rem;">Работа строго по ПУЭ, фотоотчеты, чистота.</p>
-                    </div>
-                    <div class="card fade-in" style="padding: 20px; text-align: center; transition-delay: 0.2s;">
-                        <div
-                            style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--primary-install); margin-bottom: 8px;">
-                            5</div>
-                        <h4 style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 6px;">Сдача</h4>
-                        <p style="font-size: 0.85rem;">Подписываем акт, выдаем чек и гарантию.</p>
+                <div style="text-align: center; margin-bottom: 45px;">
+                    <span class="bento-tag tag-cyan fade-in">ПРОЗРАЧНЫЙ ПРОЦЕСС</span>
+                    <h2 class="fade-in" style="margin-bottom: 12px;">Как мы <span>работаем</span></h2>
+                    <p class="fade-in" style="color: var(--text-muted); font-size: 0.95rem; max-width: 580px; margin: 0 auto;">
+                        Понятная и прозрачная цепочка взаимодействия от первого обращения до сдачи объекта.
+                    </p>
+                </div>
+
+                <div class="process-track-container fade-in">
+                    <div class="process-track-line"></div>
+                    <div class="process-track-grid">
+                        <!-- Шаг 1 -->
+                        <div class="process-track-step">
+                            <div class="process-track-node">01</div>
+                            <h4 class="process-track-title">Заявка</h4>
+                            <p class="process-track-text">Обращение через сайт или мессенджер Telegram / VK</p>
+                            <span class="process-track-tag">Ответ за 15 мин</span>
+                        </div>
+
+                        <!-- Шаг 2 -->
+                        <div class="process-track-step" style="transition-delay: 0.05s;">
+                            <div class="process-track-node">02</div>
+                            <h4 class="process-track-title">Выезд</h4>
+                            <p class="process-track-text">Осмотр объекта в СПб и ЛО, лазерные замеры трасс</p>
+                            <span class="process-track-tag">Выезд на объект</span>
+                        </div>
+
+                        <!-- Шаг 3 -->
+                        <div class="process-track-step" style="transition-delay: 0.1s;">
+                            <div class="process-track-node">03</div>
+                            <h4 class="process-track-title">Смета</h4>
+                            <p class="process-track-text">Детальный расчет стоимости и подписание договора</p>
+                            <span class="process-track-tag">Фиксация цены</span>
+                        </div>
+
+                        <!-- Шаг 4 -->
+                        <div class="process-track-step" style="transition-delay: 0.15s;">
+                            <div class="process-track-node">04</div>
+                            <h4 class="process-track-title">Монтаж</h4>
+                            <p class="process-track-text">Чистовое штробление по ПУЭ-7 и фотоотчеты</p>
+                            <span class="process-track-tag">ГОСТ и чистота</span>
+                        </div>
+
+                        <!-- Шаг 5 -->
+                        <div class="process-track-step" style="transition-delay: 0.2s;">
+                            <div class="process-track-node">05</div>
+                            <h4 class="process-track-title">Сдача</h4>
+                            <p class="process-track-text">Тестирование нагрузкой, чек и акт приёмки</p>
+                            <span class="process-track-tag">Гарантия 12 мес</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -535,11 +730,20 @@
                             зафиксируем цену ДО начала работ.
                         </p>
                         <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--border-light);">
-                            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;">Прямой номер
-                                инженера:</p>
-                            <a href="tel:+79052084284"
-                                style="font-family: var(--font-heading); font-size: 1.3rem; color: var(--volt-yellow); font-weight: 700; text-decoration: none;">+7
-                                (905) 208-42-84</a>
+                            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">Прямой номер инженера:</p>
+                            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+                                <a href="tel:+79052084284"
+                                    style="font-family: var(--font-heading); font-size: 1.3rem; color: var(--volt-yellow); font-weight: 700; text-decoration: none;">+7
+                                    (905) 208-42-84</a>
+                                <div style="display: flex; gap: 8px;">
+                                    <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="padding: 6px 14px; font-size: 0.82rem; border-color: rgba(0, 229, 255, 0.4); color: var(--primary-install);">
+                                        Telegram
+                                    </a>
+                                    <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="padding: 6px 14px; font-size: 0.82rem; border-color: rgba(123, 97, 255, 0.4); color: var(--primary-eng);">
+                                        VK
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -557,13 +761,15 @@
                         </div>
                         <div class="form-group" style="margin: 0;">
                             <label class="form-label">Тип задачи</label>
-                            <select name="service" class="form-input">
-                                <option>Замена проводки / Черновой монтаж</option>
-                                <option>Сборка и монтаж электрощита</option>
-                                <option>Монтаж «Умного дома»</option>
-                                <option>Диагностика станка / Автоматика</option>
-                                <option>Другое</option>
-                            </select>
+                            <input type="hidden" name="service" id="selectedServiceInput" value="Замена проводки / Черновой монтаж">
+                            <div class="service-chips-grid">
+                                <button type="button" class="service-chip active" data-val="Замена проводки / Черновой монтаж">Замена проводки</button>
+                                <button type="button" class="service-chip" data-val="Электромонтаж офиса / коммерции">Офис / Коммерция</button>
+                                <button type="button" class="service-chip" data-val="Сборка и монтаж электрощита">Сборка электрощита</button>
+                                <button type="button" class="service-chip" data-val="Монтаж «Умного дома»">Умный дом</button>
+                                <button type="button" class="service-chip" data-val="Диагностика станка / Автоматика">Пром. автоматика</button>
+                                <button type="button" class="service-chip" data-val="Другое">Другое</button>
+                            </div>
                         </div>
                         <div class="form-group"
                             style="display: flex; align-items: flex-start; gap: 10px; margin-top: 5px;">
@@ -655,6 +861,68 @@
             Array.from(track.children).forEach(child => {
                 track.appendChild(child.cloneNode(true));
             });
+        }
+
+        // 1.1. Динамическая ротация витрины объектов ("Качество в деталях")
+        const showcaseGrid = document.getElementById('dynamicShowcaseGrid');
+        if (showcaseGrid) {
+            fetch('./gallery/gallery-config.json')
+                .then(r => r.ok ? r.json() : Promise.reject())
+                .then(items => {
+                    if (!items || items.length < 3) return;
+                    
+                    // Перемешиваем массив объектов (алгоритм Фишера-Йейтса) для ротации при каждом визите
+                    const shuffled = [...items].sort(() => 0.5 - Math.random());
+                    const selected = shuffled.slice(0, 3);
+                    
+                    showcaseGrid.innerHTML = '';
+                    selected.forEach((item, idx) => {
+                        const a = document.createElement('a');
+                        a.href = './works.html';
+                        a.className = 'showcase-card fade-in visible';
+                        a.style.transitionDelay = (idx * 0.1) + 's';
+
+                        const imgWrap = document.createElement('div');
+                        imgWrap.className = 'showcase-img-wrap';
+                        if (item.image) {
+                            imgWrap.style.backgroundImage = `url('${encodeURI(item.image)}')`;
+                        }
+
+                        const body = document.createElement('div');
+                        body.className = 'showcase-body';
+
+                        const topDiv = document.createElement('div');
+                        const title = document.createElement('div');
+                        title.className = 'showcase-title';
+                        title.textContent = item.title || 'Объект VoltGroup';
+
+                        const desc = document.createElement('div');
+                        desc.className = 'showcase-desc';
+                        desc.textContent = item.description || '';
+
+                        topDiv.appendChild(title);
+                        topDiv.appendChild(desc);
+
+                        const tags = document.createElement('div');
+                        tags.className = 'showcase-tags';
+                        (item.badges || []).slice(0, 3).forEach(b => {
+                            const t = document.createElement('span');
+                            t.className = 'showcase-tag';
+                            t.textContent = b;
+                            tags.appendChild(t);
+                        });
+
+                        body.appendChild(topDiv);
+                        body.appendChild(tags);
+
+                        a.appendChild(imgWrap);
+                        a.appendChild(body);
+                        showcaseGrid.appendChild(a);
+                    });
+                })
+                .catch(() => {
+                    // В случае ошибки сети остаётся резервный статичный рендер
+                });
         }
 
         // 2. Оживление нагрузки щитка
@@ -799,6 +1067,19 @@
         const phoneInput = document.querySelector('input[name="phone"]');
         initPhoneMask(phoneInput);
 
+        // 4.1. Выбор типа задачи через чипы
+        const serviceInput = document.getElementById('selectedServiceInput');
+        const serviceChips = document.querySelectorAll('.service-chip');
+        serviceChips.forEach(chip => {
+            chip.addEventListener('click', function () {
+                serviceChips.forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+                if (serviceInput) {
+                    serviceInput.value = this.getAttribute('data-val');
+                }
+            });
+        });
+
         // 5. Форма обратной связи
         const leadForm = document.getElementById('leadForm');
         let hasPinged = false;
@@ -839,7 +1120,7 @@
                 const data = {
                     name: sanitizeInput(rawData.name),
                     phone: sanitizeInput(phoneVal),
-                    service: sanitizeInput(rawData.service),
+                    service: sanitizeInput(rawData.service || (serviceInput ? serviceInput.value : '')),
                     source: 'main_site'
                 };
 
@@ -860,6 +1141,12 @@
                         status.textContent = '✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.';
                         status.style.color = '#10B981';
                         this.reset();
+                        // Сброс чипов к первому по умолчанию
+                        if (serviceChips.length > 0) {
+                            serviceChips.forEach(c => c.classList.remove('active'));
+                            serviceChips[0].classList.add('active');
+                            if (serviceInput) serviceInput.value = serviceChips[0].getAttribute('data-val');
+                        }
                         if (phoneEl) phoneEl.classList.remove('is-invalid');
                     } else {
                         throw new Error('Ошибка сервера');
@@ -980,6 +1267,7 @@
 
             const overlay = document.getElementById('teamModalOverlay');
             overlay.classList.add('active');
+            document.documentElement.style.overflow = 'hidden';
             document.body.style.overflow = 'hidden';
         }
 
@@ -990,6 +1278,7 @@
             const overlay = document.getElementById('teamModalOverlay');
             if (overlay) {
                 overlay.classList.remove('active');
+                document.documentElement.style.overflow = '';
                 document.body.style.overflow = '';
             }
         }
