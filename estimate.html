@@ -322,13 +322,13 @@
         <a href="./index.html" class="logo">
             <img src="./assets/images/logo-voltgroup.png" alt="VoltGroup Logo" width="160" height="40">
         </a>
-        <button class="mobile-toggle" aria-label="Меню" type="button">☰</button>
-        <nav class="nav-links">
+        <button class="mobile-toggle" aria-label="Открыть меню" aria-expanded="false" aria-controls="mainNav" type="button">☰</button>
+        <nav class="nav-links" id="mainNav">
             <a href="./install/">Install</a>
             <a href="./engineering/">Engineering</a>
             <a href="./estimate.html" class="active">Калькулятор</a>
             <a href="./works.html">Работы</a>
-            <a href="./contacts/" class="btn btn-outline" style="padding: 8px 20px; font-size: 0.9rem;">Контакты</a>
+            <a href="./contacts/" class="btn btn-outline btn-nav-contact">Контакты</a>
         </nav>
     </div>
 </header>
@@ -467,7 +467,7 @@
                 <a href="./install/">Install</a>
                 <a href="./engineering/">Engineering</a>
                 <a href="./estimate.html">Калькулятор</a>
-                <a href="./works.html">Портфолио</a>
+                <a href="./works.html">Работы</a>
                 <a href="./contacts/">Контакты</a>
             </div>
             <div class="footer-links">
@@ -508,7 +508,10 @@
         if (navLinks) navLinks.classList.remove('open');
         if (navOverlay) navOverlay.classList.remove('active');
         document.body.style.overflow = '';
-        if (mobileToggle) mobileToggle.textContent = '☰';
+        if (mobileToggle) {
+            mobileToggle.textContent = '☰';
+            mobileToggle.setAttribute('aria-expanded', 'false');
+        }
     }
 
     if (mobileToggle && navLinks) {
@@ -517,6 +520,7 @@
             if (navOverlay) navOverlay.classList.toggle('active', isOpen);
             document.body.style.overflow = isOpen ? 'hidden' : '';
             mobileToggle.textContent = isOpen ? '✕' : '☰';
+            mobileToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         });
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', closeMobileMenu);
@@ -701,9 +705,9 @@
                 <td style="white-space: nowrap;">${Number(service.price).toLocaleString('ru-RU')} ₽</td>
                 <td>
                   <div class="qty-wrapper">
-                    <button class="qty-btn" type="button" onclick="changeQty(${index}, -1)">−</button>
+                    <button class="qty-btn" type="button" aria-label="Уменьшить количество" onclick="changeQty(${index}, -1)">−</button>
                     <input type="number" class="qty-input-stepper" id="qty-${index}" min="0" step="0.5" value="${savedState.qty}" oninput="handleServiceChange(${index}, this.value)" onchange="handleServiceChange(${index}, this.value)">
-                    <button class="qty-btn" type="button" onclick="changeQty(${index}, 1)">+</button>
+                    <button class="qty-btn" type="button" aria-label="Увеличить количество" onclick="changeQty(${index}, 1)">+</button>
                   </div>
                 </td>
                 <td id="sum-${index}" style="text-align:center; font-weight:700; color: var(--primary-install); white-space: nowrap;">${(savedState.qty * (savedState.isComplex ? service.price * 1.2 : service.price)).toLocaleString('ru-RU')} ₽</td>
@@ -778,9 +782,9 @@
             </td>
             <td>
                 <div class="qty-wrapper">
-                  <button class="qty-btn" type="button" onclick="changeCustomQty(this, -1)">−</button>
+                  <button class="qty-btn" type="button" aria-label="Уменьшить количество" onclick="changeCustomQty(this, -1)">−</button>
                   <input type="number" class="qty-input-stepper custom-qty-input" id="${uniqueId}" value="${qtyVal}" placeholder="1" min="0" step="0.5" oninput="calculateTotals()" onfocus="this.select()">
-                  <button class="qty-btn" type="button" onclick="changeCustomQty(this, 1)">+</button>
+                  <button class="qty-btn" type="button" aria-label="Увеличить количество" onclick="changeCustomQty(this, 1)">+</button>
                 </div>
             </td>
             <td style="text-align:center; font-weight:700; color: var(--primary-install); white-space: nowrap;">0 ₽</td>

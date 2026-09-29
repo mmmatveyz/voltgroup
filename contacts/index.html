@@ -174,36 +174,39 @@
 </head>
 <body>
 
+<div class="nav-overlay" id="navOverlay"></div>
+
 <header class="header">
     <div class="container nav-container">
         <a href="../index.html" class="logo">
             <img src="../assets/images/logo-voltgroup.png" alt="VoltGroup Logo" width="160" height="40">
         </a>
-        <button class="mobile-toggle" aria-label="Меню" type="button">☰</button>
-        <nav class="nav-links">
+        <button class="mobile-toggle" aria-label="Открыть меню" aria-expanded="false" aria-controls="mainNav" type="button">☰</button>
+        <nav class="nav-links" id="mainNav">
             <a href="../install/">Install</a>
             <a href="../engineering/">Engineering</a>
             <a href="../estimate.html">Калькулятор</a>
             <a href="../works.html">Работы</a>
-            <a href="../contacts/" class="btn btn-outline active" style="padding: 8px 20px; font-size: 0.9rem;">Контакты</a>
+            <a href="../contacts/" class="btn btn-outline btn-nav-contact active">Контакты</a>
         </nav>
     </div>
 </header>
-<div class="nav-overlay" id="navOverlay"></div>
 
 <main>
-    <section class="hero container fade-in" style="padding-top: 150px; display: block; text-align: left;">
-        <span class="badge-status">
-            <span class="dot"></span> На связи · Пн–Сб 9:00–21:00
-        </span>
-        <h1>Свяжитесь с <span style="color: var(--primary-install);">VoltGroup</span></h1>
-        <p class="hero-subtitle" style="max-width: 600px;">
-            Отвечаем оперативно. Звоните для вызова мастера, присылайте фото электрощитов или проекты для быстрой оценки сметы.
-        </p>
-        <div class="hero-actions" style="gap: 14px; flex-wrap: wrap;">
-            <a href="tel:+79052084284" class="btn btn-primary">📞 Позвонить ⚡</a>
-            <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="btn btn-outline">✈️ Telegram</a>
-            <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="btn btn-outline">🔹 ВКонтакте</a>
+    <section class="hero hero-single container fade-in">
+        <div class="hero-left">
+            <span class="badge-status">
+                <span class="dot"></span> На связи · Пн–Сб 9:00–21:00
+            </span>
+            <h1 class="hero-title">Свяжитесь с <span style="color: var(--primary-install);">VoltGroup</span></h1>
+            <p class="hero-subtitle">
+                Отвечаем оперативно. Звоните для вызова мастера, присылайте фото электрощитов или проекты для быстрой оценки сметы.
+            </p>
+            <div class="hero-actions" style="gap: 14px; flex-wrap: wrap;">
+                <a href="tel:+79052084284" class="btn btn-primary">📞 Позвонить ⚡</a>
+                <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="btn btn-outline">✈️ Telegram</a>
+                <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="btn btn-outline">🔹 ВКонтакте</a>
+            </div>
         </div>
     </section>
 
@@ -309,7 +312,7 @@
                 <a href="../install/">Install</a>
                 <a href="../engineering/">Engineering</a>
                 <a href="../estimate.html">Калькулятор</a>
-                <a href="../works.html">Портфолио</a>
+                <a href="../works.html">Работы</a>
                 <a href="../contacts/">Контакты</a>
             </div>
 
@@ -343,7 +346,10 @@
         if (navLinks) navLinks.classList.remove('open');
         if (navOverlay) navOverlay.classList.remove('active');
         document.body.style.overflow = '';
-        if (mobileToggle) mobileToggle.textContent = '☰';
+        if (mobileToggle) {
+            mobileToggle.textContent = '☰';
+            mobileToggle.setAttribute('aria-expanded', 'false');
+        }
     }
 
     if (mobileToggle && navLinks) {
@@ -352,6 +358,7 @@
             if (navOverlay) navOverlay.classList.toggle('active', isOpen);
             document.body.style.overflow = isOpen ? 'hidden' : '';
             mobileToggle.textContent = isOpen ? '✕' : '☰';
+            mobileToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         });
 
         document.querySelectorAll('.nav-links a').forEach(link => {

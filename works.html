@@ -310,26 +310,28 @@
         <a href="./index.html" class="logo">
             <img src="./assets/images/logo-voltgroup.png" alt="VoltGroup Logo" width="160" height="40">
         </a>
-        <button class="mobile-toggle" aria-label="Меню" type="button">☰</button>
-        <nav class="nav-links">
+        <button class="mobile-toggle" aria-label="Открыть меню" aria-expanded="false" aria-controls="mainNav" type="button">☰</button>
+        <nav class="nav-links" id="mainNav">
             <a href="./install/">Install</a>
             <a href="./engineering/">Engineering</a>
             <a href="./estimate.html">Калькулятор</a>
             <a href="./works.html" class="active">Работы</a>
-            <a href="./contacts/" class="btn btn-outline" style="padding: 8px 20px; font-size: 0.9rem;">Контакты</a>
+            <a href="./contacts/" class="btn btn-outline btn-nav-contact">Контакты</a>
         </nav>
     </div>
 </header>
 
 <main>
-    <section class="hero container fade-in" style="padding-top: 150px; display: block; text-align: left;">
-        <span class="badge-status">
-            <span class="dot"></span> Галерея выполненных объектов
-        </span>
-        <h1>Портфолио <span style="color: var(--primary-install);">VoltGroup</span></h1>
-        <p class="hero-subtitle" style="max-width: 680px;">
-            Реальные примеры электромонтажа, сборки силовых щитов и автоматизации в СПб и Ленинградской области.
-        </p>
+    <section class="hero hero-single container fade-in">
+        <div class="hero-left">
+            <span class="badge-status">
+                <span class="dot"></span> Галерея выполненных объектов
+            </span>
+            <h1 class="hero-title">Портфолио <span style="color: var(--primary-install);">VoltGroup</span></h1>
+            <p class="hero-subtitle">
+                Реальные примеры электромонтажа, сборки силовых щитов и автоматизации в СПб и Ленинградской области.
+            </p>
+        </div>
     </section>
 
     <section class="section" style="padding-top: 10px;">
@@ -364,10 +366,10 @@
     </section>
 </main>
 
-<div id="lightbox" class="lightbox">
+<div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Просмотр фотографии объекта">
     <div class="lightbox-content">
-        <span class="lightbox-close" id="lightbox-close">&times;</span>
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" alt="Фотография объекта" class="lightbox-img" id="lightbox-img">
+        <button class="lightbox-close" id="lightbox-close" aria-label="Закрыть" type="button">&times;</button>
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" alt="Фотография объекта" class="lightbox-img" id="lightbox-img" loading="lazy">
         <div class="lightbox-info">
             <h3 id="lightbox-title"></h3>
             <p id="lightbox-desc"></p>
@@ -394,7 +396,7 @@
                 <a href="./install/">Install</a>
                 <a href="./engineering/">Engineering</a>
                 <a href="./estimate.html">Калькулятор</a>
-                <a href="./works.html">Портфолио</a>
+                <a href="./works.html">Работы</a>
                 <a href="./contacts/">Контакты</a>
             </div>
             <div class="footer-links">
@@ -424,7 +426,10 @@
         if (navLinks) navLinks.classList.remove('open');
         if (navOverlay) navOverlay.classList.remove('active');
         document.body.style.overflow = '';
-        if (mobileToggle) mobileToggle.textContent = '☰';
+        if (mobileToggle) {
+            mobileToggle.textContent = '☰';
+            mobileToggle.setAttribute('aria-expanded', 'false');
+        }
     }
 
     if (mobileToggle && navLinks) {
@@ -433,6 +438,7 @@
             if (navOverlay) navOverlay.classList.toggle('active', isOpen);
             document.body.style.overflow = isOpen ? 'hidden' : '';
             mobileToggle.textContent = isOpen ? '✕' : '☰';
+            mobileToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         });
 
         document.querySelectorAll('.nav-links a').forEach(l => l.addEventListener('click', closeMobileMenu));
@@ -470,6 +476,8 @@
 
             const imgDiv = document.createElement('div');
             imgDiv.className = 'gallery-img';
+            imgDiv.setAttribute('role', 'img');
+            imgDiv.setAttribute('aria-label', item.title || 'Фото выполненного объекта');
             if (item.image) {
                 imgDiv.style.backgroundImage = `url('${encodeURI(item.image)}')`;
                 imgDiv.style.backgroundSize = 'cover';

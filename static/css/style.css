@@ -1,24 +1,46 @@
-/* === GLOBAL VARIABLES & THEME === */
-/* Шрифты подключены через <link> в HTML — @import не нужен */
+/* ==========================================================================
+   VOLTGROUP STYLESHEET
+   1. GLOBAL VARIABLES & THEME
+   2. RESET & BASE ACCESSIBILITY
+   3. TYPOGRAPHY
+   4. BUTTONS & UTILITIES
+   5. HEADER & NAVIGATION
+   6. HERO SECTION & BOARD
+   7. SERVICES BENTO & SHOWCASE
+   8. PROCESS & TEAM DOSSIER
+   9. FORMS & INPUTS
+   10. PRICE TABLES & ACCORDIONS
+   11. FOOTER & FLOATING WIDGETS
+   12. RESPONSIVE BREAKPOINTS (1080px, 992px, 768px, 640px, 540px, 480px, 380px)
+   ========================================================================== */
 
+/* === 1. GLOBAL VARIABLES & THEME === */
 :root {
     --bg-dark: #050914;
-    --bg-card: rgba(15, 23, 42, 0.75);
+    --bg-card: rgba(15, 23, 42, 0.88);
     --bg-panel: #0e141b;
 
     /* Палитра VoltGroup */
-    --primary-install: #00E5FF;
-    /* Голубой вольт */
-    --primary-eng: #7B61FF;
-    /* Фиолетовый */
-    --volt-yellow: #FFD60A;
-    /* Акцентный жёлтый */
+    --primary-install: #00E5FF; /* Голубой вольт (Install) */
+    --primary-eng: #7B61FF;     /* Фиолетовый (Engineering) */
+    --primary-eng-btn: #6347E0; /* Контрастный фиолетовый для кнопок (>4.5:1 WCAG AA) */
+    --volt-yellow: #FFD60A;     /* Акцентный жёлтый */
 
     --text-main: #F8FAFC;
     --text-muted: #94A3B8;
     --border-light: rgba(255, 255, 255, 0.08);
     --radius-lg: 18px;
     --radius-md: 12px;
+
+    /* Шкала отступов (Spacing Scale) */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-2xl: 48px;
+    --space-3xl: 64px;
+    --space-4xl: 80px;
 
     --font-main: 'Inter', system-ui, -apple-system, sans-serif;
     --font-heading: 'Unbounded', sans-serif;
@@ -28,7 +50,7 @@
     --success: #10B981;
 }
 
-/* === RESET & BASE === */
+/* === 2. RESET & BASE ACCESSIBILITY === */
 * {
     margin: 0;
     padding: 0;
@@ -93,6 +115,46 @@ footer,
 ::selection {
     background: var(--primary-install);
     color: #050914;
+}
+
+/* Доступность: видимый фокус с клавиатуры (WCAG 2.1) */
+:focus-visible {
+    outline: 2px solid var(--primary-install);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+.eng :focus-visible,
+.btn-secondary:focus-visible,
+.price-accordion.eng :focus-visible {
+    outline-color: var(--primary-eng);
+}
+
+/* Доступность: уважение к настройкам уменьшения движения */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .ticker-track {
+        animation: none !important;
+    }
+
+    .badge-status .dot {
+        animation: none !important;
+        opacity: 1 !important;
+    }
+
+    .fade-in {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
 }
 
 a {
@@ -189,14 +251,15 @@ p {
 }
 
 .btn-secondary {
-    background: var(--primary-eng);
+    background: var(--primary-eng-btn);
     color: #fff;
-    box-shadow: 0 6px 20px rgba(123, 97, 255, 0.25);
+    box-shadow: 0 6px 20px rgba(99, 71, 224, 0.35);
 }
 
 .btn-secondary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(123, 97, 255, 0.4);
+    box-shadow: 0 10px 25px rgba(99, 71, 224, 0.5);
+    background: #7357F0;
 }
 
 .btn-volt {
@@ -219,6 +282,33 @@ p {
 .btn-outline:hover {
     border-color: rgba(0, 229, 255, 0.5);
     color: var(--primary-install);
+}
+
+/* === Утилиты размеров кнопок и раскладки === */
+.btn-sm {
+    padding: 8px 16px !important;
+    font-size: 0.85rem !important;
+}
+
+.btn-md {
+    padding: 10px 20px !important;
+    font-size: 0.88rem !important;
+}
+
+.btn-nav-contact {
+    padding: 8px 20px !important;
+    font-size: 0.9rem !important;
+}
+
+.btn-full {
+    width: 100% !important;
+    justify-content: center !important;
+}
+
+.hero-page {
+    padding-top: 140px;
+    display: block;
+    text-align: left;
 }
 
 /* === HEADER & NAVIGATION === */
@@ -301,12 +391,14 @@ p {
     align-items: center;
 }
 
-.hero.hero-single {
-    display: block;
+.hero.hero-single,
+.hero.hero-page {
+    display: block !important;
     max-width: 860px;
 }
 
-.hero.hero-single .hero-subtitle {
+.hero.hero-single .hero-subtitle,
+.hero.hero-page .hero-subtitle {
     max-width: 740px;
 }
 
@@ -511,7 +603,6 @@ input:checked+.slider.purple:before {
     transition: var(--transition);
     position: relative;
     overflow: hidden;
-    backdrop-filter: blur(10px);
 }
 
 .card::after {
@@ -960,7 +1051,7 @@ select.form-input option {
 .form-input::placeholder,
 input::placeholder,
 textarea::placeholder {
-    color: rgba(148, 163, 184, 0.5);
+    color: rgba(148, 163, 184, 0.72);
     font-style: italic;
     opacity: 1;
 }
@@ -1075,7 +1166,7 @@ textarea.form-input {
 
 .copyright {
     text-align: center;
-    color: #555;
+    color: #8892b0;
     font-size: 0.88rem;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
     padding-top: 24px;
@@ -1147,8 +1238,9 @@ main>.container:first-child,
 
     .hero-board {
         width: 100%;
-        max-width: 100%;
-        margin-left: 0;
+        max-width: 380px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .hero-subtitle {
@@ -1653,8 +1745,7 @@ main>.container:first-child,
     position: absolute;
     top: 14px;
     right: 14px;
-    background: rgba(5, 9, 20, 0.85);
-    backdrop-filter: blur(8px);
+    background: rgba(5, 9, 20, 0.92);
     border: 1px solid var(--volt-yellow);
     color: var(--volt-yellow);
     font-size: 0.7rem;
@@ -2058,7 +2149,6 @@ main>.container:first-child,
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
         position: relative;
         overflow: hidden;
-        backdrop-filter: blur(10px);
         transform: none !important;
     }
     .process-track-step::after {
@@ -2207,7 +2297,6 @@ main>.container:first-child,
     margin-bottom: 14px;
     overflow: hidden;
     transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
-    backdrop-filter: blur(10px);
 }
 
 .price-accordion:hover {
@@ -2217,7 +2306,7 @@ main>.container:first-child,
 .price-accordion[open] {
     border-color: rgba(0, 229, 255, 0.4);
     box-shadow: 0 4px 24px rgba(0, 229, 255, 0.08);
-    background: rgba(15, 23, 42, 0.85);
+    background: rgba(15, 23, 42, 0.95);
 }
 
 .price-accordion.eng[open] {
@@ -2347,7 +2436,6 @@ main>.container:first-child,
     flex-direction: column;
     position: relative;
     transition: var(--transition);
-    backdrop-filter: blur(10px);
 }
 
 .spec-card:hover {

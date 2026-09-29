@@ -262,13 +262,13 @@
             <a href="./index.html" class="logo">
                 <img src="./assets/images/logo-voltgroup.png" alt="VoltGroup Logo" width="160" height="40">
             </a>
-            <button class="mobile-toggle" aria-label="Меню" type="button">☰</button>
-            <nav class="nav-links">
+            <button class="mobile-toggle" aria-label="Открыть меню" aria-expanded="false" aria-controls="mainNav" type="button">☰</button>
+            <nav class="nav-links" id="mainNav">
                 <a href="./install/">Install</a>
                 <a href="./engineering/">Engineering</a>
                 <a href="./estimate.html">Калькулятор</a>
                 <a href="./works.html">Работы</a>
-                <a href="./contacts/" class="btn btn-outline" style="padding: 8px 20px; font-size: 0.9rem;">Контакты</a>
+                <a href="./contacts/" class="btn btn-outline btn-nav-contact">Контакты</a>
             </nav>
         </div>
     </header>
@@ -369,7 +369,7 @@
                         </div>
                         <div style="padding-top: 20px; border-top: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center;">
                             <span style="font-size: 0.8rem; color: var(--primary-install); font-weight: 600;">Гарантия по договору 12 месяцев</span>
-                            <a href="./install/" class="btn btn-primary" style="padding: 10px 20px; font-size: 0.88rem;">В раздел Install →</a>
+                            <a href="./install/" class="btn btn-primary btn-md">В раздел Install →</a>
                         </div>
                     </div>
 
@@ -391,7 +391,7 @@
                         </div>
                         <div style="padding-top: 20px; border-top: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center;">
                             <span style="font-size: 0.8rem; color: var(--text-muted);">Индивидуальный проект</span>
-                            <a href="#contact" class="btn btn-outline" style="padding: 8px 16px; font-size: 0.85rem;">Консультация</a>
+                            <a href="#contact" class="btn btn-outline btn-sm">Консультация</a>
                         </div>
                     </div>
 
@@ -411,7 +411,7 @@
                             </div>
                         </div>
                         <div style="padding-top: 15px; border-top: 1px solid rgba(255, 214, 10, 0.2); text-align: center;">
-                            <a href="./estimate.html" class="btn btn-volt" style="width: 100%; justify-content: center; padding: 12px 20px; font-size: 0.9rem;">
+                            <a href="./estimate.html" class="btn btn-volt btn-full" style="padding: 12px 20px; font-size: 0.9rem;">
                                 Открыть калькулятор сметы ⚡
                             </a>
                         </div>
@@ -434,7 +434,7 @@
                         </div>
                         <div style="padding-top: 20px; border-top: 1px solid rgba(123, 97, 255, 0.25); display: flex; justify-content: space-between; align-items: center;">
                             <span style="font-size: 0.8rem; color: var(--primary-eng); font-weight: 600;">Гарантия по договору 12 месяцев</span>
-                            <a href="./engineering/" class="btn btn-secondary" style="padding: 10px 20px; font-size: 0.88rem;">В раздел Engineering →</a>
+                            <a href="./engineering/" class="btn btn-secondary btn-md">В раздел Engineering →</a>
                         </div>
                     </div>
                 </div>
@@ -452,7 +452,7 @@
                         </h2>
                     </div>
                     <div style="text-align: right;">
-                        <a href="./works.html" class="btn btn-outline" style="padding: 10px 22px; font-size: 0.88rem;">
+                        <a href="./works.html" class="btn btn-outline btn-md">
                             Смотреть всю галерею (14 объектов) →
                         </a>
                     </div>
@@ -462,7 +462,7 @@
                 <div class="showcase-grid" id="dynamicShowcaseGrid">
                     <!-- Резервный статический рендер до срабатывания JS -->
                     <a href="./works.html" class="showcase-card fade-in">
-                        <div class="showcase-img-wrap" style="background-image: url('./gallery/panel-wiring-07.webp');"></div>
+                        <div class="showcase-img-wrap" style="background-image: url('./gallery/panel-wiring-07.webp');" role="img" aria-label="Сборка распределительного щита с маркировкой"></div>
                         <div class="showcase-body">
                             <div>
                                 <div class="showcase-title">Сборка распределительного щита с маркировкой</div>
@@ -477,7 +477,7 @@
                     </a>
 
                     <a href="./works.html" class="showcase-card fade-in" style="transition-delay: 0.1s;">
-                        <div class="showcase-img-wrap" style="background-image: url('./gallery/cable-trays-06.webp');"></div>
+                        <div class="showcase-img-wrap" style="background-image: url('./gallery/cable-trays-06.webp');" role="img" aria-label="Монтаж кабельных трасс в лотках"></div>
                         <div class="showcase-body">
                             <div>
                                 <div class="showcase-title">Монтаж кабельных трасс в лотках</div>
@@ -492,7 +492,7 @@
                     </a>
 
                     <a href="./works.html" class="showcase-card fade-in" style="transition-delay: 0.2s;">
-                        <div class="showcase-img-wrap" style="background-image: url('./gallery/industrial-cabinet-bauer-11.webp');"></div>
+                        <div class="showcase-img-wrap" style="background-image: url('./gallery/industrial-cabinet-bauer-11.webp');" role="img" aria-label="Модернизация шкафа управления станка"></div>
                         <div class="showcase-body">
                             <div>
                                 <div class="showcase-title">Модернизация шкафа управления станка</div>
@@ -858,7 +858,7 @@
                     <a href="./install/">Install</a>
                     <a href="./engineering/">Engineering</a>
                     <a href="./estimate.html">Калькулятор</a>
-                    <a href="./works.html">Портфолио</a>
+                    <a href="./works.html">Работы</a>
                     <a href="./contacts/">Контакты</a>
                 </div>
                 <div class="footer-links">
@@ -932,6 +932,8 @@
 
                         const imgWrap = document.createElement('div');
                         imgWrap.className = 'showcase-img-wrap';
+                        imgWrap.setAttribute('role', 'img');
+                        imgWrap.setAttribute('aria-label', item.title || 'Объект VoltGroup');
                         if (item.image) {
                             imgWrap.style.backgroundImage = `url('${encodeURI(item.image)}')`;
                         }
@@ -989,7 +991,7 @@
         if (swSmart) swSmart.addEventListener('change', updateLoad);
         if (swAuto) swAuto.addEventListener('change', updateLoad);
 
-        // 3. Мобильное меню
+        // 3. Мобильное меню с поддержкой доступности
         const mobileToggle = document.querySelector('.mobile-toggle');
         const navLinks = document.querySelector('.nav-links');
         const navOverlay = document.getElementById('navOverlay');
@@ -998,7 +1000,10 @@
             if (navLinks) navLinks.classList.remove('open');
             if (navOverlay) navOverlay.classList.remove('active');
             document.body.style.overflow = '';
-            if (mobileToggle) mobileToggle.textContent = '☰';
+            if (mobileToggle) {
+                mobileToggle.textContent = '☰';
+                mobileToggle.setAttribute('aria-expanded', 'false');
+            }
         }
 
         if (mobileToggle && navLinks) {
@@ -1007,20 +1012,23 @@
                 if (navOverlay) navOverlay.classList.toggle('active', isOpen);
                 document.body.style.overflow = isOpen ? 'hidden' : '';
                 mobileToggle.textContent = isOpen ? '✕' : '☰';
+                mobileToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
             });
 
             document.querySelectorAll('.nav-links a').forEach(l => l.addEventListener('click', closeMobileMenu));
             if (navOverlay) navOverlay.addEventListener('click', closeMobileMenu);
         }
 
-        // 4. Аккордеон
+        // 4. Аккордеон с ARIA-доступностью
         document.querySelectorAll('.accordion-btn').forEach(btn => {
+            btn.setAttribute('aria-expanded', 'false');
             btn.addEventListener('click', () => {
                 const content = btn.nextElementSibling;
                 const isOpen = btn.classList.contains('active');
 
                 document.querySelectorAll('.accordion-btn').forEach(otherBtn => {
                     otherBtn.classList.remove('active');
+                    otherBtn.setAttribute('aria-expanded', 'false');
                     if (otherBtn.nextElementSibling) {
                         otherBtn.nextElementSibling.style.maxHeight = null;
                     }
@@ -1028,6 +1036,7 @@
 
                 if (!isOpen) {
                     btn.classList.add('active');
+                    btn.setAttribute('aria-expanded', 'true');
                     if (content) {
                         content.style.maxHeight = content.scrollHeight + "px";
                     }
