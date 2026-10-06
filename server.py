@@ -3,6 +3,7 @@ import requests
 import os
 import json
 import html
+import secrets
 import logging
 from logging.handlers import RotatingFileHandler
 import gspread
@@ -75,7 +76,8 @@ COLUMNS_MAP = {
     'total': 4,
     'paid': 5,
     'address': 6,
-    'photo': 7
+    'photo': 7,
+    'token': 8
 }
 
 _cached_ws = None
@@ -212,7 +214,7 @@ def build_object_view(ws, obj_id):
         }
 
     vals = ws.row_values(cell.row)
-    while len(vals) < 7:
+    while len(vals) < 8:
         vals.append("")
 
     progress = vals[1] or "0"
@@ -317,23 +319,32 @@ def send_message():
 @app.route('/get-status', methods=['GET', 'POST'])
 @limiter.limit("15 per minute")
 def get_status():
-    # Безопасное получение ID из POST (JSON body) или GET (query param)
+    # Безопасное получение ID и токена из POST (JSON body) или GET (query param)
     if request.method == 'POST':
         data = request.get_json(silent=True) or {}
         obj_id = data.get('id')
+        token = data.get('t') or data.get('token')
     else:
         obj_id = request.args.get('id')
+        token = request.args.get('t') or request.args.get('token')
 
     if not obj_id:
         return jsonify({"status": "error", "msg": "ID объекта не указан"}), 400
+
+    if not token or not str(token).strip():
+        return jsonify({"status": "error", "msg": "Отсутствует ключ доступа"}), 403
 
     try:
         ws = get_sheet()
         cell = ws.find(str(obj_id), in_column=1)
         if cell:
             row_values = ws.row_values(cell.row)
-            while len(row_values) < 7:
+            while len(row_values) < 8:
                 row_values.append("")
+
+            expected_token = row_values[7].strip()
+            if not expected_token or not secrets.compare_digest(expected_token, str(token).strip()):
+                return jsonify({"status": "error", "msg": "Неверный ключ доступа"}), 403
 
             data = {
                 "progress": row_values[1],
@@ -471,15 +482,26 @@ def webhook():
             elif cb_data.startswith("o:link:"):
                 obj_id = cb_data.split(":", 2)[2]
                 cell = ws.find(str(obj_id), in_column=1)
+                if not cell:
+                    send_tg_message(chat_id, f"⚠️ Объект №{html.escape(str(obj_id))} не найден в таблице.")
+                    return '', 200
+
+                row_vals = ws.row_values(cell.row)
+                while len(row_vals) < 8:
+                    row_vals.append("")
+
                 addr_text = f"по объекту №{obj_id}"
-                if cell:
-                    row_vals = ws.row_values(cell.row)
-                    if len(row_vals) > 5 and row_vals[5].strip():
-                        addr_text = f"({row_vals[5].strip()})"
+                if len(row_vals) > 5 and row_vals[5].strip():
+                    addr_text = f"({row_vals[5].strip()})"
+
+                token = row_vals[7].strip()
+                if not token:
+                    token = secrets.token_urlsafe(16)
+                    ws.update_cell(cell.row, COLUMNS_MAP['token'], token)
 
                 client_msg = (
                     f"Здравствуйте! Вы можете отслеживать ход электромонтажных работ, этапы и финансовый баланс онлайн {html.escape(addr_text)}:\n\n"
-                    f"👉 https://voltgroup-spb.ru/client/index.html?id={obj_id}\n\n"
+                    f"👉 https://voltgroup-spb.ru/client/index.html?id={obj_id}&t={token}\n\n"
                     f"VoltGroup · Электромонтаж и автоматизация"
                 )
                 send_tg_message(chat_id, client_msg)
@@ -558,7 +580,8 @@ def webhook():
                         send_tg_message(chat_id, f"⚠️ Объект №{html.escape(new_id)} уже существует в таблице.")
                         return '', 200
 
-                    ws.append_row([str(new_id), "0", "Завоз материалов", "0 ₽", "0 ₽", new_addr])
+                    token = secrets.token_urlsafe(16)
+                    ws.append_row([str(new_id), "0", "Завоз материалов", "0 ₽", "0 ₽", new_addr, "", token])
                     view_text, kb = build_object_view(ws, new_id)
                     send_tg_message(chat_id, f"🎉 <b>Объект №{html.escape(new_id)} успешно создан!</b>\n\n" + view_text, reply_markup=kb)
                     return '', 200
@@ -572,7 +595,8 @@ def webhook():
                     send_tg_message(chat_id, f"⚠️ Объект {html.escape(obj_id)} уже существует в таблице.")
                     return '', 200
 
-                ws.append_row([obj_id, "0", "Завоз материалов", "0 ₽", "0 ₽", f"Объект №{obj_id}"])
+                token = secrets.token_urlsafe(16)
+                ws.append_row([obj_id, "0", "Завоз материалов", "0 ₽", "0 ₽", f"Объект №{obj_id}", "", token])
                 view_text, kb = build_object_view(ws, obj_id)
                 send_tg_message(chat_id, f"✅ <b>Объект {html.escape(obj_id)} создан!</b>\n\n" + view_text, reply_markup=kb)
                 return '', 200

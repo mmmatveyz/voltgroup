@@ -284,8 +284,9 @@
     document.addEventListener("DOMContentLoaded", async () => {
         const urlParams = new URLSearchParams(window.location.search);
         const objectId = urlParams.get('id');
+        const token = urlParams.get('t') || urlParams.get('token');
 
-        if (!objectId) {
+        function showErrorCard(title, message) {
             const container = document.querySelector('.container');
             container.textContent = ''; // Безопасное очищение
 
@@ -294,23 +295,32 @@
 
             const errTitle = document.createElement('h2');
             errTitle.style.cssText = "color: #EF4444; font-family: var(--font-heading); font-size: 1.2rem; margin-bottom: 10px;";
-            errTitle.textContent = "ОШИБКА ДОСТУПА";
+            errTitle.textContent = title;
 
             const errText = document.createElement('p');
             errText.style.color = "var(--text-muted)";
-            errText.textContent = "Не указан номер объекта. Пожалуйста, используйте персональную ссылку из сообщения.";
+            errText.textContent = message;
 
             errCard.appendChild(errTitle);
             errCard.appendChild(errText);
             container.appendChild(errCard);
+        }
+
+        if (!objectId || !token) {
+            showErrorCard(
+                "ОШИБКА ДОСТУПА",
+                !objectId
+                    ? "Не указан номер объекта. Пожалуйста, используйте персональную ссылку из сообщения."
+                    : "Отсутствует ключ доступа. Пожалуйста, откройте персональную ссылку, полученную от мастера."
+            );
             return;
         }
 
         try {
-            const response = await fetch(`https://voltgroup-bot.onrender.com/get-status?id=${objectId}`);
+            const response = await fetch(`https://voltgroup-bot.onrender.com/get-status?id=${encodeURIComponent(objectId)}&t=${encodeURIComponent(token)}`);
             const result = await response.json();
 
-            if (result.status === "success") {
+            if (response.ok && result.status === "success") {
                 const data = result.data;
 
                 // Заголовок и адрес (Безопасная установка текста)
@@ -367,14 +377,14 @@
                 updateTimeline(progress);
 
             } else {
-                document.querySelector('.object-title').textContent = "Объект не найден";
-                document.querySelector('.object-id').textContent = "Проверьте правильность ссылки";
+                const title = response.status === 403 ? "ДОСТУП ЗАПРЕЩЁН" : "ОБЪЕКТ НЕ НАЙДЕН";
+                const msg = result.msg || "Проверьте правильность персональной ссылки.";
+                showErrorCard(title, msg);
             }
 
         } catch (error) {
             console.error("Ошибка загрузки данных объекта:", error);
-            document.querySelector('.object-title').textContent = "Ошибка соединения";
-            document.querySelector('.object-id').textContent = "Не удалось связаться с сервером";
+            showErrorCard("ОШИБКА СОЕДИНЕНИЯ", "Не удалось связаться с сервером. Попробуйте обновить страницу позже.");
         }
     });
 
