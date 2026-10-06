@@ -3,6 +3,7 @@ import requests
 import os
 import json
 import html
+import re
 import secrets
 import time
 import logging
@@ -41,12 +42,26 @@ except Exception as log_err:
 # ----------------------------------------------------
 # 2. ОГРАНИЧЕНИЕ CORS И RATE LIMITING
 # ----------------------------------------------------
-ALLOWED_ORIGINS = [
+DEFAULT_ALLOWED_ORIGINS = [
     "https://voltgroup-spb.ru",
-    "https://www.voltgroup-spb.ru"
+    "https://www.voltgroup-spb.ru",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "http://localhost:5500",
+    "http://127.0.0.1:5500"
 ]
 
-CORS(app, resources={r"/*": {"origins": ALLOWED_ORIGINS}})
+env_origins = os.environ.get('ALLOWED_ORIGINS')
+if env_origins:
+    ALLOWED_ORIGINS = [origin.strip() for origin in env_origins.split(',') if origin.strip()]
+else:
+    ALLOWED_ORIGINS = DEFAULT_ALLOWED_ORIGINS
+
+CORS(app, resources={
+    r"/ping": {"origins": ALLOWED_ORIGINS},
+    r"/send-message": {"origins": ALLOWED_ORIGINS},
+    r"/get-status": {"origins": ALLOWED_ORIGINS}
+})
 
 limiter = Limiter(
     get_remote_address,
@@ -105,6 +120,46 @@ def get_sheet():
     sh = gc.open_by_url(SHEET_URL)
     _cached_ws = sh.sheet1
     return _cached_ws
+
+def find_object_cell(ws, obj_id):
+    """
+    Ищет ячейку с точным совпадением ID объекта в первой колонке (колонка A).
+    Исключает частичные совпадения подстрок (например, чтобы '14' не находило '145').
+    """
+    target = str(obj_id).strip()
+    if not target:
+        return None
+
+    try:
+        # gspread поддерживает re.Pattern в методе find()
+        pattern = re.compile(rf"^\s*{re.escape(target)}\s*$")
+        cell = ws.find(pattern, in_column=1)
+        if cell:
+            val = getattr(cell, 'value', None)
+            if val is not None:
+                if str(val).strip() == target:
+                    return cell
+            else:
+                row_val = ws.cell(cell.row, 1).value
+                if str(row_val).strip() == target:
+                    return cell
+    except Exception as e:
+        app.logger.warning(f"Ошибка find(regex) для объекта {target}: {e}")
+
+    # Резервный поиск по первой колонке с точным сравнением
+    try:
+        col_values = ws.col_values(1)
+        for idx, val in enumerate(col_values, start=1):
+            if str(val).strip() == target:
+                class ExactCell:
+                    def __init__(self, row, value):
+                        self.row = row
+                        self.value = value
+                return ExactCell(idx, str(val).strip())
+    except Exception as e:
+        app.logger.error(f"Ошибка col_values при поиске объекта {target}: {e}")
+
+    return None
 
 STAGES = [
     "Завоз материалов",
@@ -215,7 +270,7 @@ def build_objects_list(ws):
     return text, {"inline_keyboard": buttons}
 
 def build_object_view(ws, obj_id):
-    cell = ws.find(str(obj_id), in_column=1)
+    cell = find_object_cell(ws, obj_id)
     if not cell:
         return f"⚠️ Объект №{html.escape(str(obj_id))} не найден в таблице.", {
             "inline_keyboard": [[{"text": "« К списку объектов", "callback_data": "m:list"}]]
@@ -336,15 +391,15 @@ def get_status():
         obj_id = request.args.get('id')
         token = request.args.get('t') or request.args.get('token')
 
-    if not obj_id:
-        return jsonify({"status": "error", "msg": "ID объекта не указан"}), 400
+    if not obj_id or not re.match(r"^\d{1,6}$", str(obj_id).strip()):
+        return jsonify({"status": "error", "msg": "Некорректный ID объекта"}), 400
 
     if not token or not str(token).strip():
         return jsonify({"status": "error", "msg": "Отсутствует ключ доступа"}), 403
 
     try:
         ws = get_sheet()
-        cell = ws.find(str(obj_id), in_column=1)
+        cell = find_object_cell(ws, obj_id)
         if cell:
             row_values = ws.row_values(cell.row)
             while len(row_values) < 8:
@@ -445,11 +500,19 @@ def webhook():
                 parts = cb_data.split(":")
                 obj_id = parts[2]
                 val = parts[3]
-                cell = ws.find(str(obj_id), in_column=1)
+                try:
+                    val_int = int(val)
+                    if not (0 <= val_int <= 100):
+                        raise ValueError()
+                except ValueError:
+                    send_tg_message(chat_id, "⚠️ Некорректное значение прогресса.")
+                    return '', 200
+
+                cell = find_object_cell(ws, obj_id)
                 if cell:
-                    ws.update_cell(cell.row, COLUMNS_MAP['progress'], val)
+                    ws.update_cell(cell.row, COLUMNS_MAP['progress'], str(val_int))
                 text, kb = build_object_view(ws, obj_id)
-                text = f"✅ <i>Прогресс обновлён на {val}%!</i>\n\n" + text
+                text = f"✅ <i>Прогресс обновлён на {val_int}%!</i>\n\n" + text
                 edit_tg_message(chat_id, msg_id, text, reply_markup=kb)
 
             # Меню смены этапа (o:s:<id>)
@@ -462,14 +525,21 @@ def webhook():
             elif cb_data.startswith("o:ss:"):
                 parts = cb_data.split(":")
                 obj_id = parts[2]
-                idx = int(parts[3])
+                try:
+                    idx = int(parts[3])
+                except (ValueError, IndexError):
+                    idx = -1
+
                 if 0 <= idx < len(STAGES):
                     stage_name = STAGES[idx]
-                    cell = ws.find(str(obj_id), in_column=1)
+                    cell = find_object_cell(ws, obj_id)
                     if cell:
                         ws.update_cell(cell.row, COLUMNS_MAP['stage'], stage_name)
-                text, kb = build_object_view(ws, obj_id)
-                text = f"✅ <i>Этап изменён на «{stage_name}»!</i>\n\n" + text
+                    text, kb = build_object_view(ws, obj_id)
+                    text = f"✅ <i>Этап изменён на «{html.escape(stage_name)}»!</i>\n\n" + text
+                else:
+                    text, kb = build_object_view(ws, obj_id)
+                    text = "⚠️ <i>Некорректный этап!</i>\n\n" + text
                 edit_tg_message(chat_id, msg_id, text, reply_markup=kb)
 
             # Запрос ввода оплаты (o:pay:<id>)
@@ -489,7 +559,7 @@ def webhook():
             # Готовое сообщение со ссылкой для пересылки клиенту (o:link:<id>)
             elif cb_data.startswith("o:link:"):
                 obj_id = cb_data.split(":", 2)[2]
-                cell = ws.find(str(obj_id), in_column=1)
+                cell = find_object_cell(ws, obj_id)
                 if not cell:
                     send_tg_message(chat_id, f"⚠️ Объект №{html.escape(str(obj_id))} не найден в таблице.")
                     return '', 200
@@ -565,21 +635,53 @@ def webhook():
                 # Обработка ввода оплаты
                 if action == "await_pay":
                     obj_id = state.get("obj_id")
-                    user_states.pop(chat_id, None)
-                    cell = ws.find(str(obj_id), in_column=1)
+                    cell = find_object_cell(ws, obj_id)
                     if not cell:
-                        send_tg_message(chat_id, f"⚠️ Объект №{obj_id} не найден.")
+                        user_states.pop(chat_id, None)
+                        send_tg_message(chat_id, f"⚠️ Объект №{html.escape(str(obj_id))} не найден.")
                         return '', 200
+
+                    raw_text = text.strip()
+                    cleaned = re.sub(r"(?i)\s*(₽|руб\.?|р\.?)$", "", raw_text).strip()
+                    is_exact = cleaned.startswith("=")
+                    num_part = cleaned[1:].strip() if is_exact else cleaned
+                    num_clean = num_part.replace(" ", "")
+
+                    if not num_clean.isdigit():
+                        prompt_text = (
+                            f"⚠️ <b>Не понял сумму оплаты:</b> <code>{html.escape(raw_text)}</code>\n\n"
+                            "Пожалуйста, пришлите число цифрами:\n"
+                            "• Чтобы <b>прибавить</b>: <code>50000</code> или <code>50 000 ₽</code>\n"
+                            "• Чтобы <b>установить точно</b>: <code>=120000</code>\n\n"
+                            "Для отмены отправьте /cancel"
+                        )
+                        user_states[chat_id] = {"action": "await_pay", "obj_id": obj_id, "ts": time.time()}
+                        cancel_kb = {"inline_keyboard": [[{"text": "« Назад к объекту", "callback_data": f"o:v:{obj_id}"}]]}
+                        send_tg_message(chat_id, prompt_text, reply_markup=cancel_kb)
+                        return '', 200
+
+                    parsed_sum = int(num_clean)
+                    if not is_exact and parsed_sum == 0:
+                        prompt_text = (
+                            "⚠️ <b>Сумма для прибавления равна 0.</b>\n"
+                            "Если вы хотите установить точную сумму или обнулить её, используйте знак равно: <code>=0</code>.\n\n"
+                            "Для отмены отправьте /cancel"
+                        )
+                        user_states[chat_id] = {"action": "await_pay", "obj_id": obj_id, "ts": time.time()}
+                        cancel_kb = {"inline_keyboard": [[{"text": "« Назад к объекту", "callback_data": f"o:v:{obj_id}"}]]}
+                        send_tg_message(chat_id, prompt_text, reply_markup=cancel_kb)
+                        return '', 200
+
+                    # Сумма корректна — сбрасываем состояние и обновляем таблицу
+                    user_states.pop(chat_id, None)
 
                     current_paid_str = ws.cell(cell.row, COLUMNS_MAP['paid']).value or "0"
                     current_paid_clean = int("".join(c for c in current_paid_str if c.isdigit()) or 0)
 
-                    input_val = text.replace(" ", "").replace("₽", "")
-                    if input_val.startswith("="):
-                        new_paid = int("".join(c for c in input_val if c.isdigit()) or 0)
+                    if is_exact:
+                        new_paid = parsed_sum
                     else:
-                        add_sum = int("".join(c for c in input_val if c.isdigit()) or 0)
-                        new_paid = current_paid_clean + add_sum
+                        new_paid = current_paid_clean + parsed_sum
 
                     formatted_paid = f"{new_paid:,} ₽".replace(",", " ")
                     ws.update_cell(cell.row, COLUMNS_MAP['paid'], formatted_paid)
@@ -590,12 +692,21 @@ def webhook():
 
                 # Обработка создания нового объекта
                 elif action == "await_new":
-                    user_states.pop(chat_id, None)
                     parts = [p.strip() for p in text.split(",", 1)]
                     new_id = parts[0]
                     new_addr = parts[1] if len(parts) > 1 else f"Объект №{new_id}"
 
-                    if ws.find(str(new_id), in_column=1):
+                    if not re.match(r"^\d{1,6}$", new_id):
+                        send_tg_message(
+                            chat_id,
+                            "⚠️ <b>Некорректный номер объекта:</b> <code>" + html.escape(new_id) + "</code>\n\n"
+                            "Номер должен состоять только из цифр (от 1 до 6 знаков), например: <code>142</code> или <code>142, Ленина 10</code>."
+                        )
+                        return '', 200
+
+                    user_states.pop(chat_id, None)
+
+                    if find_object_cell(ws, new_id):
                         send_tg_message(chat_id, f"⚠️ Объект №{html.escape(new_id)} уже существует в таблице.")
                         return '', 200
 
@@ -610,7 +721,15 @@ def webhook():
                 parts = text.split(' ', 1)
                 obj_id = parts[1].strip()
 
-                if ws.find(obj_id, in_column=1):
+                if not re.match(r"^\d{1,6}$", obj_id):
+                    send_tg_message(
+                        chat_id,
+                        "⚠️ <b>Некорректный номер объекта.</b>\n"
+                        "Номер должен состоять только из цифр (от 1 до 6 знаков), например: <code>/new 142</code>"
+                    )
+                    return '', 200
+
+                if find_object_cell(ws, obj_id):
                     send_tg_message(chat_id, f"⚠️ Объект {html.escape(obj_id)} уже существует в таблице.")
                     return '', 200
 
@@ -628,11 +747,15 @@ def webhook():
                     field = parts[2].strip().lower()
                     value = parts[3].strip()
 
+                    if not re.match(r"^\d{1,6}$", obj_id):
+                        send_tg_message(chat_id, "⚠️ Некорректный номер объекта.")
+                        return '', 200
+
                     if field not in COLUMNS_MAP:
                         send_tg_message(chat_id, f"⚠️ Неизвестное поле <code>{html.escape(field)}</code>.\nДоступные поля: progress, stage, total, paid, address, photo")
                         return '', 200
 
-                    cell = ws.find(obj_id, in_column=1)
+                    cell = find_object_cell(ws, obj_id)
                     if cell:
                         ws.update_cell(cell.row, COLUMNS_MAP[field], value)
                         view_text, kb = build_object_view(ws, obj_id)
