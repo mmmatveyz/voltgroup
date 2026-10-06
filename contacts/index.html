@@ -336,6 +336,7 @@
     </div>
 </footer>
 
+<script src="../static/js/config.js"></script>
 <script>
     // 1. Mobile Menu (Безопасное переключение текста)
     const mobileToggle = document.querySelector('.mobile-toggle');
@@ -472,7 +473,8 @@
         leadForm.addEventListener('focusin', () => {
             if (!hasPinged) {
                 hasPinged = true;
-                fetch('https://voltgroup-bot.onrender.com/ping', { method: 'GET' }).catch(() => {});
+                const apiUrl = window.VG_API || 'https://voltgroup-bot.onrender.com';
+                fetch(`${apiUrl}/ping`, { method: 'GET' }).catch(() => {});
             }
         });
 
@@ -510,13 +512,18 @@
             btn.textContent = 'Отправка...';
             status.style.display = 'block';
             status.style.color = 'var(--text-muted)';
-            status.textContent = '⏳ Отправляем...';
+            status.textContent = '⏳ Отправляем заявку...';
+
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 15000);
 
             try {
-                const res = await fetch('https://voltgroup-bot.onrender.com/send-message', {
+                const apiUrl = window.VG_API || 'https://voltgroup-bot.onrender.com';
+                const res = await fetch(`${apiUrl}/send-message`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(data)
+                    body: JSON.stringify(data),
+                    signal: controller.signal
                 });
                 if (res.ok) {
                     status.textContent = '✅ Заявка отправлена! Свяжемся с вами в ближайшее время.';
@@ -532,9 +539,14 @@
                     throw new Error('Ошибка сервера');
                 }
             } catch (err) {
-                status.textContent = '❌ Ошибка отправки. Напишите нам в VK или Telegram.';
+                if (err.name === 'AbortError') {
+                    status.innerHTML = '⏳ <b>Сервер просыпается</b> (холодный старт может занять до минуты). Вы можете подождать немного или связаться напрямую: <a href="https://t.me/matvey_zryachikh" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> · <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">ВКонтакте</a>';
+                } else {
+                    status.innerHTML = '❌ <b>Ошибка отправки.</b> Пожалуйста, напишите напрямую: <a href="https://t.me/matvey_zryachikh" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> · <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">ВКонтакте</a> или позвоните <a href="tel:+79052084284" style="color:var(--accent);text-decoration:underline;">+7 (905) 208-42-84</a>';
+                }
                 status.style.color = '#EF4444';
             } finally {
+                clearTimeout(timeoutId);
                 btn.disabled = false;
                 btn.textContent = 'Отправить заявку ⚡';
             }

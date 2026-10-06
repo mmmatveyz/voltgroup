@@ -596,7 +596,11 @@
             const td = document.createElement('td');
             td.colSpan = 7;
             td.style.cssText = "text-align:center; padding:30px; color:var(--danger);";
-            td.textContent = "❌ Не удалось загрузить прайс-лист. Проверьте файл static/data/prices.json.";
+            if (window.location.protocol === 'file:') {
+                td.innerHTML = '❌ <b>Браузер блокирует загрузку данных по протоколу file:// (CORS).</b><br><span style="color:var(--text-muted);font-size:0.9em;display:inline-block;margin-top:6px;">Запустите локальный HTTP-сервер: выполните <code>python -m http.server 8000</code> в корне проекта или используйте скрипт <code>tools/serve.cmd</code>, затем откройте <a href="http://localhost:8000/estimate.html" style="color:var(--accent);">http://localhost:8000/estimate.html</a></span>';
+            } else {
+                td.textContent = "❌ Не удалось загрузить прайс-лист. Проверьте файл static/data/prices.json.";
+            }
             tr.appendChild(td);
             tbody.appendChild(tr);
             return false;

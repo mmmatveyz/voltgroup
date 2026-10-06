@@ -887,6 +887,7 @@
             height="50" frameborder="0"></iframe>
     </div>
 
+    <script src="static/js/config.js"></script>
     <script>
         // Вспомогательная функция для безопасности
         function sanitizeInput(str) {
@@ -932,10 +933,13 @@
 
                         const imgWrap = document.createElement('div');
                         imgWrap.className = 'showcase-img-wrap';
-                        imgWrap.setAttribute('role', 'img');
-                        imgWrap.setAttribute('aria-label', item.title || 'Объект VoltGroup');
                         if (item.image) {
-                            imgWrap.style.backgroundImage = `url('${encodeURI(item.image)}')`;
+                            const img = document.createElement('img');
+                            img.src = encodeURI(item.image);
+                            img.alt = item.title || 'Объект VoltGroup';
+                            img.loading = 'lazy';
+                            img.decoding = 'async';
+                            imgWrap.appendChild(img);
                         }
 
                         const body = document.createElement('div');
@@ -1145,7 +1149,8 @@
             leadForm.addEventListener('focusin', () => {
                 if (!hasPinged) {
                     hasPinged = true;
-                    fetch('https://voltgroup-bot.onrender.com/ping', { method: 'GET' }).catch(() => { });
+                    const apiUrl = window.VG_API || 'https://voltgroup-bot.onrender.com';
+                    fetch(`${apiUrl}/ping`, { method: 'GET' }).catch(() => { });
                 }
             });
 
@@ -1187,11 +1192,16 @@
                 status.style.color = 'var(--text-muted)';
                 status.textContent = '⏳ Отправляем заявку...';
 
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 15000);
+
                 try {
-                    const res = await fetch('https://voltgroup-bot.onrender.com/send-message', {
+                    const apiUrl = window.VG_API || 'https://voltgroup-bot.onrender.com';
+                    const res = await fetch(`${apiUrl}/send-message`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(data)
+                        body: JSON.stringify(data),
+                        signal: controller.signal
                     });
 
                     if (res.ok) {
@@ -1209,9 +1219,14 @@
                         throw new Error('Ошибка сервера');
                     }
                 } catch (err) {
-                    status.textContent = '❌ Ошибка отправки. Пожалуйста, напишите нам в VK или Telegram.';
+                    if (err.name === 'AbortError') {
+                        status.innerHTML = '⏳ <b>Сервер просыпается</b> (холодный старт может занять до минуты). Вы можете подождать немного или связаться напрямую: <a href="https://t.me/matvey_zryachikh" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> · <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">ВКонтакте</a>';
+                    } else {
+                        status.innerHTML = '❌ <b>Ошибка отправки.</b> Пожалуйста, напишите напрямую: <a href="https://t.me/matvey_zryachikh" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> · <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">ВКонтакте</a> или позвоните <a href="tel:+79052084284" style="color:var(--accent);text-decoration:underline;">+7 (905) 208-42-84</a>';
+                    }
                     status.style.color = '#EF4444';
                 } finally {
+                    clearTimeout(timeoutId);
                     btn.disabled = false;
                     btn.textContent = 'Получить расчёт ⚡';
                 }

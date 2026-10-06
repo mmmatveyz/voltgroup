@@ -114,11 +114,7 @@
             height: 220px;
             object-fit: cover;
             background: #090d16;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
+            display: block;
             border-bottom: 1px solid var(--border-light);
         }
         .gallery-content {
@@ -474,14 +470,13 @@
             itemDiv.className = 'gallery-item';
             itemDiv.dataset.index = index;
 
-            const imgDiv = document.createElement('div');
-            imgDiv.className = 'gallery-img';
-            imgDiv.setAttribute('role', 'img');
-            imgDiv.setAttribute('aria-label', item.title || 'Фото выполненного объекта');
+            const imgEl = document.createElement('img');
+            imgEl.className = 'gallery-img';
+            imgEl.alt = item.title || 'Фото выполненного объекта';
+            imgEl.loading = 'lazy';
+            imgEl.decoding = 'async';
             if (item.image) {
-                imgDiv.style.backgroundImage = `url('${encodeURI(item.image)}')`;
-                imgDiv.style.backgroundSize = 'cover';
-                imgDiv.style.backgroundPosition = 'center';
+                imgEl.src = encodeURI(item.image);
             }
 
             const contentDiv = document.createElement('div');
@@ -507,7 +502,7 @@
             contentDiv.appendChild(descP);
             contentDiv.appendChild(badgesDiv);
 
-            itemDiv.appendChild(imgDiv);
+            itemDiv.appendChild(imgEl);
             itemDiv.appendChild(contentDiv);
 
             itemDiv.addEventListener('click', () => {
@@ -539,7 +534,11 @@
 
         const errP = document.createElement('p');
         errP.style.cssText = "color: var(--text-muted); font-size: 1.1rem; margin-bottom: 20px;";
-        errP.textContent = "⚠️ Не удалось загрузить портфолио";
+        if (window.location.protocol === 'file:') {
+            errP.innerHTML = "⚠️ <b>Браузер блокирует загрузку данных по протоколу file:// (CORS).</b><br><small style='color:var(--text-muted);display:block;margin-top:6px;'>Запустите локальный сервер: <code>python -m http.server 8000</code> или используйте <code>tools/serve.cmd</code></small>";
+        } else {
+            errP.textContent = "⚠️ Не удалось загрузить портфолио";
+        }
 
         const errBtn = document.createElement('a');
         errBtn.href = "./contacts/";

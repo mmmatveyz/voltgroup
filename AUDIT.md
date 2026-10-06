@@ -132,7 +132,9 @@ DEFAULT_ALLOWED_ORIGINS = ["https://voltgroup-spb.ru", "https://www.voltgroup-sp
 
 ---
 
-### 6. Форма заявки может «висеть» до минуты без обратной связи
+### 6. [✅ ИСПРАВЛЕНО] Форма заявки может «висеть» до минуты без обратной связи
+
+> **Статус на 2026-10-06:** закрыто. Запросы `fetch` к бэкенду обёрнуты в `AbortController` с таймаутом 15 секунд. При холодном старте выводится статус «Сервер просыпается...». Добавлены прямые ссылки на Telegram, ВКонтакте и телефон как резервный канал. Решена задача [tasks/009-form-timeout.md](tasks/009-form-timeout.md).
 
 **Где:** [index.html:1144-1218](index.html#L1144-L1218), особенно `fetch` на [index.html:1191](index.html#L1191); такие же блоки на [index.html:516](index.html#L516) и [index.html:776](index.html#L776).
 
@@ -142,7 +144,9 @@ DEFAULT_ALLOWED_ORIGINS = ["https://voltgroup-spb.ru", "https://www.voltgroup-sp
 
 ---
 
-### 7. 25,2 MB мёртвых JPEG в `gallery/` + вдвое тяжелее необходимого WebP
+### 7. [✅ ИСПРАВЛЕНО] 25,2 MB мёртвых JPEG в `gallery/` + вдвое тяжелее необходимого WebP
+
+> **Статус на 2026-10-06:** закрыто. Удалены 14 неиспользуемых JPEG (25,2 MB), 14 изображений WebP пережаты с 13,5 MB до 1,74 MB (качество 78, макс. сторона 1600 px). Галерея в `works.html` и на главной переведена с `background-image` на тег `<img loading="lazy" decoding="async">`. Решена задача [tasks/010-gallery-weight.md](tasks/010-gallery-weight.md).
 
 **Где:** `gallery/*.jpg` (14 файлов), [gallery/gallery-config.json](gallery/gallery-config.json), [works.html:482](works.html#L482).
 
@@ -162,7 +166,9 @@ DEFAULT_ALLOWED_ORIGINS = ["https://voltgroup-spb.ru", "https://www.voltgroup-sp
 
 ---
 
-### 8. Жёстко зашитый адрес бэкенда в 10+ местах
+### 8. [✅ ИСПРАВЛЕНО] Жёстко зашитый адрес бэкенда в 10+ местах
+
+> **Статус на 2026-10-06:** закрыто. Создан единый файл конфигурации `static/js/config.js` (`window.VG_API = 'https://voltgroup-bot.onrender.com'`), подключён на всех страницах проекта, хардкод URL заменён на `window.VG_API`. Решена задача [tasks/011-api-config.md](tasks/011-api-config.md).
 
 **Где:** `https://voltgroup-bot.onrender.com` в `connect-src` CSP на **каждой** странице (например [index.html:14](index.html#L14), [estimate.html:13](estimate.html#L13), [client/index.html:13](client/index.html#L13)) и в трёх вызовах внутри [index.html](index.html#L1148) (строки 1148, 1191, плюс дубли в других блоках форм).
 
@@ -250,7 +256,9 @@ DEFAULT_ALLOWED_ORIGINS = ["https://voltgroup-spb.ru", "https://www.voltgroup-sp
 
 **Что делать:** однократно получать `get_all_values()` в начале обработки вебхука и работать со снимком; кэшировать строки в словаре `{obj_id: row_number}` на время запроса; для списка объектов читать один раз.
 
-### 16. Источник данных и кэш требуют HTTP-сервера, но README обещает работу по `file://`
+### 16. [✅ ИСПРАВЛЕНО] Источник данных и кэш требуют HTTP-сервера, но README обещает работу по `file://`
+
+> **Статус на 2026-10-06:** закрыто. В `README.md` требование локального HTTP-сервера зафиксировано как обязательное; созданы скрипты запуска `tools/serve.cmd` и `tools/serve.sh`; в `estimate.html` и `works.html` добавлено явное предупреждение о блокировке CORS при открытии через протокол `file://` с инструкцией запуска сервера. Решена задача [tasks/013-local-http.md](tasks/013-local-http.md).
 
 **Где:** [estimate.html:565](estimate.html#L565) `fetch('./static/data/prices.json')`, [works.html:452](works.html#L452) `fetch('./gallery/gallery-config.json')`, [index.html:917](index.html#L917).
 
@@ -360,7 +368,9 @@ DEFAULT_ALLOWED_ORIGINS = ["https://voltgroup-spb.ru", "https://www.voltgroup-sp
 
 ## ⚪ Мелкие замечания
 
-### 28. Мёртвые и дублирующиеся файлы
+### 28. [✅ ИСПРАВЛЕНО] Мёртвые и дублирующиеся файлы
+
+> **Статус на 2026-10-06:** закрыто. Удалены дубли `yandex-tableau-logo.png` (из корня и `assets/`, канонический путь оставлен в `assets/images/`), удалён неиспользуемый `site.webmanifest`, удалены 14 JPEG из `gallery/`, создана папка и файл `static/js/config.js`. Решена задача [tasks/014-dead-files.md](tasks/014-dead-files.md).
 
 - [yandex-tableau-logo.png](yandex-tableau-logo.png) — три идентичных копии по 5937 байт: в корне, `assets/`, `assets/images/`.
 - [manifest.json](manifest.json) и [site.webmanifest](site.webmanifest) — содержимое идентично, подключён только `manifest.json`.
@@ -385,7 +395,9 @@ DEFAULT_ALLOWED_ORIGINS = ["https://voltgroup-spb.ru", "https://www.voltgroup-sp
 - «НДС не облагается» присутствует ([estimate.html:2034](estimate.html#L2034)) — корректно, но ссылку на чек «Мой налог» стоит дублировать в акте явно, а не только в договоре п. 2.4 ([estimate.html:2036](estimate.html#L2036)).
 - Год в футере — «2026» ([README.md:222](README.md#L222) и все страницы); при наступлении нового года требует ручной синхронизации.
 
-### 31. `/ping` как постоянный прогрев
+### 31. [✅ ИСПРАВЛЕНО] `/ping` как постоянный прогрев
+
+> **Статус на 2026-10-06:** закрыто. В `server.py` добавлен подробный комментарий о назначении прогрева cold-start бесплатного тарифа Render; маршрут `/ping` защищён лимитером `@limiter.limit("10 per minute")`. Решена задача [tasks/015-ping-limit.md](tasks/015-ping-limit.md).
 
 **Где:** [index.html:1148](index.html#L1148) и дубли; [server.py:287-289](server.py#L287-L289).
 
