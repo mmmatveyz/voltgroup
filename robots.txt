@@ -2,4 +2,11 @@ User-agent: *
 Allow: /
 Disallow: /client/
 
+# Debug query parameter of the Yandex.Metrica counter (?_ym_debug=1).
+# Merges such URLs into the main one so they are not indexed separately.
+# Understood by the Yandex robot only; Google relies on rel="canonical" instead.
+Clean-param: _ym_debug /
+
+# The Host directive is omitted: it is obsolete and unsupported by Yandex since 2018.
+
 Sitemap: https://voltgroup-spb.ru/sitemap.xml

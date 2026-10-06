@@ -38,21 +38,20 @@
     </url>
     <url>
         <loc>https://voltgroup-spb.ru/privacy.html</loc>
-        <lastmod>2026-09-29</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.5</priority>
+        <lastmod>2026-09-12</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
     </url>
     <url>
         <loc>https://voltgroup-spb.ru/offer.html</loc>
-        <lastmod>2026-09-29</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.5</priority>
+        <lastmod>2026-09-12</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
     </url>
     <url>
         <loc>https://voltgroup-spb.ru/cookies.html</loc>
-        <lastmod>2026-09-29</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.5</priority>
+        <lastmod>2026-09-12</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
     </url>
 </urlset>
-

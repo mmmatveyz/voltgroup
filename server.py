@@ -4,6 +4,7 @@ import os
 import json
 import html
 import secrets
+import time
 import logging
 from logging.handlers import RotatingFileHandler
 import gspread
@@ -22,17 +23,20 @@ app.config['ENV'] = 'production'
 app.debug = False
 
 # Логирование в файл вместо вывода ошибок в консоль/браузер
-if not os.path.exists('logs'):
-    os.mkdir('logs')
-
-file_handler = RotatingFileHandler('logs/app.log', maxBytes=10240000, backupCount=5)
-file_handler.setFormatter(logging.Formatter(
-    '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
-))
-file_handler.setLevel(logging.INFO)
-app.logger.addHandler(file_handler)
-app.logger.setLevel(logging.INFO)
-app.logger.info('VoltGroup Server Startup')
+LOG_DIR = os.environ.get('LOG_DIR', os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs'))
+try:
+    os.makedirs(LOG_DIR, exist_ok=True)
+    file_handler = RotatingFileHandler(os.path.join(LOG_DIR, 'app.log'), maxBytes=10240000, backupCount=5)
+    file_handler.setFormatter(logging.Formatter(
+        '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
+    ))
+    file_handler.setLevel(logging.INFO)
+    app.logger.addHandler(file_handler)
+    app.logger.setLevel(logging.INFO)
+    app.logger.info('VoltGroup Server Startup')
+except Exception as log_err:
+    logging.basicConfig(level=logging.INFO)
+    app.logger.warning(f"Не удалось инициализировать файловый логгер: {log_err}")
 
 # ----------------------------------------------------
 # 2. ОГРАНИЧЕНИЕ CORS И RATE LIMITING
@@ -110,6 +114,10 @@ STAGES = [
     "Сдача объекта / Акт"
 ]
 
+# ⚠️ ВАЖНО: user_states и лимитер хранятся в памяти процесса.
+# Запуск бэкенда строго в один процесс: gunicorn -w 1 -k gthread --threads 8.
+# При числе воркеров > 1 состояние теряется между запросами (см. AUDIT.md пункт 2).
+USER_STATE_TTL_SECONDS = 900  # 15 минут TTL для незавершённых диалогов
 user_states = {}
 
 def send_tg_message(chat_id, text, parse_mode="HTML", reply_markup=None):
@@ -407,7 +415,7 @@ def webhook():
 
             # Запрос на создание нового объекта
             elif cb_data == "m:new":
-                user_states[chat_id] = {"action": "await_new"}
+                user_states[chat_id] = {"action": "await_new", "ts": time.time()}
                 prompt_text = (
                     "➕ <b>Создание нового объекта</b>\n\n"
                     "Пришлите номер объекта (и адрес через запятую), например:\n"
@@ -467,7 +475,7 @@ def webhook():
             # Запрос ввода оплаты (o:pay:<id>)
             elif cb_data.startswith("o:pay:"):
                 obj_id = cb_data.split(":", 2)[2]
-                user_states[chat_id] = {"action": "await_pay", "obj_id": obj_id}
+                user_states[chat_id] = {"action": "await_pay", "obj_id": obj_id, "ts": time.time()}
                 prompt_text = (
                     f"💰 <b>Внесение оплаты по объекту №{html.escape(str(obj_id))}</b>\n\n"
                     "Пришлите сумму сообщением:\n"
@@ -541,6 +549,17 @@ def webhook():
             # Проверка, ждал ли бот текстовый ввод от пользователя
             state = user_states.get(chat_id)
             if state:
+                state_ts = state.get("ts", 0)
+                if state_ts and (time.time() - state_ts > USER_STATE_TTL_SECONDS):
+                    user_states.pop(chat_id, None)
+                    msg, kb = build_main_menu()
+                    send_tg_message(
+                        chat_id,
+                        "⌛ <b>Время ожидания ввода истекло.</b>\nПожалуйста, начните действие заново.\n\n" + msg,
+                        reply_markup=kb
+                    )
+                    return '', 200
+
                 action = state.get("action")
 
                 # Обработка ввода оплаты
@@ -633,5 +652,6 @@ def webhook():
     return '', 200
 
 if __name__ == "__main__":
-    # В продакшене запускать через Gunicorn / uWSGI
-    app.run(host='127.0.0.1', port=8000, debug=False)
+    # В продакшене запускать через Gunicorn: gunicorn -w 1 -k gthread --threads 8 server:app
+    port = int(os.environ.get('PORT', 8000))
+    app.run(host='0.0.0.0', port=port, debug=False)
