@@ -115,8 +115,8 @@
 |---|---|---|---|
 | [044-recrawl.md](044-recrawl.md) | **Переобход страниц в Вебмастере — приоритет №1** | человек | ⏳ **срочно** |
 | [035-index-audit.md](035-index-audit.md) | Аудит индексации: замеры сделаны, диагноз — задержка обхода | человек (панели) | 🔄 в работе |
-| [036-sitemap-fix.md](036-sitemap-fix.md) | Sitemap, `Clean-param`, актуальный `lastmod` | агент | ⏳ |
-| [037-server-rendered-content.md](037-server-rendered-content.md) | Прайс и галерея: контент должен быть в HTML | агент | ⏳ |
+| [036-sitemap-fix.md](036-sitemap-fix.md) | Sitemap, `Clean-param`, актуальный `lastmod` | агент | ✅ выполнено 06.10 |
+| [037-server-rendered-content.md](037-server-rendered-content.md) | Прайс и галерея: контент должен быть в HTML | агент | ⏸ отложено (сначала проверка в Вебмастере) |
 | [038-reviews.md](038-reviews.md) | Отзывы: вывод на сайт и разметка | агент + человек | ⏳ |
 | [039-yandex-business.md](039-yandex-business.md) | Яндекс.Бизнес: карточка, регион, услуги, NAP | человек | ⏳ |
 | [040-district-pages.md](040-district-pages.md) | Страницы под районы СПб и ЛО | агент + человек | ⏳ |
