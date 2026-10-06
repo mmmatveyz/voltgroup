@@ -1259,8 +1259,13 @@
     </table>` : ''}
 
     <div class="totals-card">
+        ${totals.discountAmount > 0 ? `
+        <div class="total-line"><span>Стоимость работ без скидки:</span><span>${totals.servicesTotal.toLocaleString('ru-RU')} ₽</span></div>
+        <div class="total-line discount"><span>Скидка:</span><span>-${totals.discountAmount.toLocaleString('ru-RU')} ₽</span></div>
+        <div class="total-line"><span>Итого за работы:</span><span>${totals.worksFinal.toLocaleString('ru-RU')} ₽</span></div>
+        ` : `
         <div class="total-line"><span>Стоимость работ:</span><span>${totals.worksFinal.toLocaleString('ru-RU')} ₽</span></div>
-        ${totals.discountAmount > 0 ? `<div class="total-line discount"><span>Скидка:</span><span>-${totals.discountAmount.toLocaleString('ru-RU')} ₽</span></div>` : ''}
+        `}
         ${totals.materialsTotal > 0 ? `<div class="total-line"><span>Материалы:</span><span>${totals.materialsTotal.toLocaleString('ru-RU')} ₽${!masterBuys ? ' (закупка заказчиком)' : ''}</span></div>` : ''}
         <div class="total-line grand"><span>ИТОГО К ОПЛАТЕ:</span><span>${totals.grandTotal.toLocaleString('ru-RU')} ₽</span></div>
     </div>
@@ -1461,8 +1466,13 @@
     </table>` : ''}
 
     <div class="total-section">
+        ${totals.discountAmount > 0 ? `
+        <div class="total-row">Стоимость электромонтажных работ без скидки: <strong>${totals.servicesTotal.toLocaleString('ru-RU')} ₽</strong></div>
+        <div class="total-row" style="color: #c00;">Персональная скидка: <strong>-${totals.discountAmount.toLocaleString('ru-RU')} ₽</strong></div>
+        <div class="total-row">Итого за электромонтажные работы: <strong>${totals.worksFinal.toLocaleString('ru-RU')} ₽</strong></div>
+        ` : `
         <div class="total-row">Стоимость электромонтажных работ: <strong>${totals.worksFinal.toLocaleString('ru-RU')} ₽</strong></div>
-        ${totals.discountAmount > 0 ? `<div class="total-row">Персональная скидка: <strong>-${totals.discountAmount.toLocaleString('ru-RU')} ₽</strong></div>` : ''}
+        `}
         ${masterBuys && totals.materialsTotal > 0 ? `<div class="total-row">Стоимость материалов: <strong>${totals.materialsTotal.toLocaleString('ru-RU')} ₽</strong></div>` : ''}
         <div class="final-price">ИТОГО К ОПЛАТЕ: ${totals.grandTotal.toLocaleString('ru-RU')} ₽</div>
     </div>
@@ -1661,10 +1671,23 @@
     </table>` : ''}
 
     <div class="totals-block">
+        ${totals.discountAmount > 0 ? `
+        <div class="total-line">Стоимость выполненных работ без скидки: <strong>${totals.servicesTotal.toLocaleString('ru-RU')} ₽</strong></div>
+        <div class="total-line" style="color: #c00;">Скидка на работы: <strong>-${totals.discountAmount.toLocaleString('ru-RU')} ₽</strong></div>
+        <div class="total-line">Итого за выполненные работы: <strong>${totals.worksFinal.toLocaleString('ru-RU')} ₽</strong></div>
+        ` : `
         <div class="total-line">Стоимость выполненных работ: <strong>${totals.worksFinal.toLocaleString('ru-RU')} ₽</strong></div>
-        ${totals.discountAmount > 0 ? `<div class="total-line" style="color: #c00;">Скидка: -${totals.discountAmount.toLocaleString('ru-RU')} ₽</div>` : ''}
-        ${masterBuys && totals.materialsTotal > 0 ? `<div class="total-line" style="font-size: 9.5pt; color: #555;">(Материалы на сумму ${totals.materialsTotal.toLocaleString('ru-RU')} ₽ оплачены Заказчиком ранее)</div>` : ''}
-        <div class="grand-total">ИТОГО К ОПЛАТЕ ЗА РАБОТЫ: ${totals.worksFinal.toLocaleString('ru-RU')} руб. (${numberToWordsRu(totals.worksFinal)}).</div>
+        `}
+        ${masterBuys && totals.materialsTotal > 0 ? `
+        <div class="total-line">Стоимость материалов (закупка Подрядчиком): <strong>${totals.materialsTotal.toLocaleString('ru-RU')} ₽</strong></div>
+        <div class="total-line" style="font-size: 8.5pt; color: #555;">(Материалы на сумму ${totals.materialsTotal.toLocaleString('ru-RU')} ₽ профинансированы Заказчиком ранее авансом)</div>
+        <div class="grand-total" style="display:block; text-align:right;">
+            ОБЩАЯ СТОИМОСТЬ ПО ДОГОВОРУ: <strong>${totals.grandTotal.toLocaleString('ru-RU')} руб. (${numberToWordsRu(totals.grandTotal)})</strong>.<br>
+            <span style="font-size: 9.5pt; font-weight: normal;">Остаток к перечислению за выполненные работы: <strong>${totals.worksFinal.toLocaleString('ru-RU')} руб. (${numberToWordsRu(totals.worksFinal)})</strong>.</span>
+        </div>` : `
+        <div class="grand-total" style="display:block; text-align:right;">
+            ОБЩАЯ СТОИМОСТЬ ПО ДОГОВОРУ (К ОПЛАТЕ): <strong>${totals.grandTotal.toLocaleString('ru-RU')} руб. (${numberToWordsRu(totals.grandTotal)})</strong>.
+        </div>`}
     </div>
 
     <div class="legal-text">
@@ -2035,9 +2058,12 @@
     <p>1.2. Работы выполняются Подрядчиком с соблюдением действующих нормативно-технических требований, правил устройства электроустановок (ПУЭ 7-е изд.), СП 256.1325800.2016, а также норм пожарной безопасности и охраны труда.</p>
 
     <div class="clause-title">2. СТОИМОСТЬ РАБОТ И ПОРЯДОК РАСЧЁТОВ</div>
-    <p>2.1. Общая стоимость подлежащих выполнению работ по настоящему Договору составляет: <strong>${totals.worksFinal.toLocaleString('ru-RU')} руб. (${numberToWordsRu(totals.worksFinal)})</strong>.${totals.discountAmount > 0 ? ` С учётом скидки: ${totals.discountAmount.toLocaleString('ru-RU')} руб. (${numberToWordsRu(totals.discountAmount)})` : ''}</p>
-    <p>2.2. Стоимость материалов ${masterBuys ? 'при закупке Подрядчиком составляет: ' + totals.materialsTotal.toLocaleString('ru-RU') + ' руб. (' + numberToWordsRu(totals.materialsTotal) + '). Итоговая цена Договора: <strong>' + totals.grandTotal.toLocaleString('ru-RU') + ' руб. (' + numberToWordsRu(totals.grandTotal) + ')</strong>.' : 'не входит в цену Договора и обеспечивается Заказчиком.'} НДС не облагается на основании ч. 8 ст. 2 Федерального закона от 27.11.2018 № 422-ФЗ.</p>
-    <p>2.3. Оплата производится Заказчиком в рублях РФ поэтапно либо в полном объёме по факту завершения работ и подписания двустороннего Акта сдачи-приёмки выполненных работ.</p>
+    <p>2.1. Общая цена настоящего Договора составляет: <strong>${totals.grandTotal.toLocaleString('ru-RU')} руб. (${numberToWordsRu(totals.grandTotal)})</strong>. НДС не облагается на основании ч. 8 ст. 2 Федерального закона от 27.11.2018 № 422-ФЗ.</p>
+    <p>2.2. Указанная в п. 2.1 цена Договора включает в себя:
+        <br>— стоимость подлежащих выполнению электромонтажных работ: <strong>${totals.worksFinal.toLocaleString('ru-RU')} руб. (${numberToWordsRu(totals.worksFinal)})</strong>${totals.discountAmount > 0 ? ` (в том числе учтена согласованная скидка в размере ${totals.discountAmount.toLocaleString('ru-RU')} руб. (${numberToWordsRu(totals.discountAmount)}))` : ''};
+        <br>— ${masterBuys ? 'стоимость материалов и комплектующих, закупаемых Подрядчиком: <strong>' + totals.materialsTotal.toLocaleString('ru-RU') + ' руб. (' + numberToWordsRu(totals.materialsTotal) + ')</strong>.' : 'материалы и комплектующие для выполнения работ обеспечиваются Заказчиком самостоятельно за свой счёт и в цену Договора не входят.'}
+    </p>
+    <p>2.3. ${masterBuys && totals.materialsTotal > 0 ? 'Оплата стоимости материалов в размере ' + totals.materialsTotal.toLocaleString('ru-RU') + ' руб. производится Заказчиком авансовым платежом до начала их закупки Подрядчиком. ' : ''}Оплата выполненных электромонтажных работ производится Заказчиком в рублях РФ поэтапно либо в полном объёме по факту завершения работ и подписания двустороннего Акта сдачи-приёмки выполненных работ.</p>
     <p>2.4. Подрядчик обязуется на каждую полученную сумму оплаты сформировать и передать Заказчику фискальный чек в электронной форме или на бумажном носителе из приложения «Мой налог» в соответствии со ст. 14 Федерального закона № 422-ФЗ.</p>
 
     <div class="clause-title">3. СРОКИ ВЫПОЛНЕНИЯ РАБОТ</div>
@@ -2098,6 +2124,15 @@
         </thead>
         <tbody>
             ${worksRowsHTML}
+            ${totals.discountAmount > 0 ? `
+            <tr style="background: #f9f9f9;">
+                <td colspan="5" style="text-align: right;">Стоимость работ без скидки:</td>
+                <td style="text-align: right;">${totals.servicesTotal.toLocaleString('ru-RU')} ₽</td>
+            </tr>
+            <tr style="background: #f9f9f9; color: #c00;">
+                <td colspan="5" style="text-align: right;">Скидка на работы:</td>
+                <td style="text-align: right;">-${totals.discountAmount.toLocaleString('ru-RU')} ₽</td>
+            </tr>` : ''}
             <tr style="font-weight: bold; background: #f9f9f9;">
                 <td colspan="5" style="text-align: right;">Итого за электромонтажные работы:</td>
                 <td style="text-align: right;">${totals.worksFinal.toLocaleString('ru-RU')} ₽</td>
@@ -2127,9 +2162,13 @@
         </tbody>
     </table>` : ''}
 
-    <p style="text-align: right; font-size: 11.5pt; font-weight: bold; margin-top: 15px;">
-        ВСЕГО К ОПЛАТЕ ПО СМЕТЕ: ${totals.grandTotal.toLocaleString('ru-RU')} руб. (${numberToWordsRu(totals.grandTotal)}).
-    </p>
+    <div style="margin-top: 15px; text-align: right; font-size: 10pt; line-height: 1.6;">
+        <div>Стоимость электромонтажных работ: <strong>${totals.worksFinal.toLocaleString('ru-RU')} ₽</strong></div>
+        ${masterBuys && totals.materialsTotal > 0 ? `<div>Стоимость материалов (закупка Подрядчиком): <strong>${totals.materialsTotal.toLocaleString('ru-RU')} ₽</strong></div>` : ''}
+        <div style="font-size: 11.5pt; font-weight: bold; margin-top: 6px; border-top: 1px solid #000; padding-top: 6px;">
+            ОБЩАЯ ЦЕНА ПО ДОГОВОРУ: ${totals.grandTotal.toLocaleString('ru-RU')} руб. (${numberToWordsRu(totals.grandTotal)}).
+        </div>
+    </div>
 
     <div class="signatures" style="margin-top: 30px;">
         <div class="sign-col">
