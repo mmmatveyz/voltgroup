@@ -190,7 +190,9 @@ DEFAULT_ALLOWED_ORIGINS = ["https://voltgroup-spb.ru", "https://www.voltgroup-sp
 
 ---
 
-### 10. Нет суммы прописью в договоре и акте
+### 10. [✅ ИСПРАВЛЕНО] Нет суммы прописью в договоре и акте
+
+> **Статус на 2026-10-06:** закрыто. Создан модуль `static/js/money.js` с функцией `numberToWordsRu(amount)`, поддерживающей правильные родовые и числовые склонения (рубли, тысячи, миллионы, миллиарды, копейки). Подключён в `estimate.html` и внедрён в генераторы договора (п. 2.1 и п. 2.2), акта выполненных работ и спецификации к договору. Покрыт автотестом `tools/test_money.js` на 18 сценариев. Решена задача [tasks/017-sum-in-words.md](tasks/017-sum-in-words.md).
 
 **Где:** [estimate.html:2033](estimate.html#L2033) — `составляет: <strong>${totals.worksFinal.toLocaleString('ru-RU')} (рублей)</strong>`; аналогично [estimate.html:1662](estimate.html#L1662) и [estimate.html:2126](estimate.html#L2126).
 

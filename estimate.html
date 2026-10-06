@@ -487,6 +487,7 @@
     </div>
 </footer>
 
+<script src="static/js/money.js"></script>
 <script>
     // Хелпер экранирования опасных символов HTML
     function escapeHtml(str) {
@@ -1663,7 +1664,7 @@
         <div class="total-line">Стоимость выполненных работ: <strong>${totals.worksFinal.toLocaleString('ru-RU')} ₽</strong></div>
         ${totals.discountAmount > 0 ? `<div class="total-line" style="color: #c00;">Скидка: -${totals.discountAmount.toLocaleString('ru-RU')} ₽</div>` : ''}
         ${masterBuys && totals.materialsTotal > 0 ? `<div class="total-line" style="font-size: 9.5pt; color: #555;">(Материалы на сумму ${totals.materialsTotal.toLocaleString('ru-RU')} ₽ оплачены Заказчиком ранее)</div>` : ''}
-        <div class="grand-total">ИТОГО К ОПЛАТЕ ЗА РАБОТЫ: ${totals.worksFinal.toLocaleString('ru-RU')} рублей.</div>
+        <div class="grand-total">ИТОГО К ОПЛАТЕ ЗА РАБОТЫ: ${totals.worksFinal.toLocaleString('ru-RU')} руб. (${numberToWordsRu(totals.worksFinal)}).</div>
     </div>
 
     <div class="legal-text">
@@ -2034,8 +2035,8 @@
     <p>1.2. Работы выполняются Подрядчиком с соблюдением действующих нормативно-технических требований, правил устройства электроустановок (ПУЭ 7-е изд.), СП 256.1325800.2016, а также норм пожарной безопасности и охраны труда.</p>
 
     <div class="clause-title">2. СТОИМОСТЬ РАБОТ И ПОРЯДОК РАСЧЁТОВ</div>
-    <p>2.1. Общая стоимость подлежащих выполнению работ по настоящему Договору составляет: <strong>${totals.worksFinal.toLocaleString('ru-RU')} (рублей)</strong>.${totals.discountAmount > 0 ? ` С учётом скидки: ${totals.discountAmount.toLocaleString('ru-RU')} руб.` : ''}</p>
-    <p>2.2. Стоимость материалов ${masterBuys ? 'при закупке Подрядчиком составляет: ' + totals.materialsTotal.toLocaleString('ru-RU') + ' руб. Итоговая цена Договора: <strong>' + totals.grandTotal.toLocaleString('ru-RU') + ' (рублей)</strong>.' : 'не входит в цену Договора и обеспечивается Заказчиком.'} НДС не облагается на основании ч. 8 ст. 2 Федерального закона от 27.11.2018 № 422-ФЗ.</p>
+    <p>2.1. Общая стоимость подлежащих выполнению работ по настоящему Договору составляет: <strong>${totals.worksFinal.toLocaleString('ru-RU')} руб. (${numberToWordsRu(totals.worksFinal)})</strong>.${totals.discountAmount > 0 ? ` С учётом скидки: ${totals.discountAmount.toLocaleString('ru-RU')} руб. (${numberToWordsRu(totals.discountAmount)})` : ''}</p>
+    <p>2.2. Стоимость материалов ${masterBuys ? 'при закупке Подрядчиком составляет: ' + totals.materialsTotal.toLocaleString('ru-RU') + ' руб. (' + numberToWordsRu(totals.materialsTotal) + '). Итоговая цена Договора: <strong>' + totals.grandTotal.toLocaleString('ru-RU') + ' руб. (' + numberToWordsRu(totals.grandTotal) + ')</strong>.' : 'не входит в цену Договора и обеспечивается Заказчиком.'} НДС не облагается на основании ч. 8 ст. 2 Федерального закона от 27.11.2018 № 422-ФЗ.</p>
     <p>2.3. Оплата производится Заказчиком в рублях РФ поэтапно либо в полном объёме по факту завершения работ и подписания двустороннего Акта сдачи-приёмки выполненных работ.</p>
     <p>2.4. Подрядчик обязуется на каждую полученную сумму оплаты сформировать и передать Заказчику фискальный чек в электронной форме или на бумажном носителе из приложения «Мой налог» в соответствии со ст. 14 Федерального закона № 422-ФЗ.</p>
 
@@ -2127,7 +2128,7 @@
     </table>` : ''}
 
     <p style="text-align: right; font-size: 11.5pt; font-weight: bold; margin-top: 15px;">
-        ВСЕГО К ОПЛАТЕ ПО СМЕТЕ: ${totals.grandTotal.toLocaleString('ru-RU')} рублей.
+        ВСЕГО К ОПЛАТЕ ПО СМЕТЕ: ${totals.grandTotal.toLocaleString('ru-RU')} руб. (${numberToWordsRu(totals.grandTotal)}).
     </p>
 
     <div class="signatures" style="margin-top: 30px;">
