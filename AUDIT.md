@@ -304,7 +304,9 @@ DEFAULT_ALLOWED_ORIGINS = ["https://voltgroup-spb.ru", "https://www.voltgroup-sp
 
 **Что делать:** разрешить только `^\d{1,6}$`, использовать `ws.find(...)` с последующей проверкой `str(row[0]).strip() == obj_id`, валидировать `progress` как целое 0-100.
 
-### 20. Пять страниц грузят устаревшую версию CSS
+### 20. [✅ ИСПРАВЛЕНО] Пять страниц грузят устаревшую версию CSS
+
+> **Статус на 2026-10-07:** закрыто. Рассинхрон устранён: единая актуальная версия `style.css?v=2.4` проставлена на всех 10 HTML-страницах проекта (`index.html`, `estimate.html`, `works.html`, `cookies.html`, `offer.html`, `privacy.html`, `404.html`, `install/index.html`, `engineering/index.html`, `contacts/index.html`). Относительные пути проверены (`./static/css/` и `../static/css/`). В `tools/check.py` внедрена автоматическая проверка синхронности версий кэш-бэстинга (шаг [6/6]). В `AGENTS.md` §2.4 закреплено правило синхронного обновления `?v=`. Решена задача [tasks/022-css-version.md](tasks/022-css-version.md).
 
 **Где:** `style.css?v=2.1` в [404.html](404.html#L29), [cookies.html](cookies.html), [offer.html](offer.html), [privacy.html](privacy.html); `?v=2.3` в [index.html](index.html), [estimate.html](estimate.html), [works.html](works.html). В `install/`, `engineering/`, `contacts/` параметра нет вовсе.
 
@@ -553,7 +555,7 @@ DEFAULT_ALLOWED_ORIGINS = ["https://voltgroup-spb.ru", "https://www.voltgroup-sp
 | 17 | Service Worker отключён | 🟡 | `sw.js` | 3 ч |
 | 18 | ✅ Парсинг суммы превращает ошибку в 0 | 🟡 | `server.py:536-541` | 0.5 ч |
 | 19 | ✅ ID без валидации, частичный поиск | 🟡 | `server.py:551, 208` | 1 ч |
-| 20 | Рассинхрон версий CSS | 🟡 | 5 страниц | 0.5 ч |
+| 20 | ✅ Рассинхрон версий CSS | 🟡 | 5 страниц | 0.5 ч |
 | 21 | 62 `!important`, инлайн-стили | 🟡 | `static/css/style.css` | постепенно |
 | 22 | ✅ Нет тестов и CI | 🟡 | — | 6 ч |
 | 23 | Обрезка/рассинхрон адреса в кнопках | 🟡 | `server.py:194, 480` | 1 ч |
@@ -569,7 +571,7 @@ DEFAULT_ALLOWED_ORIGINS = ["https://voltgroup-spb.ru", "https://www.voltgroup-sp
 | 33 | ✅ Нет `.env.example` и файла запуска | ⚪ | корень | 0.5 ч |
 | 34 | Нет резервного копирования | ⚪ | — | 2 ч |
 
-**Статус на 07.10.2026:** закрыто **20 из 34** пунктов — этап 1 (8 из 8), этап 2 (6 из 6), этап 3 (5 из 5), этап 4 (1 из 15). Открыто 14: **этап 4** (9, 13, 15, 17, 20, 21, 23–27, 29, 32, 34) плюс SEO-блок в [tasks/](tasks/README.md).
+**Статус на 07.10.2026:** закрыто **21 из 34** пунктов — этап 1 (8 из 8), этап 2 (6 из 6), этап 3 (5 из 5), этап 4 (2 из 15). Открыто 13: **этап 4** (9, 13, 15, 17, 21, 23–27, 29, 32, 34) плюс SEO-блок в [tasks/](tasks/README.md).
 
 ---
 

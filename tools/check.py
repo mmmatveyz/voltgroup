@@ -14,6 +14,7 @@ tools/check.py — Единая команда комплексной прове
    - tools/test_doc_smoke.js (генерация всех 4 документов)
    - tools/test_cookies.js (баннер согласия и Метрика)
 5. Базовые проверки безопасности и целостности репозитория
+6. Синхронность версий кэш-бэстинга style.css (?v=) и относительных путей
 
 Использование:
     python tools/check.py
@@ -54,7 +55,7 @@ def report_fail(msg: str, err: str = ""):
     print(full_msg)
 
 def check_python_syntax():
-    print("\n[1/5] Проверка синтаксиса Python-файлов...")
+    print("\n[1/6] Проверка синтаксиса Python-файлов...")
     py_files = [ROOT_DIR / "server.py", Path(__file__).resolve()]
     for py_file in py_files:
         if not py_file.exists():
@@ -69,7 +70,7 @@ def check_python_syntax():
             report_fail(f"{py_file.name}: синтаксическая ошибка", str(e))
 
 def check_json_configs():
-    print("\n[2/5] Проверка JSON-конфигураций и структуры данных...")
+    print("\n[2/6] Проверка JSON-конфигураций и структуры данных...")
     json_targets = [
         ROOT_DIR / "static" / "data" / "prices.json",
         ROOT_DIR / "gallery" / "gallery-config.json",
@@ -102,7 +103,7 @@ def check_json_configs():
             report_fail(f"{rel_path}: ошибка парсинга JSON", str(e))
 
 def check_gallery_assets():
-    print("\n[3/5] Проверка файлов медиа и галереи...")
+    print("\n[3/6] Проверка файлов медиа и галереи...")
     cfg_path = ROOT_DIR / "gallery" / "gallery-config.json"
     if not cfg_path.exists():
         report_fail("Конфиг галереи не найден для проверки медиа")
@@ -142,7 +143,7 @@ def check_gallery_assets():
         report_fail("Ошибка проверки медиа галереи", str(e))
 
 def run_node_tests():
-    print("\n[4/5] Запуск тестовых наборов JavaScript (Node.js)...")
+    print("\n[4/6] Запуск тестовых наборов JavaScript (Node.js)...")
     js_tests = [
         ROOT_DIR / "tools" / "test_money.js",
         ROOT_DIR / "tools" / "test_doc_totals.js",
@@ -176,7 +177,7 @@ def run_node_tests():
             report_fail(f"{rel_test}: не удалось запустить через Node.js", str(e))
 
 def check_security_sanity():
-    print("\n[5/5] Базовые проверки безопасности...")
+    print("\n[5/6] Базовые проверки безопасности...")
     # Проверка: файлы .env не должны отслеживаться в git
     try:
         res = subprocess.run(
@@ -203,6 +204,63 @@ def check_security_sanity():
     else:
         report_fail(".env.example отсутствует")
 
+def check_css_version_consistency():
+    print("\n[6/6] Проверка синхронности версий CSS (?v=) и относительных путей...")
+    import re
+    html_targets = [
+        ROOT_DIR / "index.html",
+        ROOT_DIR / "estimate.html",
+        ROOT_DIR / "works.html",
+        ROOT_DIR / "cookies.html",
+        ROOT_DIR / "offer.html",
+        ROOT_DIR / "privacy.html",
+        ROOT_DIR / "404.html",
+        ROOT_DIR / "install" / "index.html",
+        ROOT_DIR / "engineering" / "index.html",
+        ROOT_DIR / "contacts" / "index.html",
+    ]
+    css_pattern = re.compile(r'href=[\'"]([^\'"]*style\.css(?:\?v=([^\'"]+))?)[\'"]')
+    versions = {}
+    path_errors = []
+
+    for hpath in html_targets:
+        rel_name = str(hpath.relative_to(ROOT_DIR))
+        if not hpath.exists():
+            report_fail(f"Файл {rel_name} не существует")
+            continue
+        try:
+            with open(hpath, "r", encoding="utf-8") as f:
+                content = f.read()
+            m = css_pattern.search(content)
+            if not m:
+                report_fail(f"{rel_name}: не содержит ссылки на style.css")
+                continue
+            full_href, v = m.group(1), m.group(2)
+            if not v:
+                report_fail(f"{rel_name}: отсутствует параметр ?v= для style.css")
+                continue
+            versions[rel_name] = v
+
+            is_sub = len(hpath.relative_to(ROOT_DIR).parts) > 1
+            expected_prefix = "../static/css/style.css" if is_sub else "./static/css/style.css"
+            if not full_href.startswith(expected_prefix):
+                path_errors.append(f"{rel_name}: ожидался путь {expected_prefix}, получен {full_href}")
+        except Exception as e:
+            report_fail(f"Ошибка проверки {rel_name}", str(e))
+
+    unique_versions = set(versions.values())
+    if len(unique_versions) == 1:
+        v_val = next(iter(unique_versions))
+        report_pass(f"Все {len(versions)} страниц используют единую версию стилей: ?v={v_val}")
+    else:
+        report_fail(f"Рассинхрон версий style.css: обнаружены разные версии: {unique_versions}")
+
+    if not path_errors:
+        report_pass("Относительные пути к style.css корректны во всех 10 шаблонах")
+    else:
+        for pe in path_errors:
+            report_fail(pe)
+
 def main():
     print("=" * 60)
     print(" VoltGroup Project Health & Test Check (tools/check.py)")
@@ -213,6 +271,7 @@ def main():
     check_gallery_assets()
     run_node_tests()
     check_security_sanity()
+    check_css_version_consistency()
 
     print("\n" + "=" * 60)
     if failed_count == 0:

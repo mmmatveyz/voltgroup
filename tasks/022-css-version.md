@@ -1,7 +1,7 @@
 # Задача 022 — Синхронизировать `?v=` во всех страницах
 
 **Пункт аудита:** № 20 · из [AUDIT.md](../AUDIT.md)
-**Статус:** ⏳ не начато
+**Статус:** ✅ завершено (07.10.2026)
 **Файлы:** `404.html`, `cookies.html`, `offer.html`, `privacy.html`, `install/index.html`, `engineering/index.html`, `contacts/index.html`
 
 ## Проблема

@@ -62,7 +62,7 @@
 | [020-csp-header.md](020-csp-header.md) | 13 | CSP через HTTP-заголовок | ⏳ |
 | [024-sheets-queries.md](024-sheets-queries.md) | 15 | Уменьшить число обращений к Google Sheets | ⏳ |
 | [031-service-worker.md](031-service-worker.md) | 17 | Service Worker: офлайн-работа на объекте | ⏳ |
-| [022-css-version.md](022-css-version.md) | 20 | Синхронизировать `?v=` во всех страницах | ⏳ |
+| [022-css-version.md](022-css-version.md) | 20 | Синхронизировать `?v=` во всех страницах | ✅ завершено 07.10 |
 | [023-css-cleanup.md](023-css-cleanup.md) | 21 | Разбирать `!important` постепенно | ⏳ |
 | [034-address-truncation.md](034-address-truncation.md) | 23 | Обрезка адреса и текст для клиента | ⏳ |
 | [025-rate-limiting.md](025-rate-limiting.md) | 25 | Ревизия лимитов запросов | ⏳ |
