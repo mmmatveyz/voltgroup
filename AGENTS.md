@@ -130,7 +130,7 @@
 
 - **Без сборки.** Не вводить npm, webpack, TypeScript, фреймворки. Только обычные `.html`, `.css`, `.js`, подключаемые тегами.
 - **Без внешних CDN**, кроме уже используемых: Google Fonts, Яндекс.Метрика, виджет Яндекс.Справки. Всё остальное — локально.
-- **Кэш-бэстинг:** при любой правке [static/css/style.css](static/css/style.css) обязательно синхронно обновлять версию `?v=` **на всех 10 страницах** проекта (актуальная: `v=2.4`, отсутствие рассинхрона проверяется автоматически в `tools/check.py`).
+- **Кэш-бэстинг:** при любой правке [static/css/style.css](static/css/style.css) обязательно синхронно обновлять версию `?v=` **на всех 10 страницах** проекта (актуальная: `v=2.5`, отсутствие рассинхрона проверяется автоматически в `tools/check.py`).
 - **Инлайновые скрипты и стили допустимы** (так устроен проект), но помнить: из-за них CSP содержит `'unsafe-inline'` и не может быть ужесточён без выноса кода в файлы.
 - **Пользовательские данные — только через `textContent`** либо `escapeHtml()`. Никогда не собирать HTML конкатенацией неэкранированных значений.
 - **Доступность:** сохранять `focus-visible`, `aria-*`, `prefers-reduced-motion` — они добавлены осознанно.
@@ -153,7 +153,7 @@
 ```bash
 python tools/check.py
 ```
-Скрипт проверяет синтаксис Python, валидность всех JSON-конфигов, физическое наличие и формат изображений галереи, а также запускает модульные тесты: сумму прописью (`tools/test_money.js`), базу расчёта (`tools/test_doc_totals.js`), математику сметы (`tools/test_estimate_calc.js`) и смоук-тесты четырёх документов (`tools/test_doc_smoke.js`).
+Скрипт проверяет синтаксис Python, валидность всех JSON-конфигов, физическое наличие и формат изображений галереи, синхронность отзывов (`reviews.json` ↔ статический HTML ↔ микроразметка `AggregateRating`), а также запускает модульные тесты: сумму прописью (`tools/test_money.js`), базу расчёта (`tools/test_doc_totals.js`), математику сметы (`tools/test_estimate_calc.js`) и смоук-тесты четырёх документов (`tools/test_doc_smoke.js`).
 
 Минимум по отдельным компонентам:
 
@@ -199,14 +199,15 @@ voltgroup/
 │
 ├── server.py               Flask: вебхук Telegram + API, 784 строки
 ├── requirements.txt        flask, requests, gunicorn, gspread, flask-cors, flask-limiter
-├── sw.js                   отключён (закомментирован)
-├── manifest.json           PWA-манифест (site.webmanifest — дубль)
+├── sw.js                   заглушка: код закомментирован, регистрации нет (пункт 17, отложен)
+├── .htaccess               заголовки безопасности для Apache; GitHub Pages его игнорирует
+├── manifest.json           PWA-манифест (site.webmanifest удалён как дубль)
 └── sitemap.xml, robots.txt, CNAME, favicon*.* , icon-*.png
 ```
 
 **Внешние зависимости рантайма:**
-`https://voltgroup-bot.onrender.com` — бэкенд (захардкожен в 10+ местах, пункт № 8 аудита);
-`mc.yandex.ru` — Метрика с вебвизором (пункт № 12 — нет баннера согласия).
+`https://voltgroup-bot.onrender.com` — бэкенд (адрес берётся из `window.VG_API` в [static/js/config.js](static/js/config.js), CSP-директива `connect-src` остаётся отдельно);
+`mc.yandex.ru` — Метрика с вебвизором, инициализируется из [static/js/cookies.js](static/js/cookies.js) только после согласия на cookies.
 
 ---
 

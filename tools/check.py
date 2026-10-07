@@ -871,6 +871,126 @@ def check_photo_reports_system():
         report_fail("Ошибка функционального теста parse_cloudinary_url", str(e))
 
 
+def check_reviews_sync():
+    """Проверяет синхронность отзывов: reviews.json ↔ статический HTML ↔ микроразметка.
+
+    Статический блок в index.html читают поисковые роботы (JS они исполняют не всегда),
+    а посетители видят карточки, перерисованные скриптом из reviews.json. Если добавить
+    или удалить отзыв только в одном месте, содержимое разойдётся молча.
+    """
+    print("\n[13/13] Проверка синхронности отзывов (reviews.json ↔ HTML ↔ разметка)...")
+    reviews_path = ROOT_DIR / "static" / "data" / "reviews.json"
+    index_path = ROOT_DIR / "index.html"
+
+    if not reviews_path.exists():
+        report_fail("static/data/reviews.json не найден")
+        return
+    if not index_path.exists():
+        report_fail("index.html не найден")
+        return
+
+    try:
+        reviews = json.loads(reviews_path.read_text(encoding="utf-8"))
+    except Exception as e:
+        report_fail("reviews.json не читается как JSON", str(e))
+        return
+
+    if not isinstance(reviews, list) or not reviews:
+        report_fail("reviews.json пуст или не является массивом")
+        return
+    report_pass(f"reviews.json содержит {len(reviews)} отзыв(ов)")
+
+    required = ("author", "rating", "text")
+    missing_fields = [
+        (r.get("id", idx + 1), field)
+        for idx, r in enumerate(reviews)
+        for field in required
+        if not r.get(field)
+    ]
+    if missing_fields:
+        report_fail(
+            "В отзывах отсутствуют обязательные поля",
+            "; ".join(f"id={rid}: нет {field}" for rid, field in missing_fields),
+        )
+    else:
+        report_pass("Все отзывы содержат автора, оценку и текст")
+
+    html = index_path.read_text(encoding="utf-8")
+
+    # 1. Имена в видимых карточках статического блока (класс review-author-name).
+    # Ищем именно разметку карточек, а не весь файл: имя встречается ещё и в JSON-LD,
+    # поэтому поиск по всему HTML давал бы ложное «всё в порядке» при расхождении.
+    visible_names = re.findall(
+        r'class="review-author-name"[^>]*>\s*([^<]+?)\s*<', html
+    )
+    visible_names = [n.strip() for n in visible_names]
+
+    if not visible_names:
+        report_fail(
+            "В статическом HTML нет карточек отзывов (review-author-name)",
+            "Робот без JS не увидит отзывы. Проверьте блок #reviewsGrid в index.html.",
+        )
+    else:
+        json_authors = [str(r.get("author", "")).strip() for r in reviews]
+        missing_in_html = [a for a in json_authors if a not in visible_names]
+        extra_in_html = [n for n in visible_names if n not in json_authors]
+
+        if missing_in_html:
+            report_fail(
+                "В статическом HTML нет отзывов, которые есть в reviews.json",
+                "Отсутствуют: " + ", ".join(missing_in_html)
+                + ". Робот без JS увидит неполный список — синхронизируйте разметку.",
+            )
+        elif extra_in_html:
+            report_fail(
+                "В статическом HTML есть отзывы, которых нет в reviews.json",
+                "Лишние: " + ", ".join(extra_in_html)
+                + ". Возможно, отзыв удалён из данных, но остался в разметке.",
+            )
+        elif len(visible_names) != len(reviews):
+            report_fail(
+                "Число карточек отзывов в HTML не совпадает с reviews.json",
+                f"карточек: {len(visible_names)}, в данных: {len(reviews)}",
+            )
+        else:
+            report_pass(
+                f"Имена и число отзывов совпадают: {len(visible_names)} карточек в HTML = {len(reviews)} в reviews.json"
+            )
+
+    # 2. Микроразметка AggregateRating должна совпадать с фактическими данными
+    rating_match = re.search(r'"aggregateRating"\s*:\s*\{(.*?)\}', html, re.DOTALL)
+    if not rating_match:
+        report_fail("В index.html не найдена микроразметка aggregateRating")
+    else:
+        block = rating_match.group(1)
+        count_match = re.search(r'"reviewCount"\s*:\s*"?(\d+)"?', block)
+        value_match = re.search(r'"ratingValue"\s*:\s*"?([\d.,]+)"?', block)
+        if not count_match:
+            report_fail("В aggregateRating отсутствует reviewCount")
+        elif int(count_match.group(1)) != len(reviews):
+            report_fail(
+                "reviewCount в разметке не совпадает с числом отзывов",
+                f"разметка: {count_match.group(1)}, в reviews.json: {len(reviews)}",
+            )
+        else:
+            report_pass(f"reviewCount в разметке совпадает с числом отзывов ({len(reviews)})")
+
+        ratings = [r.get("rating") for r in reviews if isinstance(r.get("rating"), (int, float))]
+        if value_match and ratings:
+            expected = sum(ratings) / len(ratings)
+            try:
+                actual = float(value_match.group(1).replace(",", "."))
+                if abs(actual - expected) > 0.05:
+                    report_fail(
+                        "ratingValue в разметке не совпадает со средней оценкой",
+                        f"разметка: {actual}, по reviews.json: {round(expected, 2)}",
+                    )
+                else:
+                    report_pass(f"ratingValue в разметке совпадает со средней оценкой ({round(expected, 2)})")
+            except ValueError:
+                report_fail("ratingValue в разметке не является числом", value_match.group(1))
+
+
 def main():
     print("=" * 60)
     print(" VoltGroup Project Health & Test Check (tools/check.py)")
@@ -888,6 +1008,7 @@ def main():
     check_backup_system()
     check_photo_reports_system()
     check_css_version_consistency()
+    check_reviews_sync()
 
 
     print("\n" + "=" * 60)
