@@ -11,6 +11,7 @@ __pycache__/
 *.py[cod]
 
 # Backups and temporary files
+backups/
 *.backup.*
 *.bak
 new-layout-dark.html

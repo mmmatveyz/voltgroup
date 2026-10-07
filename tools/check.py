@@ -59,7 +59,7 @@ def report_fail(msg: str, err: str = ""):
 
 def check_python_syntax():
     print("\n[1/8] Проверка синтаксиса Python-файлов...")
-    py_files = [ROOT_DIR / "server.py", Path(__file__).resolve()]
+    py_files = [ROOT_DIR / "server.py", ROOT_DIR / "tools" / "backup.py", Path(__file__).resolve()]
     for py_file in py_files:
         if not py_file.exists():
             report_fail(f"Файл не найден: {py_file.name}")
@@ -625,8 +625,109 @@ def check_error_alerts_system():
     except Exception as e:
         report_fail("Сбой проверки системы алертов об ошибках", str(e))
 
+def check_backup_system():
+    print("\n[10/11] Проверка системы резервного копирования данных (tasks/033, п. 34 AUDIT)...")
+    backup_script = ROOT_DIR / "tools" / "backup.py"
+    restore_doc = ROOT_DIR / "docs" / "RESTORE.md"
+    gitignore_path = ROOT_DIR / ".gitignore"
+
+    if not backup_script.exists():
+        report_fail("Файл tools/backup.py не найден")
+        return
+    if not restore_doc.exists():
+        report_fail("Документ docs/RESTORE.md не найден")
+        return
+
+    # 1. Проверка .gitignore
+    with open(gitignore_path, "r", encoding="utf-8") as f:
+        gi_content = f.read()
+    if "backups/" not in gi_content:
+        report_fail(".gitignore не содержит исключения папки backups/")
+        return
+    report_pass(".gitignore содержит правило исключения папки backups/")
+
+    # 2. Модульное тестирование логики сохранения и ротации снимков
+    try:
+        import tempfile
+        import shutil
+        import csv
+        import glob
+        import time
+        from datetime import datetime
+
+        with open(backup_script, "r", encoding="utf-8") as f:
+            b_code = f.read()
+
+        sandbox_ns = {
+            "__file__": str(backup_script),
+            "os": os,
+            "sys": sys,
+            "json": json,
+            "csv": csv,
+            "glob": glob,
+            "time": time,
+            "datetime": datetime,
+            "Path": Path,
+            "MAX_BACKUPS_TO_KEEP": 3
+        }
+        exec(b_code, sandbox_ns)
+
+        save_fn = sandbox_ns["save_snapshot_data"]
+        rotate_fn = sandbox_ns["rotate_backups"]
+
+        # Создаем временную тестовую директорию
+        test_dir = Path(tempfile.mkdtemp(prefix="vg_backup_test_"))
+        try:
+            sample_rows = [
+                ["id", "address", "total", "paid", "progress", "stage", "photo", "token"],
+                ["101", "ул. Ленина, 10", "150000", "50000", "30", "Черновой монтаж", "", "tok_101"],
+                ["102", "Невский пр., 25", "280000", "280000", "100", "Сдан", "", "tok_102"]
+            ]
+
+            # Тест создания 5 бэкапов
+            for i in range(5):
+                ts = f"2026100{i}_120000"
+                save_fn(sample_rows, backup_dir=test_dir, timestamp_str=ts)
+                time.sleep(0.01)
+
+            json_files = list(test_dir.glob("backup_*.json"))
+            csv_files = list(test_dir.glob("backup_*.csv"))
+            assert len(json_files) == 5, "Должно быть создано 5 JSON-файлов"
+            assert len(csv_files) == 5, "Должно быть создано 5 CSV-файлов"
+
+            # Проверка содержимого сохраненного JSON и CSV
+            test_json = json_files[0]
+            with open(test_json, "r", encoding="utf-8") as jf:
+                parsed = json.load(jf)
+                assert parsed["rows_count"] == 3
+                assert parsed["data"][1][0] == "101"
+
+            test_csv = csv_files[0]
+            with open(test_csv, "r", encoding="utf-8-sig") as cf:
+                reader = list(csv.reader(cf, delimiter=";"))
+                assert len(reader) == 3
+                assert reader[2][0] == "102"
+                assert reader[2][1] == "Невский пр., 25"
+
+            report_pass("save_snapshot_data корректно сохраняет данные в JSON и CSV с метаданными")
+
+            # Тест ротации (оставляем только 3 самых свежих)
+            del_count = rotate_fn(backup_dir=test_dir, max_keep=3)
+            assert del_count == 4, f"Должно быть удалено 4 устаревших файла (2 JSON + 2 CSV), удалено {del_count}"
+            remaining_json = list(test_dir.glob("backup_*.json"))
+            remaining_csv = list(test_dir.glob("backup_*.csv"))
+            assert len(remaining_json) == 3
+            assert len(remaining_csv) == 3
+            report_pass("rotate_backups корректно очищает старые архивы и сохраняет ротацию")
+
+        finally:
+            shutil.rmtree(test_dir, ignore_errors=True)
+
+    except Exception as e:
+        report_fail("Сбой тестирования логики резервного копирования", str(e))
+
 def check_css_version_consistency():
-    print("\n[10/10] Проверка синхронности версий CSS (?v=) и относительных путей...")
+    print("\n[11/11] Проверка синхронности версий CSS (?v=) и относительных путей...")
     import re
     html_targets = [
         ROOT_DIR / "index.html",
@@ -696,6 +797,7 @@ def main():
     check_address_formatting()
     check_data_normalization_logic()
     check_error_alerts_system()
+    check_backup_system()
     check_css_version_consistency()
 
     print("\n" + "=" * 60)
