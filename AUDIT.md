@@ -240,7 +240,9 @@ DEFAULT_ALLOWED_ORIGINS = ["https://voltgroup-spb.ru", "https://www.voltgroup-sp
 
 ## 🟡 Средние замечания
 
-### 14. Дублирование генерации документов в `estimate.html`
+### 14. [✅ ИСПРАВЛЕНО] Дублирование генерации документов в `estimate.html`
+
+> **Статус на 2026-10-07:** закрыто. Дублирование устранено: созданы специализированные модули `static/js/documents.js` (генераторы сметы, КП, акта и договора с единой функцией сбора контекста `getDocContext()` и общими строителями таблиц работ `buildWorksRowsHtml` и материалов `buildMaterialsRowsHtml`) и `static/js/estimate.js` (логика калькулятора, рендеринг, расчёт итогов, работа с черновиками и экспорт). Объем `estimate.html` сокращён с 2208 до 544 строк (в 4 раза). Покрыто автотестами `tools/test_doc_totals.js` и `tools/test_money.js`. Решена задача [tasks/018-doc-refactor.md](tasks/018-doc-refactor.md).
 
 **Где:** блоки построения HTML документов повторяются ~3 раза: [estimate.html:1109-1290](estimate.html#L1109-L1290) (смета), [1300-1514](estimate.html#L1300-L1514) (КП), [1524-1700](estimate.html#L1524-L1700) (акт), [1930-2141](estimate.html#L1930-L2141) (договор).
 

@@ -1,6 +1,6 @@
 /**
  * tools/test_doc_totals.js
- * Тестирование логики формирования цен и текстов в документах (карточка 016, пункт № 11 AUDIT.md)
+ * Тестирование логики формирования цен и текстов в документах (карточка 016, 018, пункты № 11, 14 AUDIT.md)
  */
 import fs from 'fs';
 import path from 'path';
@@ -73,30 +73,62 @@ console.log('=== ТЕСТИРОВАНИЕ БАЗЫ РАСЧЁТА В ДОКУМ�
     console.log('  ✓ Цена договора = 100 000');
 }
 
-// Проверка самого файла estimate.html: ищем формулировки
+// Проверка файлов после рефакторинга
+const docsJs = fs.readFileSync(path.join(__dirname, '../static/js/documents.js'), 'utf8');
+const estimateJs = fs.readFileSync(path.join(__dirname, '../static/js/estimate.js'), 'utf8');
 const estimateHtml = fs.readFileSync(path.join(__dirname, '../estimate.html'), 'utf8');
 
 const checks = [
-    { name: 'Договор п. 2.1 содержит grandTotal', pattern: /2\.1\. Общая цена настоящего Договора составляет: <strong>\$\{totals\.grandTotal\.toLocaleString\('ru-RU'\)\} руб\./ },
-    { name: 'Договор п. 2.2 содержит worksFinal и скидку', pattern: /стоимость подлежащих выполнению электромонтажных работ: <strong>\$\{totals\.worksFinal\.toLocaleString\('ru-RU'\)\} руб\./ },
+    { name: 'Договор п. 2.1 содержит grandTotal', pattern: /2\.1\. Общая цена настоящего Договора составляет: <strong>\$\{ctx\.totals\.grandTotal\.toLocaleString\('ru-RU'\)\} руб\./ },
+    { name: 'Договор п. 2.2 содержит worksFinal и скидку', pattern: /стоимость подлежащих выполнению электромонтажных работ: <strong>\$\{ctx\.totals\.worksFinal\.toLocaleString\('ru-RU'\)\} руб\./ },
     { name: 'Договор п. 2.3 содержит аванс на материалы', pattern: /Оплата стоимости материалов в размере/ },
     { name: 'Акт содержит общую стоимость по договору grandTotal', pattern: /ОБЩАЯ СТОИМОСТЬ ПО ДОГОВОРУ/ },
     { name: 'Акт содержит расшифровку остатка за работы', pattern: /Остаток к перечислению за выполненные работы/ },
-    { name: 'Спецификация содержит ОБЩАЯ ЦЕНА ПО ДОГОВОРУ grandTotal', pattern: /ОБЩАЯ ЦЕНА ПО ДОГОВОРУ: \$\{totals\.grandTotal\.toLocaleString\('ru-RU'\)\} руб\./ },
+    { name: 'Спецификация содержит ОБЩАЯ ЦЕНА ПО ДОГОВОРУ grandTotal', pattern: /ОБЩАЯ ЦЕНА ПО ДОГОВОРУ: \$\{ctx\.totals\.grandTotal\.toLocaleString\('ru-RU'\)\} руб\./ },
     { name: 'Печатная смета разделяет стоимость до скидки и скидку', pattern: /Стоимость работ без скидки:/ },
-    { name: 'КП разделяет стоимость до скидки и скидку', pattern: /Стоимость электромонтажных работ без скидки:/ }
+    { name: 'КП разделяет стоимость до скидки и скидку', pattern: /Стоимость электромонтажных работ без скидки:/ },
+    { name: 'Функция getDocContext определена', pattern: /function getDocContext\(/ },
+    { name: 'Функция buildWorksRowsHtml определена', pattern: /function buildWorksRowsHtml\(/ },
+    { name: 'Функция buildMaterialsRowsHtml определена', pattern: /function buildMaterialsRowsHtml\(/ }
 ];
 
-console.log('\n=== ПРОВЕРКА ШАБЛОНОВ В estimate.html ===');
+console.log('\n=== ПРОВЕРКА ШАБЛОНОВ В static/js/documents.js ===');
 let allPassed = true;
 checks.forEach(c => {
-    if (c.pattern.test(estimateHtml)) {
+    if (c.pattern.test(docsJs)) {
         console.log(`✓ ${c.name}`);
     } else {
         console.error(`✗ ОШИБКА: Не найден шаблон: ${c.name}`);
         allPassed = false;
     }
 });
+
+console.log('\n=== ПРОВЕРКА ПОДКЛЮЧЕНИЯ СКРИПТОВ В estimate.html ===');
+const htmlChecks = [
+    { name: 'config.js подключен', pattern: /<script src="static\/js\/config\.js"><\/script>/ },
+    { name: 'money.js подключен', pattern: /<script src="static\/js\/money\.js"><\/script>/ },
+    { name: 'estimate.js подключен', pattern: /<script src="static\/js\/estimate\.js"><\/script>/ },
+    { name: 'documents.js подключен', pattern: /<script src="static\/js\/documents\.js"><\/script>/ }
+];
+
+htmlChecks.forEach(c => {
+    if (c.pattern.test(estimateHtml)) {
+        console.log(`✓ ${c.name}`);
+    } else {
+        console.error(`✗ ОШИБКА: Не найден тег подключения: ${c.name}`);
+        allPassed = false;
+    }
+});
+
+console.log('\n=== ПРОВЕРКА РАЗМЕРА estimate.html ===');
+const lineCount = estimateHtml.split('\n').length;
+console.log(`Количество строк в estimate.html: ${lineCount}`);
+if (lineCount <= 600) {
+    console.log(`✓ Размер сокращён более чем в 3.5 раза (было 2208, стало ${lineCount})`);
+} else {
+    console.error(`✗ Размер estimate.html больше ожидаемого: ${lineCount}`);
+    allPassed = false;
+}
 
 if (!allPassed) {
     process.exit(1);
