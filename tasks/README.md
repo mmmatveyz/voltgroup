@@ -64,7 +64,7 @@
 | [031-service-worker.md](031-service-worker.md) | 17 | Service Worker: офлайн-работа на объекте | ⏸ отложено 07.10 |
 | [022-css-version.md](022-css-version.md) | 20 | Синхронизировать `?v=` во всех страницах | ✅ завершено 07.10 |
 | [023-css-cleanup.md](023-css-cleanup.md) | 21 | Разбирать `!important` постепенно | ⏳ |
-| [034-address-truncation.md](034-address-truncation.md) | 23 | Обрезка адреса и текст для клиента | ⏳ |
+| [034-address-truncation.md](034-address-truncation.md) | 23 | Обрезка адреса и текст для клиента | ✅ завершено 07.10 |
 | [025-rate-limiting.md](025-rate-limiting.md) | 25 | Ревизия лимитов запросов | ⏳ |
 | [026-document-write.md](026-document-write.md) | 26 | Убрать `document.write` при печати | ⏳ |
 | [028-data-normalization.md](028-data-normalization.md) | 27 | Нормализация данных из таблицы | ⏳ |

@@ -343,6 +343,99 @@ def build_main_menu():
     }
     return text, kb
 
+def format_short_address(raw_addr, max_len=20):
+    """
+    Формирует компактный читаемый фрагмент адреса для кнопки Telegram.
+    Сохраняет улицу и номер дома, убирая длинные префиксы городов и избыточные детали (квартиры).
+    """
+    if not raw_addr or str(raw_addr).strip().startswith("Объект №"):
+        return "Без адреса"
+
+    clean = re.sub(r'^(?:г\.\s*санкт-петербург|санкт-петербург|спб|г\.\s*спб)[,\s]*', '', str(raw_addr).strip(), flags=re.IGNORECASE).strip()
+    if not clean:
+        clean = str(raw_addr).strip()
+
+    if len(clean) <= max_len:
+        return clean
+
+    # Пытаемся выделить улицу и номер дома/строения
+    m = re.search(r'^(.*?)(?:,\s*(?:д\.?|дом)?\s*|\s+(?:д\.?|дом)\s*)([0-9]+.*)$', clean, flags=re.IGNORECASE)
+    if m:
+        street = m.group(1).strip()
+        house = m.group(2).strip()
+        # Сокращаем house до номера дома и корпуса (отбрасываем квартиры/этажи/офисы)
+        house_short = re.sub(r'[,\s]*(?:кв\.?|квартира|эт\.?|этаж|оф\.?|офис)\s*\d+.*$', '', house, flags=re.IGNORECASE).strip()
+        if not house_short:
+            house_short = house
+        budget_for_street = max(8, max_len - len(house_short) - 2)
+        if len(street) > budget_for_street:
+            street_short = street[:budget_for_street].rstrip(' ,.') + '…'
+        else:
+            street_short = street
+        return f"{street_short}, {house_short}"
+
+    return clean[:max_len].rstrip(' ,.') + '…'
+
+def disambiguate_button_labels(obj_items):
+    """
+    Разрешает коллизии одинаковых коротких адресов в списке кнопок:
+    - obj_items: список кортежей (obj_id, progress, raw_addr)
+    - добавляет номер квартиры/офиса или различимый суффикс
+    - если адреса полностью идентичны, нумерует их (#1, #2...)
+    Возвращает список элементов для inline_keyboard: [[{"text": ..., "callback_data": ...}], ...]
+    """
+    temp = []
+    for obj_id, progress, raw_addr in obj_items:
+        s_addr = format_short_address(raw_addr)
+        temp.append({'id': str(obj_id), 'progress': str(progress), 'raw': str(raw_addr or ""), 'short': s_addr})
+
+    # Подсчитываем повторения одинаковых коротких адресов (кроме 'Без адреса')
+    counts = {}
+    for item in temp:
+        s = item['short']
+        if s != "Без адреса":
+            counts[s] = counts.get(s, 0) + 1
+
+    seen_indices = {}
+    buttons = []
+    for item in temp:
+        s_addr = item['short']
+        if counts.get(s_addr, 0) > 1:
+            idx = seen_indices.get(s_addr, 0) + 1
+            seen_indices[s_addr] = idx
+            flat_m = re.search(r'(?:кв\.?|оф\.?)\s*(\d+)', item['raw'], flags=re.IGNORECASE)
+            if flat_m:
+                s_addr = f"{s_addr} кв.{flat_m.group(1)}"
+            else:
+                s_addr = f"{s_addr} #{idx}"
+        oid = item['id']
+        prog = item['progress']
+        label = f"№{oid} · {s_addr} ({prog}%)"
+        buttons.append([{"text": label, "callback_data": f"o:v:{oid}"}])
+
+    return buttons
+
+def build_client_share_message(obj_id, raw_addr, token):
+    """
+    Формирует готовое сообщение со ссылкой для пересылки заказчику (кнопка '🔗 Ссылка клиенту').
+    - При наличии адреса: включает полный адрес в скобках с HTML-экранированием.
+    - При отсутствии адреса (или дефолтном 'Объект №X'): нейтральная формулировка без пустых скобок.
+    - Учитывает ограничения Telegram по длине.
+    """
+    addr = str(raw_addr).strip() if raw_addr else ""
+    if addr and not addr.startswith("Объект №"):
+        if len(addr) > 500:
+            addr = addr[:497] + "..."
+        addr_part = f" ({html.escape(addr)})"
+    else:
+        addr_part = ""
+
+    return (
+        f"Здравствуйте! Вы можете отслеживать ход электромонтажных работ, этапы и финансовый баланс онлайн{addr_part}:\n\n"
+        f"👉 https://voltgroup-spb.ru/client/index.html?id={obj_id}&t={token}\n\n"
+        f"VoltGroup · Электромонтаж и автоматизация"
+    )
+
 def build_objects_list(sheet):
     try:
         rows = sheet.get_all_values()
@@ -350,22 +443,21 @@ def build_objects_list(sheet):
         app.logger.error(f"Ошибка получения списка: {e}")
         rows = []
 
-    buttons = []
+    obj_items = []
     # Начиная со строки 2 (индекс 1)
     if len(rows) > 1:
         for row in rows[1:]:
             if row and row[0].strip():
                 obj_id = row[0].strip()
-                addr = row[5].strip() if len(row) > 5 and row[5].strip() else f"Объект №{obj_id}"
                 progress = row[1].strip() if len(row) > 1 and row[1].strip() else "0"
-                short_addr = (addr[:20] + '…') if len(addr) > 20 else addr
-                label = f"№{obj_id} · {short_addr} ({progress}%)"
-                buttons.append([{"text": label, "callback_data": f"o:v:{obj_id}"}])
+                raw_addr = row[5].strip() if len(row) > 5 else ""
+                obj_items.append((obj_id, progress, raw_addr))
 
+    buttons = disambiguate_button_labels(obj_items)
     buttons.append([{"text": "➕ Добавить новый", "callback_data": "m:new"}])
     buttons.append([{"text": "« Главное меню", "callback_data": "m:main"}])
 
-    count = len(buttons) - 2
+    count = len(obj_items)
     text = f"📋 <b>Список объектов VoltGroup</b> (Всего: {count}):\n\nВыберите объект для управления:"
     return text, {"inline_keyboard": buttons}
 
@@ -672,20 +764,13 @@ def webhook():
                 while len(row_vals) < 8:
                     row_vals.append("")
 
-                addr_text = f"по объекту №{obj_id}"
-                if len(row_vals) > 5 and row_vals[5].strip():
-                    addr_text = f"({row_vals[5].strip()})"
-
                 token = row_vals[7].strip()
                 if not token:
                     token = secrets.token_urlsafe(16)
                     sheet.update_cell(cell.row, COLUMNS_MAP['token'], token)
 
-                client_msg = (
-                    f"Здравствуйте! Вы можете отслеживать ход электромонтажных работ, этапы и финансовый баланс онлайн {html.escape(addr_text)}:\n\n"
-                    f"👉 https://voltgroup-spb.ru/client/index.html?id={obj_id}&t={token}\n\n"
-                    f"VoltGroup · Электромонтаж и автоматизация"
-                )
+                raw_addr = row_vals[5].strip() if len(row_vals) > 5 else ""
+                client_msg = build_client_share_message(obj_id, raw_addr, token)
                 send_tg_message(chat_id, client_msg)
 
         except Exception as e:
