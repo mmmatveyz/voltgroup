@@ -204,6 +204,31 @@ def check_security_sanity():
     else:
         report_fail(".env.example отсутствует")
 
+    # Проверка: отсутствие устаревшего X-XSS-Protection и наличие CSP в server.py
+    server_py = ROOT_DIR / "server.py"
+    if server_py.exists():
+        server_code = server_py.read_text(encoding="utf-8")
+        if "X-XSS-Protection" not in server_code:
+            report_pass("Устаревший заголовок X-XSS-Protection отсутствует в server.py")
+        else:
+            report_fail("В server.py обнаружен устаревший заголовок X-XSS-Protection")
+
+        if "Content-Security-Policy" in server_code:
+            report_pass("Заголовок Content-Security-Policy настроен в server.py")
+        else:
+            report_fail("В server.py отсутствует заголовок Content-Security-Policy")
+
+    # Проверка: наличие .htaccess с CSP для веб-сервера
+    htaccess = ROOT_DIR / ".htaccess"
+    if htaccess.exists():
+        htaccess_code = htaccess.read_text(encoding="utf-8")
+        if "Content-Security-Policy" in htaccess_code:
+            report_pass(".htaccess присутствует и содержит Content-Security-Policy")
+        else:
+            report_fail(".htaccess не содержит директивы Content-Security-Policy")
+    else:
+        report_fail("Файл .htaccess отсутствует в корне проекта")
+
 def check_css_version_consistency():
     print("\n[6/6] Проверка синхронности версий CSS (?v=) и относительных путей...")
     import re

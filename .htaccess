@@ -1,0 +1,24 @@
+# ==============================================================================
+# VoltGroup — Конфигурация HTTP-заголовков безопасности для веб-сервера Apache
+# Задача 020 / Пункт № 13 AUDIT.md
+# ==============================================================================
+
+<IfModule mod_headers.c>
+    # 1. Content Security Policy (CSP)
+    Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://mc.yandex.ru https://yastatic.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: http: https://mc.yandex.ru; connect-src 'self' https://voltgroup-bot.onrender.com https://mc.yandex.ru https://*.yandex.ru https://*.yandex.net wss://mc.yandex.ru wss://*.yandex.ru; frame-src 'self' https://yandex.ru https://*.yandex.ru https://*.yandex.md https://mc.yandex.md; frame-ancestors 'self';"
+
+    # 2. Защита от MIME-sniffing
+    Header set X-Content-Type-Options "nosniff"
+
+    # 3. Защита от кликджекинга
+    Header set X-Frame-Options "SAMEORIGIN"
+
+    # 4. Политика передачи Referrer
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # 5. HSTS (Strict-Transport-Security)
+    Header set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+    # 6. Устаревший заголовок X-XSS-Protection отключается (согласно пункту № 13 AUDIT.md)
+    Header unset X-XSS-Protection
+</IfModule>

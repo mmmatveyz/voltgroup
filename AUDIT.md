@@ -230,7 +230,9 @@ DEFAULT_ALLOWED_ORIGINS = ["https://voltgroup-spb.ru", "https://www.voltgroup-sp
 
 ---
 
-### 13. CSP задан только через `<meta>`, а не HTTP-заголовком
+### 13. [✅ ИСПРАВЛЕНО] CSP задан только через `<meta>`, а не HTTP-заголовком
+
+> **Статус на 2026-10-07:** закрыто. Создан корневой `.htaccess` с полным набором HTTP-заголовков безопасности (CSP с `frame-ancestors 'self'`, `X-Content-Type-Options: nosniff`, `X-Frame-Options: SAMEORIGIN`, `Referrer-Policy: strict-origin-when-cross-origin`, HSTS). В `server.py` удалён устаревший заголовок `X-XSS-Protection` и добавлен строгий API CSP `default-src 'none'; frame-ancestors 'none'`. Добавлены проверки в `tools/check.py`. Решена задача [tasks/020-csp-header.md](tasks/020-csp-header.md).
 
 **Где:** [index.html:13](index.html#L13), [estimate.html:7](estimate.html#L7) и остальные страницы; заголовки безопасности в [server.py:56-62](server.py#L56-L62).
 
@@ -548,7 +550,7 @@ DEFAULT_ALLOWED_ORIGINS = ["https://voltgroup-spb.ru", "https://www.voltgroup-sp
 | 10 | ✅ Нет суммы прописью | 🟠 | `estimate.html:2033` | 3 ч |
 | 11 | ✅ Разная база в договоре и акте | 🟠 | `estimate.html:2033, 1662` | 1 ч |
 | 12 | ✅ Нет баннера cookies | 🟠 | 7 страниц | 2 ч |
-| 13 | CSP только в meta | 🟠 | все страницы, `server.py:56` | 2 ч |
+| 13 | ✅ CSP только в meta | 🟠 | все страницы, `server.py:56` | 2 ч |
 | 14 | ✅ Дублирование генераторов документов | 🟡 | `estimate.html` (~750 строк) | 6 ч |
 | 15 | 6 запросов к Sheets на клик | 🟡 | `server.py:208, 429, 449…` | 3 ч |
 | 16 | ✅ Не работает по `file://` | 🟡 | `estimate.html:565` | 0.5 ч |
@@ -571,7 +573,7 @@ DEFAULT_ALLOWED_ORIGINS = ["https://voltgroup-spb.ru", "https://www.voltgroup-sp
 | 33 | ✅ Нет `.env.example` и файла запуска | ⚪ | корень | 0.5 ч |
 | 34 | Нет резервного копирования | ⚪ | — | 2 ч |
 
-**Статус на 07.10.2026:** закрыто **21 из 34** пунктов — этап 1 (8 из 8), этап 2 (6 из 6), этап 3 (5 из 5), этап 4 (2 из 15). Открыто 13: **этап 4** (9, 13, 15, 17, 21, 23–27, 29, 32, 34) плюс SEO-блок в [tasks/](tasks/README.md).
+**Статус на 07.10.2026:** закрыто **22 из 34** пунктов — этап 1 (8 из 8), этап 2 (6 из 6), этап 3 (5 из 5), этап 4 (3 из 15). Открыто 12: **этап 4** (9, 15, 17, 21, 23–27, 29, 32, 34) плюс SEO-блок в [tasks/](tasks/README.md).
 
 ---
 
