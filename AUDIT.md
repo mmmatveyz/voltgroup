@@ -378,7 +378,13 @@ DEFAULT_ALLOWED_ORIGINS = ["https://voltgroup-spb.ru", "https://www.voltgroup-sp
 
 **Что делать:** лимитировать `/ping` отдельно (например, 10/мин), увеличить часовой лимит для `/get-status`, возвращать понятный JSON с текстом при 429 (сейчас клиент увидит общую ошибку).
 
-### 26. Калькулятор: `document.write` и размер файла
+### 26. [✅ ИСПРАВЛЕНО] Калькулятор: `document.write` и размер файла
+
+> **Статус на 2026-10-07:** закрыто.
+> 1. В `static/js/documents.js` функция `openPrintWindow` переведена на генерацию `Blob` (`new Blob([html], { type: 'text/html;charset=utf-8' })`) и открытие через `URL.createObjectURL(blob)`. Устаревший `document.write` исключён, предотвращены гонки асинхронного открытия окон и предупреждения браузера в консоли.
+> 2. Добавлено освобождение памяти `URL.revokeObjectURL(blobUrl)` по событию выгрузки окна (`beforeunload`) и страховочному таймеру (60 сек), предусмотрен fallback для специфических окружений.
+> 3. Логика генераторов вынесена из `estimate.html` в модули `static/js/documents.js` и `static/js/estimate.js` (задача 018), файл разметки калькулятора сокращён с 2208 до 535 строк.
+> 4. Генерация и вывод всех четырёх документов покрыты смоук-тестами в `tools/test_doc_smoke.js` и автоматической проверкой в `tools/check.py`. Решена задача [tasks/026-document-write.md](tasks/026-document-write.md).
 
 **Где:** [estimate.html:1290](estimate.html#L1290), [1514](estimate.html#L1514), [1700](estimate.html#L1700), [2141](estimate.html#L2141) — `printWindow.document.write(printHTML)`.
 
@@ -574,7 +580,7 @@ DEFAULT_ALLOWED_ORIGINS = ["https://voltgroup-spb.ru", "https://www.voltgroup-sp
 | 23 | ✅ Обрезка/рассинхрон адреса в кнопках | 🟡 | `server.py:194, 480` | 1 ч |
 | 24 | `logs/` зависит от рабочей директории | 🟡 | `server.py:24` | 0.5 ч |
 | 25 | ✅ Лимиты по IP и отсутствие лимита на `/ping` | 🟡 | `server.py:46, 287` | 1 ч |
-| 26 | `document.write` и размер `estimate.html` | 🟡 | `estimate.html:1290+` | 3 ч |
+| 26 | ✅ `document.write` и размер `estimate.html` | 🟡 | `estimate.html:1290+` | 3 ч |
 | 27 | Нет валидации данных из таблицы | 🟡 | `server.py:214, 334` | 1 ч |
 | 28 | ✅ Мёртвые и дублирующиеся файлы | ⚪ | корень, `assets/` | 0.5 ч |
 | 29 | Захардкоженные реквизиты и телефон | ⚪ | `estimate.html:1618`, страницы | 1.5 ч |
@@ -584,7 +590,7 @@ DEFAULT_ALLOWED_ORIGINS = ["https://voltgroup-spb.ru", "https://www.voltgroup-sp
 | 33 | ✅ Нет `.env.example` и файла запуска | ⚪ | корень | 0.5 ч |
 | 34 | Нет резервного копирования | ⚪ | — | 2 ч |
 
-**Статус на 07.10.2026:** закрыто **25 из 34** пунктов — этап 1 (8 из 8), этап 2 (6 из 6), этап 3 (5 из 5), этап 4 (6 из 15). Открыто 9: **этап 4** (9, 17, 21, 24, 26, 27, 29, 32, 34) плюс SEO-блок в [tasks/](tasks/README.md).
+**Статус на 07.10.2026:** закрыто **26 из 34** пунктов — этап 1 (8 из 8), этап 2 (6 из 6), этап 3 (5 из 5), этап 4 (7 из 15). Открыто 8: **этап 4** (9, 17, 21, 24, 27, 29, 32, 34) плюс SEO-блок в [tasks/](tasks/README.md).
 
 ---
 

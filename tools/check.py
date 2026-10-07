@@ -258,6 +258,17 @@ def check_security_sanity():
     else:
         report_fail(f"Обнаружены личные ссылки matvey_zryachikh в файлах: {', '.join(found_personal_tg)}")
 
+    # Проверка: замена устаревшего document.write на Blob URL в генераторах документов (tasks/026)
+    doc_js = ROOT_DIR / "static" / "js" / "documents.js"
+    if doc_js.exists():
+        doc_code = doc_js.read_text(encoding="utf-8")
+        if "URL.createObjectURL(blob)" in doc_code and "new Blob" in doc_code:
+            report_pass("Генераторы документов используют Blob URL для безопасного вывода на печать")
+        else:
+            report_fail("В static/js/documents.js отсутствует реализация Blob URL для печати")
+    else:
+        report_fail("static/js/documents.js не найден")
+
 def check_sheets_snapshot_logic():
     print("\n[6/8] Проверка архитектуры Google Sheets снимка (SheetSnapshot)...")
     server_py = ROOT_DIR / "server.py"

@@ -160,14 +160,40 @@
     }
 
     /**
-     * Безопасное открытие окна для печати
+     * Безопасное открытие окна для печати через Blob URL (задача 026, пункт № 26 AUDIT.md)
+     * Исключает document.write, гонки загрузки и предупреждения в консоли браузера.
      */
     function openPrintWindow(html, alertMsg) {
+        if (typeof Blob !== 'undefined' && typeof URL !== 'undefined' && URL.createObjectURL) {
+            try {
+                const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+                const blobUrl = URL.createObjectURL(blob);
+                const win = window.open(blobUrl, '_blank');
+                if (win) {
+                    // Освобождаем память после закрытия/выгрузки окна либо по безопасному таймауту
+                    try {
+                        win.addEventListener('beforeunload', () => {
+                            URL.revokeObjectURL(blobUrl);
+                        }, { once: true });
+                    } catch (_) {}
+                    setTimeout(() => {
+                        URL.revokeObjectURL(blobUrl);
+                    }, 60000);
+                    return;
+                }
+            } catch (e) {
+                console.warn('Не удалось открыть документ через Blob URL, используется запасной механизм:', e);
+            }
+        }
+
+        // Резервный механизм для окружений без полноценного Blob URL (или при блокировке pop-up)
         const win = window.open('', '_blank');
         if (win) {
-            win.document.open();
-            win.document.write(html);
-            win.document.close();
+            try {
+                win.document.open();
+                win.document.write(html);
+                win.document.close();
+            } catch (_) {}
         } else {
             alert(alertMsg || 'Пожалуйста, разрешите всплывающие окна в браузере для печати документа.');
         }

@@ -1,8 +1,8 @@
 # Задача 026 — Убрать `document.write` при печати документов
 
 **Пункт аудита:** № 26 · из [AUDIT.md](../AUDIT.md)
-**Статус:** ⏳ не начато
-**Файлы:** `estimate.html`
+**Статус:** ✅ завершено (07.10.2026)
+**Файлы:** `static/js/documents.js`, `tools/test_doc_smoke.js`, `tools/check.py`
 
 ## Проблема
 

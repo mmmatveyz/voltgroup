@@ -104,15 +104,46 @@ function createDocumentsEnvironment(config = {}) {
             materialsToPay,
             grandTotal
         }),
-        open: () => ({
-            document: {
-                open: () => {},
-                write: (html) => { capturedHtml = html; },
-                close: () => {}
+        open: (url) => {
+            if (typeof url === 'string' && url.startsWith('blob:')) {
+                // Извлечение сохраненного HTML из Blob registry
+                capturedHtml = mockBlobRegistry.get(url) || '';
             }
-        }),
+            return {
+                addEventListener: () => {},
+                document: {
+                    open: () => {},
+                    write: (html) => { capturedHtml = html; },
+                    close: () => {}
+                }
+            };
+        },
         alert: () => {}
     };
+
+    const mockBlobRegistry = new Map();
+    let nextBlobId = 1;
+
+    class MockBlob {
+        constructor(parts, options) {
+            this.content = parts.join('');
+            this.type = options?.type || '';
+        }
+    }
+
+    const mockURL = {
+        createObjectURL: (blob) => {
+            const url = `blob:http://localhost/mock-blob-${nextBlobId++}`;
+            mockBlobRegistry.set(url, blob.content);
+            return url;
+        },
+        revokeObjectURL: (url) => {
+            mockBlobRegistry.delete(url);
+        }
+    };
+
+    mockWindow.Blob = MockBlob;
+    mockWindow.URL = mockURL;
 
     mockWindow.window = mockWindow;
 
