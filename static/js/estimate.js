@@ -731,11 +731,14 @@
         const clientName = (document.getElementById('client-name')?.value || '').trim();
         const clientAddr = (document.getElementById('client-address')?.value || '').trim();
         const invoiceNum = (document.getElementById('invoice-number')?.value || '').trim();
+        const dateRaw = document.getElementById('estimate-date')?.value;
+        const date = dateRaw ? new Date(dateRaw).toLocaleDateString('ru-RU') : new Date().toLocaleDateString('ru-RU');
         const masterBuys = document.getElementById('master-buys-materials')?.checked || false;
 
         let lines = [];
         lines.push('⚡ *Смета VoltGroup*');
         if (invoiceNum) lines.push(`📄 Номер: №${invoiceNum}`);
+        if (date) lines.push(`📅 Дата: ${date}`);
         if (clientName) lines.push(`👤 Заказчик: ${clientName}`);
         if (clientAddr) lines.push(`📍 Объект: ${clientAddr}`);
         lines.push('');
@@ -857,22 +860,27 @@
     });
 
     /**
-     * Выгрузка сметы в файл Excel / CSV
+     * Форматирование ячейки для экспорта в CSV (экранирование ';' и '"')
      */
-    function exportToExcel() {
-        const totals = calculateTotals();
-        if (totals.grandTotal === 0 && totals.materialsTotal === 0) {
-            alert('Смета пуста! Укажите хотя бы одну работу или материал.');
-            return;
-        }
+    function csvCell(val) {
+        if (val === null || val === undefined) return '""';
+        const str = String(val).replace(/"/g, '""');
+        return `"${str}"`;
+    }
+
+    /**
+     * Формирование содержимого CSV-файла для экспорта сметы
+     */
+    function buildCsvData(totals) {
         const clientName = document.getElementById('client-name')?.value.trim() || 'Заказчик';
         const clientAddr = document.getElementById('client-address')?.value.trim() || 'г. Санкт-Петербург';
         const invoiceNum = document.getElementById('invoice-number')?.value.trim() || 'Смета-' + new Date().getFullYear();
-        const date = document.getElementById('estimate-date')?.value || new Date().toLocaleDateString('ru-RU');
+        const dateRaw = document.getElementById('estimate-date')?.value;
+        const date = dateRaw ? new Date(dateRaw).toLocaleDateString('ru-RU') : new Date().toLocaleDateString('ru-RU');
 
         let csv = '\uFEFF';
-        csv += `Смета VoltGroup;№ ${invoiceNum};Дата:;${date}\r\n`;
-        csv += `Заказчик:;${clientName};Объект:;${clientAddr}\r\n\r\n`;
+        csv += `Смета VoltGroup;№ ${csvCell(invoiceNum)};Дата:;${csvCell(date)}\r\n`;
+        csv += `Заказчик:;${csvCell(clientName)};Объект:;${csvCell(clientAddr)}\r\n\r\n`;
         csv += `№;Наименование работ / услуг;Ед. изм.;Кол-во;Цена, руб.;Сложность;Сумма, руб.\r\n`;
 
         let rowIdx = 1;
@@ -880,7 +888,7 @@
             const state = window.servicesState[index] || { qty: 0, isComplex: false };
             if (state.qty > 0) {
                 let price = state.isComplex ? s.price * 1.2 : s.price;
-                csv += `${rowIdx++};"${s.name.replace(/"/g, '""')}";${s.unit};${state.qty};${Math.round(price)};${state.isComplex ? '+20%' : 'Базовая'};${Math.round(state.qty * price)}\r\n`;
+                csv += `${rowIdx++};${csvCell(s.name)};${csvCell(s.unit)};${state.qty};${Math.round(price)};${state.isComplex ? '+20%' : 'Базовая'};${Math.round(state.qty * price)}\r\n`;
             }
         });
 
@@ -892,7 +900,7 @@
             const complexCheck = row.querySelector('.custom-complex');
             if (qty > 0 || priceBase > 0) {
                 let finalPrice = (complexCheck && complexCheck.checked) ? priceBase * 1.2 : priceBase;
-                csv += `${rowIdx++};"${name.replace(/"/g, '""')}";${unit};${qty};${Math.round(finalPrice)};${(complexCheck && complexCheck.checked) ? '+20%' : 'Базовая'};${Math.round(qty * finalPrice)}\r\n`;
+                csv += `${rowIdx++};${csvCell(name)};${csvCell(unit)};${qty};${Math.round(finalPrice)};${(complexCheck && complexCheck.checked) ? '+20%' : 'Базовая'};${Math.round(qty * finalPrice)}\r\n`;
             }
         });
 
@@ -906,7 +914,7 @@
             const qty = parseFloat(row.querySelector('.mat-qty')?.value) || 0;
             if (qty > 0 || price > 0) {
                 hasMaterials = true;
-                matRows.push(`${mIdx++};"${name.replace(/"/g, '""')}";${unit};${qty};${Math.round(price)};${Math.round(price * qty)}\r\n`);
+                matRows.push(`${mIdx++};${csvCell(name)};${csvCell(unit)};${qty};${Math.round(price)};${Math.round(price * qty)}\r\n`);
             }
         });
 
@@ -927,19 +935,44 @@
         }
         csv += `ИТОГО К ОПЛАТЕ;${totals.grandTotal} руб.\r\n`;
 
-        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = `Смета_VoltGroup_${invoiceNum}_${date}.csv`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(a.href);
-        showToast('📊 Смета выгружена в Excel (.csv)!');
+        return csv;
+    }
+
+    /**
+     * Выгрузка сметы в файл Excel / CSV
+     */
+    function exportToExcel() {
+        const totals = calculateTotals();
+        if (totals.grandTotal === 0 && totals.materialsTotal === 0) {
+            alert('Смета пуста! Укажите хотя бы одну работу или материал.');
+            return null;
+        }
+        const invoiceNum = document.getElementById('invoice-number')?.value.trim() || 'Смета-' + new Date().getFullYear();
+        const dateRaw = document.getElementById('estimate-date')?.value;
+        const date = dateRaw ? new Date(dateRaw).toLocaleDateString('ru-RU') : new Date().toLocaleDateString('ru-RU');
+
+        const csv = buildCsvData(totals);
+
+        if (typeof Blob !== 'undefined' && typeof URL !== 'undefined' && URL.createObjectURL) {
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            const fileDate = date.replace(/[^\d.]/g, '').replace(/\./g, '-');
+            const fileInvoice = invoiceNum.replace(/[/\\?%*:|"<>]/g, '-');
+            a.download = `Смета_VoltGroup_${fileInvoice}_${fileDate}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(a.href);
+            showToast('📊 Смета выгружена в Excel (.csv)!');
+        }
+        return csv;
     }
 
     // Экспорт в глобальную область видимости
     window.escapeHtml = escapeHtml;
+    window.csvCell = csvCell;
+    window.buildCsvData = buildCsvData;
     window.toggleOnlySelected = toggleOnlySelected;
     window.updateSelectedBadge = updateSelectedBadge;
     window.loadPrices = loadPrices;

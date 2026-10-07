@@ -1,8 +1,8 @@
 # Задача 030 — Мелочи в документах и CSV-экспорте
 
 **Пункт аудита:** № 30 · из [AUDIT.md](../AUDIT.md)
-**Статус:** ⏳ не начато
-**Файлы:** `estimate.html`
+**Статус:** ✅ завершено (07.10.2026)
+**Файлы:** `static/js/estimate.js`, `static/js/documents.js`, `tools/test_estimate_calc.js`
 
 ## Проблема
 

@@ -311,6 +311,88 @@ console.log('\n7. Граничные условия:');
     assertEqual(res.worksFinal, 0, 'worksFinal не может быть отрицательным (Math.max(0, ...))');
 }
 
+// -------------------------------------------------------------
+// ТЕСТ 8: Экспорт в CSV (экранирование ';', '"' и формат даты ДД.ММ.ГГГГ)
+// -------------------------------------------------------------
+console.log('\n8. Экспорт в CSV (экранирование разделителей и формат даты):');
+{
+    const env = createEstimateEnvironment();
+    env.elements.get('client-name').value = 'Иванов; Иван Иванович';
+    env.elements.get('client-address').value = 'г. СПб; Невский пр., д. "10"';
+    env.elements.get('invoice-number').value = 'СМ;01/26';
+    env.elements.get('estimate-date').value = '2026-10-07';
+
+    env.window.allServices = [
+        { name: 'Кабель ВВГ-Пнг(А); 3х2.5', price: 150, unit: 'м; пог.' }
+    ];
+    env.window.servicesState = { 0: { qty: 50, isComplex: false } };
+
+    env.addCustomRow('Алмазное бурение; d100', 3000, 2, false);
+    env.addMaterialRow('Автоматический выключатель 16А "ABB Basic 55"', 450, 6);
+
+    const totals = env.window.calculateTotals();
+    const csv = env.window.buildCsvData(totals);
+
+    assert(csv.startsWith('\uFEFF'), 'CSV содержит маркер UTF-8 BOM');
+    assert(csv.includes('07.10.2026'), 'Дата в CSV отформатирована как ДД.ММ.ГГГГ (07.10.2026)');
+    assert(!csv.includes('2026-10-07'), 'Сырой формат ГГГГ-ММ-ДД отсутствует в CSV');
+
+    // Функция проверки CSV-строки с учётом экранирования кавычек
+    function parseCsvLine(line) {
+        const fields = [];
+        let cur = '';
+        let inQuotes = false;
+        for (let i = 0; i < line.length; i++) {
+            const ch = line[i];
+            if (ch === '"') {
+                if (inQuotes && line[i + 1] === '"') {
+                    cur += '"';
+                    i++;
+                } else {
+                    inQuotes = !inQuotes;
+                }
+            } else if (ch === ';' && !inQuotes) {
+                fields.push(cur);
+                cur = '';
+            } else {
+                cur += ch;
+            }
+        }
+        fields.push(cur);
+        return fields;
+    }
+
+    const lines = csv.replace('\uFEFF', '').split(/\r?\n/).filter(l => l.trim().length > 0);
+
+    // Проверка строки услуги: должна содержать ровно 7 колонок, несмотря на ';' в названии и единице
+    const serviceLine = lines.find(l => l.includes('Кабель ВВГ'));
+    assert(!!serviceLine, 'Строка с услугой найдена в CSV');
+    if (serviceLine) {
+        const fields = parseCsvLine(serviceLine);
+        assertEqual(fields.length, 7, 'Строка услуги содержит ровно 7 колонок');
+        assertEqual(fields[1], 'Кабель ВВГ-Пнг(А); 3х2.5', 'Точка с запятой в наименовании не разбила колонку');
+        assertEqual(fields[2], 'м; пог.', 'Точка с запятой в единице измерения не разбила колонку');
+    }
+
+    // Проверка строки материала: кавычки и наименование
+    const matLine = lines.find(l => l.includes('ABB Basic 55'));
+    assert(!!matLine, 'Строка с материалом найдена в CSV');
+    if (matLine) {
+        const fields = parseCsvLine(matLine);
+        assertEqual(fields.length, 6, 'Строка материала содержит ровно 6 колонок');
+        assertEqual(fields[1], 'Автоматический выключатель 16А "ABB Basic 55"', 'Двойные кавычки в названии корректно сохранены');
+    }
+
+    // Проверка строки заказчика и адреса
+    const clientLine = lines.find(l => l.includes('Заказчик:'));
+    assert(!!clientLine, 'Строка заказчика найдена в CSV');
+    if (clientLine) {
+        const fields = parseCsvLine(clientLine);
+        assertEqual(fields[1], 'Иванов; Иван Иванович', 'Точка с запятой в имени заказчика сохранена');
+        assertEqual(fields[3], 'г. СПб; Невский пр., д. "10"', 'Точка с запятой и кавычки в адресе сохранены');
+    }
+}
+
 console.log(`\nИТОГ ТЕСТОВ РАСЧЁТА: ${passedTests} пройдено, ${failedTests} провалено.`);
 if (failedTests > 0) {
     process.exit(1);
