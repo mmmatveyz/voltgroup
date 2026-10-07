@@ -76,6 +76,7 @@ def check_json_configs():
     print("\n[2/8] Проверка JSON-конфигураций и структуры данных...")
     json_targets = [
         ROOT_DIR / "static" / "data" / "prices.json",
+        ROOT_DIR / "static" / "data" / "reviews.json",
         ROOT_DIR / "gallery" / "gallery-config.json",
         ROOT_DIR / "manifest.json",
         ROOT_DIR / "yandex-manifest.json",
@@ -97,6 +98,11 @@ def check_json_configs():
                     report_pass(f"{rel_path}: присутствуют секции install и engineering")
                 else:
                     report_fail(f"{rel_path}: отсутствуют обязательные секции install/engineering")
+            elif jpath.name == "reviews.json":
+                if isinstance(data, list) and len(data) >= 3:
+                    report_pass(f"{rel_path}: содержит {len(data)} проверенных отзывов")
+                else:
+                    report_fail(f"{rel_path}: ожидался непустой список отзывов (минимум 3)")
             elif jpath.name == "gallery-config.json":
                 if isinstance(data, list) and len(data) >= 10:
                     report_pass(f"{rel_path}: содержит {len(data)} элементов галереи")

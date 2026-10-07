@@ -109,7 +109,55 @@
                 }
               }
             ]
-          }
+          },
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "5.0",
+            "reviewCount": "3",
+            "bestRating": "5",
+            "worstRating": "1"
+          },
+          "review": [
+            {
+              "@type": "Review",
+              "author": {
+                "@type": "Person",
+                "name": "Светлана Владимирова"
+              },
+              "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5",
+                "bestRating": "5"
+              },
+              "reviewBody": "Очень довольна работой Матвея. Быстро и качественно. Делал мне кнопку которая отключает все электричество. Очень удобно. Ушел - всё отключил и голова не болит"
+            },
+            {
+              "@type": "Review",
+              "author": {
+                "@type": "Person",
+                "name": "Мария Крохова"
+              },
+              "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5",
+                "bestRating": "5"
+              },
+              "reviewBody": "Нам необходимо было выполнить работу по переносу розеток. Работа выполнена качественно и быстро. Заранее прислали подробную смету и все договорённости выполнили в срок. Любые возникающие вопросы решались оперативно. Рекомендую"
+            },
+            {
+              "@type": "Review",
+              "author": {
+                "@type": "Person",
+                "name": "Daria Ruzavina"
+              },
+              "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5",
+                "bestRating": "5"
+              },
+              "reviewBody": "Работу выполнил очень быстро. И ответил на все вопросы. Обращусь и не один раз"
+            }
+          ]
         },
         {
           "@type": "FAQPage",
@@ -158,7 +206,7 @@
         href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="./static/css/style.css?v=2.4">
+    <link rel="stylesheet" href="./static/css/style.css?v=2.5">
 
     <style>
         .ticker {
@@ -257,6 +305,7 @@
                 <a href="./engineering/">Engineering</a>
                 <a href="./estimate.html">Калькулятор</a>
                 <a href="./works.html">Работы</a>
+                <a href="#reviews">Отзывы</a>
                 <a href="./contacts/" class="btn btn-outline btn-nav-contact">Контакты</a>
             </nav>
         </div>
@@ -715,6 +764,116 @@
             </div>
         </section>
 
+        <!-- Секция отзывов клиентов (задача 038) -->
+        <section id="reviews" class="section reviews-section">
+            <div class="container">
+                <h2 class="fade-in">Отзывы <span>клиентов</span></h2>
+                <p class="fade-in" style="color: var(--text-muted); max-width: 640px; margin: 10px auto 30px; text-align: center; font-size: 0.95rem;">
+                    Реальные впечатления заказчиков о качестве работ, соблюдении сроков и сметах. Отзывы из нашего сообщества ВКонтакте и карточки в Яндекс.Картах.
+                </p>
+
+                <div class="reviews-grid" id="reviewsGrid">
+                    <!-- Отзыв 1: Светлана Владимирова -->
+                    <article class="review-card fade-in">
+                        <div>
+                            <div class="review-card-header">
+                                <div class="review-author-wrap">
+                                    <div class="review-avatar-char" aria-hidden="true">С</div>
+                                    <div>
+                                        <div class="review-author-name">Светлана Владимирова</div>
+                                        <div class="review-object-type">Электромонтаж · Мастер-выключатель</div>
+                                    </div>
+                                </div>
+                                <span class="review-badge vk">ВКонтакте</span>
+                            </div>
+                            <div class="review-stars" aria-label="Оценка: 5 из 5">★★★★★</div>
+                            <p class="review-text">
+                                Очень довольна работой Матвея. Быстро и качественно. Делал мне кнопку которая отключает все электричество. Очень удобно. Ушел - всё отключил и голова не болит.
+                            </p>
+                        </div>
+                        <div class="review-footer">
+                            <span>Проверенный заказчик</span>
+                            <span>Оценка 5.0</span>
+                        </div>
+                    </article>
+
+                    <!-- Отзыв 2: Мария Крохова -->
+                    <article class="review-card fade-in">
+                        <div>
+                            <div class="review-card-header">
+                                <div class="review-author-wrap">
+                                    <div class="review-avatar-char" aria-hidden="true">М</div>
+                                    <div>
+                                        <div class="review-author-name">Мария Крохова</div>
+                                        <div class="review-object-type">Перенос розеток · Смета и сроки</div>
+                                    </div>
+                                </div>
+                                <span class="review-badge vk">ВКонтакте</span>
+                            </div>
+                            <div class="review-stars" aria-label="Оценка: 5 из 5">★★★★★</div>
+                            <p class="review-text">
+                                Нам необходимо было выполнить работу по переносу розеток. Работа выполнена качественно и быстро. Заранее прислали подробную смету и все договорённости выполнили в срок. Любые возникающие вопросы решались оперативно. Рекомендую ✅
+                            </p>
+                        </div>
+                        <div class="review-footer">
+                            <span>Проверенный заказчик</span>
+                            <span>Оценка 5.0</span>
+                        </div>
+                    </article>
+
+                    <!-- Отзыв 3: Daria Ruzavina -->
+                    <article class="review-card fade-in">
+                        <div>
+                            <div class="review-card-header">
+                                <div class="review-author-wrap">
+                                    <div class="review-avatar-char" aria-hidden="true">D</div>
+                                    <div>
+                                        <div class="review-author-name">Daria Ruzavina</div>
+                                        <div class="review-object-type">Электромонтаж · Консультация</div>
+                                    </div>
+                                </div>
+                                <span class="review-badge vk">ВКонтакте</span>
+                            </div>
+                            <div class="review-stars" aria-label="Оценка: 5 из 5">★★★★★</div>
+                            <p class="review-text">
+                                Работу выполнил очень быстро. И ответил на все вопросы. Обращусь и не один раз ☝️
+                            </p>
+                        </div>
+                        <div class="review-footer">
+                            <span>Проверенный заказчик</span>
+                            <span>Оценка 5.0</span>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- CTA-баннер доверия и сбора новых отзывов в Яндекс.Картах -->
+                <div class="reviews-cta-banner fade-in">
+                    <div class="reviews-cta-left">
+                        <div class="reviews-score-badge">
+                            <div class="reviews-score-val">5.0</div>
+                            <div class="reviews-score-stars">★★★★★</div>
+                        </div>
+                        <div>
+                            <div class="reviews-cta-title">Оцените нашу работу на Яндекс.Картах</div>
+                            <div class="reviews-cta-desc">
+                                Работали с нами? Поделитесь вашим отзывом в профиле организации. Это помогает новым заказчикам сделать правильный выбор.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="reviews-cta-actions">
+                        <a href="https://yandex.ru/maps/org/voltgroup_elektrika_i_avtomatizatsiya_spb/98496429753/?tab=reviews"
+                           target="_blank" rel="noopener noreferrer" class="btn-ya-review">
+                            ⭐ Оставить отзыв на Яндекс.Картах
+                        </a>
+                        <a href="https://vk.ru/topic-237900859_57977759"
+                           target="_blank" rel="noopener noreferrer" class="btn-vk-review">
+                            💬 Все отзывы во ВКонтакте
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="faq" class="section">
             <div class="container">
                 <h2 class="fade-in">Частые <span>вопросы</span></h2>
@@ -965,6 +1124,93 @@
                 })
                 .catch(() => {
                     // В случае ошибки сети остаётся резервный статичный рендер
+                });
+        }
+
+        // 1.2. Динамическая загрузка отзывов из единого источника static/data/reviews.json
+        const reviewsGrid = document.getElementById('reviewsGrid');
+        if (reviewsGrid) {
+            fetch('./static/data/reviews.json')
+                .then(r => r.ok ? r.json() : Promise.reject())
+                .then(reviews => {
+                    if (!Array.isArray(reviews) || reviews.length === 0) return;
+                    reviewsGrid.innerHTML = '';
+                    reviews.forEach(item => {
+                        const card = document.createElement('article');
+                        card.className = 'review-card fade-in visible';
+
+                        const contentWrap = document.createElement('div');
+
+                        // Шапка карточки
+                        const header = document.createElement('div');
+                        header.className = 'review-card-header';
+
+                        const authorWrap = document.createElement('div');
+                        authorWrap.className = 'review-author-wrap';
+
+                        const avatarChar = document.createElement('div');
+                        avatarChar.className = 'review-avatar-char';
+                        avatarChar.setAttribute('aria-hidden', 'true');
+                        avatarChar.textContent = item.avatar || (item.author ? item.author.charAt(0) : 'В');
+
+                        const authorMeta = document.createElement('div');
+                        const authorName = document.createElement('div');
+                        authorName.className = 'review-author-name';
+                        authorName.textContent = item.author || 'Заказчик VoltGroup';
+
+                        const objType = document.createElement('div');
+                        objType.className = 'review-object-type';
+                        objType.textContent = item.service || 'Электромонтажные работы';
+
+                        authorMeta.appendChild(authorName);
+                        authorMeta.appendChild(objType);
+
+                        authorWrap.appendChild(avatarChar);
+                        authorWrap.appendChild(authorMeta);
+
+                        const badge = document.createElement('span');
+                        const isYa = item.source === 'yandex' || item.source === 'ya';
+                        badge.className = isYa ? 'review-badge ya' : 'review-badge vk';
+                        badge.textContent = item.sourceLabel || (isYa ? 'Яндекс.Карты' : 'ВКонтакте');
+
+                        header.appendChild(authorWrap);
+                        header.appendChild(badge);
+
+                        // Звезды
+                        const stars = document.createElement('div');
+                        stars.className = 'review-stars';
+                        stars.setAttribute('aria-label', `Оценка: ${item.rating || 5} из 5`);
+                        stars.textContent = '★'.repeat(item.rating || 5);
+
+                        // Текст отзыва
+                        const text = document.createElement('p');
+                        text.className = 'review-text';
+                        text.textContent = item.text || '';
+
+                        contentWrap.appendChild(header);
+                        contentWrap.appendChild(stars);
+                        contentWrap.appendChild(text);
+
+                        // Подвал карточки
+                        const footer = document.createElement('div');
+                        footer.className = 'review-footer';
+
+                        const statusSpan = document.createElement('span');
+                        statusSpan.textContent = item.status || 'Проверенный заказчик';
+
+                        const ratingSpan = document.createElement('span');
+                        ratingSpan.textContent = `Оценка ${(item.rating || 5).toFixed(1)}`;
+
+                        footer.appendChild(statusSpan);
+                        footer.appendChild(ratingSpan);
+
+                        card.appendChild(contentWrap);
+                        card.appendChild(footer);
+                        reviewsGrid.appendChild(card);
+                    });
+                })
+                .catch(() => {
+                    // При оффлайне или ошибке сохраняется серверный статический рендер
                 });
         }
 
