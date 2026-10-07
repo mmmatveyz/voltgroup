@@ -241,6 +241,9 @@
             border-color: var(--primary-install);
             color: var(--primary-install);
         }
+        section[id] {
+            scroll-margin-top: 100px;
+        }
     </style>
 
     <!-- Управление cookies и отложенная инициализация Яндекс.Метрики (152-ФЗ) -->
@@ -282,14 +285,14 @@
                 Профессиональная электрика в новостройках Мурино. Перенос розеток по дизайн-проекту кухни, замена щитков от застройщика, штробление монолита без пыли. Фиксированная смета до начала работ и гарантия 12 месяцев по договору.
             </p>
             <div class="hero-actions">
-                <a href="#packages" class="btn btn-primary">Готовые пакеты для квартир ⚡</a>
+                <a href="#prices-section" class="btn btn-primary">Прайс-лист на работы ⚡</a>
                 <a href="../estimate.html" class="btn btn-outline">Калькулятор сметы</a>
             </div>
         </div>
     </section>
 
     <!-- ОСОБЕННОСТИ ЭЛЕКТРОМОНТАЖА В МУРИНО -->
-    <section class="section">
+    <section class="section" id="features">
         <div class="container">
             <div style="text-align: center; max-width: 720px; margin: 0 auto 35px;">
                 <span class="bento-tag tag-cyan fade-in">СПЕЦИФИКА ЛОКАЦИИ</span>
@@ -300,7 +303,7 @@
             </div>
 
             <div class="services-bento">
-                <!-- 1. Монолитные стены и штробление без пыли -->
+                <!-- 1. Монолитные стены и штробление без пыли (Span 7) -->
                 <div class="bento-card bento-install bento-span-7 fade-in">
                     <div>
                         <span class="bento-tag tag-cyan">01 // ТЕХНОЛОГИЯ</span>
@@ -318,7 +321,7 @@
                     </div>
                 </div>
 
-                <!-- 2. Замена слабого щитка от застройщика -->
+                <!-- 2. Замена слабого щитка от застройщика (Span 5) -->
                 <div class="bento-card bento-calc bento-span-5 fade-in" style="transition-delay: 0.1s;">
                     <div>
                         <span class="bento-tag tag-yellow">02 // БЕЗОПАСНОСТЬ</span>
@@ -334,92 +337,68 @@
                     </div>
                 </div>
 
-                <!-- 3. Кухонный гарнитур и перенос точек -->
-                <div class="bento-card bento-span-12 fade-in" style="transition-delay: 0.15s;">
-                    <div style="display: flex; flex-direction: column; md-flex-direction: row; gap: 20px;">
-                        <span class="bento-tag tag-cyan">03 // КУХНЯ И МОКРЫЕ ЗОНЫ</span>
-                        <h3 style="font-family: var(--font-heading); font-size: 1.35rem; margin-bottom: 10px; text-transform: uppercase;">
-                            Точный перенос электроточек под проект кухонного гарнитура
+                <!-- 3. Кухонный гарнитур и перенос точек (Span 5) -->
+                <div class="bento-card bento-smart bento-span-5 fade-in" style="transition-delay: 0.15s;">
+                    <div>
+                        <span class="bento-tag tag-cyan">03 // КУХНЯ & МОКРЫЕ ЗОНЫ</span>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 12px; text-transform: uppercase;">
+                            Перенос точек под кухню
                         </h3>
-                        <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55; max-width: 850px;">
-                            Стандартные розетки от застройщика почти никогда не совпадают с проектом кухни. Мы выводим силовые линии на варочную панель (3х6 мм²), духовой шкаф, посудомоечную машину, вытяжку, измельчитель и подсветку рабочей зоны по миллиметровым чертежам кухонщиков.
+                        <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55;">
+                            Стандартные розетки застройщика почти никогда не подходят под кухонный гарнитур. Выводим силовые линии на варочную панель, духовой шкаф, посудомойку, вытяжку и подсветку строго по проекту кухни.
                         </p>
+                        <ul class="bento-features">
+                            <li><i>⚡</i> Выделенная линия 3х6 мм² под варочную панель</li>
+                            <li><i>⚡</i> УЗО 10 мА для мокрых зон санузла и кухни</li>
+                            <li><i>⚡</i> Лазерная центровка розеток над фартуком</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 4. Чистовой монтаж и мастер-выключатель (Span 7) -->
+                <div class="bento-card bento-eng bento-span-7 fade-in" style="transition-delay: 0.2s;">
+                    <div>
+                        <span class="bento-tag tag-purple">04 // ЧИСТОВАЯ & СЛАБОТОЧКА</span>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.35rem; margin-bottom: 12px; text-transform: uppercase;">
+                            Чистовая электрика & мастер-выключатель
+                        </h3>
+                        <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55;">
+                            Аккуратный монтаж механизмов розеток и выключателей в единый горизонт. Реализация схемы «Мастер-выключатель» у входа для отключения всего света одним нажатием, скрытый монтаж Wi-Fi роутера в слаботочном щите.
+                        </p>
+                        <ul class="bento-features">
+                            <li style="color: #cbd5e1;"><i style="color: var(--primary-eng);">⚡</i> Мастер-выключатель («выключить всё») у входной двери</li>
+                            <li style="color: #cbd5e1;"><i style="color: var(--primary-eng);">⚡</i> Слаботочный щит для роутера и ТВ-разводки</li>
+                            <li style="color: #cbd5e1;"><i style="color: var(--primary-eng);">⚡</i> Подключение тёплых полов и терморегуляторов</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ПАКЕТЫ И СТОИМОСТЬ -->
-    <section class="section" id="packages" style="background: rgba(255, 255, 255, 0.01); border-block: 1px solid var(--border-light);">
+    <!-- СЕКЦИЯ 2: ПРАЙС-ЛИСТ В АККОРДЕОНАХ -->
+    <section class="section" id="prices-section" style="background: rgba(255, 255, 255, 0.01); border-block: 1px solid var(--border-light);">
         <div class="container">
-            <div style="text-align: center; max-width: 680px; margin: 0 auto;">
-                <span class="bento-tag tag-cyan fade-in">ЦЕНЫ В МУРИНО</span>
-                <h2 class="fade-in" style="margin-bottom: 10px;">Стоимость электрики <span>под ключ</span></h2>
-                <p class="fade-in" style="color: var(--text-muted); font-size: 0.95rem;">
-                    Фиксируем стоимость работ в договоре. Точный расчёт по чертежу или дизайн-проекту без скрытых доплат.
+            <div style="text-align: center; margin-bottom: 30px;">
+                <span class="bento-tag tag-cyan fade-in">ПРОЗРАЧНЫЕ РАСЦЕНКИ</span>
+                <h2 class="fade-in" style="margin-bottom: 12px;">Прайс-лист на <span>электромонтаж в Мурино</span></h2>
+                <p class="fade-in" style="color: var(--text-muted); max-width: 680px; margin: 0 auto; font-size: 0.95rem;">
+                    Все расценки прозрачны и строго соответствуют онлайн-калькулятору сметы. Выберите интересующую категорию или рассчитайте точную смету под свой объект.
                 </p>
             </div>
 
-            <div class="local-packages-grid">
-                <!-- Студия -->
-                <div class="local-package-card fade-in">
-                    <div>
-                        <span class="badge-status" style="margin-bottom: 10px;"><span class="dot"></span> Студия (20–28 м²)</span>
-                        <h3 style="font-family: var(--font-heading); font-size: 1.25rem;">Базовая доработка новостройки</h3>
-                        <div class="local-package-price">от 35 000 ₽</div>
-                        <ul class="local-package-features">
-                            <li><i>⚡</i> Перенос 12–16 розеток под мебель и ТВ</li>
-                            <li><i>⚡</i> Выделенная силовая линия на варочную панель</li>
-                            <li><i>⚡</i> Модернизация электрощита (УЗО + 5-6 групп)</li>
-                            <li><i>⚡</i> Срок выполнения: 1–2 рабочих дня</li>
-                        </ul>
-                    </div>
-                    <a href="#contact" class="btn btn-outline" style="width: 100%; justify-content: center;">Заказать для студии</a>
+            <div class="price-controls-bar fade-in">
+                <div class="price-controls-actions">
+                    <button type="button" class="price-ctrl-btn" id="expandAllPrices">Развернуть все</button>
+                    <button type="button" class="price-ctrl-btn" id="collapseAllPrices">Свернуть все</button>
                 </div>
-
-                <!-- 1-комнатная квартира -->
-                <div class="local-package-card fade-in" style="border-color: rgba(0, 229, 255, 0.4); box-shadow: 0 0 20px rgba(0, 229, 255, 0.05); transition-delay: 0.1s;">
-                    <div>
-                        <span class="badge-status" style="margin-bottom: 10px; background: rgba(0, 229, 255, 0.15); border-color: rgba(0, 229, 255, 0.4);"><span class="dot"></span> 1-к. квартира (32–45 м²)</span>
-                        <h3 style="font-family: var(--font-heading); font-size: 1.25rem;">Комплексный электромонтаж</h3>
-                        <div class="local-package-price">от 50 000 ₽</div>
-                        <ul class="local-package-features">
-                            <li><i>⚡</i> Полная разводка кухни, спальни, санузла и коридора</li>
-                            <li><i>⚡</i> 25–35 электроточек (розетки, свет, интернет)</li>
-                            <li><i>⚡</i> Сборка щита на 12–18 модулей с реле напряжения</li>
-                            <li><i>⚡</i> Разводка линий кондиционера и стиральной машины</li>
-                            <li><i>⚡</i> Срок выполнения: 2–3 рабочих дня</li>
-                        </ul>
-                    </div>
-                    <a href="#contact" class="btn btn-primary" style="width: 100%; justify-content: center;">Заказать для 1-комнатной ⚡</a>
-                </div>
-
-                <!-- 2-комнатная квартира -->
-                <div class="local-package-card fade-in" style="transition-delay: 0.2s;">
-                    <div>
-                        <span class="badge-status" style="margin-bottom: 10px;"><span class="dot"></span> 2-к. квартира (50–70 м²)</span>
-                        <h3 style="font-family: var(--font-heading); font-size: 1.25rem;">Электромонтаж по дизайн-проекту</h3>
-                        <div class="local-package-price">от 70 000 ₽</div>
-                        <ul class="local-package-features">
-                            <li><i>⚡</i> 45–60 электроточек, зонированное освещение</li>
-                            <li><i>⚡</i> Мастер-выключатель («выключить всё») у входа</li>
-                            <li><i>⚡</i> Силовой щит 24–36 модулей (ABB / Dekraft)</li>
-                            <li><i>⚡</i> Линии тёплых полов, бойлера и посудомоечной машины</li>
-                            <li><i>⚡</i> Срок выполнения: 3–5 рабочих дней</li>
-                        </ul>
-                    </div>
-                    <a href="#contact" class="btn btn-outline" style="width: 100%; justify-content: center;">Заказать для 2-комнатной</a>
-                </div>
-            </div>
-
-            <div style="margin-top: 30px; text-align: center;">
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px;">
-                    Нужен нестандартный расчёт или частичный перенос нескольких точек?
-                </p>
-                <a href="../estimate.html" class="btn btn-outline" style="padding: 10px 24px;">
-                    Рассчитать точную стоимость в онлайн-калькуляторе →
+                <a href="../estimate.html" class="price-ctrl-btn highlight">
+                    <span>⚡ Рассчитать в онлайн-калькуляторе</span>
                 </a>
+            </div>
+
+            <div id="install-prices" class="fade-in">
+                <p style="text-align: center; color: var(--text-muted);">⏳ Загрузка прайс-листа...</p>
             </div>
         </div>
     </section>
@@ -803,6 +782,119 @@
             }
         });
     }
+
+    // Загрузка прайс-листа из prices.json в аккордеоны (единый источник истины с калькулятором)
+    fetch('../static/data/prices.json')
+        .then(r => {
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            return r.json();
+        })
+        .then(d => {
+            const container = document.getElementById('install-prices');
+            if (d.install && d.install.categories) {
+                container.textContent = '';
+                const categoryIcons = {
+                    'Черновые': '🔨',
+                    'Чистовая': '🔌',
+                    'Проектирование': '📐',
+                    'Сборка': '⚡',
+                    'Ревизия': '🔧',
+                    'Слаботочные': '📡',
+                    'Освещение': '💡',
+                    'Подключение': '🍳',
+                    'Диагностика': '🔍'
+                };
+                d.install.categories.forEach(c => {
+                    const details = document.createElement('details');
+                    details.className = 'price-accordion';
+                    const summary = document.createElement('summary');
+                    summary.className = 'price-accordion-summary';
+                    let icon = '⚡';
+                    for (const [key, ic] of Object.entries(categoryIcons)) {
+                        if (c.name.indexOf(key) !== -1) {
+                            icon = ic;
+                            break;
+                        }
+                    }
+                    const titleDiv = document.createElement('div');
+                    titleDiv.className = 'price-accordion-title';
+                    const iconSpan = document.createElement('span');
+                    iconSpan.className = 'price-accordion-icon-tag';
+                    iconSpan.textContent = icon;
+                    const nameSpan = document.createElement('span');
+                    nameSpan.textContent = c.name;
+                    titleDiv.appendChild(iconSpan);
+                    titleDiv.appendChild(nameSpan);
+
+                    const metaDiv = document.createElement('div');
+                    metaDiv.className = 'price-accordion-meta';
+                    const countSpan = document.createElement('span');
+                    countSpan.className = 'price-accordion-count';
+                    const itemCount = c.items ? c.items.length : 0;
+                    countSpan.textContent = itemCount + ' ' + (itemCount === 1 ? 'позиция' : (itemCount >= 2 && itemCount <= 4 ? 'позиции' : 'позиций'));
+                    const arrowSpan = document.createElement('span');
+                    arrowSpan.className = 'price-accordion-arrow';
+                    arrowSpan.textContent = '▼';
+                    metaDiv.appendChild(countSpan);
+                    metaDiv.appendChild(arrowSpan);
+
+                    summary.appendChild(titleDiv);
+                    summary.appendChild(metaDiv);
+                    details.appendChild(summary);
+
+                    const bodyDiv = document.createElement('div');
+                    bodyDiv.className = 'price-accordion-body';
+                    const tableResp = document.createElement('div');
+                    tableResp.className = 'table-responsive';
+                    const table = document.createElement('table');
+                    table.className = 'price-table';
+                    const thead = document.createElement('thead');
+                    thead.innerHTML = '<tr><th>Услуга</th><th>Ед.</th><th>Цена</th></tr>';
+                    table.appendChild(thead);
+                    const tbody = document.createElement('tbody');
+                    c.items.forEach(i => {
+                        const tr = document.createElement('tr');
+                        const tdService = document.createElement('td');
+                        tdService.textContent = i.service;
+                        const tdUnit = document.createElement('td');
+                        tdUnit.style.color = 'var(--text-muted)';
+                        tdUnit.textContent = i.unit;
+                        const tdPrice = document.createElement('td');
+                        tdPrice.className = 'price-value';
+                        tdPrice.textContent = Number(i.price).toLocaleString('ru-RU') + ' ₽';
+                        tr.appendChild(tdService);
+                        tr.appendChild(tdUnit);
+                        tr.appendChild(tdPrice);
+                        tbody.appendChild(tr);
+                    });
+                    table.appendChild(tbody);
+                    tableResp.appendChild(table);
+                    bodyDiv.appendChild(tableResp);
+                    details.appendChild(bodyDiv);
+                    container.appendChild(details);
+                });
+
+                const expandBtn = document.getElementById('expandAllPrices');
+                const collapseBtn = document.getElementById('collapseAllPrices');
+                if (expandBtn) {
+                    expandBtn.addEventListener('click', () => {
+                        document.querySelectorAll('#install-prices .price-accordion').forEach(acc => acc.open = true);
+                    });
+                }
+                if (collapseBtn) {
+                    collapseBtn.addEventListener('click', () => {
+                        document.querySelectorAll('#install-prices .price-accordion').forEach(acc => acc.open = false);
+                    });
+                }
+            } else {
+                container.textContent = 'Раздел Install не найден в прайсе.';
+            }
+        })
+        .catch(err => {
+            console.error('Ошибка загрузки прайса:', err);
+            const container = document.getElementById('install-prices');
+            if (container) container.textContent = '⚠️ Не удалось загрузить прайс-лист.';
+        });
 
     // Плавное появление
     const observer = new IntersectionObserver((entries) => {

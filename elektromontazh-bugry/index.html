@@ -241,6 +241,9 @@
             border-color: var(--primary-install);
             color: var(--primary-install);
         }
+        section[id] {
+            scroll-margin-top: 100px;
+        }
     </style>
 
     <!-- Управление cookies и отложенная инициализация Яндекс.Метрики (152-ФЗ) -->
@@ -282,14 +285,14 @@
                 Качественная электрика для квартир и коттеджей в Буграх. Доработка предчистовой отделки white-box, перенос розеток под кухонную технику, монтаж слаботочных щитов и защита от перепадов напряжения. Фиксированная смета и официальный договор с гарантией 12 месяцев.
             </p>
             <div class="hero-actions">
-                <a href="#packages" class="btn btn-primary">Стоимость и пакеты ⚡</a>
+                <a href="#prices-section" class="btn btn-primary">Прайс-лист на работы ⚡</a>
                 <a href="../estimate.html" class="btn btn-outline">Калькулятор сметы</a>
             </div>
         </div>
     </section>
 
     <!-- ОСОБЕННОСТИ ЭЛЕКТРОМОНТАЖА В БУГРАХ -->
-    <section class="section">
+    <section class="section" id="features">
         <div class="container">
             <div style="text-align: center; max-width: 720px; margin: 0 auto 35px;">
                 <span class="bento-tag tag-cyan fade-in">СПЕЦИФИКА КВАРТАЛОВ БУГРОВ</span>
@@ -334,92 +337,68 @@
                     </div>
                 </div>
 
-                <!-- 3. Силовые линии для современной техники -->
-                <div class="bento-card bento-span-12 fade-in" style="transition-delay: 0.15s;">
-                    <div style="display: flex; flex-direction: column; gap: 15px;">
+                <!-- 3. Силовые линии для современной техники (Span 5) -->
+                <div class="bento-card bento-smart bento-span-5 fade-in" style="transition-delay: 0.15s;">
+                    <div>
                         <span class="bento-tag tag-cyan">03 // ЭНЕРГОПОТРЕБЛЕНИЕ</span>
-                        <h3 style="font-family: var(--font-heading); font-size: 1.35rem; margin-bottom: 6px; text-transform: uppercase;">
-                            Выделенные линии на варочные панели, бойлеры и тёплые полы
+                        <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 12px; text-transform: uppercase;">
+                            Выделенные линии под технику
                         </h3>
-                        <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55; max-width: 880px;">
-                            Квартиры в Буграх проектируются под полное электроотопление мокрых зон и индукционные плиты. Мы рассчитываем сечения жил по формулам длительно допустимого тока: отдельная линия 3х6 мм² для варочной панели, раздельные линии 3х2.5 мм² с дифференциальной защитой для водонагревателя, духового шкафа, посудомоечной и стиральной машин.
+                        <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55;">
+                            Квартиры в Буграх проектируются под полное электроотопление мокрых зон и индукционные плиты. Мы рассчитываем сечения жил по формулам длительно допустимого тока.
                         </p>
+                        <ul class="bento-features">
+                            <li><i>⚡</i> Отдельная линия 3х6 мм² для варочной панели</li>
+                            <li><i>⚡</i> Раздельные линии 3х2.5 мм² с дифзащитой на бойлер и духовой шкаф</li>
+                            <li><i>⚡</i> Питание посудомоечной и стиральной машин</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 4. Слаботочный щит и мастер-выключатель (Span 7) -->
+                <div class="bento-card bento-eng bento-span-7 fade-in" style="transition-delay: 0.2s;">
+                    <div>
+                        <span class="bento-tag tag-purple">04 // СЛАБОТОЧКА & КОМФОРТ</span>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.35rem; margin-bottom: 12px; text-transform: uppercase;">
+                            Слаботочный щит & мастер-выключатель
+                        </h3>
+                        <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55;">
+                            Скрытый монтаж роутера в слаботочном щитке у входа — никаких свисающих проводов в коридоре. Организация клавиши «Мастер-выключатель» для обесточивания света во всей квартире перед выходом.
+                        </p>
+                        <ul class="bento-features">
+                            <li style="color: #cbd5e1;"><i style="color: var(--primary-eng);">⚡</i> Мастер-кнопка «отпуск / выключить всё» у входной двери</li>
+                            <li style="color: #cbd5e1;"><i style="color: var(--primary-eng);">⚡</i> Встраиваемый слаботочный бокс для Wi-Fi и оптики</li>
+                            <li style="color: #cbd5e1;"><i style="color: var(--primary-eng);">⚡</i> Монтаж электронных терморегуляторов тёплого пола</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ПАКЕТЫ И СТОИМОСТЬ -->
-    <section class="section" id="packages" style="background: rgba(255, 255, 255, 0.01); border-block: 1px solid var(--border-light);">
+    <!-- СЕКЦИЯ 2: ПРАЙС-ЛИСТ В АККОРДЕОНАХ -->
+    <section class="section" id="prices-section" style="background: rgba(255, 255, 255, 0.01); border-block: 1px solid var(--border-light);">
         <div class="container">
-            <div style="text-align: center; max-width: 680px; margin: 0 auto;">
-                <span class="bento-tag tag-cyan fade-in">РАСЦЕНКИ В БУГРАХ</span>
-                <h2 class="fade-in" style="margin-bottom: 10px;">Пакетные решения <span>под ключ</span></h2>
-                <p class="fade-in" style="color: var(--text-muted); font-size: 0.95rem;">
-                    Фиксируем перечень работ и материалов в смете. Выезд на замер в Бугры — бесплатно при подписании договора.
+            <div style="text-align: center; margin-bottom: 30px;">
+                <span class="bento-tag tag-cyan fade-in">ПРОЗРАЧНЫЕ РАСЦЕНКИ</span>
+                <h2 class="fade-in" style="margin-bottom: 12px;">Прайс-лист на <span>электромонтаж в Буграх</span></h2>
+                <p class="fade-in" style="color: var(--text-muted); max-width: 680px; margin: 0 auto; font-size: 0.95rem;">
+                    Все расценки прозрачны и строго соответствуют онлайн-калькулятору сметы. Выберите интересующую категорию или рассчитайте точную смету под свой объект.
                 </p>
             </div>
 
-            <div class="local-packages-grid">
-                <!-- Студия / 1-к. white-box -->
-                <div class="local-package-card fade-in">
-                    <div>
-                        <span class="badge-status" style="margin-bottom: 10px;"><span class="dot"></span> Студия / White-Box (22–32 м²)</span>
-                        <h3 style="font-family: var(--font-heading); font-size: 1.25rem;">Доработка предчистовой электрики</h3>
-                        <div class="local-package-price">от 38 000 ₽</div>
-                        <ul class="local-package-features">
-                            <li><i>⚡</i> Перенос 14–18 точек под мебель и кухонную гарнитуру</li>
-                            <li><i>⚡</i> Вывод под индукцию и вытяжку</li>
-                            <li><i>⚡</i> Установка УЗО и реле напряжения в штатный щит</li>
-                            <li><i>⚡</i> Срок выполнения: 1–2 рабочих дня</li>
-                        </ul>
-                    </div>
-                    <a href="#contact" class="btn btn-outline" style="width: 100%; justify-content: center;">Выбрать пакет</a>
+            <div class="price-controls-bar fade-in">
+                <div class="price-controls-actions">
+                    <button type="button" class="price-ctrl-btn" id="expandAllPrices">Развернуть все</button>
+                    <button type="button" class="price-ctrl-btn" id="collapseAllPrices">Свернуть все</button>
                 </div>
-
-                <!-- 1-к. / Евро-2 -->
-                <div class="local-package-card fade-in" style="border-color: rgba(0, 229, 255, 0.4); box-shadow: 0 0 20px rgba(0, 229, 255, 0.05); transition-delay: 0.1s;">
-                    <div>
-                        <span class="badge-status" style="margin-bottom: 10px; background: rgba(0, 229, 255, 0.15); border-color: rgba(0, 229, 255, 0.4);"><span class="dot"></span> Евро-2 / 1-к. (36–48 м²)</span>
-                        <h3 style="font-family: var(--font-heading); font-size: 1.25rem;">Комплексный электромонтаж</h3>
-                        <div class="local-package-price">от 55 000 ₽</div>
-                        <ul class="local-package-features">
-                            <li><i>⚡</i> Полная разводка большой кухни-гостиной и спальни</li>
-                            <li><i>⚡</i> 30–40 электроточек (силовые, ТВ, интернет)</li>
-                            <li><i>⚡</i> Сборка щита на 18–24 модуля с защитой от скачков</li>
-                            <li><i>⚡</i> Отдельные линии на бойлер и кондиционер</li>
-                            <li><i>⚡</i> Срок выполнения: 2–4 рабочих дня</li>
-                        </ul>
-                    </div>
-                    <a href="#contact" class="btn btn-primary" style="width: 100%; justify-content: center;">Выбрать для Евро-2 ⚡</a>
-                </div>
-
-                <!-- 2-к. / Евро-3 -->
-                <div class="local-package-card fade-in" style="transition-delay: 0.2s;">
-                    <div>
-                        <span class="badge-status" style="margin-bottom: 10px;"><span class="dot"></span> 2-к. / Евро-3 (55–78 м²)</span>
-                        <h3 style="font-family: var(--font-heading); font-size: 1.25rem;">Электрика по дизайн-проекту</h3>
-                        <div class="local-package-price">от 75 000 ₽</div>
-                        <ul class="local-package-features">
-                            <li><i>⚡</i> 50–70 электроточек, многозонный свет</li>
-                            <li><i>⚡</i> Мастер-выключатель прихожей («отпуск/уход»)</li>
-                            <li><i>⚡</i> Сборка щита 36–54 модуля с индикацией фаз</li>
-                            <li><i>⚡</i> Линии тёплых полов, посудомойки, кондиционеров</li>
-                            <li><i>⚡</i> Срок выполнения: 4–6 рабочих дней</li>
-                        </ul>
-                    </div>
-                    <a href="#contact" class="btn btn-outline" style="width: 100%; justify-content: center;">Выбрать для Евро-3</a>
-                </div>
-            </div>
-
-            <div style="margin-top: 30px; text-align: center;">
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px;">
-                    Хотите рассчитать смету со всеми позициями и материалами?
-                </p>
-                <a href="../estimate.html" class="btn btn-outline" style="padding: 10px 24px;">
-                    Перейти в онлайн-калькулятор сметы →
+                <a href="../estimate.html" class="price-ctrl-btn highlight">
+                    <span>⚡ Рассчитать в онлайн-калькуляторе</span>
                 </a>
+            </div>
+
+            <div id="install-prices" class="fade-in">
+                <p style="text-align: center; color: var(--text-muted);">⏳ Загрузка прайс-листа...</p>
             </div>
         </div>
     </section>
@@ -801,6 +780,119 @@
             }
         });
     }
+
+    // Загрузка прайс-листа из prices.json
+    fetch('../static/data/prices.json')
+        .then(r => {
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            return r.json();
+        })
+        .then(d => {
+            const container = document.getElementById('install-prices');
+            if (d.install && d.install.categories) {
+                container.textContent = '';
+                const categoryIcons = {
+                    'Черновые': '🔨',
+                    'Чистовая': '🔌',
+                    'Проектирование': '📐',
+                    'Сборка': '⚡',
+                    'Ревизия': '🔧',
+                    'Слаботочные': '📡',
+                    'Освещение': '💡',
+                    'Подключение': '🍳',
+                    'Диагностика': '🔍'
+                };
+                d.install.categories.forEach(c => {
+                    const details = document.createElement('details');
+                    details.className = 'price-accordion';
+                    const summary = document.createElement('summary');
+                    summary.className = 'price-accordion-summary';
+                    let icon = '⚡';
+                    for (const [key, ic] of Object.entries(categoryIcons)) {
+                        if (c.name.indexOf(key) !== -1) {
+                            icon = ic;
+                            break;
+                        }
+                    }
+                    const titleDiv = document.createElement('div');
+                    titleDiv.className = 'price-accordion-title';
+                    const iconSpan = document.createElement('span');
+                    iconSpan.className = 'price-accordion-icon-tag';
+                    iconSpan.textContent = icon;
+                    const nameSpan = document.createElement('span');
+                    nameSpan.textContent = c.name;
+                    titleDiv.appendChild(iconSpan);
+                    titleDiv.appendChild(nameSpan);
+
+                    const metaDiv = document.createElement('div');
+                    metaDiv.className = 'price-accordion-meta';
+                    const countSpan = document.createElement('span');
+                    countSpan.className = 'price-accordion-count';
+                    const itemCount = c.items ? c.items.length : 0;
+                    countSpan.textContent = itemCount + ' ' + (itemCount === 1 ? 'позиция' : (itemCount >= 2 && itemCount <= 4 ? 'позиции' : 'позиций'));
+                    const arrowSpan = document.createElement('span');
+                    arrowSpan.className = 'price-accordion-arrow';
+                    arrowSpan.textContent = '▼';
+                    metaDiv.appendChild(countSpan);
+                    metaDiv.appendChild(arrowSpan);
+
+                    summary.appendChild(titleDiv);
+                    summary.appendChild(metaDiv);
+                    details.appendChild(summary);
+
+                    const bodyDiv = document.createElement('div');
+                    bodyDiv.className = 'price-accordion-body';
+                    const tableResp = document.createElement('div');
+                    tableResp.className = 'table-responsive';
+                    const table = document.createElement('table');
+                    table.className = 'price-table';
+                    const thead = document.createElement('thead');
+                    thead.innerHTML = '<tr><th>Услуга</th><th>Ед.</th><th>Цена</th></tr>';
+                    table.appendChild(thead);
+                    const tbody = document.createElement('tbody');
+                    c.items.forEach(i => {
+                        const tr = document.createElement('tr');
+                        const tdService = document.createElement('td');
+                        tdService.textContent = i.service;
+                        const tdUnit = document.createElement('td');
+                        tdUnit.style.color = 'var(--text-muted)';
+                        tdUnit.textContent = i.unit;
+                        const tdPrice = document.createElement('td');
+                        tdPrice.className = 'price-value';
+                        tdPrice.textContent = Number(i.price).toLocaleString('ru-RU') + ' ₽';
+                        tr.appendChild(tdService);
+                        tr.appendChild(tdUnit);
+                        tr.appendChild(tdPrice);
+                        tbody.appendChild(tr);
+                    });
+                    table.appendChild(tbody);
+                    tableResp.appendChild(table);
+                    bodyDiv.appendChild(tableResp);
+                    details.appendChild(bodyDiv);
+                    container.appendChild(details);
+                });
+
+                const expandBtn = document.getElementById('expandAllPrices');
+                const collapseBtn = document.getElementById('collapseAllPrices');
+                if (expandBtn) {
+                    expandBtn.addEventListener('click', () => {
+                        document.querySelectorAll('#install-prices .price-accordion').forEach(acc => acc.open = true);
+                    });
+                }
+                if (collapseBtn) {
+                    collapseBtn.addEventListener('click', () => {
+                        document.querySelectorAll('#install-prices .price-accordion').forEach(acc => acc.open = false);
+                    });
+                }
+            } else {
+                container.textContent = 'Раздел Install не найден в прайсе.';
+            }
+        })
+        .catch(err => {
+            console.error('Ошибка загрузки прайса:', err);
+            const container = document.getElementById('install-prices');
+            if (container) container.textContent = '⚠️ Не удалось загрузить прайс-лист.';
+        });
 
     // Плавное появление
     const observer = new IntersectionObserver((entries) => {
