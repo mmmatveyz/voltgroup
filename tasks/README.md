@@ -67,7 +67,7 @@
 | [034-address-truncation.md](034-address-truncation.md) | 23 | Обрезка адреса и текст для клиента | ✅ завершено 07.10 |
 | [025-rate-limiting.md](025-rate-limiting.md) | 25 | Ревизия лимитов запросов | ✅ завершено 07.10 |
 | [026-document-write.md](026-document-write.md) | 26 | Убрать `document.write` при печати | ✅ завершено 07.10 |
-| [028-data-normalization.md](028-data-normalization.md) | 27 | Нормализация данных из таблицы | ⏳ |
+| [028-data-normalization.md](028-data-normalization.md) | 27 | Нормализация данных из таблицы | ✅ завершено 07.10 |
 | [029-company-config.md](029-company-config.md) | 29 | Единый конфиг реквизитов и контактов | ⏳ |
 | [032-error-alerts.md](032-error-alerts.md) | 32 | Алерты в Telegram при сбоях | ⏳ |
 | [033-backup.md](033-backup.md) | 34 | Резервное копирование данных | ⏳ |

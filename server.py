@@ -335,6 +335,76 @@ def answer_callback(callback_query_id, text=None):
         app.logger.error(f"Ошибка answerCallbackQuery: {e}")
         return False
 
+# ----------------------------------------------------
+# 4.1. НОРМАЛИЗАЦИЯ ДАННЫХ ИЗ ТАБЛИЦЫ (задача 028, пункт № 27 AUDIT.md)
+# ----------------------------------------------------
+
+def normalize_progress(val, obj_id=None):
+    """
+    Приводит процент выполнения объекта к целому числу в диапазоне 0..100.
+    При нечисловом или выходящем за границы значении логирует предупреждение и зажимает диапазон.
+    """
+    if val is None or str(val).strip() == "":
+        return 0
+    raw_str = str(val).strip().rstrip('%').strip()
+    try:
+        num = int(float(raw_str))
+        clamped = max(0, min(100, num))
+        if clamped != num:
+            app.logger.warning(f"Объект №{obj_id}: значение progress={val} выходило за границы 0..100, нормализовано в {clamped}")
+        return clamped
+    except (ValueError, TypeError):
+        app.logger.warning(f"Объект №{obj_id}: нечисловое значение progress='{val}', нормализовано в 0")
+        return 0
+
+def normalize_money_str(val, default_suffix=" ₽", obj_id=None, field_name="money"):
+    """
+    Нормализует денежные суммы (total, paid) в предсказуемый строковый вид с разделителями тысяч.
+    Устраняет хаотичные пробелы, символы валют и мусор из ручного ввода в таблице.
+    """
+    if val is None or str(val).strip() == "":
+        return f"0{default_suffix}"
+    raw_str = str(val).strip()
+    # Извлечение только цифр (и возможной точки/запятой)
+    digits_only = re.sub(r'[^\d]', '', raw_str)
+    if not digits_only:
+        app.logger.warning(f"Объект №{obj_id}: некорректное значение поля {field_name}='{val}', нормализовано в 0")
+        return f"0{default_suffix}"
+    try:
+        amount = int(digits_only)
+        formatted = f"{amount:,}".replace(",", " ")
+        return f"{formatted}{default_suffix}"
+    except (ValueError, TypeError):
+        app.logger.warning(f"Объект №{obj_id}: ошибка парсинга {field_name}='{val}'")
+        return f"0{default_suffix}"
+
+def normalize_stage(val, obj_id=None):
+    """
+    Проверяет этап выполнения объекта по справочнику STAGES.
+    Если в таблице указан неизвестный этап, логирует предупреждение, но сохраняет исходный текст.
+    """
+    stage_str = str(val).strip() if val else ""
+    if not stage_str:
+        return STAGES[0]
+    if stage_str not in STAGES:
+        app.logger.warning(f"Объект №{obj_id}: нестандартный этап '{stage_str}' (нет в STAGES)")
+    return stage_str
+
+def normalize_photo_urls(val):
+    """
+    Разбирает строку ссылок на фото, отбрасывает пустые фрагменты и дубликаты с сохранением порядка.
+    """
+    if not val or not str(val).strip():
+        return ""
+    raw_parts = [p.strip() for p in str(val).split(',')]
+    seen = set()
+    cleaned = []
+    for part in raw_parts:
+        if part and part not in seen:
+            seen.add(part)
+            cleaned.append(part)
+    return ", ".join(cleaned)
+
 def build_main_menu():
     text = (
         "⚡️ <b>Панель управления VoltGroup</b>\n\n"
@@ -459,7 +529,8 @@ def build_objects_list(sheet):
         for row in rows[1:]:
             if row and row[0].strip():
                 obj_id = row[0].strip()
-                progress = row[1].strip() if len(row) > 1 and row[1].strip() else "0"
+                raw_prog = row[1].strip() if len(row) > 1 and row[1].strip() else "0"
+                progress = normalize_progress(raw_prog, obj_id=obj_id)
                 raw_addr = row[5].strip() if len(row) > 5 else ""
                 obj_items.append((obj_id, progress, raw_addr))
 
@@ -482,16 +553,16 @@ def build_object_view(sheet, obj_id):
     while len(vals) < 8:
         vals.append("")
 
-    progress = vals[1] or "0"
-    stage = vals[2] or "Завоз материалов"
-    total = vals[3] or "0 ₽"
-    paid = vals[4] or "0 ₽"
-    address = vals[5] or f"Объект №{obj_id}"
+    progress = normalize_progress(vals[1], obj_id=obj_id)
+    stage = normalize_stage(vals[2], obj_id=obj_id)
+    total = normalize_money_str(vals[3], default_suffix=" ₽", obj_id=obj_id, field_name="total")
+    paid = normalize_money_str(vals[4], default_suffix=" ₽", obj_id=obj_id, field_name="paid")
+    address = vals[5].strip() if vals[5] and vals[5].strip() else f"Объект №{obj_id}"
 
     text = (
         f"📍 <b>Объект №{html.escape(str(obj_id))}</b>\n\n"
         f"🏢 <b>Адрес:</b> {html.escape(str(address))}\n"
-        f"📊 <b>Прогресс:</b> <code>{html.escape(str(progress))}%</code>\n"
+        f"📊 <b>Прогресс:</b> <code>{progress}%</code>\n"
         f"🏗 <b>Этап:</b> {html.escape(str(stage))}\n"
         f"💰 <b>Сумма сметы:</b> {html.escape(str(total))}\n"
         f"💳 <b>Оплачено:</b> {html.escape(str(paid))}\n"
@@ -615,13 +686,20 @@ def get_status():
             if not expected_token or not secrets.compare_digest(expected_token, str(token).strip()):
                 return jsonify({"status": "error", "msg": "Неверный ключ доступа"}), 403
 
+            progress_val = normalize_progress(row_values[1], obj_id=obj_id)
+            stage_val = normalize_stage(row_values[2], obj_id=obj_id)
+            total_val = normalize_money_str(row_values[3], default_suffix=" ₽", obj_id=obj_id, field_name="total")
+            paid_val = normalize_money_str(row_values[4], default_suffix=" ₽", obj_id=obj_id, field_name="paid")
+            addr_val = row_values[5].strip() if row_values[5] and row_values[5].strip() else f"Объект №{obj_id}"
+            photo_val = normalize_photo_urls(row_values[6])
+
             data = {
-                "progress": row_values[1],
-                "stage": row_values[2],
-                "total": row_values[3],
-                "paid": row_values[4],
-                "address": row_values[5],
-                "photo": row_values[6]
+                "progress": str(progress_val),
+                "stage": stage_val,
+                "total": total_val,
+                "paid": paid_val,
+                "address": addr_val,
+                "photo": photo_val
             }
             return jsonify({"status": "success", "data": data}), 200
         else:

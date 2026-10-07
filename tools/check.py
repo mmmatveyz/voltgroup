@@ -25,6 +25,7 @@ tools/check.py — Единая команда комплексной прове
 import ast
 import json
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -433,6 +434,81 @@ def check_address_formatting():
     except Exception as e:
         report_fail("Сбой функционального теста форматирования адресов", str(e))
 
+def check_data_normalization_logic():
+    print("\n[8/9] Проверка нормализации данных из Google Таблицы (tasks/028, п. 27 AUDIT)...")
+    server_py = ROOT_DIR / "server.py"
+    if not server_py.exists():
+        report_fail("server.py не найден")
+        return
+
+    server_code = server_py.read_text(encoding="utf-8")
+    required_funcs = ["normalize_progress", "normalize_money_str", "normalize_stage", "normalize_photo_urls"]
+    for fn in required_funcs:
+        if f"def {fn}" in server_code:
+            report_pass(f"Функция {fn} присутствует в server.py")
+        else:
+            report_fail(f"Функция {fn} отсутствует в server.py")
+            return
+
+    try:
+        tree = ast.parse(server_code)
+        target_nodes = []
+        for node in tree.body:
+            if isinstance(node, ast.Assign):
+                for target in node.targets:
+                    if isinstance(target, ast.Name) and target.id == "STAGES":
+                        target_nodes.append(node)
+            elif isinstance(node, ast.FunctionDef) and node.name in required_funcs:
+                target_nodes.append(node)
+
+        module_ast = ast.Module(body=target_nodes, type_ignores=[])
+        compiled = compile(module_ast, filename="<normalization_test>", mode="exec")
+        sandbox_ns = {
+            "re": re,
+            "app": type("App", (), {"logger": type("Logger", (), {"warning": lambda *a, **k: None, "error": lambda *a, **k: None})()})()
+        }
+        exec(compiled, sandbox_ns)
+
+        norm_prog = sandbox_ns["normalize_progress"]
+        norm_money = sandbox_ns["normalize_money_str"]
+        norm_stage = sandbox_ns["normalize_stage"]
+        norm_photo = sandbox_ns["normalize_photo_urls"]
+
+        # Тест progress: 150 -> 100, -20 -> 0, "85%" -> 85, "много" -> 0, пустой -> 0
+        assert norm_prog(150) == 100
+        assert norm_prog(-20) == 0
+        assert norm_prog("85%") == 85
+        assert norm_prog("много") == 0
+        assert norm_prog("") == 0
+        assert norm_prog(None) == 0
+        assert norm_prog(50) == 50
+        report_pass("normalize_progress строго зажимает процент выполнения в диапазон 0..100")
+
+        # Тест money: "50000" -> "50 000 ₽", "50 000 ₽" -> "50 000 ₽", "abc" -> "0 ₽", "" -> "0 ₽"
+        assert norm_money("50000") == "50 000 ₽"
+        assert norm_money("50 000 ₽") == "50 000 ₽"
+        assert norm_money(" 1250300 ") == "1 250 300 ₽"
+        assert norm_money("неизвестно") == "0 ₽"
+        assert norm_money(None) == "0 ₽"
+        report_pass("normalize_money_str корректно форматирует суммы и очищает ручной ввод")
+
+        # Тест stage: стандартный этап -> без изменений, нестандартный -> без падений с логированием
+        assert norm_stage("Завоз материалов") == "Завоз материалов"
+        assert norm_stage("Нестандартный этап") == "Нестандартный этап"
+        assert norm_stage("") == "Завоз материалов"
+        report_pass("normalize_stage валидирует этап и подставляет дефолтный при пустом значении")
+
+        # Тест photo: разбор строки, удаление дублей и пустых значений
+        photo_input = "https://img1.com, , https://img2.com, https://img1.com,  https://img3.com "
+        photo_res = norm_photo(photo_input)
+        assert photo_res == "https://img1.com, https://img2.com, https://img3.com"
+        assert norm_photo("") == ""
+        assert norm_photo(None) == ""
+        report_pass("normalize_photo_urls удаляет пустые элементы и дедуплицирует ссылки")
+
+    except Exception as e:
+        report_fail("Сбой модульного теста нормализации данных таблицы", str(e))
+
 def check_css_version_consistency():
     print("\n[8/8] Проверка синхронности версий CSS (?v=) и относительных путей...")
     import re
@@ -502,6 +578,7 @@ def main():
     check_security_sanity()
     check_sheets_snapshot_logic()
     check_address_formatting()
+    check_data_normalization_logic()
     check_css_version_consistency()
 
     print("\n" + "=" * 60)

@@ -334,12 +334,13 @@
                 document.querySelector('.object-title').textContent = data.address || `Объект №${objectId}`;
                 document.querySelector('.object-id').textContent = `Договор / ID: ${objectId}`;
 
-                // Прогресс бар
-                const progress = parseInt(data.progress) || 0;
+                // Прогресс бар: строгая нормализация в диапазон 0..100 и защита от NaN
+                const rawProgress = parseInt(data.progress, 10);
+                const progress = isNaN(rawProgress) ? 0 : Math.max(0, Math.min(100, rawProgress));
                 document.getElementById('progress-bar').style.width = progress + '%';
                 document.getElementById('progress-text').textContent = progress + '%';
 
-                // Финансы и этап
+                // Финансы и этап: защита от нечисловых форматов и NaN
                 const formatRub = val => {
                     if (!val) return '0 ₽';
                     const cleaned = String(val).replace(/₽/g, '').trim();
