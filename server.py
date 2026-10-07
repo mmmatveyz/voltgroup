@@ -121,14 +121,114 @@ def get_sheet():
     _cached_ws = sh.sheet1
     return _cached_ws
 
+class SnapshotCell:
+    """Обертка ячейки для совместимости с интерфейсом gspread.Cell"""
+    def __init__(self, row, col, value):
+        self.row = row
+        self.col = col
+        self.value = value
+
+class SheetSnapshot:
+    """
+    Снимок таблицы для обслуживания одного входящего запроса (вебхук или API).
+    Загружает данные ровно один раз через ws.get_all_values() и строит O(1) индекс по ID объекта.
+    Все последующие чтения (поиск объекта, получение строки, чтение ячейки) выполняются из памяти
+    без сетевых запросов. Запись (update_cell, append_row) обновляет как удаленную таблицу Google,
+    так и локальный снимок, гарантируя согласованность данных в рамках запроса.
+    """
+    def __init__(self, ws):
+        self.ws = ws
+        try:
+            self.rows = ws.get_all_values() if ws else []
+        except Exception as e:
+            app.logger.error(f"Ошибка загрузки снимка таблицы: {e}")
+            self.rows = []
+        self._build_index()
+
+    def _build_index(self):
+        self.index = {}  # obj_id -> row_number (1-based)
+        if len(self.rows) > 1:
+            for idx, row in enumerate(self.rows[1:], start=2):
+                if row and len(row) > 0 and str(row[0]).strip():
+                    obj_id = str(row[0]).strip()
+                    self.index[obj_id] = idx
+
+    def find_object(self, obj_id):
+        """O(1) поиск ячейки объекта по точному совпадению ID"""
+        target = str(obj_id).strip()
+        if not target:
+            return None
+        row_num = self.index.get(target)
+        if row_num is not None:
+            return SnapshotCell(row_num, 1, target)
+        return None
+
+    def row_values(self, row_num):
+        """Возвращает значения строки из снимка с дополнением минимум до 8 колонок"""
+        row_idx = row_num - 1
+        if 0 <= row_idx < len(self.rows):
+            vals = list(self.rows[row_idx])
+            while len(vals) < 8:
+                vals.append("")
+            return vals
+        return [""] * 8
+
+    def cell(self, row_num, col_num):
+        """Возвращает ячейку из снимка памяти без сетевого вызова"""
+        row_idx = row_num - 1
+        col_idx = col_num - 1
+        if 0 <= row_idx < len(self.rows):
+            row = self.rows[row_idx]
+            val = row[col_idx] if 0 <= col_idx < len(row) else ""
+            return SnapshotCell(row_num, col_num, val)
+        return SnapshotCell(row_num, col_num, "")
+
+    def get_all_values(self):
+        """Возвращает кэшированные строки таблицы"""
+        return self.rows
+
+    def update_cell(self, row_num, col_num, value):
+        """Синхронно обновляет ячейку в Google Таблице и в снимке памяти"""
+        str_val = str(value)
+        if self.ws:
+            self.ws.update_cell(row_num, col_num, str_val)
+        row_idx = row_num - 1
+        col_idx = col_num - 1
+        while len(self.rows) <= row_idx:
+            self.rows.append([])
+        row = self.rows[row_idx]
+        while len(row) <= col_idx:
+            row.append("")
+        row[col_idx] = str_val
+        if col_num == 1:
+            self._build_index()
+
+    def append_row(self, row_values):
+        """Синхронно добавляет строку в Google Таблицу и в снимок памяти"""
+        str_row = [str(v) for v in row_values]
+        if self.ws:
+            self.ws.append_row(str_row)
+        self.rows.append(str_row)
+        new_row_num = len(self.rows)
+        if str_row and str_row[0].strip():
+            self.index[str_row[0].strip()] = new_row_num
+
+def get_sheet_snapshot():
+    """Возвращает свежий снимок Google Таблицы для обслуживания одного запроса"""
+    return SheetSnapshot(get_sheet())
+
 def find_object_cell(ws, obj_id):
     """
     Ищет ячейку с точным совпадением ID объекта в первой колонке (колонка A).
     Исключает частичные совпадения подстрок (например, чтобы '14' не находило '145').
+    Если передан SheetSnapshot, использует локальный индекс O(1) без сетевых запросов.
     """
     target = str(obj_id).strip()
     if not target:
         return None
+
+    if hasattr(ws, 'find_object'):
+        return ws.find_object(target)
 
     try:
         # gspread поддерживает re.Pattern в методе find()
@@ -243,9 +343,9 @@ def build_main_menu():
     }
     return text, kb
 
-def build_objects_list(ws):
+def build_objects_list(sheet):
     try:
-        rows = ws.get_all_values()
+        rows = sheet.get_all_values()
     except Exception as e:
         app.logger.error(f"Ошибка получения списка: {e}")
         rows = []
@@ -269,14 +369,14 @@ def build_objects_list(ws):
     text = f"📋 <b>Список объектов VoltGroup</b> (Всего: {count}):\n\nВыберите объект для управления:"
     return text, {"inline_keyboard": buttons}
 
-def build_object_view(ws, obj_id):
-    cell = find_object_cell(ws, obj_id)
+def build_object_view(sheet, obj_id):
+    cell = find_object_cell(sheet, obj_id)
     if not cell:
         return f"⚠️ Объект №{html.escape(str(obj_id))} не найден в таблице.", {
             "inline_keyboard": [[{"text": "« К списку объектов", "callback_data": "m:list"}]]
         }
 
-    vals = ws.row_values(cell.row)
+    vals = sheet.row_values(cell.row)
     while len(vals) < 8:
         vals.append("")
 
@@ -402,10 +502,10 @@ def get_status():
         return jsonify({"status": "error", "msg": "Отсутствует ключ доступа"}), 403
 
     try:
-        ws = get_sheet()
-        cell = find_object_cell(ws, obj_id)
+        sheet = get_sheet_snapshot()
+        cell = find_object_cell(sheet, obj_id)
         if cell:
-            row_values = ws.row_values(cell.row)
+            row_values = sheet.row_values(cell.row)
             while len(row_values) < 8:
                 row_values.append("")
 
@@ -458,7 +558,7 @@ def webhook():
             return '', 200
 
         try:
-            ws = get_sheet()
+            sheet = get_sheet_snapshot()
 
             # Главное меню
             if cb_data == "m:main":
@@ -469,7 +569,7 @@ def webhook():
             # Список объектов
             elif cb_data == "m:list":
                 user_states.pop(chat_id, None)
-                text, kb = build_objects_list(ws)
+                text, kb = build_objects_list(sheet)
                 edit_tg_message(chat_id, msg_id, text, reply_markup=kb)
 
             # Запрос на создание нового объекта
@@ -490,7 +590,7 @@ def webhook():
             elif cb_data.startswith("o:v:"):
                 user_states.pop(chat_id, None)
                 obj_id = cb_data.split(":", 2)[2]
-                text, kb = build_object_view(ws, obj_id)
+                text, kb = build_object_view(sheet, obj_id)
                 edit_tg_message(chat_id, msg_id, text, reply_markup=kb)
 
             # Меню смены прогресса (o:p:<id>)
@@ -512,10 +612,10 @@ def webhook():
                     send_tg_message(chat_id, "⚠️ Некорректное значение прогресса.")
                     return '', 200
 
-                cell = find_object_cell(ws, obj_id)
+                cell = find_object_cell(sheet, obj_id)
                 if cell:
-                    ws.update_cell(cell.row, COLUMNS_MAP['progress'], str(val_int))
-                text, kb = build_object_view(ws, obj_id)
+                    sheet.update_cell(cell.row, COLUMNS_MAP['progress'], str(val_int))
+                text, kb = build_object_view(sheet, obj_id)
                 text = f"✅ <i>Прогресс обновлён на {val_int}%!</i>\n\n" + text
                 edit_tg_message(chat_id, msg_id, text, reply_markup=kb)
 
@@ -536,13 +636,13 @@ def webhook():
 
                 if 0 <= idx < len(STAGES):
                     stage_name = STAGES[idx]
-                    cell = find_object_cell(ws, obj_id)
+                    cell = find_object_cell(sheet, obj_id)
                     if cell:
-                        ws.update_cell(cell.row, COLUMNS_MAP['stage'], stage_name)
-                    text, kb = build_object_view(ws, obj_id)
+                        sheet.update_cell(cell.row, COLUMNS_MAP['stage'], stage_name)
+                    text, kb = build_object_view(sheet, obj_id)
                     text = f"✅ <i>Этап изменён на «{html.escape(stage_name)}»!</i>\n\n" + text
                 else:
-                    text, kb = build_object_view(ws, obj_id)
+                    text, kb = build_object_view(sheet, obj_id)
                     text = "⚠️ <i>Некорректный этап!</i>\n\n" + text
                 edit_tg_message(chat_id, msg_id, text, reply_markup=kb)
 
@@ -563,12 +663,12 @@ def webhook():
             # Готовое сообщение со ссылкой для пересылки клиенту (o:link:<id>)
             elif cb_data.startswith("o:link:"):
                 obj_id = cb_data.split(":", 2)[2]
-                cell = find_object_cell(ws, obj_id)
+                cell = find_object_cell(sheet, obj_id)
                 if not cell:
                     send_tg_message(chat_id, f"⚠️ Объект №{html.escape(str(obj_id))} не найден в таблице.")
                     return '', 200
 
-                row_vals = ws.row_values(cell.row)
+                row_vals = sheet.row_values(cell.row)
                 while len(row_vals) < 8:
                     row_vals.append("")
 
@@ -579,7 +679,7 @@ def webhook():
                 token = row_vals[7].strip()
                 if not token:
                     token = secrets.token_urlsafe(16)
-                    ws.update_cell(cell.row, COLUMNS_MAP['token'], token)
+                    sheet.update_cell(cell.row, COLUMNS_MAP['token'], token)
 
                 client_msg = (
                     f"Здравствуйте! Вы можете отслеживать ход электромонтажных работ, этапы и финансовый баланс онлайн {html.escape(addr_text)}:\n\n"
@@ -604,7 +704,7 @@ def webhook():
             return '', 200
 
         try:
-            ws = get_sheet()
+            sheet = get_sheet_snapshot()
 
             # Команда /cancel сбрасывает ожидание ввода
             if text == "/cancel":
@@ -639,7 +739,7 @@ def webhook():
                 # Обработка ввода оплаты
                 if action == "await_pay":
                     obj_id = state.get("obj_id")
-                    cell = find_object_cell(ws, obj_id)
+                    cell = find_object_cell(sheet, obj_id)
                     if not cell:
                         user_states.pop(chat_id, None)
                         send_tg_message(chat_id, f"⚠️ Объект №{html.escape(str(obj_id))} не найден.")
@@ -679,7 +779,7 @@ def webhook():
                     # Сумма корректна — сбрасываем состояние и обновляем таблицу
                     user_states.pop(chat_id, None)
 
-                    current_paid_str = ws.cell(cell.row, COLUMNS_MAP['paid']).value or "0"
+                    current_paid_str = sheet.cell(cell.row, COLUMNS_MAP['paid']).value or "0"
                     current_paid_clean = int("".join(c for c in current_paid_str if c.isdigit()) or 0)
 
                     if is_exact:
@@ -688,9 +788,9 @@ def webhook():
                         new_paid = current_paid_clean + parsed_sum
 
                     formatted_paid = f"{new_paid:,} ₽".replace(",", " ")
-                    ws.update_cell(cell.row, COLUMNS_MAP['paid'], formatted_paid)
+                    sheet.update_cell(cell.row, COLUMNS_MAP['paid'], formatted_paid)
 
-                    view_text, kb = build_object_view(ws, obj_id)
+                    view_text, kb = build_object_view(sheet, obj_id)
                     send_tg_message(chat_id, f"✅ <b>Оплата сохранена: {formatted_paid}</b>\n\n" + view_text, reply_markup=kb)
                     return '', 200
 
@@ -710,13 +810,13 @@ def webhook():
 
                     user_states.pop(chat_id, None)
 
-                    if find_object_cell(ws, new_id):
+                    if find_object_cell(sheet, new_id):
                         send_tg_message(chat_id, f"⚠️ Объект №{html.escape(new_id)} уже существует в таблице.")
                         return '', 200
 
                     token = secrets.token_urlsafe(16)
-                    ws.append_row([str(new_id), "0", "Завоз материалов", "0 ₽", "0 ₽", new_addr, "", token])
-                    view_text, kb = build_object_view(ws, new_id)
+                    sheet.append_row([str(new_id), "0", "Завоз материалов", "0 ₽", "0 ₽", new_addr, "", token])
+                    view_text, kb = build_object_view(sheet, new_id)
                     send_tg_message(chat_id, f"🎉 <b>Объект №{html.escape(new_id)} успешно создан!</b>\n\n" + view_text, reply_markup=kb)
                     return '', 200
 
@@ -733,13 +833,13 @@ def webhook():
                     )
                     return '', 200
 
-                if find_object_cell(ws, obj_id):
+                if find_object_cell(sheet, obj_id):
                     send_tg_message(chat_id, f"⚠️ Объект {html.escape(obj_id)} уже существует в таблице.")
                     return '', 200
 
                 token = secrets.token_urlsafe(16)
-                ws.append_row([obj_id, "0", "Завоз материалов", "0 ₽", "0 ₽", f"Объект №{obj_id}", "", token])
-                view_text, kb = build_object_view(ws, obj_id)
+                sheet.append_row([obj_id, "0", "Завоз материалов", "0 ₽", "0 ₽", f"Объект №{obj_id}", "", token])
+                view_text, kb = build_object_view(sheet, obj_id)
                 send_tg_message(chat_id, f"✅ <b>Объект {html.escape(obj_id)} создан!</b>\n\n" + view_text, reply_markup=kb)
                 return '', 200
 
@@ -759,10 +859,10 @@ def webhook():
                         send_tg_message(chat_id, f"⚠️ Неизвестное поле <code>{html.escape(field)}</code>.\nДоступные поля: progress, stage, total, paid, address, photo")
                         return '', 200
 
-                    cell = find_object_cell(ws, obj_id)
+                    cell = find_object_cell(sheet, obj_id)
                     if cell:
-                        ws.update_cell(cell.row, COLUMNS_MAP[field], value)
-                        view_text, kb = build_object_view(ws, obj_id)
+                        sheet.update_cell(cell.row, COLUMNS_MAP[field], value)
+                        view_text, kb = build_object_view(sheet, obj_id)
                         send_tg_message(chat_id, f"✅ Обновлено!\n\n" + view_text, reply_markup=kb)
                     else:
                         send_tg_message(chat_id, f"⚠️ Ошибка: Объект {html.escape(obj_id)} не найден.")

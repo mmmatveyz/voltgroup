@@ -13,8 +13,9 @@ tools/check.py — Единая команда комплексной прове
    - tools/test_estimate_calc.js (математика калькулятора, скидки, материалы)
    - tools/test_doc_smoke.js (генерация всех 4 документов)
    - tools/test_cookies.js (баннер согласия и Метрика)
-5. Базовые проверки безопасности и целостности репозитория
-6. Синхронность версий кэш-бэстинга style.css (?v=) и относительных путей
+5. Базовые проверки безопасности и целостности репозитория (.env, CSP, .htaccess)
+6. Архитектура Google Sheets: снимок SheetSnapshot, кэширование и сокращение сетевых запросов
+7. Синхронность версий кэш-бэстинга style.css (?v=) и относительных путей
 
 Использование:
     python tools/check.py
@@ -55,7 +56,7 @@ def report_fail(msg: str, err: str = ""):
     print(full_msg)
 
 def check_python_syntax():
-    print("\n[1/6] Проверка синтаксиса Python-файлов...")
+    print("\n[1/7] Проверка синтаксиса Python-файлов...")
     py_files = [ROOT_DIR / "server.py", Path(__file__).resolve()]
     for py_file in py_files:
         if not py_file.exists():
@@ -70,7 +71,7 @@ def check_python_syntax():
             report_fail(f"{py_file.name}: синтаксическая ошибка", str(e))
 
 def check_json_configs():
-    print("\n[2/6] Проверка JSON-конфигураций и структуры данных...")
+    print("\n[2/7] Проверка JSON-конфигураций и структуры данных...")
     json_targets = [
         ROOT_DIR / "static" / "data" / "prices.json",
         ROOT_DIR / "gallery" / "gallery-config.json",
@@ -103,7 +104,7 @@ def check_json_configs():
             report_fail(f"{rel_path}: ошибка парсинга JSON", str(e))
 
 def check_gallery_assets():
-    print("\n[3/6] Проверка файлов медиа и галереи...")
+    print("\n[3/7] Проверка файлов медиа и галереи...")
     cfg_path = ROOT_DIR / "gallery" / "gallery-config.json"
     if not cfg_path.exists():
         report_fail("Конфиг галереи не найден для проверки медиа")
@@ -143,7 +144,7 @@ def check_gallery_assets():
         report_fail("Ошибка проверки медиа галереи", str(e))
 
 def run_node_tests():
-    print("\n[4/6] Запуск тестовых наборов JavaScript (Node.js)...")
+    print("\n[4/7] Запуск тестовых наборов JavaScript (Node.js)...")
     js_tests = [
         ROOT_DIR / "tools" / "test_money.js",
         ROOT_DIR / "tools" / "test_doc_totals.js",
@@ -177,7 +178,7 @@ def run_node_tests():
             report_fail(f"{rel_test}: не удалось запустить через Node.js", str(e))
 
 def check_security_sanity():
-    print("\n[5/6] Базовые проверки безопасности...")
+    print("\n[5/7] Базовые проверки безопасности...")
     # Проверка: файлы .env не должны отслеживаться в git
     try:
         res = subprocess.run(
@@ -229,8 +230,86 @@ def check_security_sanity():
     else:
         report_fail("Файл .htaccess отсутствует в корне проекта")
 
+def check_sheets_snapshot_logic():
+    print("\n[6/7] Проверка архитектуры Google Sheets снимка (SheetSnapshot)...")
+    server_py = ROOT_DIR / "server.py"
+    if not server_py.exists():
+        report_fail("server.py не найден")
+        return
+
+    server_code = server_py.read_text(encoding="utf-8")
+    if "class SheetSnapshot" in server_code and "get_sheet_snapshot" in server_code:
+        report_pass("Класс SheetSnapshot и фабрика get_sheet_snapshot присутствуют в server.py")
+    else:
+        report_fail("В server.py отсутствует SheetSnapshot или get_sheet_snapshot")
+        return
+
+    try:
+        tree = ast.parse(server_code)
+        target_nodes = []
+        for node in tree.body:
+            if isinstance(node, ast.ClassDef) and node.name in ("SnapshotCell", "SheetSnapshot"):
+                target_nodes.append(node)
+
+        module_ast = ast.Module(body=target_nodes, type_ignores=[])
+        compiled = compile(module_ast, filename="<snapshot_test>", mode="exec")
+        sandbox_ns = {"app": type("App", (), {"logger": type("Logger", (), {"error": lambda *a, **k: None})()})()}
+        exec(compiled, sandbox_ns)
+
+        SheetSnapshot = sandbox_ns["SheetSnapshot"]
+
+        class MockWs:
+            def __init__(self, rows):
+                self._rows = [list(r) for r in rows]
+                self.calls = {"get_all_values": 0, "update_cell": 0, "append_row": 0}
+            def get_all_values(self):
+                self.calls["get_all_values"] += 1
+                return [list(r) for r in self._rows]
+            def update_cell(self, r, c, v):
+                self.calls["update_cell"] += 1
+                self._rows[r - 1][c - 1] = str(v)
+            def append_row(self, row):
+                self.calls["append_row"] += 1
+                self._rows.append(list(row))
+
+        mock_ws = MockWs([
+            ["id", "progress", "stage", "total", "paid", "address", "photo", "token"],
+            ["14", "25", "Штробление", "100 000 ₽", "25 000 ₽", "ул. Мира, 1", "", "tok14"],
+            ["145", "50", "Кабель", "200 000 ₽", "100 000 ₽", "пр. Невский, 10", "", "tok145"]
+        ])
+
+        snap = SheetSnapshot(mock_ws)
+        assert mock_ws.calls["get_all_values"] == 1, "Должен быть ровно 1 вызов get_all_values"
+
+        # O(1) точный поиск по ID
+        c14 = snap.find_object("14")
+        assert c14 is not None and c14.row == 2
+        c145 = snap.find_object("145")
+        assert c145 is not None and c145.row == 3
+        assert snap.find_object("999") is None
+        assert mock_ws.calls["get_all_values"] == 1
+
+        # Обновление ячейки: сетевой вызов + мгновенное локальное обновление
+        snap.update_cell(c14.row, 2, "75")
+        assert mock_ws.calls["update_cell"] == 1
+        assert snap.row_values(c14.row)[1] == "75"
+        assert snap.cell(c14.row, 2).value == "75"
+
+        # Добавление строки: сетевой вызов + добавление в локальный индекс
+        snap.append_row(["200", "0", "Завоз", "50 000 ₽", "0 ₽", "ул. Садовая", "", "tok200"])
+        assert mock_ws.calls["append_row"] == 1
+        c200 = snap.find_object("200")
+        assert c200 is not None and c200.row == 4
+        assert snap.row_values(c200.row)[5] == "ул. Садовая"
+
+        # За весь жизненный цикл запроса — ровно 1 чтение
+        assert mock_ws.calls["get_all_values"] == 1
+        report_pass("Модульный тест SheetSnapshot: ровно 1 чтение таблицы на запрос, O(1) поиск и синхронность")
+    except Exception as e:
+        report_fail("Сбой функционального теста SheetSnapshot", str(e))
+
 def check_css_version_consistency():
-    print("\n[6/6] Проверка синхронности версий CSS (?v=) и относительных путей...")
+    print("\n[7/7] Проверка синхронности версий CSS (?v=) и относительных путей...")
     import re
     html_targets = [
         ROOT_DIR / "index.html",
@@ -296,6 +375,7 @@ def main():
     check_gallery_assets()
     run_node_tests()
     check_security_sanity()
+    check_sheets_snapshot_logic()
     check_css_version_consistency()
 
     print("\n" + "=" * 60)
