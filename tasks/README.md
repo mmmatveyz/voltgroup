@@ -117,7 +117,7 @@
 | [036-sitemap-fix.md](036-sitemap-fix.md) | Sitemap, `Clean-param`, актуальный `lastmod` | агент | ✅ выполнено 06.10 |
 | [037-server-rendered-content.md](037-server-rendered-content.md) | Прайс и галерея: контент должен быть в HTML | агент | ⏸ отложено (сначала проверка в Вебмастере) |
 | [038-reviews.md](038-reviews.md) | Отзывы: вывод на сайт и разметка | агент + человек | ✅ выполнено 07.10 |
-| [039-yandex-business.md](039-yandex-business.md) | Яндекс.Бизнес: карточка, регион, услуги, NAP | человек | ⏳ |
+| [039-yandex-business.md](039-yandex-business.md) | Яндекс.Бизнес: карточка, регион, услуги, NAP | человек + агент | ✅ выполнено 07.10 |
 | [040-district-pages.md](040-district-pages.md) | Страницы под районы СПб и ЛО | агент + человек | ⏳ |
 | [041-google-properties.md](041-google-properties.md) | Google Search Console и Business Profile | человек | ⏳ |
 | [042-external-listings.md](042-external-listings.md) | Внешние каталоги и упоминания (2ГИС, Авито) | человек | ⏳ |
