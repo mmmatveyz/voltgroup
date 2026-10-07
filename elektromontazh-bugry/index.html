@@ -182,6 +182,76 @@
             font-style: normal;
             flex-shrink: 0;
         }
+        .live-pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: #10B981;
+            border-radius: 50%;
+            display: inline-block;
+            position: relative;
+            box-shadow: 0 0 10px #10B981;
+            margin-right: 6px;
+        }
+        .live-pulse-dot::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 1px solid #10B981;
+            animation: pulse-ring 1.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.6); opacity: 0.9; }
+            80%, 100% { transform: scale(2.2); opacity: 0; }
+        }
+        .ticker {
+            overflow: hidden;
+            border-block: 1px solid var(--border-light);
+            background: rgba(255, 255, 255, 0.02);
+            position: relative;
+            z-index: 1;
+            margin: 35px 0 0;
+        }
+        .ticker-track {
+            display: flex;
+            width: max-content;
+            animation: tick 24s linear infinite;
+            padding: 13px 0;
+        }
+        .ticker-track span {
+            font-family: var(--font-heading);
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            padding: 0 20px;
+            white-space: nowrap;
+        }
+        .ticker-track span i {
+            color: var(--volt-yellow);
+            font-style: normal;
+        }
+        @keyframes tick {
+            to { transform: translateX(-50%); }
+        }
+        .bento-card {
+            transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+        .bento-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 229, 255, 0.45);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 229, 255, 0.12);
+        }
+        .complex-chip {
+            transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+            cursor: default;
+        }
+        .complex-chip:hover {
+            transform: translateY(-2px);
+            border-color: rgba(0, 229, 255, 0.5);
+            background: rgba(0, 229, 255, 0.06);
+            box-shadow: 0 4px 15px rgba(0, 229, 255, 0.1);
+        }
         .gallery-mini-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -195,12 +265,63 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.35s ease, box-shadow 0.35s ease;
         }
-        .gallery-mini-card img {
-            width: 100%;
+        .gallery-mini-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(0, 229, 255, 0.5);
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55), 0 0 25px rgba(0, 229, 255, 0.15);
+        }
+        .gallery-mini-thumb {
+            position: relative;
             height: 220px;
+            overflow: hidden;
+            background: #02040a;
+        }
+        .gallery-mini-thumb img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
             display: block;
+            transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.4s ease;
+        }
+        .gallery-mini-card:hover .gallery-mini-thumb img {
+            transform: scale(1.08);
+            filter: brightness(1.08);
+        }
+        .gallery-mini-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(5, 9, 20, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(2px);
+        }
+        .gallery-mini-card:hover .gallery-mini-overlay {
+            opacity: 1;
+        }
+        .gallery-mini-overlay-badge {
+            background: rgba(0, 229, 255, 0.2);
+            border: 1px solid var(--primary-install);
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: #fff;
+            font-size: 0.84rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 16px rgba(0, 229, 255, 0.3);
+            transform: translateY(6px);
+            transition: transform 0.3s ease;
+        }
+        .gallery-mini-card:hover .gallery-mini-overlay-badge {
+            transform: translateY(0);
         }
         .gallery-mini-body {
             padding: 18px;
@@ -244,6 +365,88 @@
         section[id] {
             scroll-margin-top: 100px;
         }
+
+        /* Lightbox просмотрщик */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 9, 20, 0.88);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .lightbox.active { display: flex; }
+        .lightbox-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 15px; right: 20px;
+            font-size: 1.8rem;
+            color: var(--text-main);
+            cursor: pointer;
+            z-index: 10;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid var(--border-light);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        .lightbox-close:hover {
+            background: var(--primary-install);
+            color: #050914;
+            transform: rotate(90deg);
+        }
+        .lightbox-img {
+            width: 100%;
+            max-height: 60vh;
+            object-fit: contain;
+            background: #02040a;
+            display: block;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .lightbox-info { padding: 25px; }
+        .lightbox-info h3 {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: var(--text-main);
+            text-transform: uppercase;
+        }
+        .lightbox-info p {
+            margin-bottom: 18px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .gallery-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .badge {
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            color: var(--primary-install);
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
     </style>
 
     <!-- Управление cookies и отложенная инициализация Яндекс.Метрики (152-ФЗ) -->
@@ -275,7 +478,7 @@
     <section class="hero hero-single container fade-in">
         <div class="hero-left">
             <span class="district-hero-badge">
-                📍 Посёлок Бугры · ЖК Энфилд & Новые Горизонты · Выезд мастера сегодня
+                <span class="live-pulse-dot"></span> Посёлок Бугры · ЖК Энфилд & Новые Горизонты · Выезд мастера сегодня
             </span>
             <h1 class="hero-title">
                 Электромонтаж <br>
@@ -290,6 +493,24 @@
             </div>
         </div>
     </section>
+
+    <!-- БЕГУЩАЯ СТРОКА ПРЕИМУЩЕСТВ -->
+    <div class="ticker">
+        <div class="ticker-track">
+            <span>White-Box без пыли <i>⚡</i></span>
+            <span>Реле напряжения от скачков <i>⚡</i></span>
+            <span>Линия 3х6 под индукцию <i>⚡</i></span>
+            <span>Официальный договор и чек <i>⚡</i></span>
+            <span>Гарантия 12 месяцев <i>⚡</i></span>
+            <span>Выезд мастера сегодня <i>⚡</i></span>
+            <span>White-Box без пыли <i>⚡</i></span>
+            <span>Реле напряжения от скачков <i>⚡</i></span>
+            <span>Линия 3х6 под индукцию <i>⚡</i></span>
+            <span>Официальный договор и чек <i>⚡</i></span>
+            <span>Гарантия 12 месяцев <i>⚡</i></span>
+            <span>Выезд мастера сегодня <i>⚡</i></span>
+        </div>
+    </div>
 
     <!-- ОСОБЕННОСТИ ЭЛЕКТРОМОНТАЖА В БУГРАХ -->
     <section class="section" id="features">
@@ -416,8 +637,13 @@
 
             <div class="gallery-mini-grid">
                 <!-- 1. Щит -->
-                <div class="gallery-mini-card fade-in">
-                    <img src="../gallery/panel-wiring-07.webp" alt="Сборка распределительного щита в Буграх" loading="lazy" decoding="async">
+                <div class="gallery-mini-card fade-in" data-img="../gallery/panel-wiring-07.webp" data-title="Сборка щита с дифференциальной защитой" data-desc="Распределение нагрузок по группам потребителей, маркировка каждого автоматического выключателя и надежная затяжка клемм динамометрическим инструментом." data-badges="Электрощит,ABB,ГОСТ">
+                    <div class="gallery-mini-thumb">
+                        <img src="../gallery/panel-wiring-07.webp" alt="Сборка распределительного щита в Буграх" loading="lazy" decoding="async">
+                        <div class="gallery-mini-overlay">
+                            <span class="gallery-mini-overlay-badge">🔍 Увеличить фото</span>
+                        </div>
+                    </div>
                     <div class="gallery-mini-body">
                         <div>
                             <h4 style="font-family: var(--font-heading); font-size: 1.05rem; margin-bottom: 8px;">Сборка щита с дифференциальной защитой</h4>
@@ -432,8 +658,13 @@
                 </div>
 
                 <!-- 2. Лоджия и розетки -->
-                <div class="gallery-mini-card fade-in" style="transition-delay: 0.1s;">
-                    <img src="../gallery/apartment-wiring-10.webp" alt="Электромонтаж розеток и света" loading="lazy" decoding="async">
+                <div class="gallery-mini-card fade-in" style="transition-delay: 0.1s;" data-img="../gallery/apartment-wiring-10.webp" data-title="Электрика лоджии и рабочего места" data-desc="Вывод отдельной линии на лоджию, монтаж розеток для конвектора и рабочего стола, аккуратная скрытая проводка в кирпиче и бетоне." data-badges="Лоджия,Розетки,РабочееМесто">
+                    <div class="gallery-mini-thumb">
+                        <img src="../gallery/apartment-wiring-10.webp" alt="Электромонтаж розеток и света" loading="lazy" decoding="async">
+                        <div class="gallery-mini-overlay">
+                            <span class="gallery-mini-overlay-badge">🔍 Увеличить фото</span>
+                        </div>
+                    </div>
                     <div class="gallery-mini-body">
                         <div>
                             <h4 style="font-family: var(--font-heading); font-size: 1.05rem; margin-bottom: 8px;">Электрика лоджии и рабочего места</h4>
@@ -448,8 +679,13 @@
                 </div>
 
                 <!-- 3. Кухонный перенос -->
-                <div class="gallery-mini-card fade-in" style="transition-delay: 0.2s;">
-                    <img src="../gallery/kitchen-relocation-collage.webp" alt="Перенос розеток под кухонную технику" loading="lazy" decoding="async">
+                <div class="gallery-mini-card fade-in" style="transition-delay: 0.2s;" data-img="../gallery/kitchen-relocation-collage.webp" data-title="Перенос розеток после застройщика" data-desc="Точная разметка по кухонному чертежу. Никаких накладных кабель-каналов: штробление по уровню и вывод отдельных силовых линий под плиту и духовку." data-badges="Кухня,СиловаяЛиния,WhiteBox">
+                    <div class="gallery-mini-thumb">
+                        <img src="../gallery/kitchen-relocation-collage.webp" alt="Перенос розеток под кухонную технику" loading="lazy" decoding="async">
+                        <div class="gallery-mini-overlay">
+                            <span class="gallery-mini-overlay-badge">🔍 Увеличить фото</span>
+                        </div>
+                    </div>
                     <div class="gallery-mini-body">
                         <div>
                             <h4 style="font-family: var(--font-heading); font-size: 1.05rem; margin-bottom: 8px;">Перенос розеток после застройщика</h4>
@@ -552,6 +788,19 @@
             </div>
         </div>
     </section>
+
+    <!-- Lightbox просмотрщик изображений -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Просмотр фотографии">
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="lightbox-close" aria-label="Закрыть">✕</button>
+            <img src="" alt="" class="lightbox-img" id="lightbox-img">
+            <div class="lightbox-info">
+                <h3 id="lightbox-title"></h3>
+                <p id="lightbox-desc"></p>
+                <div class="gallery-badges" id="lightbox-badges"></div>
+            </div>
+        </div>
+    </div>
 </main>
 
 <footer class="footer">
@@ -893,6 +1142,61 @@
             const container = document.getElementById('install-prices');
             if (container) container.textContent = '⚠️ Не удалось загрузить прайс-лист.';
         });
+
+    // Lightbox просмотрщик фото
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxTitle = document.getElementById('lightbox-title');
+    const lightboxDesc = document.getElementById('lightbox-desc');
+    const lightboxBadges = document.getElementById('lightbox-badges');
+    const lightboxClose = document.getElementById('lightbox-close');
+
+    function openLightbox(img, title, desc, badges) {
+        if (!lightbox || !lightboxImg) return;
+        lightboxImg.src = img || '';
+        lightboxTitle.textContent = title || '';
+        lightboxDesc.textContent = desc || '';
+        lightboxBadges.textContent = '';
+        if (badges) {
+            badges.split(',').forEach(b => {
+                const span = document.createElement('span');
+                span.className = 'badge';
+                span.textContent = b.trim();
+                lightboxBadges.appendChild(span);
+            });
+        }
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        if (!lightbox) return;
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+        setTimeout(() => {
+            if (lightboxImg) lightboxImg.src = '';
+        }, 200);
+    }
+
+    document.querySelectorAll('.gallery-mini-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const img = card.getAttribute('data-img');
+            const title = card.getAttribute('data-title');
+            const desc = card.getAttribute('data-desc');
+            const badges = card.getAttribute('data-badges');
+            openLightbox(img, title, desc, badges);
+        });
+    });
+
+    if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+    if (lightbox) {
+        lightbox.addEventListener('click', (e) => {
+            if (e.target.id === 'lightbox') closeLightbox();
+        });
+    }
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeLightbox();
+    });
 
     // Плавное появление
     const observer = new IntersectionObserver((entries) => {
