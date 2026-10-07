@@ -6,6 +6,7 @@ import html
 import re
 import secrets
 import time
+from datetime import datetime
 import logging
 from logging.handlers import RotatingFileHandler
 import gspread
@@ -109,6 +110,120 @@ COLUMNS_MAP = {
     'token': 8
 }
 
+def send_tg_message(chat_id, text, parse_mode="HTML", reply_markup=None):
+    """Отправляет сообщение в Telegram с проверкой статуса и поддержкой клавиатуры"""
+    if not BOT_TOKEN:
+        app.logger.error("BOT_TOKEN не задан")
+        return False
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+    payload = {"chat_id": chat_id, "text": text, "parse_mode": parse_mode}
+    if reply_markup is not None:
+        payload["reply_markup"] = reply_markup
+    try:
+        resp = requests.post(url, json=payload, timeout=10)
+        data = resp.json()
+        if not data.get("ok"):
+            app.logger.error(f"Ошибка Telegram API: {data}")
+            return False
+        return True
+    except Exception as e:
+        app.logger.error(f"Ошибка отправки сообщения в Telegram: {e}")
+        return False
+
+def edit_tg_message(chat_id, message_id, text, parse_mode="HTML", reply_markup=None):
+    """Редактирует существующее сообщение в Telegram"""
+    if not BOT_TOKEN:
+        return False
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/editMessageText"
+    payload = {"chat_id": chat_id, "message_id": message_id, "text": text, "parse_mode": parse_mode}
+    if reply_markup is not None:
+        payload["reply_markup"] = reply_markup
+    try:
+        resp = requests.post(url, json=payload, timeout=10)
+        return resp.json().get("ok", False)
+    except Exception as e:
+        app.logger.error(f"Ошибка editMessageText: {e}")
+        return False
+
+def answer_callback(callback_query_id, text=None):
+    """Отвечает на callback_query, снимая спиннер загрузки"""
+    if not BOT_TOKEN or not callback_query_id:
+        return False
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/answerCallbackQuery"
+    payload = {"callback_query_id": callback_query_id}
+    if text:
+        payload["text"] = text
+    try:
+        requests.post(url, json=payload, timeout=5)
+        return True
+    except Exception as e:
+        app.logger.error(f"Ошибка answerCallbackQuery: {e}")
+        return False
+
+# ----------------------------------------------------
+# 4.0. СИСТЕМА ОПОВЕЩЕНИЙ ОБ ОШИБКАХ (задача 032, пункт № 32 AUDIT.md)
+# ----------------------------------------------------
+
+_error_alert_timestamps = {}
+_error_alert_counts = {}
+ALERT_THROTTLE_SECONDS = 300  # 5 минут между алертами одного типа
+
+def sanitize_error_reason(exc):
+    """
+    Очищает текст ошибки от внутренних путей файлов, стектрейсов и секретов.
+    Возвращает краткую безопасную причину для Telegram-уведомления.
+    """
+    if not exc:
+        return "Неизвестная ошибка"
+    err_type = type(exc).__name__
+    raw_msg = str(exc).strip()
+    # Удаляем пути Linux/Unix (/var/..., /home/...) и Windows (C:\...)
+    cleaned = re.sub(r'/[a-zA-Z0-9_\-./]+', '', raw_msg)
+    cleaned = re.sub(r'[A-Za-z]:\\[a-zA-Z0-9_\-\\.]+', '', cleaned)
+    # Маскируем секретный токен, если он случайно попал в текст
+    if BOT_TOKEN and BOT_TOKEN in cleaned:
+        cleaned = cleaned.replace(BOT_TOKEN, '[HIDDEN_TOKEN]')
+    cleaned = re.sub(r'\s+', ' ', cleaned).strip()
+    if len(cleaned) > 160:
+        cleaned = cleaned[:157] + "..."
+    return f"{err_type}: {cleaned}" if cleaned else err_type
+
+def notify_admin(error_key, op_type, obj_id=None, exc=None, custom_msg=None):
+    """
+    Отправляет краткий алерт о сбое администратору в Telegram с защитой от лавины (троттлинг 5 минут).
+    Не содержит стектрейсов, путей файлов и приватных ключей.
+    """
+    if not BOT_TOKEN or not CHAT_ID:
+        return False
+
+    now = time.time()
+    last_time = _error_alert_timestamps.get(error_key, 0)
+    if now - last_time < ALERT_THROTTLE_SECONDS:
+        _error_alert_counts[error_key] = _error_alert_counts.get(error_key, 0) + 1
+        app.logger.warning(f"Алерт '{error_key}' пропущен из-за троттлинга (повторений: {_error_alert_counts[error_key]})")
+        return False
+
+    repeat_count = _error_alert_counts.get(error_key, 0)
+    _error_alert_counts[error_key] = 0
+    _error_alert_timestamps[error_key] = now
+
+    reason = custom_msg or sanitize_error_reason(exc)
+    time_str = datetime.now().strftime("%d.%m.%Y %H:%M:%S")
+
+    lines = [
+        "🚨 <b>Сбой в работе VoltGroup</b>\n",
+        f"<b>Операция:</b> {html.escape(str(op_type))}"
+    ]
+    if obj_id:
+        lines.append(f"<b>Объект ID:</b> <code>{html.escape(str(obj_id))}</code>")
+    lines.append(f"<b>Причина:</b> <code>{html.escape(reason)}</code>")
+    lines.append(f"<b>Время:</b> {time_str}")
+    if repeat_count > 0:
+        lines.append(f"<i>(Повторений за последние 5 минут: {repeat_count})</i>")
+
+    alert_text = "\n".join(lines)
+    return send_tg_message(CHAT_ID, alert_text, parse_mode="HTML")
+
 _cached_ws = None
 
 def get_sheet():
@@ -123,13 +238,19 @@ def get_sheet():
 
     creds_json = os.environ.get('GOOGLE_CREDENTIALS')
     if not creds_json or not SHEET_URL:
-        raise ValueError("Не настроены переменные GOOGLE_CREDENTIALS или SHEET_URL")
+        err_msg = "Не настроены переменные GOOGLE_CREDENTIALS или SHEET_URL"
+        notify_admin("sheets_config_missing", op_type="Конфигурация Google Таблиц", custom_msg=err_msg)
+        raise ValueError(err_msg)
 
-    creds_dict = json.loads(creds_json)
-    gc = gspread.service_account_from_dict(creds_dict)
-    sh = gc.open_by_url(SHEET_URL)
-    _cached_ws = sh.sheet1
-    return _cached_ws
+    try:
+        creds_dict = json.loads(creds_json)
+        gc = gspread.service_account_from_dict(creds_dict)
+        sh = gc.open_by_url(SHEET_URL)
+        _cached_ws = sh.sheet1
+        return _cached_ws
+    except Exception as e:
+        notify_admin("sheets_connect_error", op_type="Подключение к Google Таблице", exc=e)
+        raise
 
 class SnapshotCell:
     """Обертка ячейки для совместимости с интерфейсом gspread.Cell"""
@@ -152,6 +273,7 @@ class SheetSnapshot:
             self.rows = ws.get_all_values() if ws else []
         except Exception as e:
             app.logger.error(f"Ошибка загрузки снимка таблицы: {e}")
+            notify_admin("snapshot_load_error", op_type="Чтение Google Таблицы (снимок)", exc=e)
             self.rows = []
         self._build_index()
 
@@ -284,56 +406,6 @@ STAGES = [
 # При числе воркеров > 1 состояние теряется между запросами (см. AUDIT.md пункт 2).
 USER_STATE_TTL_SECONDS = 900  # 15 минут TTL для незавершённых диалогов
 user_states = {}
-
-def send_tg_message(chat_id, text, parse_mode="HTML", reply_markup=None):
-    """Отправляет сообщение в Telegram с проверкой статуса и поддержкой клавиатуры"""
-    if not BOT_TOKEN:
-        app.logger.error("BOT_TOKEN не задан")
-        return False
-    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
-    payload = {"chat_id": chat_id, "text": text, "parse_mode": parse_mode}
-    if reply_markup is not None:
-        payload["reply_markup"] = reply_markup
-    try:
-        resp = requests.post(url, json=payload, timeout=10)
-        data = resp.json()
-        if not data.get("ok"):
-            app.logger.error(f"Ошибка Telegram API: {data}")
-            return False
-        return True
-    except Exception as e:
-        app.logger.error(f"Ошибка отправки сообщения в Telegram: {e}")
-        return False
-
-def edit_tg_message(chat_id, message_id, text, parse_mode="HTML", reply_markup=None):
-    """Редактирует существующее сообщение в Telegram"""
-    if not BOT_TOKEN:
-        return False
-    url = f"https://api.telegram.org/bot{BOT_TOKEN}/editMessageText"
-    payload = {"chat_id": chat_id, "message_id": message_id, "text": text, "parse_mode": parse_mode}
-    if reply_markup is not None:
-        payload["reply_markup"] = reply_markup
-    try:
-        resp = requests.post(url, json=payload, timeout=10)
-        return resp.json().get("ok", False)
-    except Exception as e:
-        app.logger.error(f"Ошибка editMessageText: {e}")
-        return False
-
-def answer_callback(callback_query_id, text=None):
-    """Отвечает на callback_query, снимая спиннер загрузки"""
-    if not BOT_TOKEN or not callback_query_id:
-        return False
-    url = f"https://api.telegram.org/bot{BOT_TOKEN}/answerCallbackQuery"
-    payload = {"callback_query_id": callback_query_id}
-    if text:
-        payload["text"] = text
-    try:
-        requests.post(url, json=payload, timeout=5)
-        return True
-    except Exception as e:
-        app.logger.error(f"Ошибка answerCallbackQuery: {e}")
-        return False
 
 # ----------------------------------------------------
 # 4.1. НОРМАЛИЗАЦИЯ ДАННЫХ ИЗ ТАБЛИЦЫ (задача 028, пункт № 27 AUDIT.md)
@@ -622,12 +694,33 @@ def build_stage_keyboard(obj_id):
 # 5. МАРШРУТЫ ДЛЯ САЙТА
 # ----------------------------------------------------
 
+_last_sheets_check_time = 0
+_last_sheets_check_status = True
+
 # Назначение /ping — предварительный прогрев бесплатного тарифа Render (cold start)
 # при фокусе клиента на поле ввода в формах сайта. При переходе на платный инстанс
 # необходимость отпадает. Ограничен 10 запросами в минуту с одного IP для защиты от спама.
+# Опциональный параметр ?check_sheets=1 выполняет фоновую проверку связи с Google Таблицей (кэш 60 с).
 @app.route('/ping', methods=['GET'])
 @limiter.limit("10 per minute")
 def ping():
+    check_sheets = request.args.get('check_sheets')
+    if check_sheets:
+        now = time.time()
+        global _last_sheets_check_time, _last_sheets_check_status
+        if now - _last_sheets_check_time > 60:
+            try:
+                get_sheet()
+                _last_sheets_check_status = True
+            except Exception as e:
+                _last_sheets_check_status = False
+                notify_admin("sheets_health_ping", op_type="Проверка доступности Таблицы (/ping)", exc=e)
+            _last_sheets_check_time = now
+
+        if not _last_sheets_check_status:
+            return jsonify({"status": "degraded", "sheets": "unreachable"}), 503
+        return jsonify({"status": "awake", "sheets": "ok"}), 200
+
     return jsonify({"status": "awake"}), 200
 
 @app.route('/send-message', methods=['POST'])
@@ -651,9 +744,11 @@ def send_message():
         if success:
             return jsonify({"status": "success"}), 200
         else:
+            notify_admin("lead_delivery_failed", op_type="Отправка заявки в Telegram", custom_msg="send_tg_message вернул False")
             return jsonify({"status": "error", "msg": "Не удалось доставить уведомление"}), 502
     except Exception as e:
         app.logger.error(f"Ошибка в /send-message: {e}")
+        notify_admin("send_message_error", op_type="Форма заявки (/send-message)", exc=e)
         return jsonify({"status": "error", "msg": "Ошибка сервера"}), 500
 
 @app.route('/get-status', methods=['GET', 'POST'])
@@ -706,6 +801,7 @@ def get_status():
             return jsonify({"status": "error", "msg": "Объект не найден"}), 404
     except Exception as e:
         app.logger.error(f"Ошибка чтения таблицы: {e}")
+        notify_admin("get_status_error", op_type="Кабинет заказчика (/get-status)", obj_id=obj_id, exc=e)
         return jsonify({"status": "error", "msg": "Ошибка сервера"}), 500
 
 # ----------------------------------------------------
@@ -863,6 +959,8 @@ def webhook():
 
         except Exception as e:
             app.logger.error(f"Ошибка callback_query: {e}")
+            cb_data = cb.get("data", "")
+            notify_admin(f"cb_{cb_data.split(':')[0]}", op_type=f"Инлайн-кнопка ({cb_data[:25]})", exc=e)
             send_tg_message(chat_id, "💥 Ошибка при обработке нажатия кнопки")
 
         return '', 200
@@ -1047,6 +1145,7 @@ def webhook():
 
         except Exception as e:
             app.logger.error(f"Ошибка вебхука Telegram: {e}")
+            notify_admin("tg_msg_error", op_type="Сообщение бота", exc=e)
             send_tg_message(chat_id, "💥 Ошибка сервера при работе с таблицей")
 
     return '', 200

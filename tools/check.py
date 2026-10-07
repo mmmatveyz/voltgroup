@@ -529,8 +529,104 @@ def check_data_normalization_logic():
     except Exception as e:
         report_fail("Сбой модульного теста нормализации данных таблицы", str(e))
 
+def check_error_alerts_system():
+    print("\n[9/10] Проверка системы алертов об ошибках в Telegram (tasks/032, п. 32 AUDIT)...")
+    server_path = ROOT_DIR / "server.py"
+    with open(server_path, "r", encoding="utf-8") as f:
+        server_code = f.read()
+
+    required_symbols = [
+        "notify_admin",
+        "sanitize_error_reason",
+        "_error_alert_timestamps",
+        "_error_alert_counts",
+        "ALERT_THROTTLE_SECONDS"
+    ]
+    for sym in required_symbols:
+        if sym not in server_code:
+            report_fail(f"В server.py отсутствует символ/функция {sym}")
+            return
+
+    try:
+        import html
+        import re
+        from datetime import datetime
+
+        tree = ast.parse(server_code)
+        target_funcs = []
+        for node in tree.body:
+            if isinstance(node, ast.FunctionDef) and node.name in ["notify_admin", "sanitize_error_reason"]:
+                target_funcs.append(node)
+
+        mod_ast = ast.Module(body=target_funcs, type_ignores=[])
+        compiled = compile(mod_ast, "<alerts_test>", "exec")
+        
+        sent_messages = []
+        class MockApp:
+            class logger:
+                @staticmethod
+                def error(*args, **kwargs): pass
+                @staticmethod
+                def warning(*args, **kwargs): pass
+                @staticmethod
+                def info(*args, **kwargs): pass
+
+        def mock_send_tg_message(chat_id, text, reply_markup=None, parse_mode="HTML"):
+            sent_messages.append((chat_id, text))
+            return True
+
+        sandbox_ns = {
+            "re": re,
+            "html": html,
+            "datetime": datetime,
+            "time": __import__("time"),
+            "app": MockApp,
+            "send_tg_message": mock_send_tg_message,
+            "BOT_TOKEN": "123:ABC",
+            "CHAT_ID": "123456",
+            "ALERT_THROTTLE_SECONDS": 300,
+            "_error_alert_timestamps": {},
+            "_error_alert_counts": {}
+        }
+        exec(compiled, sandbox_ns)
+
+        clean_err = sandbox_ns["sanitize_error_reason"]
+        notify = sandbox_ns["notify_admin"]
+
+        # Тест 1: Санитизация путей и чувствительных данных
+        raw_exc = Exception("Failed opening /var/data/users/secret.json: gspread error at C:\\Users\\Admin\\project\\server.py line 42")
+        cleaned = clean_err(raw_exc)
+        assert "/var" not in cleaned and "secret.json" not in cleaned
+        assert "C:\\" not in cleaned and "server.py" not in cleaned
+        report_pass("sanitize_error_reason надежно очищает пути файловой системы и системные пути")
+
+        # Тест 2: Отправка алерта и троттлинг (подавление дублей)
+        sent_messages.clear()
+        res1 = notify("sheet_conn", op_type="Чтение Google Sheets", exc=Exception("Timeout"))
+        assert res1 is True
+        assert len(sent_messages) == 1
+        assert "🚨 <b>Сбой в работе VoltGroup</b>" in sent_messages[0][1]
+        assert "Операция:</b> Чтение Google Sheets" in sent_messages[0][1]
+
+        # Второй вызов подряд с тем же ключом должен быть отброшен троттлингом
+        res2 = notify("sheet_conn", op_type="Чтение Google Sheets", exc=Exception("Timeout 2"))
+        assert res2 is False
+        assert len(sent_messages) == 1  # новых сообщений не отправлено!
+        assert sandbox_ns["_error_alert_counts"]["sheet_conn"] == 1
+        report_pass("notify_admin успешно отправляет алерт и троттлит повторные ошибки (минимум 5 мин)")
+
+        # Тест 3: Другой ключ ошибки проходит без блокировки
+        res3 = notify("tg_callback", op_type="Callback кнопка", obj_id="77", exc=Exception("Bad query"))
+        assert res3 is True
+        assert len(sent_messages) == 2
+        assert "Объект ID:</b> <code>77</code>" in sent_messages[1][1]
+        report_pass("notify_admin изолирует троттлинг по error_key и выводит ID объекта при наличии")
+
+    except Exception as e:
+        report_fail("Сбой проверки системы алертов об ошибках", str(e))
+
 def check_css_version_consistency():
-    print("\n[8/8] Проверка синхронности версий CSS (?v=) и относительных путей...")
+    print("\n[10/10] Проверка синхронности версий CSS (?v=) и относительных путей...")
     import re
     html_targets = [
         ROOT_DIR / "index.html",
@@ -599,6 +695,7 @@ def main():
     check_sheets_snapshot_logic()
     check_address_formatting()
     check_data_normalization_logic()
+    check_error_alerts_system()
     check_css_version_consistency()
 
     print("\n" + "=" * 60)

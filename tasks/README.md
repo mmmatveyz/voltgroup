@@ -69,7 +69,7 @@
 | [026-document-write.md](026-document-write.md) | 26 | Убрать `document.write` при печати | ✅ завершено 07.10 |
 | [028-data-normalization.md](028-data-normalization.md) | 27 | Нормализация данных из таблицы | ✅ завершено 07.10 |
 | [029-company-config.md](029-company-config.md) | 29 | Единый конфиг реквизитов и контактов | ✅ завершено 07.10 |
-| [032-error-alerts.md](032-error-alerts.md) | 32 | Алерты в Telegram при сбоях | ⏳ |
+| [032-error-alerts.md](032-error-alerts.md) | 32 | Алерты в Telegram при сбоях | ✅ завершено 07.10 |
 | [033-backup.md](033-backup.md) | 34 | Резервное копирование данных | ⏳ |
 
 ---
