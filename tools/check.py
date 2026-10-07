@@ -270,6 +270,26 @@ def check_security_sanity():
     else:
         report_fail("static/js/documents.js не найден")
 
+    # Проверка: единый конфиг реквизитов и контактов VG_COMPANY (tasks/029, п. 29 AUDIT)
+    cfg_js = ROOT_DIR / "static" / "js" / "config.js"
+    if cfg_js.exists():
+        cfg_code = cfg_js.read_text(encoding="utf-8")
+        required_keys = ["name", "inn", "phone", "telegram", "vk", "site", "brandName", "shortName"]
+        missing_keys = [k for k in required_keys if f"{k}:" not in cfg_code and f"'{k}'" not in cfg_code and f'"{k}"' not in cfg_code]
+        if "VG_COMPANY" in cfg_code and not missing_keys:
+            report_pass("Конфиг static/js/config.js содержит единый объект VG_COMPANY со всеми реквизитами")
+        else:
+            report_fail(f"В static/js/config.js отсутствует VG_COMPANY или ключи: {missing_keys}")
+    else:
+        report_fail("static/js/config.js не найден")
+
+    if doc_js.exists():
+        doc_code = doc_js.read_text(encoding="utf-8")
+        if "VG_COMPANY" in doc_code and "getContractorInfo" in doc_code:
+            report_pass("Генераторы документов используют единый конфиг VG_COMPANY для реквизитов")
+        else:
+            report_fail("В static/js/documents.js отсутствует привязка к VG_COMPANY или getContractorInfo")
+
 def check_sheets_snapshot_logic():
     print("\n[6/8] Проверка архитектуры Google Sheets снимка (SheetSnapshot)...")
     server_py = ROOT_DIR / "server.py"

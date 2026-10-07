@@ -801,8 +801,12 @@
         }
         lines.push(`ИТОГО К ОПЛАТЕ: ${totals.grandTotal.toLocaleString('ru-RU')} ₽`);
         lines.push('');
-        lines.push('📞 Контакты: +7 (905) 208-42-84 (Матвей, VoltGroup)');
-        lines.push('🌐 Сайт: https://voltgroup-spb.ru');
+        const comp = (typeof window !== 'undefined' && window.VG_COMPANY) ? window.VG_COMPANY : {};
+        const compPhone = comp.phone || '+7 (905) 208-42-84';
+        const compBrand = comp.brandName || 'VoltGroup';
+        const compSite = comp.siteUrl || 'https://voltgroup-spb.ru';
+        lines.push(`📞 Контакты: ${compPhone} (Матвей, ${compBrand})`);
+        lines.push(`🌐 Сайт: ${compSite}`);
 
         const textToCopy = lines.join('\n');
 

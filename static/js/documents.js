@@ -12,15 +12,25 @@
 (function (window) {
     'use strict';
 
-    // Реквизиты Исполнителя
-    const CONTRACTOR = {
-        name: 'Зрячих Матвей Олегович',
-        status: 'Плательщик НПД (самозанятый)',
-        inn: '591110297727',
-        phone: '+7 (905) 208-42-84',
-        site: 'voltgroup-spb.ru',
-        region: 'Санкт-Петербург и ЛО'
-    };
+    // Реквизиты Исполнителя: единый источник — window.VG_COMPANY (static/js/config.js)
+    function getContractorInfo() {
+        const comp = (typeof window !== 'undefined' && window.VG_COMPANY) ? window.VG_COMPANY : {};
+        return {
+            name: comp.name || 'Зрячих Матвей Олегович',
+            shortName: comp.shortName || 'Зрячих М.О.',
+            status: comp.status || 'Плательщик НПД (самозанятый)',
+            inn: comp.inn || '591110297727',
+            phone: comp.phone || '+7 (905) 208-42-84',
+            phoneRaw: comp.phoneRaw || '+79052084284',
+            telegram: comp.telegram || 'https://t.me/voltgroup_spb',
+            vk: comp.vk || 'https://vk.com/voltgroup_spb',
+            site: comp.site || 'voltgroup-spb.ru',
+            siteUrl: comp.siteUrl || 'https://voltgroup-spb.ru',
+            region: comp.region || 'Санкт-Петербург и ЛО',
+            city: comp.city || 'г. Санкт-Петербург',
+            brandName: comp.brandName || 'VoltGroup'
+        };
+    }
 
     /**
      * Сбор единого контекста для любого документа
@@ -102,8 +112,14 @@
             }
         });
 
+        const rawContractor = getContractorInfo();
+        const contractor = {};
+        for (const [k, v] of Object.entries(rawContractor)) {
+            contractor[k] = typeof v === 'string' ? esc(v) : v;
+        }
+
         return {
-            contractor: CONTRACTOR,
+            contractor,
             totals,
             clientName,
             clientAddr,
@@ -339,8 +355,8 @@
         <div class="sign-box">
             <strong>Исполнитель:</strong><br>
             ${ctx.contractor.name}<br>
-            ИНН ${ctx.contractor.inn} | VoltGroup
-            <div class="sign-line">/ Зрячих М.О. / М.П.</div>
+            ИНН ${ctx.contractor.inn} | ${ctx.contractor.brandName}
+            <div class="sign-line">/ ${ctx.contractor.shortName} / М.П.</div>
         </div>
         <div class="sign-box" style="text-align: right;">
             <strong>Заказчик:</strong><br>
@@ -526,8 +542,8 @@
         <div class="sign-col">
             <strong>Исполнитель:</strong><br>
             ${ctx.contractor.name}<br>
-            VoltGroup | ИНН ${ctx.contractor.inn}
-            <div class="sign-line">/ Зрячих М.О. / М.П.</div>
+            ${ctx.contractor.brandName} | ИНН ${ctx.contractor.inn}
+            <div class="sign-line">/ ${ctx.contractor.shortName} / М.П.</div>
         </div>
         <div class="sign-col" style="text-align: right;">
             <strong>Заказчик:</strong><br>
@@ -682,7 +698,7 @@
             Статус: ${ctx.contractor.status}<br>
             ИНН: ${ctx.contractor.inn}<br>
             Тел: ${ctx.contractor.phone}
-            <div class="sign-line">/ Зрячих М.О. /</div>
+            <div class="sign-line">/ ${ctx.contractor.shortName} /</div>
         </div>
         <div class="sign-box">
             <div class="sign-title">ЗАКАЗЧИК:</div>
@@ -748,7 +764,7 @@
 
     <h1>ДОГОВОР ПОДРЯДА НА ВЫПОЛНЕНИЕ ЭЛЕКТРОМОНТАЖНЫХ РАБОТ № ${ctx.invoiceNum}</h1>
     <div class="doc-date">
-        <span>г. Санкт-Петербург</span>
+        <span>${ctx.contractor.city}</span>
         <span>«${ctx.date}» г.</span>
     </div>
 
@@ -798,7 +814,7 @@
             ИНН: ${ctx.contractor.inn}<br>
             Телефон: ${ctx.contractor.phone}<br>
             Сайт: ${ctx.contractor.site}<br><br>
-            <div class="sign-line">/ Зрячих М.О. /</div>
+            <div class="sign-line">/ ${ctx.contractor.shortName} /</div>
         </div>
         <div class="sign-col">
             <strong>ЗАКАЗЧИК:</strong><br>
@@ -878,7 +894,7 @@
 
     <div class="signatures" style="margin-top: 30px;">
         <div class="sign-col">
-            Подрядчик: _______________ / Зрячих М.О. /
+            Подрядчик: _______________ / ${ctx.contractor.shortName} /
         </div>
         <div class="sign-col" style="text-align: right;">
             Заказчик: _______________ / ${ctx.clientName} /
@@ -891,7 +907,7 @@
     }
 
     // Экспорт в глобальную область видимости
-    window.CONTRACTOR_INFO = CONTRACTOR;
+    window.CONTRACTOR_INFO = getContractorInfo();
     window.getDocContext = getDocContext;
     window.buildWorksRowsHtml = buildWorksRowsHtml;
     window.buildMaterialsRowsHtml = buildMaterialsRowsHtml;

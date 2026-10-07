@@ -266,14 +266,14 @@
     </div>
 
     <div class="contacts-wrapper">
-        <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="btn-contact btn-tg">
+        <a id="client-btn-tg" href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="btn-contact btn-tg">
             ✈️ Написать мастеру в Telegram
         </a>
         <div class="contacts-grid">
-            <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="btn-contact btn-vk">
+            <a id="client-btn-vk" href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="btn-contact btn-vk">
                 💬 Группа ВКонтакте
             </a>
-            <a href="tel:+79052084284" class="btn-contact btn-phone">
+            <a id="client-btn-phone" href="tel:+79052084284" class="btn-contact btn-phone">
                 📞 Позвонить
             </a>
         </div>
@@ -283,6 +283,15 @@
 <script src="../static/js/config.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", async () => {
+        if (window.VG_COMPANY) {
+            const btnTg = document.getElementById('client-btn-tg');
+            const btnVk = document.getElementById('client-btn-vk');
+            const btnPhone = document.getElementById('client-btn-phone');
+            if (btnTg && window.VG_COMPANY.telegram) btnTg.href = window.VG_COMPANY.telegram;
+            if (btnVk && window.VG_COMPANY.vk) btnVk.href = window.VG_COMPANY.vk;
+            if (btnPhone && window.VG_COMPANY.phoneRaw) btnPhone.href = `tel:${window.VG_COMPANY.phoneRaw}`;
+        }
+
         const urlParams = new URLSearchParams(window.location.search);
         const objectId = urlParams.get('id');
         const token = urlParams.get('t') || urlParams.get('token');

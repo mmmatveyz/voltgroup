@@ -144,8 +144,12 @@ function createDocumentsEnvironment(config = {}) {
 
     mockWindow.Blob = MockBlob;
     mockWindow.URL = mockURL;
-
     mockWindow.window = mockWindow;
+    mockWindow.global = mockWindow;
+
+    // Загрузка config.js
+    const configCode = fs.readFileSync(path.join(__dirname, '..', 'static', 'js', 'config.js'), 'utf8');
+    vm.runInNewContext(configCode, mockWindow);
 
     // Загрузка money.js
     const moneyCode = fs.readFileSync(path.join(__dirname, '..', 'static', 'js', 'money.js'), 'utf8');
@@ -229,6 +233,42 @@ console.log('\n3. Проверка экранирования XSS-символо
     assert(!html.includes('<script>alert('), 'Скрипт в имени клиента экранирован');
     assert(html.includes('&lt;script&gt;') || html.includes('Петров'), 'Экранированная разметка присутствует');
     assert(!html.includes('<img src=x'), 'Опасный тег img в адресе экранирован');
+}
+
+// -------------------------------------------------------------
+// ТЕСТ 4: Проверка динамического переопределения реквизитов через VG_COMPANY
+// -------------------------------------------------------------
+console.log('\n4. Проверка единого конфига реквизитов компании (VG_COMPANY):');
+{
+    const env = createDocumentsEnvironment();
+    env.window.VG_COMPANY = {
+        name: 'Тестовый Подрядчик Петров',
+        shortName: 'Петров П.П.',
+        status: 'Индивидуальный предприниматель',
+        inn: '770123456789',
+        phone: '+7 (999) 000-11-22',
+        site: 'petrov-electro.ru',
+        brandName: 'PetrovElectro',
+        city: 'г. Москва'
+    };
+
+    // Проверяем смету
+    env.window.generatePDF();
+    let html = env.getCapturedHtml();
+    assert(html.includes('770123456789'), 'Смета содержит кастомный ИНН');
+    assert(html.includes('Тестовый Подрядчик Петров'), 'Смета содержит кастомное ФИО');
+    assert(html.includes('Петров П.П.'), 'Смета содержит кастомную подпись');
+    assert(html.includes('PetrovElectro'), 'Смета содержит кастомный бренд');
+    assert(!html.includes('591110297727'), 'Смета не содержит старый ИНН');
+
+    // Проверяем договор
+    env.window.generateContract();
+    html = env.getCapturedHtml();
+    assert(html.includes('770123456789'), 'Договор содержит кастомный ИНН');
+    assert(html.includes('+7 (999) 000-11-22'), 'Договор содержит кастомный телефон');
+    assert(html.includes('г. Москва'), 'Договор содержит кастомный город');
+    assert(html.includes('Петров П.П.'), 'Договор содержит кастомную подпись');
+    assert(!html.includes('591110297727'), 'Договор не содержит старый ИНН');
 }
 
 console.log(`\nИТОГ СМОУК-ТЕСТОВ ДОКУМЕНТОВ: ${passedTests} пройдено, ${failedTests} провалено.`);
