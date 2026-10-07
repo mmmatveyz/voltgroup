@@ -1,8 +1,8 @@
 # Задача 019 — Тесты расчёта и генерации документов
 
 **Пункт аудита:** № 22 · из [AUDIT.md](../AUDIT.md)
-**Статус:** ⏳ не начато
-**Файлы:** новый `tests/`, `requirements-dev.txt` (при необходимости)
+**Статус:** ✅ завершено (07.10.2026)
+**Файлы:** `tools/check.py`, `tools/test_estimate_calc.js`, `tools/test_doc_smoke.js`, `tools/test_doc_totals.js`, `tools/test_money.js`
 
 ## Проблема
 

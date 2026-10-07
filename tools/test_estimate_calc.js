@@ -1,0 +1,319 @@
+/**
+ * tools/test_estimate_calc.js
+ * Автоматические тесты расчёта сметы (calculateTotals) в static/js/estimate.js:
+ * - Базовый расчёт услуг (кол-во × цена)
+ * - Коэффициент сложности (+20%)
+ * - Скидки (процентные: 0%, 10%, 20% и фиксированные в рублях)
+ * - Расчёт материалов (закупка подрядчиком vs обеспечение заказчиком)
+ * - Кастомные позиции работ
+ * - Граничные случаи (скидка > суммы, нулевые объёмы, округление до рублей)
+ */
+
+import fs from 'fs';
+import path from 'path';
+import vm from 'vm';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+let passedTests = 0;
+let failedTests = 0;
+
+function assert(condition, testName, details = '') {
+    if (condition) {
+        console.log(`  ✓ PASS: ${testName}`);
+        passedTests++;
+    } else {
+        console.error(`  ❌ FAIL: ${testName} ${details ? '(' + details + ')' : ''}`);
+        failedTests++;
+    }
+}
+
+function assertEqual(actual, expected, testName) {
+    if (actual === expected) {
+        console.log(`  ✓ PASS: ${testName} [${actual}]`);
+        passedTests++;
+    } else {
+        console.error(`  ❌ FAIL: ${testName} — Ожидалось: ${expected}, получено: ${actual}`);
+        failedTests++;
+    }
+}
+
+/**
+ * Создаёт тестовое окружение с мок-DOM для static/js/estimate.js
+ */
+function createEstimateEnvironment() {
+    const elements = new Map();
+
+    function getOrCreateEl(id) {
+        if (!elements.has(id)) {
+            elements.set(id, {
+                id,
+                value: '',
+                checked: false,
+                textContent: '',
+                style: {},
+                classList: {
+                    toggle: () => {},
+                    add: () => {},
+                    remove: () => {}
+                }
+            });
+        }
+        return elements.get(id);
+    }
+
+    // Регистрация стандартных элементов интерфейса
+    [
+        'discount-input',
+        'master-buys-materials',
+        'services-total-display',
+        'discount-value-display',
+        'works-subtotal-display',
+        'materials-total-display',
+        'grand-total',
+        'materials-summary-row',
+        'selected-count-badge',
+        'btn-filter-selected',
+        'client-name',
+        'client-address',
+        'estimate-date',
+        'invoice-number'
+    ].forEach(id => getOrCreateEl(id));
+
+    const customWorkRows = [];
+    const materialRows = [];
+
+    const mockDocument = {
+        addEventListener: () => {},
+        removeEventListener: () => {},
+        getElementById: (id) => getOrCreateEl(id),
+        querySelectorAll: (sel) => {
+            if (sel === '.custom-work-row') return customWorkRows;
+            if (sel === '#materials-body tr') return materialRows;
+            return [];
+        },
+        createElement: (tag) => ({
+            tagName: tag,
+            style: {},
+            classList: { add: () => {}, remove: () => {}, toggle: () => {} },
+            appendChild: () => {},
+            removeChild: () => {}
+        })
+    };
+
+    const mockWindow = {
+        document: mockDocument,
+        addEventListener: () => {},
+        removeEventListener: () => {},
+        location: { protocol: 'http:' },
+        allServices: [],
+        servicesState: {},
+        currentSection: 'install',
+        currentCategory: 'all',
+        showOnlySelected: false
+    };
+
+    mockWindow.window = mockWindow;
+
+    const estimateCode = fs.readFileSync(path.join(__dirname, '..', 'static', 'js', 'estimate.js'), 'utf8');
+    const script = new vm.Script(estimateCode);
+    const context = vm.createContext(mockWindow);
+    script.runInContext(context);
+
+    return {
+        window: mockWindow,
+        elements,
+        customWorkRows,
+        materialRows,
+        setDiscount: (val) => { getOrCreateEl('discount-input').value = val; },
+        setMasterBuys: (checked) => { getOrCreateEl('master-buys-materials').checked = checked; },
+        addCustomRow: (name, price, qty, isComplex = false) => {
+            const sumCell = { textContent: '' };
+            customWorkRows.push({
+                querySelector: (sel) => {
+                    if (sel === '.name-input') return { value: name };
+                    if (sel === '.mat-unit') return { value: 'шт.' };
+                    if (sel === '.mat-price') return { value: String(price) };
+                    if (sel === '.custom-qty-input') return { value: String(qty) };
+                    if (sel === '.custom-complex') return { checked: isComplex };
+                    if (sel === 'td:nth-child(5)') return sumCell;
+                    return null;
+                }
+            });
+        },
+        addMaterialRow: (name, price, qty) => {
+            const sumCell = { textContent: '' };
+            materialRows.push({
+                querySelector: (sel) => {
+                    if (sel === '.mat-name') return { value: name };
+                    if (sel === '.mat-unit') return { value: 'м' };
+                    if (sel === '.mat-price') return { value: String(price) };
+                    if (sel === '.mat-qty') return { value: String(qty) };
+                    if (sel === 'td:nth-child(5)') return sumCell;
+                    return null;
+                }
+            });
+        }
+    };
+}
+
+console.log('=== ТЕСТИРОВАНИЕ РАСЧЁТНОЙ ЛОГИКИ СМЕТЫ (static/js/estimate.js) ===\n');
+
+// -------------------------------------------------------------
+// ТЕСТ 1: Базовый расчёт услуг (без скидок и коэффициентов)
+// -------------------------------------------------------------
+console.log('1. Базовый расчёт без скидки:');
+{
+    const env = createEstimateEnvironment();
+    env.window.allServices = [
+        { name: 'Монтаж кабеля', price: 150, unit: 'м' },
+        { name: 'Установка розетки', price: 350, unit: 'шт.' }
+    ];
+    env.window.servicesState = {
+        0: { qty: 100, isComplex: false }, // 100 * 150 = 15 000
+        1: { qty: 20, isComplex: false }   // 20 * 350 = 7 000
+    };
+    const res = env.window.calculateTotals();
+    assertEqual(res.servicesTotal, 22000, 'Сумма услуг (15000 + 7000)');
+    assertEqual(res.discountAmount, 0, 'Скидка = 0');
+    assertEqual(res.worksFinal, 22000, 'Итого за работы = 22000');
+    assertEqual(res.grandTotal, 22000, 'Общий итог = 22000');
+}
+
+// -------------------------------------------------------------
+// ТЕСТ 2: Коэффициент сложности (+20%)
+// -------------------------------------------------------------
+console.log('\n2. Коэффициент сложности (+20%):');
+{
+    const env = createEstimateEnvironment();
+    env.window.allServices = [
+        { name: 'Штробление бетон', price: 500, unit: 'м' } // 500 * 1.2 = 600
+    ];
+    env.window.servicesState = {
+        0: { qty: 10, isComplex: true } // 10 * 600 = 6 000
+    };
+    const res = env.window.calculateTotals();
+    assertEqual(res.servicesTotal, 6000, 'Штробление с к-том сложности (10 * 500 * 1.2)');
+    assertEqual(res.worksFinal, 6000, 'Итого за работы');
+}
+
+// -------------------------------------------------------------
+// ТЕСТ 3: Процентная скидка (0%, 10%, 20%)
+// -------------------------------------------------------------
+console.log('\n3. Процентная скидка (0%, 10%, 20%):');
+{
+    const env = createEstimateEnvironment();
+    env.window.allServices = [
+        { name: 'Комплексный электромонтаж', price: 100000, unit: 'объект' }
+    ];
+    env.window.servicesState = { 0: { qty: 1, isComplex: false } };
+
+    // 0%
+    env.setDiscount('0%');
+    let res = env.window.calculateTotals();
+    assertEqual(res.discountAmount, 0, 'Скидка 0%');
+    assertEqual(res.worksFinal, 100000, 'Работы при 0%');
+
+    // 10%
+    env.setDiscount('10%');
+    res = env.window.calculateTotals();
+    assertEqual(res.discountAmount, 10000, 'Скидка 10% от 100 000');
+    assertEqual(res.worksFinal, 90000, 'Работы при 10%');
+
+    // 20%
+    env.setDiscount('20%');
+    res = env.window.calculateTotals();
+    assertEqual(res.discountAmount, 20000, 'Скидка 20% от 100 000');
+    assertEqual(res.worksFinal, 80000, 'Работы при 20%');
+}
+
+// -------------------------------------------------------------
+// ТЕСТ 4: Фиксированная скидка в рублях
+// -------------------------------------------------------------
+console.log('\n4. Фиксированная скидка в рублях:');
+{
+    const env = createEstimateEnvironment();
+    env.window.allServices = [
+        { name: 'Электромонтаж', price: 50000, unit: 'объект' }
+    ];
+    env.window.servicesState = { 0: { qty: 1, isComplex: false } };
+
+    env.setDiscount('7500');
+    const res = env.window.calculateTotals();
+    assertEqual(res.discountAmount, 7500, 'Фиксированная скидка 7500 руб.');
+    assertEqual(res.worksFinal, 42500, 'Работы за вычетом фикс. скидки (50000 - 7500)');
+}
+
+// -------------------------------------------------------------
+// ТЕСТ 5: Материалы — закупка подрядчиком vs обеспечение заказчиком
+// -------------------------------------------------------------
+console.log('\n5. Материалы и переключатель закупки:');
+{
+    const env = createEstimateEnvironment();
+    env.window.allServices = [
+        { name: 'Монтаж щита', price: 20000, unit: 'шт.' }
+    ];
+    env.window.servicesState = { 0: { qty: 1, isComplex: false } };
+    env.addMaterialRow('Кабель ВВГнг-LS 3х2.5', 95, 100); // 9500
+    env.addMaterialRow('Автоматический выключатель 16А', 450, 10); // 4500
+    // materialsTotal = 9500 + 4500 = 14000
+
+    // Заказчик закупает (masterBuys = false)
+    env.setMasterBuys(false);
+    let res = env.window.calculateTotals();
+    assertEqual(res.materialsTotal, 14000, 'Общая стоимость материалов');
+    assertEqual(res.materialsToPay, 0, 'К оплате за материалы = 0 (обеспечивает заказчик)');
+    assertEqual(res.grandTotal, 20000, 'Цена договора = worksFinal (материалы не входят)');
+
+    // Подрядчик закупает (masterBuys = true)
+    env.setMasterBuys(true);
+    res = env.window.calculateTotals();
+    assertEqual(res.materialsToPay, 14000, 'К оплате за материалы = 14000 (закупка подрядчиком)');
+    assertEqual(res.grandTotal, 34000, 'Цена договора = worksFinal + materialsTotal (20000 + 14000)');
+}
+
+// -------------------------------------------------------------
+// ТЕСТ 6: Кастомные позиции работ
+// -------------------------------------------------------------
+console.log('\n6. Кастомные позиции работ:');
+{
+    const env = createEstimateEnvironment();
+    env.addCustomRow('Алмазное бурение d100', 2500, 4, false); // 10 000
+    env.addCustomRow('Монтаж шинопровода на высоте 4м', 1000, 5, true); // 5 * 1000 * 1.2 = 6 000
+
+    const res = env.window.calculateTotals();
+    assertEqual(res.servicesTotal, 16000, 'Сумма кастомных работ (10000 + 6000)');
+    assertEqual(res.worksFinal, 16000, 'Итого за кастомные работы');
+}
+
+// -------------------------------------------------------------
+// ТЕСТ 7: Граничные условия и округление
+// -------------------------------------------------------------
+console.log('\n7. Граничные условия:');
+{
+    const env = createEstimateEnvironment();
+    env.window.allServices = [
+        { name: 'Работа А', price: 153, unit: 'м' }
+    ];
+    env.window.servicesState = { 0: { qty: 7, isComplex: false } }; // 153 * 7 = 1071
+
+    // Скидка 33% -> 1071 * 0.33 = 353.43 -> округление до 353
+    env.setDiscount('33%');
+    let res = env.window.calculateTotals();
+    assertEqual(res.discountAmount, 353, 'Округление скидки до целых рублей');
+    assertEqual(res.worksFinal, 718, 'Округление работ (1071 - 353 = 718)');
+
+    // Скидка превышает стоимость работ (не должно уходить в минус)
+    env.setDiscount('5000');
+    res = env.window.calculateTotals();
+    assertEqual(res.worksFinal, 0, 'worksFinal не может быть отрицательным (Math.max(0, ...))');
+}
+
+console.log(`\nИТОГ ТЕСТОВ РАСЧЁТА: ${passedTests} пройдено, ${failedTests} провалено.`);
+if (failedTests > 0) {
+    process.exit(1);
+} else {
+    process.exit(0);
+}
