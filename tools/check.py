@@ -12,6 +12,7 @@ tools/check.py — Единая команда комплексной прове
    - tools/test_doc_totals.js (единая база цен и шаблоны)
    - tools/test_estimate_calc.js (математика калькулятора, скидки, материалы)
    - tools/test_doc_smoke.js (генерация всех 4 документов)
+   - tools/test_cookies.js (баннер согласия и Метрика)
 5. Базовые проверки безопасности и целостности репозитория
 
 Использование:
@@ -146,7 +147,8 @@ def run_node_tests():
         ROOT_DIR / "tools" / "test_money.js",
         ROOT_DIR / "tools" / "test_doc_totals.js",
         ROOT_DIR / "tools" / "test_estimate_calc.js",
-        ROOT_DIR / "tools" / "test_doc_smoke.js"
+        ROOT_DIR / "tools" / "test_doc_smoke.js",
+        ROOT_DIR / "tools" / "test_cookies.js"
     ]
 
     for test_file in js_tests:

@@ -58,7 +58,7 @@
 | Карточка | Пункт | Тема | Статус |
 |---|---|---|---|
 | [012-photo-reports.md](012-photo-reports.md) | 9 | Фотоотчёты: реализовать или убрать | ⏳ 💬 |
-| [021-cookie-consent.md](021-cookie-consent.md) | 12 | Баннер согласия на cookies | ⏳ |
+| [021-cookie-consent.md](021-cookie-consent.md) | 12 | Баннер согласия на cookies | ✅ завершено 07.10 |
 | [020-csp-header.md](020-csp-header.md) | 13 | CSP через HTTP-заголовок | ⏳ |
 | [024-sheets-queries.md](024-sheets-queries.md) | 15 | Уменьшить число обращений к Google Sheets | ⏳ |
 | [031-service-worker.md](031-service-worker.md) | 17 | Service Worker: офлайн-работа на объекте | ⏳ |

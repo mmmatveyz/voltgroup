@@ -2689,4 +2689,104 @@ main>.container:first-child,
         text-align: center;
         justify-content: center;
     }
-}
+}
+
+/* === БАННЕР СОГЛАСИЯ НА COOKIES (ПУНКТ № 12, ЗАДАЧА 021) === */
+.cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9998;
+    background: rgba(9, 14, 26, 0.96);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(0, 240, 255, 0.25);
+    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.6);
+    padding: 16px 24px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+}
+
+.cookie-banner.visible {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.cookie-banner-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.cookie-banner-text {
+    flex: 1 1 520px;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--text-main, #e0e6ed);
+}
+
+.cookie-banner-link {
+    color: var(--primary-install, #00f0ff);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: opacity 0.2s ease;
+}
+
+.cookie-banner-link:hover {
+    opacity: 0.8;
+}
+
+.cookie-banner-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.cookie-banner-actions .cookie-btn {
+    padding: 9px 18px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    white-space: nowrap;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.15s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.cookie-banner-actions .cookie-btn:active {
+    transform: scale(0.98);
+}
+
+@media (max-width: 768px) {
+    .cookie-banner {
+        padding: 14px 16px;
+        bottom: 0;
+    }
+    .cookie-banner-content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+    }
+    .cookie-banner-text {
+        font-size: 0.85rem;
+    }
+    .cookie-banner-actions {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    .cookie-banner-actions .cookie-btn {
+        width: 100%;
+        text-align: center;
+        padding: 11px 16px;
+    }
+}
+
