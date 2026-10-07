@@ -119,7 +119,7 @@
 | [038-reviews.md](038-reviews.md) | Отзывы: вывод на сайт и разметка | агент + человек | ✅ выполнено 07.10 |
 | [045-reviews-generator.md](045-reviews-generator.md) | **Генератор статичного блока отзывов из `reviews.json`** — править одно место вместо двух | агент | ✅ выполнено 07.10 |
 | [039-yandex-business.md](039-yandex-business.md) | Яндекс.Бизнес: карточка, регион, услуги, NAP | человек + агент | ✅ выполнено 07.10 |
-| [040-district-pages.md](040-district-pages.md) | Страницы под районы СПб и ЛО | агент + человек | ⏳ |
+| [040-district-pages.md](040-district-pages.md) | Страницы под районы СПб и ЛО | агент + человек | ✅ выполнено 07.10 (Мурино, Бугры) |
 | [041-google-properties.md](041-google-properties.md) | Google Search Console и Business Profile | человек + агент | 🔄 в работе (метатег добавлен) |
 | [042-external-listings.md](042-external-listings.md) | Внешние каталоги (Авито есть; 2ГИС снят) | человек | 🔄 в работе |
 | [043-long-tail-content.md](043-long-tail-content.md) | Расширение под низкочастотные запросы | агент + человек | ⏳ |

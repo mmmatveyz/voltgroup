@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' https://mc.yandex.ru https://yastatic.net;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com;
+        img-src 'self' data: https: http: https://mc.yandex.ru;
+        connect-src 'self' https://voltgroup-bot.onrender.com https://mc.yandex.ru https://*.yandex.ru https://*.yandex.net wss://mc.yandex.ru wss://*.yandex.ru;
+        frame-src 'self' https://yandex.ru https://*.yandex.ru https://*.yandex.md https://mc.yandex.md;
+    ">
+
+    <title>Электромонтаж в Мурино и Девяткино под ключ | Электрика в новостройках | VoltGroup</title>
+    <meta name="description" content="Электромонтажные работы в Мурино и у метро Девяткино. Перенос розеток по дизайн-проекту, замена щитов застройщика, штробление монолита без пыли. Выезд мастера в Мурино в день обращения. Гарантия 12 месяцев.">
+    <link rel="canonical" href="https://voltgroup-spb.ru/elektromontazh-murino/">
+
+    <meta property="og:title" content="Электромонтаж в Мурино и Девяткино под ключ | VoltGroup">
+    <meta property="og:description" content="Качественная электрика в новостройках Мурино: перенос розеток, сборка надежных щитов с защитой от скачков напряжения, штробление без пыли по ГОСТ и ПУЭ.">
+    <meta property="og:image" content="https://voltgroup-spb.ru/assets/images/og-main.jpg">
+    <meta property="og:url" content="https://voltgroup-spb.ru/elektromontazh-murino/">
+    <meta property="og:type" content="website">
+
+    <!-- Микроразметка Schema.org (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Service",
+          "name": "Электромонтажные работы в Мурино под ключ",
+          "serviceType": "Электромонтаж квартир, перенос розеток, замена щитов застройщика в Мурино",
+          "provider": {
+            "@type": "LocalBusiness",
+            "name": "VoltGroup",
+            "url": "https://voltgroup-spb.ru",
+            "telephone": "+7-905-208-42-84"
+          },
+          "areaServed": [
+            {
+              "@type": "City",
+              "name": "Мурино"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Всеволожский район"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Ленинградская область"
+            }
+          ],
+          "url": "https://voltgroup-spb.ru/elektromontazh-murino/"
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Главная",
+              "item": "https://voltgroup-spb.ru/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Электромонтаж (Install)",
+              "item": "https://voltgroup-spb.ru/install/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Электромонтаж в Мурино",
+              "item": "https://voltgroup-spb.ru/elektromontazh-murino/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <!-- Фавиконы и иконки -->
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <meta name="theme-color" content="#050914">
+    <link rel="manifest" href="../manifest.json">
+    <link rel="yandex-tableau-widget" href="../yandex-manifest.json">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../static/css/style.css?v=2.5">
+
+    <style>
+        .district-hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: rgba(0, 229, 255, 0.08);
+            border: 1px solid rgba(0, 229, 255, 0.25);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--primary-install);
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .district-complexes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .complex-chip {
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            font-size: 0.86rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .complex-chip i {
+            color: var(--primary-install);
+            font-style: normal;
+        }
+        .local-packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .local-package-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            transition: var(--transition);
+        }
+        .local-package-card:hover {
+            border-color: rgba(0, 229, 255, 0.35);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+        .local-package-price {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary-install);
+            margin: 12px 0 16px;
+        }
+        .local-package-features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+        .local-package-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .local-package-features li i {
+            color: var(--primary-install);
+            font-style: normal;
+            flex-shrink: 0;
+        }
+        .gallery-mini-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+        .gallery-mini-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .gallery-mini-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+        .gallery-mini-body {
+            padding: 18px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .nearby-districts-bar {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 40px;
+        }
+        .nearby-districts-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .nearby-link {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        .nearby-link:hover {
+            border-color: var(--primary-install);
+            color: var(--primary-install);
+        }
+    </style>
+
+    <!-- Управление cookies и отложенная инициализация Яндекс.Метрики (152-ФЗ) -->
+    <script src="../static/js/cookies.js" defer></script>
+</head>
+<body>
+
+<div class="nav-overlay" id="navOverlay"></div>
+
+<header class="header">
+    <div class="container nav-container">
+        <a href="../index.html" class="logo">
+            <img src="../assets/images/logo-voltgroup.png" alt="VoltGroup Logo" width="160" height="40">
+        </a>
+        <button class="mobile-toggle" aria-label="Открыть меню" aria-expanded="false" aria-controls="mainNav" type="button">☰</button>
+        <nav class="nav-links" id="mainNav">
+            <a href="../install/" class="active">Install</a>
+            <a href="../engineering/">Engineering</a>
+            <a href="../estimate.html">Калькулятор</a>
+            <a href="../works.html">Работы</a>
+            <a href="../index.html#reviews">Отзывы</a>
+            <a href="../contacts/" class="btn btn-outline btn-nav-contact">Контакты</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <!-- HERO СЕКЦИЯ -->
+    <section class="hero hero-single container fade-in">
+        <div class="hero-left">
+            <span class="district-hero-badge">
+                📍 Мурино & ст. м. Девяткино · Выезд мастера сегодня
+            </span>
+            <h1 class="hero-title">
+                Электромонтаж <br>
+                в Мурино <span style="color: var(--primary-install);">под ключ</span>
+            </h1>
+            <p class="hero-subtitle">
+                Профессиональная электрика в новостройках Мурино. Перенос розеток по дизайн-проекту кухни, замена щитков от застройщика, штробление монолита без пыли. Фиксированная смета до начала работ и гарантия 12 месяцев по договору.
+            </p>
+            <div class="hero-actions">
+                <a href="#packages" class="btn btn-primary">Готовые пакеты для квартир ⚡</a>
+                <a href="../estimate.html" class="btn btn-outline">Калькулятор сметы</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ОСОБЕННОСТИ ЭЛЕКТРОМОНТАЖА В МУРИНО -->
+    <section class="section">
+        <div class="container">
+            <div style="text-align: center; max-width: 720px; margin: 0 auto 35px;">
+                <span class="bento-tag tag-cyan fade-in">СПЕЦИФИКА ЛОКАЦИИ</span>
+                <h2 class="fade-in" style="margin-bottom: 12px;">Электрика в новостройках <span>Мурино</span></h2>
+                <p class="fade-in" style="color: var(--text-muted); font-size: 0.95rem;">
+                    Знаем конструктив домов всех основных застройщиков в Мурино (Setl City, ЦДС, Полис Групп, Мавис, Евроинвест). Решаем типичные проблемы сдаваемого жилья:
+                </p>
+            </div>
+
+            <div class="services-bento">
+                <!-- 1. Монолитные стены и штробление без пыли -->
+                <div class="bento-card bento-install bento-span-7 fade-in">
+                    <div>
+                        <span class="bento-tag tag-cyan">01 // ТЕХНОЛОГИЯ</span>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.35rem; margin-bottom: 12px; text-transform: uppercase;">
+                            Штробление монолита без пыли и без повреждения арматуры
+                        </h3>
+                        <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55;">
+                            В монолитных домах Мурино несущие пилоны запрещено штробить горизонтально. Мы прокладываем основные магистрали строго по потолку в негорючей гофре ГОСТ, а вертикальные спуски выполняем алмазным штроборезом с пылесосом класса M. Никакой строительной пыли в подъезде и воздуховодах.
+                        </p>
+                        <ul class="bento-features">
+                            <li><i>⚡</i> Алмазные коронки и штроборез с пылеотводом</li>
+                            <li><i>⚡</i> Соблюдение «закона о тишине» ЛО (тихий час 13:00–15:00)</li>
+                            <li><i>⚡</i> Сохранение целостности несущей арматуры монолитных стен</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 2. Замена слабого щитка от застройщика -->
+                <div class="bento-card bento-calc bento-span-5 fade-in" style="transition-delay: 0.1s;">
+                    <div>
+                        <span class="bento-tag tag-yellow">02 // БЕЗОПАСНОСТЬ</span>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 12px; text-transform: uppercase;">
+                            Замена щитка застройщика
+                        </h3>
+                        <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55;">
+                            Застройщики часто сдают квартиры с 3–4 бюджетными автоматами без качественного УЗО и реле напряжения. Мы собираем щиты с дифференциальной защитой и реле от скачков напряжения в сети, защищая дорогую технику.
+                        </p>
+                        <div style="margin: 15px 0; padding: 12px; background: rgba(255, 214, 10, 0.05); border: 1px dashed rgba(255, 214, 10, 0.3); border-radius: 12px; font-size: 0.85rem; color: var(--text-muted);">
+                            <b style="color: var(--volt-yellow);">Защита от 380В:</b> реле напряжения защитит технику при обрыве нуля на подстанции.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Кухонный гарнитур и перенос точек -->
+                <div class="bento-card bento-span-12 fade-in" style="transition-delay: 0.15s;">
+                    <div style="display: flex; flex-direction: column; md-flex-direction: row; gap: 20px;">
+                        <span class="bento-tag tag-cyan">03 // КУХНЯ И МОКРЫЕ ЗОНЫ</span>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.35rem; margin-bottom: 10px; text-transform: uppercase;">
+                            Точный перенос электроточек под проект кухонного гарнитура
+                        </h3>
+                        <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55; max-width: 850px;">
+                            Стандартные розетки от застройщика почти никогда не совпадают с проектом кухни. Мы выводим силовые линии на варочную панель (3х6 мм²), духовой шкаф, посудомоечную машину, вытяжку, измельчитель и подсветку рабочей зоны по миллиметровым чертежам кухонщиков.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ПАКЕТЫ И СТОИМОСТЬ -->
+    <section class="section" id="packages" style="background: rgba(255, 255, 255, 0.01); border-block: 1px solid var(--border-light);">
+        <div class="container">
+            <div style="text-align: center; max-width: 680px; margin: 0 auto;">
+                <span class="bento-tag tag-cyan fade-in">ЦЕНЫ В МУРИНО</span>
+                <h2 class="fade-in" style="margin-bottom: 10px;">Стоимость электрики <span>под ключ</span></h2>
+                <p class="fade-in" style="color: var(--text-muted); font-size: 0.95rem;">
+                    Фиксируем стоимость работ в договоре. Точный расчёт по чертежу или дизайн-проекту без скрытых доплат.
+                </p>
+            </div>
+
+            <div class="local-packages-grid">
+                <!-- Студия -->
+                <div class="local-package-card fade-in">
+                    <div>
+                        <span class="badge-status" style="margin-bottom: 10px;"><span class="dot"></span> Студия (20–28 м²)</span>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.25rem;">Базовая доработка новостройки</h3>
+                        <div class="local-package-price">от 35 000 ₽</div>
+                        <ul class="local-package-features">
+                            <li><i>⚡</i> Перенос 12–16 розеток под мебель и ТВ</li>
+                            <li><i>⚡</i> Выделенная силовая линия на варочную панель</li>
+                            <li><i>⚡</i> Модернизация электрощита (УЗО + 5-6 групп)</li>
+                            <li><i>⚡</i> Срок выполнения: 1–2 рабочих дня</li>
+                        </ul>
+                    </div>
+                    <a href="#contact" class="btn btn-outline" style="width: 100%; justify-content: center;">Заказать для студии</a>
+                </div>
+
+                <!-- 1-комнатная квартира -->
+                <div class="local-package-card fade-in" style="border-color: rgba(0, 229, 255, 0.4); box-shadow: 0 0 20px rgba(0, 229, 255, 0.05); transition-delay: 0.1s;">
+                    <div>
+                        <span class="badge-status" style="margin-bottom: 10px; background: rgba(0, 229, 255, 0.15); border-color: rgba(0, 229, 255, 0.4);"><span class="dot"></span> 1-к. квартира (32–45 м²)</span>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.25rem;">Комплексный электромонтаж</h3>
+                        <div class="local-package-price">от 50 000 ₽</div>
+                        <ul class="local-package-features">
+                            <li><i>⚡</i> Полная разводка кухни, спальни, санузла и коридора</li>
+                            <li><i>⚡</i> 25–35 электроточек (розетки, свет, интернет)</li>
+                            <li><i>⚡</i> Сборка щита на 12–18 модулей с реле напряжения</li>
+                            <li><i>⚡</i> Разводка линий кондиционера и стиральной машины</li>
+                            <li><i>⚡</i> Срок выполнения: 2–3 рабочих дня</li>
+                        </ul>
+                    </div>
+                    <a href="#contact" class="btn btn-primary" style="width: 100%; justify-content: center;">Заказать для 1-комнатной ⚡</a>
+                </div>
+
+                <!-- 2-комнатная квартира -->
+                <div class="local-package-card fade-in" style="transition-delay: 0.2s;">
+                    <div>
+                        <span class="badge-status" style="margin-bottom: 10px;"><span class="dot"></span> 2-к. квартира (50–70 м²)</span>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.25rem;">Электромонтаж по дизайн-проекту</h3>
+                        <div class="local-package-price">от 70 000 ₽</div>
+                        <ul class="local-package-features">
+                            <li><i>⚡</i> 45–60 электроточек, зонированное освещение</li>
+                            <li><i>⚡</i> Мастер-выключатель («выключить всё») у входа</li>
+                            <li><i>⚡</i> Силовой щит 24–36 модулей (ABB / Dekraft)</li>
+                            <li><i>⚡</i> Линии тёплых полов, бойлера и посудомоечной машины</li>
+                            <li><i>⚡</i> Срок выполнения: 3–5 рабочих дней</li>
+                        </ul>
+                    </div>
+                    <a href="#contact" class="btn btn-outline" style="width: 100%; justify-content: center;">Заказать для 2-комнатной</a>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px; text-align: center;">
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px;">
+                    Нужен нестандартный расчёт или частичный перенос нескольких точек?
+                </p>
+                <a href="../estimate.html" class="btn btn-outline" style="padding: 10px 24px;">
+                    Рассчитать точную стоимость в онлайн-калькуляторе →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- РЕАЛЬНЫЕ ПРИМЕРЫ РАБОТ С ФОТО -->
+    <section class="section">
+        <div class="container">
+            <div style="text-align: center; max-width: 680px; margin: 0 auto 30px;">
+                <span class="bento-tag tag-cyan fade-in">РЕЗУЛЬТАТЫ</span>
+                <h2 class="fade-in" style="margin-bottom: 10px;">Примеры выполненных <span>работ</span></h2>
+                <p class="fade-in" style="color: var(--text-muted); font-size: 0.95rem;">
+                    Реальные кадры монтажа на объектах: аккуратность штробления, профессиональная сборка щитов и надежные соединения.
+                </p>
+            </div>
+
+            <div class="gallery-mini-grid">
+                <!-- 1. Кухня -->
+                <div class="gallery-mini-card fade-in">
+                    <img src="../gallery/kitchen-relocation-collage.webp" alt="Перенос розеток на кухне в новостройке" loading="lazy" decoding="async">
+                    <div class="gallery-mini-body">
+                        <div>
+                            <h4 style="font-family: var(--font-heading); font-size: 1.05rem; margin-bottom: 8px;">Перенос точек под кухонный гарнитур</h4>
+                            <p style="font-size: 0.86rem; color: var(--text-muted); line-height: 1.5;">
+                                Перенос розеток после застройщика под индивидуальный дизайн кухни. Штробление строго по лазерному уровню, прокладка выделенной силовой линии для плиты.
+                            </p>
+                        </div>
+                        <div style="margin-top: 12px; font-size: 0.78rem; color: var(--primary-install); font-weight: 600;">
+                            #ПереносРозеток #Новостройка
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Щит -->
+                <div class="gallery-mini-card fade-in" style="transition-delay: 0.1s;">
+                    <img src="../gallery/panel-wiring-07.webp" alt="Сборка распределительного щита" loading="lazy" decoding="async">
+                    <div class="gallery-mini-body">
+                        <div>
+                            <h4 style="font-family: var(--font-heading); font-size: 1.05rem; margin-bottom: 8px;">Сборка щита с маркировкой линий</h4>
+                            <p style="font-size: 0.86rem; color: var(--text-muted); line-height: 1.5;">
+                                Аккуратная модульная сборка с надежной автоматикой. Цветовая маркировка кабелей, защита УЗО по мокрым зонам и реле напряжения.
+                            </p>
+                        </div>
+                        <div style="margin-top: 12px; font-size: 0.78rem; color: var(--primary-install); font-weight: 600;">
+                            #Электрощит #Безопасность
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Распаячная коробка WAGO -->
+                <div class="gallery-mini-card fade-in" style="transition-delay: 0.2s;">
+                    <img src="../gallery/junction-box-09.webp" alt="Коммутация распределительной коробки WAGO" loading="lazy" decoding="async">
+                    <div class="gallery-mini-body">
+                        <div>
+                            <h4 style="font-family: var(--font-heading); font-size: 1.05rem; margin-bottom: 8px;">Надежная коммутация без скруток</h4>
+                            <p style="font-size: 0.86rem; color: var(--text-muted); line-height: 1.5;">
+                                Коммутация необслуживаемых соединений на сертифицированных клеммах WAGO и гильзах ГМЛ. Четкая укладка жил без заломов и перегибов.
+                            </p>
+                        </div>
+                        <div style="margin-top: 12px; font-size: 0.78rem; color: var(--primary-install); font-weight: 600;">
+                            #ГОСТ #ПУЭ
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- РАБОТАЕМ ВО ВСЕХ ЖК МУРИНО -->
+    <section class="section" style="padding-top: 10px;">
+        <div class="container">
+            <div class="card fade-in" style="padding: 30px;">
+                <h3 style="font-family: var(--font-heading); font-size: 1.25rem; margin-bottom: 12px; text-transform: uppercase;">
+                    Работаем во всех жилых комплексах Мурино и Девяткино
+                </h3>
+                <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;">
+                    Оперативно выезжаем для замера и выполнения электромонтажа в Западное и Восточное Мурино, в том числе по адресам: Воронцовский бульвар, бульвар Менделеева, ул. Шувалова, ул. Авиаторов Балтики, ул. Графская, Петровский бульвар, Охтинская аллея, Ручьевский проспект:
+                </p>
+
+                <div class="district-complexes-grid">
+                    <div class="complex-chip"><i>⚡</i> ЖК GreenЛандия (1 & 2)</div>
+                    <div class="complex-chip"><i>⚡</i> ЖК ID Murino (1, 2, 3)</div>
+                    <div class="complex-chip"><i>⚡</i> ЖК Авиатор</div>
+                    <div class="complex-chip"><i>⚡</i> ЖК Мой Город</div>
+                    <div class="complex-chip"><i>⚡</i> ЖК Урбанист</div>
+                    <div class="complex-chip"><i>⚡</i> ЖК Мурино Клаб</div>
+                    <div class="complex-chip"><i>⚡</i> ЖК Муринский Посад</div>
+                    <div class="complex-chip"><i>⚡</i> ЖК Ласточка & Браун</div>
+                </div>
+
+                <div class="nearby-districts-bar">
+                    <div style="font-size: 0.9rem; color: var(--text-muted);">
+                        Работаем также в соседних локациях:
+                    </div>
+                    <div class="nearby-districts-links">
+                        <a href="../elektromontazh-bugry/" class="nearby-link">📍 Электромонтаж в Буграх</a>
+                        <a href="../install/" class="nearby-link">⚡ Электромонтаж в Санкт-Петербурге</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- СЕКЦИЯ ФОРМЫ СВЯЗИ -->
+    <section id="contact" class="section contact-section" style="padding-top: 20px; padding-bottom: 90px;">
+        <div class="container">
+            <div class="card fade-in contact-grid-card">
+                <div>
+                    <span class="badge-status">
+                        <span class="dot"></span> Заявка на монтаж в Мурино
+                    </span>
+                    <h2 style="text-align: left; margin-bottom: 15px;">Вызовите электрика <span style="color: var(--primary-install);">в Мурино</span></h2>
+                    <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+                        Оставьте заявку на бесплатную консультацию и расчёт сметы. Мастер ответит в течение 15 минут, согласует удобное время выезда и зафиксирует стоимость работ.
+                    </p>
+                    <div style="padding: 16px; background: rgba(0, 229, 255, 0.04); border: 1px dashed rgba(0, 229, 255, 0.2); border-radius: 12px; margin-bottom: 15px;">
+                        <p style="font-size: 0.88rem; color: var(--text-main); font-weight: 600;">⚡ Выезд на замер — бесплатно</p>
+                        <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">При заключении договора выезд и составление сметы не оплачиваются.</p>
+                    </div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">
+                        Прямая связь: 📞 <a href="tel:+79052084284" style="color: var(--primary-install); text-decoration: none; font-weight: 600;">+7 (905) 208-42-84</a>
+                    </div>
+                </div>
+
+                <form id="leadForm" style="display: grid; gap: 16px;">
+                    <div class="form-group" style="margin: 0;">
+                        <label class="form-label">Ваше имя</label>
+                        <input type="text" name="name" class="form-input" placeholder="Иван" required maxlength="100">
+                    </div>
+                    <div class="form-group" style="margin: 0;">
+                        <label class="form-label">Телефон</label>
+                        <input type="tel" name="phone" class="form-input" placeholder="+7 (___) ___-__-__" required autocomplete="tel" pattern="(\+7|8)[\s\-]?[0-9\(\)\s\-]{10,18}" title="Формат: +7 (999) 000-00-00">
+                    </div>
+                    <div class="form-group" style="margin: 0;">
+                        <label class="form-label">Тип объекта / Задача</label>
+                        <input type="hidden" name="service" id="selectedServiceInput" value="Электромонтаж в новостройке Мурино">
+                        <div class="service-chips-grid">
+                            <button type="button" class="service-chip active" data-val="Электромонтаж в новостройке Мурино">Новостройка Мурино</button>
+                            <button type="button" class="service-chip" data-val="Перенос розеток на кухне">Перенос розеток (кухня)</button>
+                            <button type="button" class="service-chip" data-val="Замена и сборка электрощита">Замена электрощита</button>
+                            <button type="button" class="service-chip" data-val="Электрика студии под ключ">Студия под ключ</button>
+                            <button type="button" class="service-chip" data-val="Другое">Другое</button>
+                        </div>
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: flex-start; gap: 10px; margin-top: 5px;">
+                        <input type="checkbox" id="privacy-consent-main" required style="margin-top: 3px; width: 18px; height: 18px; accent-color: var(--primary-install); cursor: pointer; flex-shrink: 0;">
+                        <label for="privacy-consent-main" style="font-size: 0.82rem; color: var(--text-muted); cursor: pointer; line-height: 1.4;">
+                            Даю согласие на обработку <a href="../privacy.html" target="_blank" rel="noopener noreferrer" style="color: var(--primary-install); text-decoration: underline;">персональных данных</a>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-volt" style="width: 100%; justify-content: center; margin-top: 10px;">Вызвать мастера в Мурино ⚡</button>
+                    <p id="formStatus" style="margin-top: 10px; text-align: center; display: none; font-weight: 600;"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <h4>⚡ VoltGroup</h4>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
+                    Энергия решений.<br>Электромонтаж в Мурино, Буграх, СПб и ЛО.
+                </p>
+                <div style="display: flex; gap: 15px; font-size: 0.9rem;">
+                    <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color: var(--primary-install); font-weight: 600;">VK</a>
+                    <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color: var(--primary-install); font-weight: 600;">Telegram</a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h4>Навигация</h4>
+                <a href="../install/">Install (Электромонтаж)</a>
+                <a href="../engineering/">Engineering (Автоматика)</a>
+                <a href="../estimate.html">Калькулятор</a>
+                <a href="../works.html">Работы</a>
+                <a href="../contacts/">Контакты</a>
+            </div>
+
+            <div class="footer-links">
+                <h4>Локации</h4>
+                <a href="../elektromontazh-murino/">Мурино & Девяткино</a>
+                <a href="../elektromontazh-bugry/">Бугры & Энфилд</a>
+                <a href="../install/">Санкт-Петербург</a>
+            </div>
+
+            <div>
+                <h4>Контакты</h4>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;">📞 <a href="tel:+79052084284" style="color: inherit; text-decoration: none;">+7 (905) 208-42-84</a></p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">🕒 Пн–Сб: 9:00–21:00</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">📍 г. Мурино, Всеволожский район</p>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2026 VoltGroup. Все права защищены.
+        </div>
+    </div>
+</footer>
+
+<script src="../static/js/config.js"></script>
+<script>
+    function sanitizeInput(str) {
+        if (typeof str !== 'string') return '';
+        return str.replace(/[&<>"']/g, function(m) {
+            return {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            }[m];
+        });
+    }
+
+    // Мобильное меню
+    const mobileToggle = document.querySelector('.mobile-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    const navOverlay = document.getElementById('navOverlay');
+
+    function closeMobileMenu() {
+        if (navLinks) navLinks.classList.remove('open');
+        if (navOverlay) navOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+        if (mobileToggle) {
+            mobileToggle.textContent = '☰';
+            mobileToggle.setAttribute('aria-expanded', 'false');
+        }
+    }
+
+    if (mobileToggle && navLinks) {
+        mobileToggle.addEventListener('click', () => {
+            const isOpen = navLinks.classList.toggle('open');
+            if (navOverlay) navOverlay.classList.toggle('active', isOpen);
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+            mobileToggle.textContent = isOpen ? '✕' : '☰';
+            mobileToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+
+        if (navOverlay) navOverlay.addEventListener('click', closeMobileMenu);
+    }
+
+    // Маска телефона
+    function initPhoneMask(input) {
+        if (!input) return;
+        function formatPhone(val) {
+            let digits = val.replace(/\D/g, '');
+            if (!digits) return '';
+            if (digits[0] === '7' || digits[0] === '8') {
+                digits = digits.substring(1);
+            }
+            let res = '+7';
+            if (digits.length > 0) res += ' (' + digits.substring(0, 3);
+            if (digits.length >= 4) res += ') ' + digits.substring(3, 6);
+            if (digits.length >= 7) res += '-' + digits.substring(6, 8);
+            if (digits.length >= 9) res += '-' + digits.substring(8, 10);
+            return res;
+        }
+
+        input.addEventListener('input', function() {
+            this.value = formatPhone(this.value);
+            if (this.classList.contains('is-invalid')) {
+                const digits = this.value.replace(/\D/g, '');
+                if (digits.length === 11) this.classList.remove('is-invalid');
+            }
+        });
+
+        input.addEventListener('focus', function() {
+            if (!this.value) this.value = '+7 (';
+        });
+
+        input.addEventListener('blur', function() {
+            if (this.value === '+7 (' || this.value === '+7' || this.value === '+') {
+                this.value = '';
+                this.classList.remove('is-invalid');
+            } else {
+                const digits = this.value.replace(/\D/g, '');
+                if (digits.length < 11) this.classList.add('is-invalid');
+                else this.classList.remove('is-invalid');
+            }
+        });
+
+        input.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && this.value.length <= 4) this.value = '';
+        });
+    }
+
+    const phoneInput = document.querySelector('input[name="phone"]');
+    initPhoneMask(phoneInput);
+
+    // Выбор задачи через чипы
+    const serviceInput = document.getElementById('selectedServiceInput');
+    const serviceChips = document.querySelectorAll('.service-chip');
+    serviceChips.forEach(chip => {
+        chip.addEventListener('click', function () {
+            serviceChips.forEach(c => c.classList.remove('active'));
+            this.classList.add('active');
+            if (serviceInput) serviceInput.value = this.getAttribute('data-val');
+        });
+    });
+
+    // Отправка формы
+    const leadForm = document.getElementById('leadForm');
+    if (leadForm) {
+        leadForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const btn = this.querySelector('button[type="submit"]');
+            const status = document.getElementById('formStatus');
+            const phoneEl = this.querySelector('input[name="phone"]');
+
+            const rawData = Object.fromEntries(new FormData(this));
+            const phoneVal = (rawData.phone || '').trim();
+            const digits = phoneVal.replace(/\D/g, '');
+
+            if (digits.length !== 11) {
+                if (phoneEl) {
+                    phoneEl.classList.add('is-invalid');
+                    phoneEl.focus();
+                }
+                status.style.display = 'block';
+                status.style.color = '#EF4444';
+                status.textContent = '⚠️ Пожалуйста, введите полный номер телефона: +7 (XXX) XXX-XX-XX';
+                return;
+            } else if (phoneEl) {
+                phoneEl.classList.remove('is-invalid');
+            }
+
+            const data = {
+                name: sanitizeInput(rawData.name),
+                phone: sanitizeInput(phoneVal),
+                service: sanitizeInput(rawData.service || (serviceInput ? serviceInput.value : 'Электромонтаж в Мурино')),
+                source: 'murino_landing'
+            };
+
+            btn.disabled = true;
+            btn.textContent = 'Отправка...';
+            status.style.display = 'block';
+            status.style.color = 'var(--text-muted)';
+            status.textContent = '⏳ Отправляем заявку...';
+
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+            try {
+                const apiUrl = window.VG_API || 'https://voltgroup-bot.onrender.com';
+                const res = await fetch(`${apiUrl}/send-message`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data),
+                    signal: controller.signal
+                });
+                if (res.ok) {
+                    status.textContent = '✅ Заявка принята! Мастер свяжется с вами в течение 15 минут.';
+                    status.style.color = '#10B981';
+                    this.reset();
+                    if (serviceChips.length > 0) {
+                        serviceChips.forEach(c => c.classList.remove('active'));
+                        serviceChips[0].classList.add('active');
+                        if (serviceInput) serviceInput.value = serviceChips[0].getAttribute('data-val');
+                    }
+                    if (phoneEl) phoneEl.classList.remove('is-invalid');
+                } else if (res.status === 429) {
+                    const errData = await res.json().catch(() => ({}));
+                    const limitMsg = errData.msg || 'Слишком много запросов. Пожалуйста, подождите минуту.';
+                    status.innerHTML = `⚠️ <b>${limitMsg}</b> Или свяжитесь напрямую: <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> · <a href="tel:+79052084284" style="color:var(--accent);text-decoration:underline;">+7 (905) 208-42-84</a>`;
+                    status.style.color = '#F59E0B';
+                } else {
+                    throw new Error('Ошибка сервера');
+                }
+            } catch (err) {
+                status.innerHTML = '❌ <b>Ошибка отправки.</b> Пожалуйста, напишите напрямую: <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> или позвоните <a href="tel:+79052084284" style="color:var(--accent);text-decoration:underline;">+7 (905) 208-42-84</a>';
+                status.style.color = '#EF4444';
+            } finally {
+                clearTimeout(timeoutId);
+                btn.disabled = false;
+                btn.textContent = 'Вызвать мастера в Мурино ⚡';
+            }
+        });
+    }
+
+    // Плавное появление
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) e.target.classList.add('visible');
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

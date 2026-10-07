@@ -764,6 +764,8 @@ def check_css_version_consistency():
         ROOT_DIR / "install" / "index.html",
         ROOT_DIR / "engineering" / "index.html",
         ROOT_DIR / "contacts" / "index.html",
+        ROOT_DIR / "elektromontazh-murino" / "index.html",
+        ROOT_DIR / "elektromontazh-bugry" / "index.html",
     ]
     css_pattern = re.compile(r'href=[\'"]([^\'"]*style\.css(?:\?v=([^\'"]+))?)[\'"]')
     versions = {}
@@ -802,7 +804,7 @@ def check_css_version_consistency():
         report_fail(f"Рассинхрон версий style.css: обнаружены разные версии: {unique_versions}")
 
     if not path_errors:
-        report_pass("Относительные пути к style.css корректны во всех 10 шаблонах")
+        report_pass(f"Относительные пути к style.css корректны во всех {len(html_targets)} шаблонах")
     else:
         for pe in path_errors:
             report_fail(pe)

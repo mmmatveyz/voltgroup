@@ -1,8 +1,8 @@
 # Задача 040 — Страницы под районы СПб и ЛО
 
 **Направление:** SEO · контент и семантика · из [AUDIT.md](../AUDIT.md) (SEO-раздел)
-**Статус:** ⏳ не начато
-**Файлы:** новые каталоги (например, `elektromontazh-primorsky/`, `elektromontazh-vsevolozhsk/`), `sitemap.xml`, внутренние ссылки
+**Статус:** ✅ завершено (07.10.2026)
+**Файлы:** `elektromontazh-murino/index.html`, `elektromontazh-bugry/index.html`, `install/index.html`, `contacts/index.html`, `sitemap.xml`, `tools/check.py`
 
 ## Проблема
 
