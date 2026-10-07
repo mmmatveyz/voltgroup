@@ -120,8 +120,8 @@
 | [045-reviews-generator.md](045-reviews-generator.md) | **Генератор статичного блока отзывов из `reviews.json`** — править одно место вместо двух | агент | ⏳ |
 | [039-yandex-business.md](039-yandex-business.md) | Яндекс.Бизнес: карточка, регион, услуги, NAP | человек + агент | ✅ выполнено 07.10 |
 | [040-district-pages.md](040-district-pages.md) | Страницы под районы СПб и ЛО | агент + человек | ⏳ |
-| [041-google-properties.md](041-google-properties.md) | Google Search Console и Business Profile | человек | ⏳ |
-| [042-external-listings.md](042-external-listings.md) | Внешние каталоги и упоминания (2ГИС, Авито) | человек | ⏳ |
+| [041-google-properties.md](041-google-properties.md) | Google Search Console и Business Profile | человек + агент | 🔄 в работе (метатег добавлен) |
+| [042-external-listings.md](042-external-listings.md) | Внешние каталоги (Авито есть; 2ГИС снят) | человек | 🔄 в работе |
 | [043-long-tail-content.md](043-long-tail-content.md) | Расширение под низкочастотные запросы | агент + человек | ⏳ |
 
 **Порядок внутри этапа:** `044` (снять задержку обхода — без этого остальное не работает) → `036` (sitemap и `Clean-param`) → `035` (дожать замеры: «Все страницы», статус sitemap, обход) → `045` (генератор отзывов — убирает ручную синхронизацию двух копий) → `039` + `038` (локальная выдача и доверие) → `041` + `042` (внешний контур) → `037` + `040` + `043` (контент, самый долгий).

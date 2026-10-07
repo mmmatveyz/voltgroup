@@ -1,7 +1,7 @@
 # Задача 041 — Google Search Console и Google Business Profile
 
 **Направление:** SEO · внешний контур · из [AUDIT.md](../AUDIT.md) (SEO-раздел)
-**Статус:** ⏳ не начато
+**Статус:** 🔄 в работе (07.10.2026: метатег подтверждения добавлен в index.html, ожидание верификации и отправки sitemap)
 **Где:** Google Search Console, Google Business Profile, `index.html`
 
 ## Проблема
