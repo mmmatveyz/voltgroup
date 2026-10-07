@@ -290,6 +290,19 @@ def check_security_sanity():
         else:
             report_fail("В static/js/documents.js отсутствует привязка к VG_COMPANY или getContractorInfo")
 
+    # Проверка: абсолютный путь LOG_DIR и отказоустойчивость логирования (п. 24 AUDIT)
+    if server_py.exists():
+        server_code = server_py.read_text(encoding="utf-8")
+        if "os.path.abspath(__file__)" in server_code and "os.makedirs(LOG_DIR, exist_ok=True)" in server_code:
+            report_pass("Каталог logs/ использует абсолютный путь от расположения server.py с exist_ok=True")
+        else:
+            report_fail("В server.py путь к logs/ не приведен к абсолютному от __file__ или нет exist_ok=True")
+
+        if "except Exception as log_err:" in server_code and "logging.basicConfig" in server_code:
+            report_pass("При ошибках создания каталога/файла логов предусмотрен fallback на консольный логгер")
+        else:
+            report_fail("В server.py отсутствует fallback на базовый логгер при сбое файлового логгера")
+
 def check_sheets_snapshot_logic():
     print("\n[6/8] Проверка архитектуры Google Sheets снимка (SheetSnapshot)...")
     server_py = ROOT_DIR / "server.py"
