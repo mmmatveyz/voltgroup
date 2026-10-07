@@ -796,6 +796,75 @@ def check_css_version_consistency():
         for pe in path_errors:
             report_fail(pe)
 
+def check_photo_reports_system():
+    print("\n[12/12] Проверка системы фотоотчётов и интеграции Cloudinary (tasks/012, п. 9 AUDIT)...")
+    server_py = ROOT_DIR / "server.py"
+    env_example = ROOT_DIR / ".env.example"
+    render_yaml = ROOT_DIR / "render.yaml"
+
+    if not env_example.exists():
+        report_fail(".env.example не найден")
+        return
+    if "CLOUDINARY_URL" not in env_example.read_text(encoding="utf-8"):
+        report_fail("В .env.example отсутствует переменная CLOUDINARY_URL")
+    else:
+        report_pass(".env.example содержит документацию и пример переменной CLOUDINARY_URL")
+
+    if not render_yaml.exists():
+        report_fail("render.yaml не найден")
+        return
+    if "CLOUDINARY_URL" not in render_yaml.read_text(encoding="utf-8"):
+        report_fail("В render.yaml отсутствует переменная CLOUDINARY_URL")
+    else:
+        report_pass("render.yaml содержит ключ CLOUDINARY_URL в секции envVars")
+
+    server_code = server_py.read_text(encoding="utf-8")
+    required_funcs = ["parse_cloudinary_url", "upload_image_to_cloudinary", "get_telegram_file_bytes"]
+    for fn in required_funcs:
+        if fn not in server_code:
+            report_fail(f"В server.py отсутствует функция {fn}")
+            return
+
+    if 'o:photo:' not in server_code:
+        report_fail("В server.py отсутствует обработка callback-кнопки o:photo:")
+        return
+
+    if '"photo" in data["message"]' not in server_code and "'photo' in data['message']" not in server_code:
+        report_fail("В webhook server.py отсутствует ветка обработки фотографии message.photo")
+        return
+
+    # Функциональный модульный тест parse_cloudinary_url через AST-изоляцию
+    try:
+        import urllib
+        import urllib.parse
+        tree = ast.parse(server_code)
+        target_nodes = []
+        for node in tree.body:
+            if isinstance(node, ast.FunctionDef) and node.name == "parse_cloudinary_url":
+                target_nodes.append(node)
+
+        mod_ast = ast.Module(body=target_nodes, type_ignores=[])
+        compiled = compile(mod_ast, "<cloudinary_test>", "exec")
+        sandbox_ns = {
+            "urllib": urllib,
+            "CLOUDINARY_URL": None,
+            "app": type("AppMock", (), {"logger": type("LoggerMock", (), {"error": lambda *args: None})()})()
+        }
+        exec(compiled, sandbox_ns)
+        parse_func = sandbox_ns["parse_cloudinary_url"]
+
+
+        valid_res = parse_func("cloudinary://123456789:mysecretkey@voltcloud")
+        assert valid_res == ("123456789", "mysecretkey", "voltcloud"), f"Неверный результат парсинга: {valid_res}"
+        assert parse_func("http://invalid.url") is None
+        assert parse_func("") is None
+        assert parse_func(None) is None
+        report_pass("parse_cloudinary_url корректно извлекает API ключ, секрет и cloud_name")
+        report_pass("Инлайн-кнопка '📸 Добавить фото' и приём фотографий настроены в webhook")
+    except Exception as e:
+        report_fail("Ошибка функционального теста parse_cloudinary_url", str(e))
+
+
 def main():
     print("=" * 60)
     print(" VoltGroup Project Health & Test Check (tools/check.py)")
@@ -811,7 +880,9 @@ def main():
     check_data_normalization_logic()
     check_error_alerts_system()
     check_backup_system()
+    check_photo_reports_system()
     check_css_version_consistency()
+
 
     print("\n" + "=" * 60)
     if failed_count == 0:

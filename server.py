@@ -7,6 +7,8 @@ import re
 import secrets
 import time
 from datetime import datetime
+import hashlib
+import urllib.parse
 import logging
 from logging.handlers import RotatingFileHandler
 import gspread
@@ -159,6 +161,109 @@ def answer_callback(callback_query_id, text=None):
     except Exception as e:
         app.logger.error(f"Ошибка answerCallbackQuery: {e}")
         return False
+
+# ----------------------------------------------------
+# 4.0. ЗАГРУЗКА ФОТООТЧЁТОВ В CLOUDINARY (задача 012, пункт № 9 AUDIT.md)
+# ----------------------------------------------------
+CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL')
+
+def parse_cloudinary_url(raw_url=None):
+    """
+    Разбирает CLOUDINARY_URL формата:
+    cloudinary://<api_key>:<api_secret>@<cloud_name>
+    Возвращает кортеж (api_key, api_secret, cloud_name) или None.
+    """
+    url_to_parse = raw_url or CLOUDINARY_URL
+    if not url_to_parse or not str(url_to_parse).strip():
+        return None
+    try:
+        parsed = urllib.parse.urlparse(str(url_to_parse).strip())
+        if parsed.scheme != "cloudinary":
+            return None
+        cloud_name = parsed.hostname
+        api_key = parsed.username
+        api_secret = parsed.password
+        if not cloud_name or not api_key or not api_secret:
+            return None
+        return api_key, api_secret, cloud_name
+    except Exception as e:
+        app.logger.error(f"Ошибка парсинга CLOUDINARY_URL: {e}")
+        return None
+
+def get_telegram_file_bytes(file_id):
+    """
+    Загружает байты файла из Telegram Bot API по file_id.
+    Секретный токен BOT_TOKEN используется только на бэкенде и не передаётся наружу.
+    """
+    if not BOT_TOKEN or not file_id:
+        return None
+    try:
+        get_file_url = f"https://api.telegram.org/bot{BOT_TOKEN}/getFile"
+        resp = requests.get(get_file_url, params={"file_id": file_id}, timeout=15)
+        data = resp.json()
+        if not data.get("ok"):
+            app.logger.error(f"Ошибка getFile в Telegram API: {data}")
+            return None
+        file_path = data.get("result", {}).get("file_path")
+        if not file_path:
+            return None
+
+        download_url = f"https://api.telegram.org/file/bot{BOT_TOKEN}/{file_path}"
+        dl_resp = requests.get(download_url, timeout=30)
+        if dl_resp.status_code == 200:
+            return dl_resp.content
+        app.logger.error(f"Ошибка скачивания файла Telegram (код {dl_resp.status_code})")
+        return None
+    except Exception as e:
+        app.logger.error(f"Исключение при получении файла из Telegram: {e}")
+        return None
+
+def upload_image_to_cloudinary(image_bytes, folder="voltgroup_reports", custom_url=None):
+    """
+    Загружает изображение в Cloudinary через подписанный REST API запрос.
+    Возвращает постоянный защищённый HTTPS URL (secure_url) или None при ошибке.
+    """
+    creds = parse_cloudinary_url(custom_url)
+    if not creds:
+        app.logger.error("CLOUDINARY_URL не настроен или содержит неверный формат")
+        return None
+    api_key, api_secret, cloud_name = creds
+
+    timestamp = str(int(time.time()))
+    # Формируем строку для подписи (параметры сортируются по алфавиту)
+    params_to_sign = {}
+    if folder:
+        params_to_sign["folder"] = folder
+    params_to_sign["timestamp"] = timestamp
+
+    sorted_params = sorted(params_to_sign.items(), key=lambda x: x[0])
+    serialized_str = "&".join(f"{k}={v}" for k, v in sorted_params) + api_secret
+    signature = hashlib.sha1(serialized_str.encode('utf-8')).hexdigest()
+
+    upload_url = f"https://api.cloudinary.com/v1_1/{cloud_name}/image/upload"
+    data_payload = {
+        "api_key": api_key,
+        "timestamp": timestamp,
+        "signature": signature
+    }
+    if folder:
+        data_payload["folder"] = folder
+
+    files_payload = {
+        "file": ("report.jpg", image_bytes, "image/jpeg")
+    }
+
+    try:
+        resp = requests.post(upload_url, data=data_payload, files=files_payload, timeout=30)
+        res_json = resp.json()
+        if resp.status_code in (200, 201) and "secure_url" in res_json:
+            return res_json["secure_url"]
+        app.logger.error(f"Ошибка загрузки в Cloudinary: {res_json}")
+        return None
+    except Exception as e:
+        app.logger.error(f"Исключение при вызове Cloudinary API: {e}")
+        return None
+
 
 # ----------------------------------------------------
 # 4.0. СИСТЕМА ОПОВЕЩЕНИЙ ОБ ОШИБКАХ (задача 032, пункт № 32 AUDIT.md)
@@ -648,6 +753,9 @@ def build_object_view(sheet, obj_id):
             ],
             [
                 {"text": "💰 Внести оплату", "callback_data": f"o:pay:{obj_id}"},
+                {"text": "📸 Добавить фото", "callback_data": f"o:photo:{obj_id}"}
+            ],
+            [
                 {"text": "🔗 Ссылка клиенту", "callback_data": f"o:link:{obj_id}"}
             ],
             [
@@ -657,6 +765,7 @@ def build_object_view(sheet, obj_id):
         ]
     }
     return text, kb
+
 
 def build_progress_keyboard(obj_id):
     text = f"📊 <b>Изменение прогресса по объекту №{html.escape(str(obj_id))}</b>\n\nВыберите процент готовности:"
@@ -936,8 +1045,22 @@ def webhook():
                 cancel_kb = {"inline_keyboard": [[{"text": "« Назад к объекту", "callback_data": f"o:v:{obj_id}"}]]}
                 edit_tg_message(chat_id, msg_id, prompt_text, reply_markup=cancel_kb)
 
+            # Запрос отправки фотоотчёта (o:photo:<id>)
+            elif cb_data.startswith("o:photo:"):
+                obj_id = cb_data.split(":", 2)[2]
+                user_states[chat_id] = {"action": "await_photo", "obj_id": obj_id, "ts": time.time()}
+                prompt_text = (
+                    f"📸 <b>Добавление фото к объекту №{html.escape(str(obj_id))}</b>\n\n"
+                    "Отправьте фотографию (или несколько фото по очереди) в этот чат.\n\n"
+                    "Фотография будет безопасно загружена в облачное хранилище, а ссылка добавлена в карточку объекта и клиентский кабинет.\n\n"
+                    "Для отмены отправьте /cancel или нажмите кнопку ниже:"
+                )
+                cancel_kb = {"inline_keyboard": [[{"text": "« Назад к объекту", "callback_data": f"o:v:{obj_id}"}]]}
+                edit_tg_message(chat_id, msg_id, prompt_text, reply_markup=cancel_kb)
+
             # Готовое сообщение со ссылкой для пересылки клиенту (o:link:<id>)
             elif cb_data.startswith("o:link:"):
+
                 obj_id = cb_data.split(":", 2)[2]
                 cell = find_object_cell(sheet, obj_id)
                 if not cell:
@@ -1148,7 +1271,122 @@ def webhook():
             notify_admin("tg_msg_error", op_type="Сообщение бота", exc=e)
             send_tg_message(chat_id, "💥 Ошибка сервера при работе с таблицей")
 
-    return '', 200
+        return '', 200
+
+    # 3. ОБРАБОТКА ФОТОГРАФИЙ (задача 012, пункт № 9 AUDIT.md)
+    if "message" in data and "photo" in data["message"]:
+        chat_id = str(data["message"]["chat"]["id"])
+
+        # Защита: слушать только ваш CHAT_ID
+        if chat_id != str(CHAT_ID):
+            return '', 200
+
+        try:
+            state = user_states.get(chat_id)
+            if not state or state.get("action") != "await_photo":
+                msg = (
+                    "📸 Вы отправили фотографию, но объект не выбран.\n\n"
+                    "Чтобы прикрепить фото к объекту:\n"
+                    "1. Откройте нужный объект через <b>📋 Мои объекты</b>.\n"
+                    "2. Нажмите <b>📸 Добавить фото</b>.\n"
+                    "3. Отправьте фото в чат."
+                )
+                menu_msg, kb = build_main_menu()
+                send_tg_message(chat_id, f"{msg}\n\n{menu_msg}", reply_markup=kb)
+                return '', 200
+
+            state_ts = state.get("ts", 0)
+            if state_ts and (time.time() - state_ts > USER_STATE_TTL_SECONDS):
+                user_states.pop(chat_id, None)
+                menu_msg, kb = build_main_menu()
+                send_tg_message(
+                    chat_id,
+                    "⌛ <b>Время ожидания отправки фото истекло.</b>\nПожалуйста, выберите объект заново.\n\n" + menu_msg,
+                    reply_markup=kb
+                )
+                return '', 200
+
+            obj_id = state.get("obj_id")
+            photos = data["message"]["photo"]
+            if not photos or not isinstance(photos, list):
+                send_tg_message(chat_id, "⚠️ Не удалось распознать файл фотографии.")
+                return '', 200
+
+            # Берём максимальный размер фотографии (последний элемент в массиве Telegram PhotoSize)
+            best_photo = photos[-1]
+            file_id = best_photo.get("file_id")
+            if not file_id:
+                send_tg_message(chat_id, "⚠️ Отсутствует file_id фотографии.")
+                return '', 200
+
+            if not CLOUDINARY_URL or not parse_cloudinary_url():
+                send_tg_message(
+                    chat_id,
+                    "⚠️ <b>Облачное хранилище не настроено.</b>\n\n"
+                    "Для сохранения фотографий необходимо добавить переменную <code>CLOUDINARY_URL</code> в панели управления Render.\n"
+                    "Инструкция доступна в <code>docs/DEPLOY.md</code> и <code>.env.example</code>."
+                )
+                return '', 200
+
+            send_tg_message(chat_id, f"⏳ <i>Загружаем фото для объекта №{html.escape(str(obj_id))} в защищённое облако...</i>")
+
+            photo_bytes = get_telegram_file_bytes(file_id)
+            if not photo_bytes:
+                notify_admin("tg_photo_download_failed", op_type="Загрузка фото из Telegram", obj_id=obj_id,
+                             custom_msg="Не удалось скачать файл из Telegram API")
+                send_tg_message(chat_id, "⚠️ Не удалось получить фотографию от серверов Telegram. Попробуйте ещё раз.")
+                return '', 200
+
+            secure_url = upload_image_to_cloudinary(photo_bytes, folder="voltgroup_reports")
+            if not secure_url:
+                notify_admin("cloudinary_upload_failed", op_type="Загрузка фото в Cloudinary", obj_id=obj_id,
+                             custom_msg="Cloudinary API вернул ошибку при загрузке")
+                send_tg_message(chat_id, "💥 Ошибка при загрузке фото в Cloudinary. Проверьте настройки CLOUDINARY_URL.")
+                return '', 200
+
+            # Сохранение ссылки в ячейку Google Таблицы
+            sheet = get_sheet_snapshot()
+            cell = find_object_cell(sheet, obj_id)
+            if not cell:
+                user_states.pop(chat_id, None)
+                send_tg_message(chat_id, f"⚠️ Объект №{html.escape(str(obj_id))} не найден в таблице.")
+                return '', 200
+
+            row_vals = sheet.row_values(cell.row)
+            while len(row_vals) < 8:
+                row_vals.append("")
+
+            current_photos_str = row_vals[6].strip() if len(row_vals) > 6 else ""
+            if current_photos_str:
+                new_photos_list = [p.strip() for p in current_photos_str.split(',') if p.strip()]
+                if secure_url not in new_photos_list:
+                    new_photos_list.append(secure_url)
+                updated_photos_str = ", ".join(new_photos_list)
+            else:
+                updated_photos_str = secure_url
+
+            # Обновляем ячейку в таблице
+            sheet.update_cell(cell.row, COLUMNS_MAP['photo'], updated_photos_str)
+
+            # Обновляем метку времени состояния, чтобы мастер мог отправить следующее фото
+            user_states[chat_id]["ts"] = time.time()
+
+            view_text, kb = build_object_view(sheet, obj_id)
+            success_text = (
+                f"✅ <b>Фото успешно добавлено к объекту №{html.escape(str(obj_id))}!</b>\n"
+                f"🌐 Фотография сохранена и уже видна заказчику в личном кабинете.\n\n"
+                f"<i>Вы можете отправить ещё фотографии или вернуться к объекту кнопкой ниже.</i>\n\n"
+                f"{view_text}"
+            )
+            send_tg_message(chat_id, success_text, reply_markup=kb)
+
+        except Exception as e:
+            app.logger.error(f"Ошибка обработки фото: {e}")
+            notify_admin("photo_process_error", op_type="Обработка фотоотчёта", exc=e)
+            send_tg_message(chat_id, "💥 Внутренняя ошибка сервера при сохранении фотографии.")
+
+        return '', 200
+
 
 if __name__ == "__main__":
     # В продакшене запускать через Gunicorn: gunicorn -w 1 -k gthread --threads 8 server:app
