@@ -141,7 +141,7 @@
 - **Комментарии — на русском**, по делу, без пересказа кода.
 - **Изменения делать атомарно** — одна задача, один логичный набор правок. Не смешивать исправление бага и рефакторинг.
 - **Не создавать новые файлы**, если задачу решает правка существующего. Исключение — файлы, прямо требуемые аудитом (`render.yaml`, `.env.example`, `static/js/config.js`).
-- **Большие файлы не переписывать целиком.** [estimate.html](estimate.html) — 2164 строки, [static/css/style.css](static/css/style.css) — 2342. Использовать точечные правки.
+- **Большие файлы не переписывать целиком.** [static/css/style.css](static/css/style.css) — 2692 строки, [static/js/documents.js](static/js/documents.js) — 877, [static/js/estimate.js](static/js/estimate.js) — 1003. Использовать точечные правки. После разбиения `estimate.html` (задача 018) держать модульность и не возвращать логику обратно в HTML.
 
 ---
 
@@ -182,21 +182,22 @@ voltgroup/
 ├── README.md               ← описание проекта; актуализировано 06.10.2026 (пункт № 4 закрыт)
 │
 ├── index.html              лендинг, 1365 строк; формы, галерея, прайс, команда
-├── estimate.html           калькулятор + 4 генератора документов, 2164 строки — самый сложный файл
-├── works.html              портфолио; грузит images через background-image (пункт № 7)
+├── estimate.html           разметка калькулятора, 543 строки; логика вынесена в static/js/
+├── works.html              портфолио; изображения через `<img loading="lazy">`
 ├── 404.html, privacy.html, offer.html, cookies.html    юридические и служебные
 ├── install/index.html      раздел «Электромонтаж»
 ├── engineering/index.html  раздел «Пром. автоматизация»
 ├── contacts/index.html     контакты
 ├── client/index.html       кабинет заказчика; параметр ?id= (не ?code=!)
 │
-├── static/css/style.css    все стили, 2342 строки, 62 × !important
+├── static/css/style.css    все стили, 2692 строки, 62 × !important
 ├── static/data/prices.json единственный источник цен (install + engineering)
-├── static/js/              пуста — сюда выносить JS при рефакторинге
-├── gallery/                gallery-config.json + 14 .webp (и 14 неиспользуемых .jpg — 25 MB)
+├── static/js/              модули: config.js, money.js, estimate.js, documents.js
+├── tools/                  check.py (обязательная проверка), serve.cmd/sh, тесты JS
+├── gallery/                gallery-config.json + 14 .webp (1,75 MB; JPEG-дубли удалены)
 ├── assets/images/          логотип, og-картинка
 │
-├── server.py               Flask: вебхук Telegram + API, 613 строк
+├── server.py               Flask: вебхук Telegram + API, 784 строки
 ├── requirements.txt        flask, requests, gunicorn, gspread, flask-cors, flask-limiter
 ├── sw.js                   отключён (закомментирован)
 ├── manifest.json           PWA-манифест (site.webmanifest — дубль)
