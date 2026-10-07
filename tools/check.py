@@ -58,8 +58,13 @@ def report_fail(msg: str, err: str = ""):
     print(full_msg)
 
 def check_python_syntax():
-    print("\n[1/8] Проверка синтаксиса Python-файлов...")
-    py_files = [ROOT_DIR / "server.py", ROOT_DIR / "tools" / "backup.py", Path(__file__).resolve()]
+    print("\n[1/13] Проверка синтаксиса Python-файлов...")
+    py_files = [
+        ROOT_DIR / "server.py",
+        ROOT_DIR / "tools" / "backup.py",
+        ROOT_DIR / "tools" / "build_reviews.py",
+        Path(__file__).resolve(),
+    ]
     for py_file in py_files:
         if not py_file.exists():
             report_fail(f"Файл не найден: {py_file.name}")
@@ -73,7 +78,7 @@ def check_python_syntax():
             report_fail(f"{py_file.name}: синтаксическая ошибка", str(e))
 
 def check_json_configs():
-    print("\n[2/8] Проверка JSON-конфигураций и структуры данных...")
+    print("\n[2/13] Проверка JSON-конфигураций и структуры данных...")
     json_targets = [
         ROOT_DIR / "static" / "data" / "prices.json",
         ROOT_DIR / "static" / "data" / "reviews.json",
@@ -112,7 +117,7 @@ def check_json_configs():
             report_fail(f"{rel_path}: ошибка парсинга JSON", str(e))
 
 def check_gallery_assets():
-    print("\n[3/8] Проверка файлов медиа и галереи...")
+    print("\n[3/13] Проверка файлов медиа и галереи...")
     cfg_path = ROOT_DIR / "gallery" / "gallery-config.json"
     if not cfg_path.exists():
         report_fail("Конфиг галереи не найден для проверки медиа")
@@ -152,7 +157,7 @@ def check_gallery_assets():
         report_fail("Ошибка проверки медиа галереи", str(e))
 
 def run_node_tests():
-    print("\n[4/8] Запуск тестовых наборов JavaScript (Node.js)...")
+    print("\n[4/13] Запуск тестовых наборов JavaScript (Node.js)...")
     js_tests = [
         ROOT_DIR / "tools" / "test_money.js",
         ROOT_DIR / "tools" / "test_doc_totals.js",
@@ -186,7 +191,7 @@ def run_node_tests():
             report_fail(f"{rel_test}: не удалось запустить через Node.js", str(e))
 
 def check_security_sanity():
-    print("\n[5/8] Базовые проверки безопасности...")
+    print("\n[5/13] Базовые проверки безопасности...")
     # Проверка: файлы .env не должны отслеживаться в git
     try:
         res = subprocess.run(
@@ -310,7 +315,7 @@ def check_security_sanity():
             report_fail("В server.py отсутствует fallback на базовый логгер при сбое файлового логгера")
 
 def check_sheets_snapshot_logic():
-    print("\n[6/8] Проверка архитектуры Google Sheets снимка (SheetSnapshot)...")
+    print("\n[6/13] Проверка архитектуры Google Sheets снимка (SheetSnapshot)...")
     server_py = ROOT_DIR / "server.py"
     if not server_py.exists():
         report_fail("server.py не найден")
@@ -388,7 +393,7 @@ def check_sheets_snapshot_logic():
         report_fail("Сбой функционального теста SheetSnapshot", str(e))
 
 def check_address_formatting():
-    print("\n[7/8] Проверка форматирования адресов и ссылок клиенту (tasks/034)...")
+    print("\n[7/13] Проверка форматирования адресов и ссылок клиенту (tasks/034)...")
     server_py = ROOT_DIR / "server.py"
     if not server_py.exists():
         report_fail("server.py не найден")
@@ -474,7 +479,7 @@ def check_address_formatting():
         report_fail("Сбой функционального теста форматирования адресов", str(e))
 
 def check_data_normalization_logic():
-    print("\n[8/9] Проверка нормализации данных из Google Таблицы (tasks/028, п. 27 AUDIT)...")
+    print("\n[8/13] Проверка нормализации данных из Google Таблицы (tasks/028, п. 27 AUDIT)...")
     server_py = ROOT_DIR / "server.py"
     if not server_py.exists():
         report_fail("server.py не найден")
@@ -549,7 +554,7 @@ def check_data_normalization_logic():
         report_fail("Сбой модульного теста нормализации данных таблицы", str(e))
 
 def check_error_alerts_system():
-    print("\n[9/10] Проверка системы алертов об ошибках в Telegram (tasks/032, п. 32 AUDIT)...")
+    print("\n[9/13] Проверка системы алертов об ошибках в Telegram (tasks/032, п. 32 AUDIT)...")
     server_path = ROOT_DIR / "server.py"
     with open(server_path, "r", encoding="utf-8") as f:
         server_code = f.read()
@@ -645,7 +650,7 @@ def check_error_alerts_system():
         report_fail("Сбой проверки системы алертов об ошибках", str(e))
 
 def check_backup_system():
-    print("\n[10/11] Проверка системы резервного копирования данных (tasks/033, п. 34 AUDIT)...")
+    print("\n[10/13] Проверка системы резервного копирования данных (tasks/033, п. 34 AUDIT)...")
     backup_script = ROOT_DIR / "tools" / "backup.py"
     restore_doc = ROOT_DIR / "docs" / "RESTORE.md"
     gitignore_path = ROOT_DIR / ".gitignore"
@@ -746,7 +751,7 @@ def check_backup_system():
         report_fail("Сбой тестирования логики резервного копирования", str(e))
 
 def check_css_version_consistency():
-    print("\n[11/11] Проверка синхронности версий CSS (?v=) и относительных путей...")
+    print("\n[12/13] Проверка синхронности версий CSS (?v=) и относительных путей...")
     import re
     html_targets = [
         ROOT_DIR / "index.html",
@@ -803,7 +808,7 @@ def check_css_version_consistency():
             report_fail(pe)
 
 def check_photo_reports_system():
-    print("\n[12/12] Проверка системы фотоотчётов и интеграции Cloudinary (tasks/012, п. 9 AUDIT)...")
+    print("\n[11/13] Проверка системы фотоотчётов и интеграции Cloudinary (tasks/012, п. 9 AUDIT)...")
     server_py = ROOT_DIR / "server.py"
     env_example = ROOT_DIR / ".env.example"
     render_yaml = ROOT_DIR / "render.yaml"
@@ -917,45 +922,30 @@ def check_reviews_sync():
 
     html = index_path.read_text(encoding="utf-8")
 
-    # 1. Имена в видимых карточках статического блока (класс review-author-name).
-    # Ищем именно разметку карточек, а не весь файл: имя встречается ещё и в JSON-LD,
-    # поэтому поиск по всему HTML давал бы ложное «всё в порядке» при расхождении.
-    visible_names = re.findall(
-        r'class="review-author-name"[^>]*>\s*([^<]+?)\s*<', html
-    )
-    visible_names = [n.strip() for n in visible_names]
+    # 1. Запуск генератора в режиме проверки синхронности (--check)
+    builder = ROOT_DIR / "tools" / "build_reviews.py"
+    if not builder.exists():
+        report_fail("tools/build_reviews.py не найден")
+        return
 
-    if not visible_names:
-        report_fail(
-            "В статическом HTML нет карточек отзывов (review-author-name)",
-            "Робот без JS не увидит отзывы. Проверьте блок #reviewsGrid в index.html.",
+    try:
+        proc = subprocess.run(
+            [sys.executable, str(builder), "--check"],
+            cwd=str(ROOT_DIR),
+            capture_output=True,
+            text=True,
+            encoding="utf-8"
         )
-    else:
-        json_authors = [str(r.get("author", "")).strip() for r in reviews]
-        missing_in_html = [a for a in json_authors if a not in visible_names]
-        extra_in_html = [n for n in visible_names if n not in json_authors]
-
-        if missing_in_html:
-            report_fail(
-                "В статическом HTML нет отзывов, которые есть в reviews.json",
-                "Отсутствуют: " + ", ".join(missing_in_html)
-                + ". Робот без JS увидит неполный список — синхронизируйте разметку.",
-            )
-        elif extra_in_html:
-            report_fail(
-                "В статическом HTML есть отзывы, которых нет в reviews.json",
-                "Лишние: " + ", ".join(extra_in_html)
-                + ". Возможно, отзыв удалён из данных, но остался в разметке.",
-            )
-        elif len(visible_names) != len(reviews):
-            report_fail(
-                "Число карточек отзывов в HTML не совпадает с reviews.json",
-                f"карточек: {len(visible_names)}, в данных: {len(reviews)}",
-            )
+        if proc.returncode == 0:
+            report_pass("Генератор подтвердил полную синхронность карточек и разметки с reviews.json")
         else:
-            report_pass(
-                f"Имена и число отзывов совпадают: {len(visible_names)} карточек в HTML = {len(reviews)} в reviews.json"
+            err_msg = (proc.stderr or proc.stdout).strip().splitlines()[-1] if (proc.stderr or proc.stdout) else "Расхождение"
+            report_fail(
+                "Расхождение между reviews.json и index.html (запустите python tools/build_reviews.py)",
+                err_msg
             )
+    except Exception as e:
+        report_fail("Ошибка запуска tools/build_reviews.py --check", str(e))
 
     # 2. Микроразметка AggregateRating должна совпадать с фактическими данными
     rating_match = re.search(r'"aggregateRating"\s*:\s*\{(.*?)\}', html, re.DOTALL)

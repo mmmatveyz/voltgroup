@@ -774,6 +774,7 @@
                 </p>
 
                 <div class="reviews-grid" id="reviewsGrid">
+                    <!-- reviews:begin (генерируется tools/build_reviews.py из static/data/reviews.json) -->
                     <!-- Отзыв 1: Светлана Владимирова -->
                     <article class="review-card fade-in">
                         <div>
@@ -845,6 +846,7 @@
                             <span>Оценка 5.0</span>
                         </div>
                     </article>
+                    <!-- reviews:end -->
                 </div>
 
                 <!-- CTA-баннер доверия и сбора новых отзывов в Яндекс.Картах -->
@@ -1125,93 +1127,6 @@
                 })
                 .catch(() => {
                     // В случае ошибки сети остаётся резервный статичный рендер
-                });
-        }
-
-        // 1.2. Динамическая загрузка отзывов из единого источника static/data/reviews.json
-        const reviewsGrid = document.getElementById('reviewsGrid');
-        if (reviewsGrid) {
-            fetch('./static/data/reviews.json')
-                .then(r => r.ok ? r.json() : Promise.reject())
-                .then(reviews => {
-                    if (!Array.isArray(reviews) || reviews.length === 0) return;
-                    reviewsGrid.innerHTML = '';
-                    reviews.forEach(item => {
-                        const card = document.createElement('article');
-                        card.className = 'review-card fade-in visible';
-
-                        const contentWrap = document.createElement('div');
-
-                        // Шапка карточки
-                        const header = document.createElement('div');
-                        header.className = 'review-card-header';
-
-                        const authorWrap = document.createElement('div');
-                        authorWrap.className = 'review-author-wrap';
-
-                        const avatarChar = document.createElement('div');
-                        avatarChar.className = 'review-avatar-char';
-                        avatarChar.setAttribute('aria-hidden', 'true');
-                        avatarChar.textContent = item.avatar || (item.author ? item.author.charAt(0) : 'В');
-
-                        const authorMeta = document.createElement('div');
-                        const authorName = document.createElement('div');
-                        authorName.className = 'review-author-name';
-                        authorName.textContent = item.author || 'Заказчик VoltGroup';
-
-                        const objType = document.createElement('div');
-                        objType.className = 'review-object-type';
-                        objType.textContent = item.service || 'Электромонтажные работы';
-
-                        authorMeta.appendChild(authorName);
-                        authorMeta.appendChild(objType);
-
-                        authorWrap.appendChild(avatarChar);
-                        authorWrap.appendChild(authorMeta);
-
-                        const badge = document.createElement('span');
-                        const isYa = item.source === 'yandex' || item.source === 'ya';
-                        badge.className = isYa ? 'review-badge ya' : 'review-badge vk';
-                        badge.textContent = item.sourceLabel || (isYa ? 'Яндекс.Карты' : 'ВКонтакте');
-
-                        header.appendChild(authorWrap);
-                        header.appendChild(badge);
-
-                        // Звезды
-                        const stars = document.createElement('div');
-                        stars.className = 'review-stars';
-                        stars.setAttribute('aria-label', `Оценка: ${item.rating || 5} из 5`);
-                        stars.textContent = '★'.repeat(item.rating || 5);
-
-                        // Текст отзыва
-                        const text = document.createElement('p');
-                        text.className = 'review-text';
-                        text.textContent = item.text || '';
-
-                        contentWrap.appendChild(header);
-                        contentWrap.appendChild(stars);
-                        contentWrap.appendChild(text);
-
-                        // Подвал карточки
-                        const footer = document.createElement('div');
-                        footer.className = 'review-footer';
-
-                        const statusSpan = document.createElement('span');
-                        statusSpan.textContent = item.status || 'Проверенный заказчик';
-
-                        const ratingSpan = document.createElement('span');
-                        ratingSpan.textContent = `Оценка ${(item.rating || 5).toFixed(1)}`;
-
-                        footer.appendChild(statusSpan);
-                        footer.appendChild(ratingSpan);
-
-                        card.appendChild(contentWrap);
-                        card.appendChild(footer);
-                        reviewsGrid.appendChild(card);
-                    });
-                })
-                .catch(() => {
-                    // При оффлайне или ошибке сохраняется серверный статический рендер
                 });
         }
 
