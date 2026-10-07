@@ -66,9 +66,19 @@ CORS(app, resources={
 limiter = Limiter(
     get_remote_address,
     app=app,
-    default_limits=["200 per day", "50 per hour"],
+    default_limits=["1000 per day", "300 per hour"],
     storage_uri="memory://"
 )
+
+@app.errorhandler(429)
+def ratelimit_handler(e):
+    """Возвращает понятный структурированный JSON при превышении лимита запросов (HTTP 429)"""
+    description = getattr(e, 'description', None)
+    return jsonify({
+        "status": "error",
+        "msg": "Слишком много запросов. Пожалуйста, подождите минуту перед повторной попыткой.",
+        "detail": str(description) if description else "Превышен лимит запросов с вашего IP-адреса"
+    }), 429
 
 # ----------------------------------------------------
 # 3. SECURITY HEADERS (Заголовки безопасности)
@@ -550,7 +560,7 @@ def ping():
     return jsonify({"status": "awake"}), 200
 
 @app.route('/send-message', methods=['POST'])
-@limiter.limit("5 per minute")  # Ограничение: не более 5 заявок в минуту с одного IP
+@limiter.limit("5 per minute; 30 per hour")  # Защита от спама: не более 5 заявок в минуту и 30 в час
 def send_message():
     try:
         data = request.get_json(silent=True) or {}
@@ -576,7 +586,7 @@ def send_message():
         return jsonify({"status": "error", "msg": "Ошибка сервера"}), 500
 
 @app.route('/get-status', methods=['GET', 'POST'])
-@limiter.limit("15 per minute")
+@limiter.limit("60 per minute; 300 per hour")  # Мягкий лимит с учётом NAT в офисах и ЖК
 def get_status():
     # Безопасное получение ID и токена из POST (JSON body) или GET (query param)
     if request.method == 'POST':
@@ -625,7 +635,7 @@ def get_status():
 # ----------------------------------------------------
 
 @app.route('/webhook', methods=['POST'])
-@limiter.limit("60 per minute")
+@limiter.limit("120 per minute")
 def webhook():
     """Слушает команды и инлайн-кнопки из Telegram и управляет Google Таблицей"""
     if TELEGRAM_SECRET_TOKEN:

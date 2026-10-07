@@ -65,7 +65,7 @@
 | [022-css-version.md](022-css-version.md) | 20 | Синхронизировать `?v=` во всех страницах | ✅ завершено 07.10 |
 | [023-css-cleanup.md](023-css-cleanup.md) | 21 | Разбирать `!important` постепенно | ⏳ |
 | [034-address-truncation.md](034-address-truncation.md) | 23 | Обрезка адреса и текст для клиента | ✅ завершено 07.10 |
-| [025-rate-limiting.md](025-rate-limiting.md) | 25 | Ревизия лимитов запросов | ⏳ |
+| [025-rate-limiting.md](025-rate-limiting.md) | 25 | Ревизия лимитов запросов | ✅ завершено 07.10 |
 | [026-document-write.md](026-document-write.md) | 26 | Убрать `document.write` при печати | ⏳ |
 | [028-data-normalization.md](028-data-normalization.md) | 27 | Нормализация данных из таблицы | ⏳ |
 | [029-company-config.md](029-company-config.md) | 29 | Единый конфиг реквизитов и контактов | ⏳ |

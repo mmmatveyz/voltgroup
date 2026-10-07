@@ -231,6 +231,33 @@ def check_security_sanity():
     else:
         report_fail("Файл .htaccess отсутствует в корне проекта")
 
+    # Проверка: лимиты запросов и кастомный JSON 429 обработчик в server.py
+    if server_py.exists():
+        if "@app.errorhandler(429)" in server_code and "ratelimit_handler" in server_code:
+            report_pass("Кастомный JSON-обработчик 429 настроен в server.py")
+        else:
+            report_fail("В server.py отсутствует кастомный JSON-обработчик @app.errorhandler(429)")
+
+        if 'default_limits=["1000 per day", "300 per hour"]' in server_code:
+            report_pass("Дефолтные лимиты Flask-Limiter расширены с учетом NAT (300 per hour)")
+        else:
+            report_fail("В server.py не обнаружены расширенные лимиты default_limits (300 per hour)")
+
+    # Проверка: отсутствие устаревших личных ссылок matvey_zryachikh в формах и разметке
+    html_files = list(ROOT_DIR.glob("*.html")) + list(ROOT_DIR.glob("*/index.html"))
+    found_personal_tg = []
+    for hf in html_files:
+        try:
+            content = hf.read_text(encoding="utf-8")
+            if "matvey_zryachikh" in content:
+                found_personal_tg.append(str(hf.relative_to(ROOT_DIR)))
+        except Exception:
+            pass
+    if not found_personal_tg:
+        report_pass("Личные ссылки matvey_zryachikh отсутствуют во всех HTML-страницах (используется voltgroup_spb)")
+    else:
+        report_fail(f"Обнаружены личные ссылки matvey_zryachikh в файлах: {', '.join(found_personal_tg)}")
+
 def check_sheets_snapshot_logic():
     print("\n[6/8] Проверка архитектуры Google Sheets снимка (SheetSnapshot)...")
     server_py = ROOT_DIR / "server.py"

@@ -1,8 +1,8 @@
 # Задача 025 — Ревизия лимитов запросов
 
 **Пункт аудита:** № 25 · из [AUDIT.md](../AUDIT.md)
-**Статус:** ⏳ не начато
-**Файлы:** `server.py`
+**Статус:** ✅ завершено (07.10.2026)
+**Файлы:** `server.py`, `index.html`, `install/index.html`, `engineering/index.html`, `contacts/index.html`, `client/index.html`, `tools/check.py`
 
 ## Проблема
 

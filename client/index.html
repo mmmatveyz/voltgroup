@@ -384,8 +384,8 @@
                 updateTimeline(progress);
 
             } else {
-                const title = response.status === 403 ? "ДОСТУП ЗАПРЕЩЁН" : "ОБЪЕКТ НЕ НАЙДЕН";
-                const msg = result.msg || "Проверьте правильность персональной ссылки.";
+                const title = response.status === 403 ? "ДОСТУП ЗАПРЕЩЁН" : (response.status === 429 ? "СЛИШКОМ МНОГО ЗАПРОСОВ" : "ОБЪЕКТ НЕ НАЙДЕН");
+                const msg = result.msg || (response.status === 429 ? "Пожалуйста, подождите минуту перед повторной попыткой." : "Проверьте правильность персональной ссылки.");
                 showErrorCard(title, msg);
             }
 
