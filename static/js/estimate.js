@@ -113,6 +113,88 @@
             });
     }
 
+    let hasPingedEstimate = false;
+    function pingServerOnFocus() {
+        if (!hasPingedEstimate) {
+            hasPingedEstimate = true;
+            const apiUrl = (typeof window !== 'undefined' && window.VG_API) ? window.VG_API : 'https://voltgroup-bot.onrender.com';
+            fetch(`${apiUrl}/ping`, { method: 'GET' }).catch(() => {});
+        }
+    }
+
+    /**
+     * Маска и валидация номера телефона (+7 (___) ___-__-__)
+     */
+    function initPhoneMask(input) {
+        if (!input) return;
+
+        function formatPhone(val) {
+            let digits = val.replace(/\D/g, '');
+            if (!digits) return '';
+
+            if (digits[0] === '7' || digits[0] === '8') {
+                digits = digits.substring(1);
+            } else if (digits[0] === '9') {
+                // оставляем как есть
+            } else {
+                digits = digits.substring(1);
+            }
+
+            let res = '+7';
+            if (digits.length > 0) {
+                res += ' (' + digits.substring(0, 3);
+            }
+            if (digits.length >= 4) {
+                res += ') ' + digits.substring(3, 6);
+            }
+            if (digits.length >= 7) {
+                res += '-' + digits.substring(6, 8);
+            }
+            if (digits.length >= 9) {
+                res += '-' + digits.substring(8, 10);
+            }
+            return res;
+        }
+
+        input.addEventListener('input', function () {
+            const formatted = formatPhone(this.value);
+            this.value = formatted;
+            if (this.classList.contains('is-invalid')) {
+                const digits = this.value.replace(/\D/g, '');
+                if (digits.length === 11) {
+                    this.classList.remove('is-invalid');
+                }
+            }
+        });
+
+        input.addEventListener('focus', function () {
+            pingServerOnFocus();
+            if (!this.value) {
+                this.value = '+7 (';
+            }
+        });
+
+        input.addEventListener('blur', function () {
+            if (this.value === '+7 (' || this.value === '+7' || this.value === '+') {
+                this.value = '';
+                this.classList.remove('is-invalid');
+            } else {
+                const digits = this.value.replace(/\D/g, '');
+                if (digits.length < 11) {
+                    this.classList.add('is-invalid');
+                } else {
+                    this.classList.remove('is-invalid');
+                }
+            }
+        });
+
+        input.addEventListener('keydown', function (e) {
+            if (e.key === 'Backspace' && this.value.length <= 4) {
+                this.value = '';
+            }
+        });
+    }
+
     /**
      * Инициализация калькулятора
      */
@@ -125,6 +207,15 @@
         window.currentCategory = 'all';
         const btnInstall = document.getElementById('btn-install');
         if (btnInstall) btnInstall.classList.add('active');
+
+        const phoneInput = document.getElementById('client-phone');
+        if (phoneInput) {
+            initPhoneMask(phoneInput);
+        }
+        const nameInput = document.getElementById('client-name');
+        if (nameInput) {
+            nameInput.addEventListener('focus', pingServerOnFocus);
+        }
 
         updateCategoryOptions();
         updateDraftList();
@@ -503,6 +594,7 @@
         calculateTotals();
         return {
             clientName: document.getElementById('client-name')?.value || '',
+            clientPhone: document.getElementById('client-phone')?.value || '',
             clientAddress: document.getElementById('client-address')?.value || '',
             date: document.getElementById('estimate-date')?.value || '',
             invoiceNum: document.getElementById('invoice-number')?.value || '',
@@ -549,6 +641,7 @@
         if (!data) return;
 
         if (document.getElementById('client-name')) document.getElementById('client-name').value = data.clientName || '';
+        if (document.getElementById('client-phone')) document.getElementById('client-phone').value = data.clientPhone || '';
         if (document.getElementById('client-address')) document.getElementById('client-address').value = data.clientAddress || '';
         if (document.getElementById('estimate-date')) document.getElementById('estimate-date').value = data.date || '';
         if (document.getElementById('invoice-number')) document.getElementById('invoice-number').value = data.invoiceNum || '';
@@ -626,6 +719,7 @@
         if (!confirm('Очистить все поля?')) return;
         window.servicesState = {};
         if (document.getElementById('client-name')) document.getElementById('client-name').value = '';
+        if (document.getElementById('client-phone')) document.getElementById('client-phone').value = '';
         if (document.getElementById('client-address')) document.getElementById('client-address').value = '';
         if (document.getElementById('estimate-date')) document.getElementById('estimate-date').valueAsDate = new Date();
         if (document.getElementById('invoice-number')) document.getElementById('invoice-number').value = '';
@@ -665,6 +759,7 @@
             try {
                 const data = JSON.parse(e.target.result);
                 if (document.getElementById('client-name')) document.getElementById('client-name').value = data.clientName || '';
+                if (document.getElementById('client-phone')) document.getElementById('client-phone').value = data.clientPhone || '';
                 if (document.getElementById('client-address')) document.getElementById('client-address').value = data.clientAddress || '';
                 if (document.getElementById('estimate-date')) document.getElementById('estimate-date').value = data.date || '';
                 if (document.getElementById('invoice-number')) document.getElementById('invoice-number').value = data.invoiceNum || '';
@@ -841,6 +936,251 @@
     }
 
     /**
+     * Формирование компактной сводки сметы для отправки мастера (Telegram)
+     */
+    function buildEstimateSummaryForLead(options = {}) {
+        const maxItems = options.maxItems || 15;
+        const totals = calculateTotals();
+        const clientAddr = (document.getElementById('client-address')?.value || '').trim();
+        const invoiceNum = (document.getElementById('invoice-number')?.value || '').trim();
+        const dateRaw = document.getElementById('estimate-date')?.value;
+        const date = dateRaw ? new Date(dateRaw).toLocaleDateString('ru-RU') : '';
+        const masterBuys = document.getElementById('master-buys-materials')?.checked ?? true;
+
+        let lines = [];
+        if (clientAddr) lines.push(`📍 Адрес: ${clientAddr}`);
+        if (invoiceNum) lines.push(`📄 Смета: №${invoiceNum}`);
+        if (date) lines.push(`📅 Дата: ${date}`);
+        if (lines.length > 0) lines.push('');
+
+        // Собираем все выбранные работы
+        let selectedWorks = [];
+        (window.allServices || []).forEach((s, index) => {
+            const state = (window.servicesState && window.servicesState[index]) || { qty: 0, isComplex: false };
+            if (state.qty > 0) {
+                let price = s.price;
+                let note = state.isComplex ? ' (+20% сложн.)' : '';
+                let finalPrice = state.isComplex ? price * 1.2 : price;
+                let sum = state.qty * finalPrice;
+                selectedWorks.push(`${s.name}${note} — ${state.qty} ${s.unit} × ${Math.round(finalPrice).toLocaleString('ru-RU')} ₽ = ${Math.round(sum).toLocaleString('ru-RU')} ₽`);
+            }
+        });
+
+        document.querySelectorAll('.custom-work-row').forEach(row => {
+            const name = (row.querySelector('.name-input')?.value || 'Доп. работа').trim();
+            const unit = (row.querySelector('.mat-unit')?.value || 'шт.').trim();
+            const priceBase = parseFloat(row.querySelector('.mat-price')?.value) || 0;
+            const qty = parseFloat(row.querySelector('.custom-qty-input')?.value) || 0;
+            const complexCheck = row.querySelector('.custom-complex');
+            if (qty > 0 || priceBase > 0) {
+                let finalPrice = (complexCheck && complexCheck.checked) ? priceBase * 1.2 : priceBase;
+                let note = (complexCheck && complexCheck.checked) ? ' (+20% сложн.)' : '';
+                let sum = qty * finalPrice;
+                selectedWorks.push(`${name}${note} — ${qty} ${unit} × ${Math.round(finalPrice).toLocaleString('ru-RU')} ₽ = ${Math.round(sum).toLocaleString('ru-RU')} ₽`);
+            }
+        });
+
+        const totalWorksCount = selectedWorks.length;
+        if (totalWorksCount > 0) {
+            lines.push(`🛠 Работы (${totalWorksCount} поз.):`);
+            const displayedWorks = selectedWorks.slice(0, maxItems);
+            displayedWorks.forEach((item, idx) => {
+                lines.push(`${idx + 1}. ${item}`);
+            });
+            if (totalWorksCount > maxItems) {
+                lines.push(`… и ещё ${totalWorksCount - maxItems} позиций`);
+            }
+            lines.push('');
+        }
+
+        // Собираем материалы
+        let materialItems = [];
+        document.querySelectorAll('#materials-body tr').forEach(r => {
+            const name = (r.querySelector('.mat-name')?.value || 'Материал').trim();
+            const unit = (r.querySelector('.mat-unit')?.value || 'шт.').trim();
+            const price = parseFloat(r.querySelector('.mat-price')?.value) || 0;
+            const qty = parseFloat(r.querySelector('.mat-qty')?.value) || 0;
+            if (qty > 0 || price > 0) {
+                materialItems.push(`${name} — ${qty} ${unit} × ${Math.round(price).toLocaleString('ru-RU')} ₽ = ${Math.round(price * qty).toLocaleString('ru-RU')} ₽`);
+            }
+        });
+
+        if (materialItems.length > 0) {
+            lines.push(`📦 Материалы (${masterBuys ? 'закупка мастером' : 'закупка заказчиком'}, ${materialItems.length} поз.):`);
+            if (materialItems.length <= 5) {
+                materialItems.forEach((m, idx) => lines.push(`${idx + 1}. ${m}`));
+            } else {
+                materialItems.slice(0, 5).forEach((m, idx) => lines.push(`${idx + 1}. ${m}`));
+                lines.push(`… и ещё ${materialItems.length - 5} материалов`);
+            }
+            lines.push('');
+        }
+
+        lines.push('💰 Итоговый расчёт:');
+        lines.push(`• Работы: ${totals.worksFinal.toLocaleString('ru-RU')} ₽`);
+        if (totals.discountAmount > 0) {
+            lines.push(`• Скидка: -${totals.discountAmount.toLocaleString('ru-RU')} ₽`);
+        }
+        if (totals.materialsTotal > 0) {
+            lines.push(`• Материалы: ${totals.materialsTotal.toLocaleString('ru-RU')} ₽${!masterBuys ? ' (заказчик)' : ''}`);
+        }
+        lines.push(`• ИТОГО К ОПЛАТЕ: ${totals.grandTotal.toLocaleString('ru-RU')} ₽`);
+
+        return {
+            text: lines.join('\n'),
+            totalWorksCount,
+            materialsCount: materialItems.length,
+            grandTotal: totals.grandTotal,
+            materialsTotal: totals.materialsTotal
+        };
+    }
+
+    /**
+     * Отправка сметы мастеру из калькулятора (задача 046)
+     */
+    async function sendEstimateToMaster() {
+        const statusEl = document.getElementById('estimate-send-status');
+        const sendBtn = document.getElementById('btn-send-estimate');
+        const phoneEl = document.getElementById('client-phone');
+        const nameEl = document.getElementById('client-name');
+
+        function showStatus(html, type) {
+            if (!statusEl) return;
+            statusEl.style.display = 'block';
+            if (type === 'success') {
+                statusEl.style.background = 'rgba(16, 185, 129, 0.12)';
+                statusEl.style.borderColor = '#10B981';
+                statusEl.style.color = '#10B981';
+            } else if (type === 'warning') {
+                statusEl.style.background = 'rgba(245, 158, 11, 0.12)';
+                statusEl.style.borderColor = '#F59E0B';
+                statusEl.style.color = '#F59E0B';
+            } else if (type === 'error') {
+                statusEl.style.background = 'rgba(239, 68, 68, 0.12)';
+                statusEl.style.borderColor = '#EF4444';
+                statusEl.style.color = '#EF4444';
+            } else {
+                statusEl.style.background = 'rgba(255, 255, 255, 0.04)';
+                statusEl.style.borderColor = 'var(--border-light)';
+                statusEl.style.color = 'var(--text-main)';
+            }
+            statusEl.innerHTML = html;
+            try {
+                statusEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } catch (e) {}
+        }
+
+        const comp = (typeof window !== 'undefined' && window.VG_COMPANY) ? window.VG_COMPANY : {};
+        const compPhone = comp.phone || '+7 (905) 208-42-84';
+        const compPhoneClean = compPhone.replace(/[^\d+]/g, '');
+        const compTg = comp.telegram || 'https://t.me/voltgroup_spb';
+        const compVk = comp.vk || 'https://vk.com/voltgroup_spb';
+
+        const summary = buildEstimateSummaryForLead({ maxItems: 15 });
+        if (summary.totalWorksCount === 0 && summary.materialsCount === 0 && summary.grandTotal === 0) {
+            showStatus('⚠️ <b>Смета пуста!</b> Добавьте хотя бы одну работу или материал в калькулятор перед отправкой.', 'warning');
+            return;
+        }
+
+        const phoneVal = (phoneEl?.value || '').trim();
+        const digits = phoneVal.replace(/\D/g, '');
+        if (digits.length !== 11) {
+            if (phoneEl) {
+                phoneEl.classList.add('is-invalid');
+                phoneEl.focus();
+            }
+            showStatus('⚠️ <b>Укажите телефон для связи:</b> +7 (XXX) XXX-XX-XX, чтобы мастер мог ответить по смете.', 'warning');
+            return;
+        }
+        if (phoneEl) phoneEl.classList.remove('is-invalid');
+
+        const clientName = (nameEl?.value || '').trim();
+
+        if (sendBtn) {
+            sendBtn.disabled = true;
+            sendBtn.textContent = '⏳ Отправляем смету...';
+        }
+        showStatus('⏳ Передаём смету мастеру VoltGroup...', 'info');
+
+        const controller = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+        let timeoutId = null;
+        if (controller) {
+            timeoutId = setTimeout(() => controller.abort(), 15000);
+        }
+
+        const payload = {
+            name: clientName || 'Заказчик (из калькулятора)',
+            phone: phoneVal,
+            service: summary.text,
+            source: 'Калькулятор сметы'
+        };
+
+        try {
+            const apiUrl = (typeof window !== 'undefined' && window.VG_API) ? window.VG_API : 'https://voltgroup-bot.onrender.com';
+            const fetchOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            };
+            if (controller) {
+                fetchOptions.signal = controller.signal;
+            }
+
+            const res = await fetch(`${apiUrl}/send-message`, fetchOptions);
+            if (timeoutId) clearTimeout(timeoutId);
+
+            if (res.ok) {
+                showStatus(
+                    `✅ <b>Смета успешно передана мастеру!</b><br>` +
+                    `Мы изучим расчёт и свяжемся с вами в ближайшее время по номеру <b>${escapeHtml(phoneVal)}</b>.<br>` +
+                    `При необходимости напишите напрямую мастеру в <a href="${compTg}" target="_blank" rel="noopener noreferrer" style="color:var(--primary-install);text-decoration:underline;font-weight:600;">Telegram</a>, ` +
+                    `<a href="${compVk}" target="_blank" rel="noopener noreferrer" style="color:var(--primary-install);text-decoration:underline;font-weight:600;">ВКонтакте</a> или ` +
+                    `позвоните <a href="tel:${compPhoneClean}" style="color:var(--primary-install);text-decoration:underline;font-weight:600;">${compPhone}</a>.`,
+                    'success'
+                );
+            } else if (res.status === 429) {
+                const errData = await res.json().catch(() => ({}));
+                const limitMsg = errData.msg || 'Слишком много запросов. Пожалуйста, подождите минуту.';
+                showStatus(
+                    `⚠️ <b>${escapeHtml(limitMsg)}</b><br>` +
+                    `Свяжитесь с мастером напрямую: <a href="${compTg}" target="_blank" rel="noopener noreferrer" style="color:var(--primary-install);text-decoration:underline;font-weight:600;">Telegram</a> · ` +
+                    `<a href="${compVk}" target="_blank" rel="noopener noreferrer" style="color:var(--primary-install);text-decoration:underline;font-weight:600;">ВКонтакте</a> · ` +
+                    `<a href="tel:${compPhoneClean}" style="color:var(--primary-install);text-decoration:underline;font-weight:600;">${compPhone}</a>`,
+                    'warning'
+                );
+            } else {
+                throw new Error(`Код ответа: ${res.status}`);
+            }
+        } catch (err) {
+            if (timeoutId) clearTimeout(timeoutId);
+            if (err && err.name === 'AbortError') {
+                showStatus(
+                    `⏳ <b>Сервер просыпается</b> (холодный старт Render может занять до минуты).<br>` +
+                    `Вы можете подождать немного и нажать повторно, либо связаться напрямую: ` +
+                    `<a href="${compTg}" target="_blank" rel="noopener noreferrer" style="color:var(--primary-install);text-decoration:underline;font-weight:600;">Telegram</a> · ` +
+                    `<a href="${compVk}" target="_blank" rel="noopener noreferrer" style="color:var(--primary-install);text-decoration:underline;font-weight:600;">ВКонтакте</a> · ` +
+                    `<a href="tel:${compPhoneClean}" style="color:var(--primary-install);text-decoration:underline;font-weight:600;">${compPhone}</a>`,
+                    'warning'
+                );
+            } else {
+                showStatus(
+                    `❌ <b>Не удалось отправить смету автоматически.</b><br>` +
+                    `Пожалуйста, свяжитесь с мастером напрямую: ` +
+                    `<a href="${compTg}" target="_blank" rel="noopener noreferrer" style="color:var(--primary-install);text-decoration:underline;font-weight:600;">Telegram</a> · ` +
+                    `<a href="${compVk}" target="_blank" rel="noopener noreferrer" style="color:var(--primary-install);text-decoration:underline;font-weight:600;">ВКонтакте</a> · ` +
+                    `<a href="tel:${compPhoneClean}" style="color:var(--primary-install);text-decoration:underline;font-weight:600;">${compPhone}</a>`,
+                    'error'
+                );
+            }
+        } finally {
+            if (sendBtn) {
+                sendBtn.disabled = false;
+                sendBtn.textContent = '⚡ Передать смету мастеру';
+            }
+        }
+    }
+
+    /**
      * Переключение выпадающего меню документов
      */
     function toggleDocsMenu(event) {
@@ -1001,6 +1341,8 @@
     window.importDraftFromFile = importDraftFromFile;
     window.showToast = showToast;
     window.copyEstimateToClipboard = copyEstimateToClipboard;
+    window.buildEstimateSummaryForLead = buildEstimateSummaryForLead;
+    window.sendEstimateToMaster = sendEstimateToMaster;
     window.toggleDocsMenu = toggleDocsMenu;
     window.exportToExcel = exportToExcel;
 

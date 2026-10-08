@@ -846,9 +846,12 @@ def send_message():
             f"⚡️ <b>Новая заявка!</b>\n\n"
             f"👤 <b>Имя:</b> {html.escape(str(name))}\n"
             f"📞 <b>Телефон:</b> {html.escape(str(phone))}\n"
-            f"🛠 <b>Задача:</b> {html.escape(str(service))}\n"
+            f"🛠 <b>Задача:</b>\n{html.escape(str(service))}\n\n"
             f"📍 <b>Источник:</b> <code>{html.escape(str(source))}</code>"
         )
+        if len(text) > 4000:
+            text = text[:3900] + "\n\n<i>[Текст сокращен из-за лимита Telegram]</i>"
+
         success = send_tg_message(CHAT_ID, text, parse_mode="HTML")
         if success:
             return jsonify({"status": "success"}), 200

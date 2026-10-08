@@ -337,10 +337,11 @@
 
         <div class="card fade-in" style="margin-bottom: 25px;">
             <div class="client-info">
-                <div class="form-group"><label class="form-label">Имя заказчика</label><input type="text" id="client-name" class="form-input" placeholder="Иванов И.И." maxlength="100"></div>
-                <div class="form-group"><label class="form-label">Адрес объекта</label><input type="text" id="client-address" class="form-input" placeholder="СПб, ул. Ленина..." maxlength="200"></div>
-                <div class="form-group"><label class="form-label">Дата</label><input type="date" id="estimate-date" class="form-input"></div>
-                <div class="form-group"><label class="form-label">№ Сметы / КП</label><input type="text" id="invoice-number" class="form-input" placeholder="Напр. КП-01" maxlength="50"></div>
+                <div class="form-group"><label class="form-label" for="client-name">Имя заказчика</label><input type="text" id="client-name" class="form-input" placeholder="Иванов И.И." maxlength="100"></div>
+                <div class="form-group"><label class="form-label" for="client-phone">Телефон для связи</label><input type="tel" id="client-phone" class="form-input" placeholder="+7 (___) ___-__-__" autocomplete="tel"></div>
+                <div class="form-group"><label class="form-label" for="client-address">Адрес объекта</label><input type="text" id="client-address" class="form-input" placeholder="СПб, ул. Ленина..." maxlength="200"></div>
+                <div class="form-group"><label class="form-label" for="estimate-date">Дата</label><input type="date" id="estimate-date" class="form-input"></div>
+                <div class="form-group"><label class="form-label" for="invoice-number">№ Сметы / КП</label><input type="text" id="invoice-number" class="form-input" placeholder="Напр. КП-01" maxlength="50"></div>
             </div>
         </div>
 
@@ -424,6 +425,7 @@
         </div>
 
         <div class="actions fade-in">
+            <button class="btn btn-primary btn-send-master" id="btn-send-estimate" type="button" onclick="sendEstimateToMaster()" style="background: linear-gradient(135deg, #10B981, #059669); color: #ffffff; font-weight: 700; box-shadow: 0 0 20px rgba(16, 185, 129, 0.35);">⚡ Передать смету мастеру</button>
             <button class="btn btn-primary" type="button" onclick="copyEstimateToClipboard()" style="background: linear-gradient(135deg, var(--primary-install), #00b4d8); color: #050914;">📋 Скопировать для мессенджера</button>
             <button class="btn btn-primary" type="button" onclick="generatePDF()">📄 Скачать смету (PDF)</button>
             <div class="dropdown-docs" id="docsDropdownContainer">
@@ -440,6 +442,7 @@
             </div>
             <button class="btn btn-outline" type="button" onclick="clearForm()" style="color: var(--danger); border-color: rgba(239, 68, 68, 0.4);">🗑 Очистить</button>
         </div>
+        <div id="estimate-send-status" class="fade-in" style="display: none; max-width: 720px; margin: 0 auto 30px auto; padding: 16px 20px; border-radius: var(--radius-md); font-size: 0.95rem; line-height: 1.5; text-align: center; border: 1px solid transparent;"></div>
     </div>
 </main>
 

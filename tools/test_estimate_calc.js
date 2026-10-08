@@ -77,9 +77,12 @@ function createEstimateEnvironment() {
         'selected-count-badge',
         'btn-filter-selected',
         'client-name',
+        'client-phone',
         'client-address',
         'estimate-date',
-        'invoice-number'
+        'invoice-number',
+        'btn-send-estimate',
+        'estimate-send-status'
     ].forEach(id => getOrCreateEl(id));
 
     const customWorkRows = [];
@@ -391,6 +394,49 @@ console.log('\n8. Экспорт в CSV (экранирование раздел
         assertEqual(fields[1], 'Иванов; Иван Иванович', 'Точка с запятой в имени заказчика сохранена');
         assertEqual(fields[3], 'г. СПб; Невский пр., д. "10"', 'Точка с запятой и кавычки в адресе сохранены');
     }
+}
+
+// ==========================================
+// 9. ТЕСТ СБОРКИ СМЕТЫ ДЛЯ МАСТЕРА (tasks/046)
+// ==========================================
+console.log('\n--- Тест 9: Сборка сметы для передачи мастеру (tasks/046) ---');
+{
+    const env = createEstimateEnvironment();
+    env.elements.get('client-name').value = 'Тестов Т.Т.';
+    env.elements.get('client-phone').value = '+7 (999) 111-22-33';
+    env.elements.get('client-address').value = 'СПб, пр. Просвещения, 15';
+    env.elements.get('invoice-number').value = 'КП-99';
+    env.elements.get('estimate-date').value = '2026-10-08';
+
+    // Добавляем 20 услуг для проверки обрезки длинного списка до 15
+    env.window.allServices = [];
+    env.window.servicesState = {};
+    for (let i = 0; i < 20; i++) {
+        env.window.allServices.push({
+            name: `Услуга №${i + 1}`,
+            unit: 'шт.',
+            price: 1000,
+            section: 'install',
+            category: 'Тест'
+        });
+        env.window.servicesState[i] = { qty: 2, isComplex: false };
+    }
+
+    env.setMasterBuys(true);
+    env.addMaterialRow('Кабель ВВГнг-LS 3х2.5', 100, 50);
+
+    const summary = env.window.buildEstimateSummaryForLead({ maxItems: 15 });
+    assert(!!summary.text, 'Текст сметы сформирован');
+    assertEqual(summary.totalWorksCount, 20, 'Всего 20 выбранных работ');
+    assertEqual(summary.materialsCount, 1, 'Материалы присутствуют (1 позиция)');
+    assertEqual(summary.grandTotal, 45000, 'Числовой итог сметы grandTotal равен 45 000 ₽');
+    assert(summary.text.includes('Адрес: СПб, пр. Просвещения, 15'), 'Адрес присутствует в тексте');
+    assert(summary.text.includes('15. Услуга №15'), '15-я позиция присутствует');
+    assert(!summary.text.includes('16. Услуга №16'), '16-я позиция скрыта (лимит 15)');
+    assert(summary.text.includes('… и ещё 5 позиций'), 'Выведено сообщение об оставшихся 5 позициях');
+    const normalizedText = summary.text.replace(/\u00a0/g, ' ');
+    assert(normalizedText.includes('Кабель ВВГнг-LS 3х2.5 — 50 м × 100 ₽ = 5 000 ₽'), 'Материал рассчитан и указан');
+    assert(normalizedText.includes('ИТОГО К ОПЛАТЕ: 45 000 ₽'), 'Итоговая сумма рассчитана верно (40 000 работы + 5 000 материалы)');
 }
 
 console.log(`\nИТОГ ТЕСТОВ РАСЧЁТА: ${passedTests} пройдено, ${failedTests} провалено.`);
