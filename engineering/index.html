@@ -87,7 +87,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../static/css/style.css?v=2.5">
+    <link rel="stylesheet" href="../static/css/style.css?v=2.6">
 
     <style>
         .ticker {
@@ -299,7 +299,13 @@
             </div>
 
             <div id="eng-prices" class="fade-in">
-                <p style="text-align: center; color: var(--text-muted);">⏳ Загрузка прайс-листа...</p>
+                <div class="skeleton-list" aria-hidden="true">
+                    <div class="skeleton skeleton-row"></div>
+                    <div class="skeleton skeleton-row"></div>
+                    <div class="skeleton skeleton-row"></div>
+                    <div class="skeleton skeleton-row"></div>
+                </div>
+                <p class="sr-only">Загрузка прайс-листа…</p>
             </div>
         </div>
     </section>

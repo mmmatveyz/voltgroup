@@ -61,7 +61,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="./static/css/style.css?v=2.5">
+    <link rel="stylesheet" href="./static/css/style.css?v=2.6">
 
     <!-- Управление cookies и отложенная инициализация Яндекс.Метрики (152-ФЗ) -->
     <script src="./static/js/cookies.js" defer></script>
@@ -324,9 +324,15 @@
 
     <section class="section" style="padding-top: 10px;">
         <div class="container">
-            <div id="loading-text" style="text-align: center; padding: 60px 20px; color: var(--text-muted); font-size: 1.1rem;">
-                ⏳ Загрузка портфолио...
+            <div id="gallery-skeleton" class="gallery-grid" aria-hidden="true">
+                <div class="skeleton skeleton-card"></div>
+                <div class="skeleton skeleton-card"></div>
+                <div class="skeleton skeleton-card"></div>
+                <div class="skeleton skeleton-card"></div>
+                <div class="skeleton skeleton-card"></div>
+                <div class="skeleton skeleton-card"></div>
             </div>
+            <p id="loading-text" class="sr-only">Загрузка портфолио…</p>
             <div id="gallery" class="gallery-grid" style="display: none;"></div>
         </div>
     </section>
@@ -443,6 +449,8 @@
         return r.json();
     })
         .then(data => {
+        const skeleton = document.getElementById('gallery-skeleton');
+        if (skeleton) skeleton.remove();
         loadingText.style.display = 'none';
         gallery.style.display = 'grid';
 
@@ -459,8 +467,9 @@
 
         data.forEach((item, index) => {
             const itemDiv = document.createElement('div');
-            itemDiv.className = 'gallery-item';
+            itemDiv.className = 'gallery-item fade-in visible';
             itemDiv.dataset.index = index;
+            itemDiv.style.transitionDelay = (index * 0.05) + 's';
 
             const imgEl = document.createElement('img');
             imgEl.className = 'gallery-img';
@@ -504,21 +513,19 @@
             gallery.appendChild(itemDiv);
         });
 
-        // Анимация появления элементов
+        // Анимация плавного появления элементов
         setTimeout(() => {
             document.querySelectorAll('.gallery-item').forEach((el, index) => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(20px)';
-                setTimeout(() => {
-                    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                    el.style.opacity = '1';
-                    el.style.transform = 'translateY(0)';
-                }, index * 80);
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
             });
         }, 50);
     })
         .catch(err => {
         console.error('Gallery error:', err);
+        const skeleton = document.getElementById('gallery-skeleton');
+        if (skeleton) skeleton.remove();
+        loadingText.classList.remove('sr-only');
         loadingText.textContent = '';
 
         const errCard = document.createElement('div');

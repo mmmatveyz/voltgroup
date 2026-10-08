@@ -11,10 +11,10 @@
 ## 1. Текущий фокус
 
 **Дата:** 2026-10-08
-**Задача:** Выполнены продуктовые задачи **048** ([tasks/048-remove-whatsapp.md](tasks/048-remove-whatsapp.md) — удаление неиспользуемого WhatsApp) и **046** ([tasks/046-estimate-to-lead.md](tasks/046-estimate-to-lead.md) — отправка сметы напрямую мастеру из калькулятора в Telegram, маска телефона, прогрев Render). Google Search Console успешно обработал `sitemap.xml` (11 из 11 страниц обнаружены без ошибок).
-**Статус:** ✅ задача 048 завершена · ✅ задача 046 завершена · ✅ sitemap в Google Search Console обработан (11 страниц) · 🔄 задача 041 в работе · 🔄 задача 044 в работе (ожидание визита робота Яндекса)
-**Точка остановки:** калькулятор отправляет смету мастеру, `python tools/check.py` пройден (64/64 PASS). Готово к коммиту и пушу.
-**Следующий шаг:** коммит и пуш в `main`. Выбор следующей задачи: [047](tasks/047-print-styles.md) (стили печати), [043](tasks/043-long-tail-content.md) (контент под точечные запросы) или [049](tasks/049-loading-skeletons.md) (скелетоны).
+**Задача:** Завершена задача **049** ([tasks/049-loading-skeletons.md](tasks/049-loading-skeletons.md) — скелетоны загрузки вместо текста «Загрузка…» для галереи и аккордеонов прайса, стили шиммера, уважение `prefers-reduced-motion`, a11y `.sr-only`, синхронное обновление кэш-бэстинга CSS `?v=2.6` на всех 12 страницах).
+**Статус:** ✅ задача 048 завершена · ✅ задача 046 завершена · ✅ задача 049 завершена · 🔄 задача 044 в работе (ожидание визита робота Яндекса)
+**Точка остановки:** все 12 страниц переведены на CSS `?v=2.6`, скелетоны внедрены в `works.html`, `install/index.html`, `engineering/index.html`, `elektromontazh-murino/index.html`, `elektromontazh-bugry/index.html`, `python tools/check.py` пройден (64/64 PASS).
+**Следующий шаг:** переход к задаче [047](tasks/047-print-styles.md) (стили печати `@media print` для документов и сметы) или [050](tasks/050-design-system.md) (дизайн-система).
 
 > 🔴 **Статус обхода:** Google Search Console обработал `sitemap.xml` на 100% (11 страниц в очереди). Яндекс поставлен в очередь обхода (задача 044).
 
@@ -164,6 +164,50 @@
 *Новые записи добавлять **сверху**, сразу под этой строкой. Старые записи не удалять. Шаблон — [AGENTS.md](AGENTS.md) §7.*
 
 <!-- НОВЫЕ ЗАПИСИ ДОБАВЛЯТЬ ЗДЕСЬ -->
+
+### 2026-10-08 — Выполнение задачи 049 (скелетоны загрузки вместо надписей «Загрузка…»)
+
+**Что сделано:**
+1. **Базовые стили скелетона в [static/css/style.css](static/css/style.css):**
+   - Добавлен класс `.skeleton` с градиентной анимацией шиммера `skeleton-shimmer` (1.4s infinite).
+   - Добавлена медиа-директива `@media (prefers-reduced-motion: reduce)` для пользователей с чувствительностью к анимации (отключение шиммера, статичный цвет фона).
+   - Добавлены классы `.skeleton-card` (высота 380px, скругление `var(--radius-lg)`, бордер `var(--border-light)` под фактический размер `.gallery-item` без layout shift) и `.skeleton-row` (высота 68px, отступ 14px под нераскрытый `.price-accordion`).
+   - Добавлен утилитный класс доступности `.sr-only` (скрытие с экрана без `display: none` для скринридеров).
+2. **Синхронное обновление версии кэш-бэстинга CSS до `?v=2.6`:**
+   - По правилу [AGENTS.md](AGENTS.md) §2.4 обновлена версия `style.css?v=2.6` на всех 12 страницах: `index.html`, `estimate.html`, `works.html`, `cookies.html`, `offer.html`, `privacy.html`, `404.html`, `install/index.html`, `engineering/index.html`, `contacts/index.html`, `elektromontazh-murino/index.html`, `elektromontazh-bugry/index.html`.
+3. **Разметка скелетонов и обработка в [works.html](works.html):**
+   - Вместо текстового блока `⏳ Загрузка портфолио...` внедрена сетка `#gallery-skeleton` из 6 карточек `.skeleton.skeleton-card` с `aria-hidden="true"` и невидимым текстом `<p id="loading-text" class="sr-only">Загрузка портфолио…</p>`.
+   - В скрипте: скелетон удаляется из DOM и при успешной загрузке (`.then`), и при ошибке (`.catch`).
+   - При ошибке у `#loading-text` снимается класс `.sr-only`, отображается центрированная карточка ошибки.
+   - Карточкам галереи при создании сразу назначаются классы `gallery-item fade-in visible` с каскадным `transitionDelay`, предотвращая проблему невидимости карточек.
+4. **Скелетоны прайс-листов в разделах услуг:**
+   - В [install/index.html](install/index.html), [engineering/index.html](engineering/index.html), [elektromontazh-murino/index.html](elektromontazh-murino/index.html), [elektromontazh-bugry/index.html](elektromontazh-bugry/index.html) надпись `⏳ Загрузка прайс-листа...` заменена на 4 плашки `.skeleton.skeleton-row` и доступный `<p class="sr-only">Загрузка прайс-листа…</p>`.
+   - Существующая логика скриптов (`container.textContent = ''`) безопасно очищает скелетоны как при успешном построении аккордеонов, так и при выводе блока ошибки.
+5. **Актуализация карточек и статусов:**
+   - [tasks/049-loading-skeletons.md](tasks/049-loading-skeletons.md) переведена в статус `✅ завершено (08.10.2026)`.
+   - [tasks/README.md](tasks/README.md) обновлён.
+
+**Какие файлы изменены:**
+- `static/css/style.css` (строки 3071–3127)
+- `works.html` (строки 64, 327–335, 452–453, 467–469, 527–529)
+- `install/index.html` (строки 90, 303–311)
+- `engineering/index.html` (строки 90, 302–310)
+- `elektromontazh-murino/index.html` (строки 99, 622–630)
+- `elektromontazh-bugry/index.html` (строки 99, 622–630)
+- `index.html`, `estimate.html`, `cookies.html`, `offer.html`, `privacy.html`, `404.html`, `contacts/index.html` (обновление `style.css?v=2.6`)
+- `tasks/049-loading-skeletons.md`, `tasks/README.md`, `AGENT_STATE.md`
+
+**Как проверено:**
+- `python tools/check.py` — 64/64 проверок PASS (все 13 шагов пройдены без ошибок, включая шаг [12/13] — синхронность версий `?v=2.6` во всех 12 шаблонах).
+- Проверена разметка скелетонов: отсутствие скачков высоты (карточка 380px, строка 68px), доступность через `aria-hidden="true"` и класс `.sr-only`.
+
+**Где остановился:**
+Задача 049 полностью завершена.
+
+**Что делать дальше:**
+1. Показать пользователю результат задачи 049.
+2. Дать подробное объяснение задачи 047 (стили печати `@media print`).
+3. При согласии — реализовать задачу 047 или перейти к 050.
 
 ### 2026-10-08 — Выполнение задач 048 (удаление WhatsApp) и 046 (передача сметы мастеру из калькулятора)
 
