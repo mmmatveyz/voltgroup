@@ -411,7 +411,7 @@ p {
 
 /* === HERO SECTION (ДЕСКТОП) === */
 .hero {
-    padding: 150px 0 70px;
+    padding-bottom: 70px;
     display: grid;
     grid-template-columns: 1fr 340px;
     /* Фиксируем ширину щитка до 340px */
@@ -2126,7 +2126,7 @@ main>.container:first-child,
    ========================================================================== */
 @media (max-width: 992px) {
     .services-bento {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
     }
     .bento-install,
     .bento-smart,
@@ -2140,7 +2140,7 @@ main>.container:first-child,
     }
 
     .why-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     }
 
     .process-track-grid {
@@ -2241,6 +2241,12 @@ main>.container:first-child,
 }
 
 @media (max-width: 640px) {
+    .services-bento {
+        grid-template-columns: 1fr;
+    }
+    .why-grid {
+        grid-template-columns: 1fr;
+    }
     .showcase-grid {
         grid-template-columns: 1fr;
     }
@@ -3085,7 +3091,7 @@ main>.container:first-child,
     transform: translateY(-2px);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
     .reviews-grid {
         grid-template-columns: 1fr;
     }
