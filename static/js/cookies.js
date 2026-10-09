@@ -149,7 +149,7 @@
         banner.innerHTML = `
             <div class="cookie-banner-content">
                 <div class="cookie-banner-text">
-                    <span>Мы используем технические файлы cookie и веб-аналитику Яндекс.Метрика (с вебвизором) для правильной работы сайта и оценки удобства интерфейса. Вы можете согласиться на использование всех файлов или оставить только необходимые. Подробнее — в <a href="${policyUrl}" class="cookie-banner-link">Политике cookies</a>.</span>
+                    <span>Мы используем файлы cookie и Яндекс.Метрику для правильной работы сайта и аналитики. Подробнее — в <a href="${policyUrl}" class="cookie-banner-link">Политике cookies</a>.</span>
                 </div>
                 <div class="cookie-banner-actions">
                     <button type="button" id="vg-cookie-accept-all" class="btn btn-primary cookie-btn">Принять все</button>
