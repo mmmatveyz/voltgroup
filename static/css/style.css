@@ -32,9 +32,14 @@
     --radius-lg: 18px;
     --radius-md: 12px;
 
+    /* Высота смещения первого блока от фиксированной шапки */
+    --header-offset: 140px;
+
     /* Шкала отступов (Spacing Scale) */
+    --space-2xs: 2px;
     --space-xs: 4px;
     --space-sm: 8px;
+    --space-compact: 12px;
     --space-md: 16px;
     --space-lg: 24px;
     --space-xl: 32px;
@@ -235,7 +240,7 @@ p {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: var(--space-sm);
     padding: 14px 28px;
     border-radius: 14px;
     font-weight: 700;
@@ -348,7 +353,7 @@ p {
 
 .nav-links {
     display: flex;
-    gap: 28px;
+    gap: var(--space-xl);
     align-items: center;
 }
 
@@ -371,7 +376,7 @@ p {
     color: var(--volt-yellow);
     font-size: var(--fs-xl);
     cursor: pointer;
-    padding: 4px;
+    padding: var(--space-xs);
 }
 
 .nav-overlay {
@@ -397,7 +402,7 @@ p {
     display: grid;
     grid-template-columns: 1fr 340px;
     /* Фиксируем ширину щитка до 340px */
-    gap: 40px;
+    gap: var(--space-2xl);
     align-items: center;
 }
 
@@ -421,14 +426,14 @@ p {
 
 .hero-actions {
     display: flex;
-    gap: 16px;
+    gap: var(--space-md);
     flex-wrap: wrap;
 }
 
 .badge-status {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--space-sm);
     font-size: var(--fs-xs);
     font-weight: 700;
     text-transform: uppercase;
@@ -461,7 +466,7 @@ p {
     background: linear-gradient(180deg, #111827, #090d16);
     border: 1px solid var(--border-light);
     border-radius: 20px;
-    padding: 20px;
+    padding: var(--space-lg);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
     position: relative;
     width: 340px;
@@ -499,7 +504,7 @@ p {
     margin-bottom: 8px;
     font-size: var(--fs-sm);
     font-weight: 600;
-    gap: 8px;
+    gap: var(--space-sm);
 }
 
 .board-row small {
@@ -596,20 +601,20 @@ input:checked+.slider.purple:before {
 .grid-3 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    gap: var(--space-lg);
 }
 
 /* 5 колонок в "Как мы работаем" на ПК */
 #process .grid-3 {
     grid-template-columns: repeat(5, 1fr) !important;
-    gap: 16px !important;
+    gap: var(--space-md) !important;
 }
 
 .card {
     background: var(--bg-card);
     border: 1px solid var(--border-light);
     border-radius: var(--radius-lg);
-    padding: 28px;
+    padding: var(--space-xl);
     transition: var(--transition);
     position: relative;
     overflow: hidden;
@@ -669,7 +674,7 @@ input:checked+.slider.purple:before {
 
 .accordion-btn {
     width: 100%;
-    padding: 20px;
+    padding: var(--space-lg);
     text-align: left;
     background: none;
     border: none;
@@ -681,7 +686,7 @@ input:checked+.slider.purple:before {
     justify-content: space-between;
     align-items: center;
     font-family: var(--font-main);
-    gap: 16px;
+    gap: var(--space-md);
 }
 
 .accordion-btn::after {
@@ -714,7 +719,7 @@ input:checked+.slider.purple:before {
 .team-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 28px;
+    gap: var(--space-xl);
     max-width: 860px;
     margin: 0 auto;
 }
@@ -812,7 +817,7 @@ input:checked+.slider.purple:before {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: var(--space-sm);
 }
 
 /* === TEAM MODAL POPUP === */
@@ -824,7 +829,7 @@ input:checked+.slider.purple:before {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: var(--space-lg);
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -887,7 +892,7 @@ input:checked+.slider.purple:before {
 .modal-master-header {
     display: flex;
     align-items: center;
-    gap: 18px;
+    gap: var(--space-lg);
     margin-bottom: 24px;
     padding-bottom: 20px;
     border-bottom: 1px solid var(--border-light);
@@ -916,7 +921,7 @@ input:checked+.slider.purple:before {
 .modal-block-title {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--space-sm);
     font-family: var(--font-heading);
     font-size: var(--fs-base);
     color: var(--primary-install);
@@ -934,7 +939,7 @@ input:checked+.slider.purple:before {
     padding: 0;
     margin: 0;
     display: grid;
-    gap: 8px;
+    gap: var(--space-sm);
 }
 
 .modal-list li {
@@ -942,7 +947,7 @@ input:checked+.slider.purple:before {
     color: var(--text-main);
     display: flex;
     align-items: flex-start;
-    gap: 8px;
+    gap: var(--space-sm);
     line-height: 1.5;
 }
 
@@ -983,7 +988,7 @@ input:checked+.slider.purple:before {
     max-width: 600px;
     margin: 0 auto;
     background: var(--bg-card);
-    padding: 40px;
+    padding: var(--space-2xl);
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-light);
 }
@@ -1026,7 +1031,7 @@ select.form-input option {
 .service-chips-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: var(--space-sm);
     margin-top: 4px;
 }
 
@@ -1078,10 +1083,10 @@ textarea.form-input {
 
 /* Двухколоночная карточка формы на ДЕСКТОПЕ */
 .contact-grid-card {
-    padding: 40px;
+    padding: var(--space-2xl);
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 40px;
+    gap: var(--space-2xl);
     align-items: center;
 }
 
@@ -1151,7 +1156,7 @@ textarea.form-input {
 .footer-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 40px;
+    gap: var(--space-2xl);
     margin-bottom: 40px;
 }
 
@@ -1198,41 +1203,12 @@ textarea.form-input {
 
 /* === УНИВЕРСАЛЬНЫЕ ОТСТУПЫ ПОД ФИКСИРОВАННУЮ ШАПКУ === */
 
-/* На ПК: делаем отступ сверху не менее 140px для первого блока main */
+/* Отступ сверху для первого блока main с учетом адаптивной высоты шапки */
 main>section:first-child,
 main>.container:first-child,
-.hero {
-    padding-top: 140px !important;
-}
-
-/* На планшетах (до 992px) */
-@media (max-width: 992px) {
-
-    main>section:first-child,
-    main>.container:first-child,
-    .hero {
-        padding-top: 120px !important;
-    }
-}
-
-/* На смартфонах (до 768px): шапка становится чуть более компактной */
-@media (max-width: 768px) {
-
-    main>section:first-child,
-    main>.container:first-child,
-    .hero {
-        padding-top: 100px !important;
-    }
-}
-
-/* На совсем узких смартфонах (до 380px) */
-@media (max-width: 380px) {
-
-    main>section:first-child,
-    main>.container:first-child,
-    .hero {
-        padding-top: 90px !important;
-    }
+.hero,
+.hero-page {
+    padding-top: var(--header-offset);
 }
 
 /* ==========================================================================
@@ -1240,10 +1216,13 @@ main>.container:first-child,
    ========================================================================== */
 
 @media (max-width: 992px) {
+    :root {
+        --header-offset: 120px;
+    }
+
     .hero {
         grid-template-columns: 1fr !important;
-        padding-top: 120px !important;
-        gap: 30px;
+        gap: var(--space-xl);
     }
 
     .hero-board {
@@ -1263,8 +1242,12 @@ main>.container:first-child,
 }
 
 @media (max-width: 768px) {
+    :root {
+        --header-offset: 100px;
+    }
+
     .container {
-        padding: 0 12px;
+        padding: 0 var(--space-compact);
     }
 
     .section {
@@ -1314,7 +1297,7 @@ main>.container:first-child,
         flex-direction: column;
         justify-content: flex-start;
         align-items: stretch;
-        gap: 10px;
+        gap: var(--space-compact);
         padding: 75px 18px 30px;
         transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 1003;
@@ -1329,7 +1312,7 @@ main>.container:first-child,
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        gap: 12px;
+        gap: var(--space-compact);
         font-size: var(--fs-base);
         font-weight: 600;
         color: #f1f5f9 !important;
@@ -1371,7 +1354,7 @@ main>.container:first-child,
     /* Сетки услуг и шагов работы на смартфонах */
     .grid-3 {
         grid-template-columns: 1fr !important;
-        gap: 16px !important;
+        gap: var(--space-md) !important;
     }
 
     #process .grid-3 {
@@ -1380,7 +1363,7 @@ main>.container:first-child,
 
     .footer-grid {
         grid-template-columns: 1fr;
-        gap: 25px;
+        gap: var(--space-lg);
     }
 
     .hero-actions {
@@ -1396,8 +1379,8 @@ main>.container:first-child,
     .contact-grid-card,
     .contact-section .card {
         grid-template-columns: 1fr !important;
-        padding: 20px !important;
-        gap: 22px !important;
+        padding: var(--space-lg) !important;
+        gap: var(--space-lg) !important;
     }
 
     /* Рейтинг Яндекса */
@@ -1424,7 +1407,7 @@ main>.container:first-child,
     }
 
     .summary {
-        padding: 20px;
+        padding: var(--space-lg);
     }
 
     .summary-total {
@@ -1486,11 +1469,11 @@ main>.container:first-child,
         font-size: var(--fs-sm);
         padding: 8px 10px;
         flex-wrap: nowrap;
-        gap: 6px;
+        gap: var(--space-sm);
     }
 
     .card {
-        padding: 18px;
+        padding: var(--space-lg);
     }
 
     .btn {
@@ -1506,7 +1489,7 @@ main>.container:first-child,
     }
 
     .qty-wrapper {
-        gap: 3px;
+        gap: var(--space-2xs);
     }
 
     .qty-btn {
@@ -1517,7 +1500,7 @@ main>.container:first-child,
 
     .qty-input-stepper {
         width: 48px !important;
-        padding: 4px;
+        padding: var(--space-xs);
         font-size: var(--fs-sm);
     }
 
@@ -1528,7 +1511,7 @@ main>.container:first-child,
 
     .team-grid {
         grid-template-columns: 1fr;
-        gap: 18px;
+        gap: var(--space-lg);
     }
 
     .team-card {
@@ -1542,13 +1525,17 @@ main>.container:first-child,
     .modal-master-header {
         flex-direction: column;
         text-align: center;
-        gap: 12px;
+        gap: var(--space-compact);
     }
 }
 
 @media (max-width: 380px) {
+    :root {
+        --header-offset: 90px;
+    }
+
     .container {
-        padding: 0 10px !important;
+        padding: 0 var(--space-compact);
     }
 
     .card {
@@ -1594,14 +1581,14 @@ main>.container:first-child,
 .services-bento {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    gap: 24px;
+    gap: var(--space-lg);
 }
 
 .bento-card {
     background: var(--bg-card);
     border: 1px solid var(--border-light);
     border-radius: 24px;
-    padding: 32px;
+    padding: var(--space-xl);
     position: relative;
     overflow: hidden;
     transition: var(--transition);
@@ -1655,7 +1642,7 @@ main>.container:first-child,
 .bento-tag {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: var(--space-sm);
     padding: 4px 12px;
     border-radius: 99px;
     font-size: var(--fs-xs);
@@ -1687,14 +1674,14 @@ main>.container:first-child,
     margin: 16px 0 24px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: var(--space-compact);
 }
 .bento-features li {
     font-size: var(--fs-sm);
     color: var(--text-muted);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: var(--space-compact);
 }
 .bento-features li i {
     color: var(--primary-install);
@@ -1708,13 +1695,13 @@ main>.container:first-child,
     justify-content: space-between;
     align-items: flex-end;
     margin-bottom: 32px;
-    gap: 20px;
+    gap: var(--space-lg);
 }
 
 .showcase-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    gap: var(--space-lg);
 }
 
 .showcase-card {
@@ -1774,7 +1761,7 @@ main>.container:first-child,
 }
 
 .showcase-body {
-    padding: 22px;
+    padding: var(--space-lg);
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -1799,7 +1786,7 @@ main>.container:first-child,
 .showcase-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: var(--space-sm);
 }
 
 .showcase-tag {
@@ -1815,7 +1802,7 @@ main>.container:first-child,
 .why-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    gap: var(--space-lg);
 }
 
 .why-card {
@@ -1901,7 +1888,7 @@ main>.container:first-child,
 .process-track-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 20px;
+    gap: var(--space-lg);
     position: relative;
     z-index: 2;
 }
@@ -2016,7 +2003,7 @@ main>.container:first-child,
 .team-dossier-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    gap: var(--space-lg);
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -2061,7 +2048,7 @@ main>.container:first-child,
 .dossier-header {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: var(--space-md);
     margin-bottom: 18px;
 }
 
@@ -2100,7 +2087,7 @@ main>.container:first-child,
     margin: 18px 0;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: var(--space-sm);
 }
 
 .dossier-specs li {
@@ -2108,7 +2095,7 @@ main>.container:first-child,
     color: var(--text-muted);
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--space-sm);
 }
 
 .dossier-specs li span {
@@ -2145,7 +2132,7 @@ main>.container:first-child,
 
     .process-track-grid {
         grid-template-columns: 1fr;
-        gap: 16px;
+        gap: var(--space-md);
     }
     .process-track-line {
         display: none;
@@ -2247,7 +2234,7 @@ main>.container:first-child,
     .showcase-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 12px;
+        gap: var(--space-compact);
     }
     .bento-card {
         padding: 24px 18px;
@@ -2260,13 +2247,13 @@ main>.container:first-child,
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: var(--space-compact);
     margin-bottom: 24px;
 }
 
 .price-controls-actions {
     display: flex;
-    gap: 10px;
+    gap: var(--space-compact);
     flex-wrap: wrap;
 }
 
@@ -2274,7 +2261,7 @@ main>.container:first-child,
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: var(--space-sm);
     padding: 8px 16px;
     border-radius: 8px;
     font-size: var(--fs-sm);
@@ -2338,7 +2325,7 @@ main>.container:first-child,
     cursor: pointer;
     user-select: none;
     list-style: none;
-    gap: 14px;
+    gap: var(--space-md);
 }
 
 .price-accordion-summary::-webkit-details-marker {
@@ -2352,7 +2339,7 @@ main>.container:first-child,
 .price-accordion-title {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: var(--space-compact);
     font-family: var(--font-heading);
     font-size: var(--fs-base);
     font-weight: 700;
@@ -2381,7 +2368,7 @@ main>.container:first-child,
 .price-accordion-meta {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: var(--space-compact);
     flex-shrink: 0;
 }
 
@@ -2439,7 +2426,7 @@ main>.container:first-child,
 .spec-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-    gap: 22px;
+    gap: var(--space-lg);
     margin-top: 25px;
 }
 
@@ -2506,7 +2493,7 @@ main>.container:first-child,
     margin: 0 0 20px 0;
     display: flex;
     flex-direction: column;
-    gap: 9px;
+    gap: var(--space-compact);
 }
 
 .spec-features li {
@@ -2514,7 +2501,7 @@ main>.container:first-child,
     color: var(--text-muted);
     display: flex;
     align-items: flex-start;
-    gap: 8px;
+    gap: var(--space-sm);
     line-height: 1.45;
 }
 
@@ -2553,7 +2540,7 @@ main>.container:first-child,
 .why-grid-4 {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    gap: var(--space-lg);
 }
 
 @media (max-width: 1080px) {
@@ -2672,7 +2659,7 @@ main>.container:first-child,
     .price-accordion-summary {
         padding: 14px 16px;
         flex-wrap: wrap;
-        gap: 8px;
+        gap: var(--space-sm);
     }
     .price-accordion-title {
         font-size: var(--fs-base);
@@ -2731,7 +2718,7 @@ main>.container:first-child,
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 24px;
+    gap: var(--space-lg);
     flex-wrap: wrap;
 }
 
@@ -2756,7 +2743,7 @@ main>.container:first-child,
 .cookie-banner-actions {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: var(--space-compact);
     flex-wrap: wrap;
 }
 
@@ -2782,7 +2769,7 @@ main>.container:first-child,
     .cookie-banner-content {
         flex-direction: column;
         align-items: stretch;
-        gap: 14px;
+        gap: var(--space-md);
     }
     .cookie-banner-text {
         font-size: var(--fs-sm);
@@ -2791,7 +2778,7 @@ main>.container:first-child,
         width: 100%;
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: var(--space-sm);
     }
     .cookie-banner-actions .cookie-btn {
         width: 100%;
@@ -2810,7 +2797,7 @@ main>.container:first-child,
 .reviews-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 24px;
+    gap: var(--space-lg);
     margin-top: 36px;
     margin-bottom: 36px;
 }
@@ -2839,13 +2826,13 @@ main>.container:first-child,
     align-items: center;
     justify-content: space-between;
     margin-bottom: 16px;
-    gap: 12px;
+    gap: var(--space-compact);
 }
 
 .review-author-wrap {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: var(--space-compact);
 }
 
 .review-avatar-char {
@@ -2879,7 +2866,7 @@ main>.container:first-child,
 .review-badge {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: var(--space-sm);
     padding: 4px 10px;
     border-radius: 20px;
     font-size: var(--fs-xs);
@@ -2907,7 +2894,7 @@ main>.container:first-child,
     margin-bottom: 14px;
     display: flex;
     align-items: center;
-    gap: 2px;
+    gap: var(--space-2xs);
 }
 
 .review-text {
@@ -2954,12 +2941,12 @@ main>.container:first-child,
     background: linear-gradient(135deg, rgba(14, 22, 41, 0.95), rgba(18, 29, 58, 0.95));
     border: 1px solid rgba(0, 240, 255, 0.25);
     border-radius: var(--radius-lg);
-    padding: 30px;
+    padding: var(--space-xl);
     margin-top: 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 24px;
+    gap: var(--space-lg);
     flex-wrap: wrap;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
@@ -2967,7 +2954,7 @@ main>.container:first-child,
 .reviews-cta-left {
     display: flex;
     align-items: center;
-    gap: 18px;
+    gap: var(--space-lg);
     flex: 1 1 340px;
 }
 
@@ -3011,7 +2998,7 @@ main>.container:first-child,
 
 .reviews-cta-actions {
     display: flex;
-    gap: 12px;
+    gap: var(--space-compact);
     flex-wrap: wrap;
     align-items: center;
 }
@@ -3027,7 +3014,7 @@ main>.container:first-child,
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--space-sm);
     transition: transform var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
@@ -3048,7 +3035,7 @@ main>.container:first-child,
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--space-sm);
     transition: all var(--transition-fast);
 }
 
@@ -3063,7 +3050,7 @@ main>.container:first-child,
         grid-template-columns: 1fr;
     }
     .reviews-cta-banner {
-        padding: 20px;
+        padding: var(--space-lg);
         flex-direction: column;
         align-items: stretch;
     }
