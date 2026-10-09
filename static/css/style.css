@@ -1225,10 +1225,10 @@ main>.container:first-child,
 }
 
 /* ==========================================================================
-   📱 МОБИЛЬНЫЕ СТИЛИ (ЭКРАНЫ МЕНЕЕ 992px, 768px И 480px)
+   📱 АДАПТИВНЫЕ СТИЛИ (СТАНДАРТНЫЕ ТОЧКИ: 1024px, 768px И 480px)
    ========================================================================== */
 
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
     :root {
         --header-offset: 120px;
     }
@@ -1451,6 +1451,10 @@ main>.container:first-child,
 }
 
 @media (max-width: 480px) {
+    :root {
+        --header-offset: 90px;
+    }
+
     h1 {
         font-size: clamp(1.2rem, 6.2vw, 1.55rem) !important;
         line-height: 1.2 !important;
@@ -1485,8 +1489,17 @@ main>.container:first-child,
         gap: var(--space-sm);
     }
 
+    .board-row span,
+    .board-row small {
+        font-size: var(--fs-xs);
+    }
+
     .card {
-        padding: var(--space-lg);
+        padding: 14px;
+    }
+
+    .contact-grid-card {
+        padding: 16px;
     }
 
     .btn {
@@ -1522,6 +1535,12 @@ main>.container:first-child,
         font-size: var(--fs-sm) !important;
     }
 
+    .price-table th,
+    .price-table td {
+        padding: 8px 5px;
+        font-size: var(--fs-sm);
+    }
+
     .team-grid {
         grid-template-columns: 1fr;
         gap: var(--space-lg);
@@ -1539,38 +1558,6 @@ main>.container:first-child,
         flex-direction: column;
         text-align: center;
         gap: var(--space-compact);
-    }
-}
-
-@media (max-width: 380px) {
-    :root {
-        --header-offset: 90px;
-    }
-
-    .container {
-        padding: 0 var(--space-compact);
-    }
-
-    .card {
-        padding: 14px !important;
-    }
-
-    .contact-grid-card {
-        padding: 16px !important;
-    }
-
-    .board-row span {
-        font-size: var(--fs-xs) !important;
-    }
-
-    .board-row small {
-        font-size: var(--fs-xs) !important;
-    }
-
-    .price-table th,
-    .price-table td {
-        padding: 8px 5px;
-        font-size: var(--fs-sm);
     }
 }
 
@@ -2124,7 +2111,7 @@ main>.container:first-child,
 /* ==========================================================================
    АДАПТИВНОСТЬ НОВЫХ БЛОКОВ НА ПЛАНШЕТАХ И МОБИЛЬНЫХ
    ========================================================================== */
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
     .services-bento {
         grid-template-columns: 1fr;
     }
@@ -2219,28 +2206,12 @@ main>.container:first-child,
         font-size: var(--fs-xs);
     }
 
-    @media (max-width: 400px) {
-        .process-track-step {
-            grid-template-columns: 40px 1fr;
-            column-gap: 12px;
-            padding: 16px 14px;
-        }
-        .process-track-node {
-            width: 38px;
-            height: 38px;
-            font-size: var(--fs-sm);
-        }
-        .process-track-title {
-            font-size: var(--fs-base);
-        }
-    }
-
     .team-dossier-grid {
         grid-template-columns: 1fr;
     }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
     .showcase-grid {
         grid-template-columns: 1fr;
     }
@@ -2251,6 +2222,22 @@ main>.container:first-child,
     }
     .bento-card {
         padding: 24px 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .process-track-step {
+        grid-template-columns: 40px 1fr;
+        column-gap: 12px;
+        padding: 16px 14px;
+    }
+    .process-track-node {
+        width: 38px;
+        height: 38px;
+        font-size: var(--fs-sm);
+    }
+    .process-track-title {
+        font-size: var(--fs-base);
     }
 }
 
@@ -2556,13 +2543,13 @@ main>.container:first-child,
     gap: var(--space-lg);
 }
 
-@media (max-width: 1080px) {
+@media (max-width: 1024px) {
     .why-grid-4 {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
     .why-grid-4 {
         grid-template-columns: 1fr;
     }
@@ -2617,7 +2604,7 @@ main>.container:first-child,
     grid-column: span 5;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
     .bento-span-7,
     .bento-span-5 {
         grid-column: span 12 !important;
@@ -2668,7 +2655,7 @@ main>.container:first-child,
     border-color: rgba(123, 97, 255, 0.35);
 }
 
-@media (max-width: 540px) {
+@media (max-width: 768px) {
     .price-accordion-summary {
         padding: 14px 16px;
         flex-wrap: wrap;
@@ -2817,13 +2804,6 @@ main>.container:first-child,
         background: rgba(255, 255, 255, 0.06);
         border: 1px solid rgba(255, 255, 255, 0.18);
         color: #f1f5f9;
-    }
-}
-
-@media (max-width: 360px) {
-    .cookie-banner-actions .cookie-btn {
-        padding: 6px 4px;
-        font-size: 11px;
     }
 }
 
