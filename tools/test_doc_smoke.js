@@ -194,6 +194,8 @@ console.log('1. Проверка четырёх генераторов (мате
         assert(html.includes('591110297727'), `${doc.name}: содержит ИНН Подрядчика`);
         assert(html.includes('Иванов Иван Иванович'), `${doc.name}: содержит имя Заказчика`);
         assert(normHtml.includes('120 000') || html.includes('120000'), `${doc.name}: содержит общую цену договора (120 000)`);
+        assert(html.includes('table-header-group'), `${doc.name}: содержит thead { display: table-header-group; }`);
+        assert(html.includes('break-inside: avoid'), `${doc.name}: содержит tr { break-inside: avoid; }`);
     });
 }
 

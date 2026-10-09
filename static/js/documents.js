@@ -264,7 +264,12 @@
         .controls { text-align: center; margin-bottom: 12px; padding: 8px; background: #f8fafc; border: 1px dashed #94a3b8; border-radius: 6px; font-family: sans-serif; }
         .btn { padding: 8px 18px; background: #00E5FF; color: #050914; border: 1px solid #00b4d8; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px; margin: 3px; }
         .btn-close { background: #e2e8f0; border-color: #cbd5e1; color: #334155; }
-        @media print { .no-print { display: none !important; } body { padding: 0 !important; margin: 0 !important; } }
+        @media print { 
+            .no-print { display: none !important; } 
+            body { padding: 0 !important; margin: 0 !important; } 
+            thead { display: table-header-group; } 
+            tr { break-inside: avoid; page-break-inside: avoid; } 
+        }
     </style>
 </head>
 <body>
@@ -425,7 +430,12 @@
         .controls { text-align: center; margin-bottom: 12px; padding: 8px; background: #f8fafc; border-radius: 6px; border: 1px dashed #94a3b8; font-family: sans-serif; }
         .btn { padding: 8px 18px; background: #00E5FF; color: #0b1120; border: 1px solid #00b4d8; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px; margin: 3px; }
         .btn-close { background: #e2e8f0; border-color: #cbd5e1; color: #334155; }
-        @media print { .no-print { display: none !important; } body { padding: 0 !important; margin: 0 !important; } }
+        @media print { 
+            .no-print { display: none !important; } 
+            body { padding: 0 !important; margin: 0 !important; } 
+            thead { display: table-header-group; } 
+            tr { break-inside: avoid; page-break-inside: avoid; } 
+        }
     </style>
 </head>
 <body>
@@ -602,7 +612,12 @@
         .controls { text-align: center; margin-bottom: 12px; padding: 8px; background: #f5f5f5; border-radius: 6px; border: 1px dashed #999; font-family: sans-serif; }
         .btn { padding: 8px 18px; background: #00E5FF; color: #050914; border: 1px solid #00b4d8; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px; margin: 3px; }
         .btn-close { background: #ddd; color: #333; }
-        @media print { .no-print { display: none !important; } body { padding: 0 !important; margin: 0 !important; } }
+        @media print { 
+            .no-print { display: none !important; } 
+            body { padding: 0 !important; margin: 0 !important; } 
+            thead { display: table-header-group; } 
+            tr { break-inside: avoid; page-break-inside: avoid; } 
+        }
     </style>
 </head>
 <body>
@@ -752,7 +767,12 @@
         .controls { text-align: center; margin-bottom: 15px; padding: 10px; background: #f8fafc; border: 1px dashed #94a3b8; border-radius: 6px; font-family: sans-serif; }
         .btn { padding: 8px 18px; background: #00E5FF; color: #050914; border: 1px solid #00b4d8; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px; margin: 3px; }
         .btn-close { background: #e2e8f0; border-color: #cbd5e1; color: #334155; }
-        @media print { .no-print { display: none !important; } body { padding: 0 !important; } }
+        @media print { 
+            .no-print { display: none !important; } 
+            body { padding: 0 !important; margin: 0 !important; } 
+            thead { display: table-header-group; } 
+            tr { break-inside: avoid; page-break-inside: avoid; } 
+        }
     </style>
 </head>
 <body>
