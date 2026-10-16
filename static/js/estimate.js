@@ -318,6 +318,7 @@
             const savedState = window.servicesState[index] || { qty: 0, isComplex: false };
             const tr = document.createElement('tr');
             tr.dataset.index = index;
+            if (savedState.qty > 0) tr.classList.add('is-selected');
             tr.innerHTML = `
                 <td style="font-weight: 600;">${escapeHtml(service.name)}</td>
                 <td style="color: var(--text-muted);">${escapeHtml(service.unit)}</td>
@@ -383,6 +384,15 @@
         const sum = window.servicesState[index].qty * price;
         const sumCell = document.getElementById(`sum-${index}`);
         if (sumCell) sumCell.textContent = sum.toLocaleString('ru-RU') + ' ₽';
+
+        const row = document.querySelector(`tr[data-index="${index}"]`);
+        if (row && row.classList) {
+            if (window.servicesState[index].qty > 0) {
+                row.classList.add('is-selected');
+            } else {
+                row.classList.remove('is-selected');
+            }
+        }
 
         calculateTotals();
     }
@@ -527,6 +537,13 @@
             let finalPrice = (complexCheck && complexCheck.checked) ? priceBase * 1.2 : priceBase;
             const sum = qty * finalPrice;
             if (sumCell) sumCell.textContent = sum.toLocaleString('ru-RU') + ' ₽';
+            if (row.classList) {
+                if (sum > 0) {
+                    row.classList.add('is-selected');
+                } else {
+                    row.classList.remove('is-selected');
+                }
+            }
             servicesTotal += sum;
         });
 
@@ -550,6 +567,13 @@
             const sum = price * qty;
             const sumCell = row.querySelector('td:nth-child(5)');
             if (sumCell) sumCell.textContent = sum.toLocaleString('ru-RU') + ' ₽';
+            if (row.classList) {
+                if (sum > 0) {
+                    row.classList.add('is-selected');
+                } else {
+                    row.classList.remove('is-selected');
+                }
+            }
             materialsTotal += sum;
         });
 

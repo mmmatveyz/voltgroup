@@ -327,7 +327,7 @@
 
 <main>
     <div class="container" style="padding-top: 130px;">
-        <div class="calc-header fade-in">
+        <div class="calc-header">
             <span class="badge-status">
                 <span class="dot"></span> Онлайн-расчёт сметы 2026
             </span>
@@ -335,7 +335,7 @@
             <p class="subtitle">Предварительный расчёт стоимости электромонтажных работ и материалов VoltGroup</p>
         </div>
 
-        <div class="card fade-in" style="margin-bottom: 25px;">
+        <div class="card" style="margin-bottom: 25px;">
             <div class="client-info">
                 <div class="form-group"><label class="form-label" for="client-name">Имя заказчика</label><input type="text" id="client-name" class="form-input" placeholder="Иванов И.И." maxlength="100"></div>
                 <div class="form-group"><label class="form-label" for="client-phone">Телефон для связи</label><input type="tel" id="client-phone" class="form-input" placeholder="+7 (___) ___-__-__" autocomplete="tel"></div>
@@ -345,7 +345,7 @@
             </div>
         </div>
 
-        <div class="card fade-in" style="padding: 18px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 25px;">
+        <div class="card" style="padding: 18px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 25px;">
             <input type="text" id="draft-name" class="form-input" placeholder="Название черновика..." style="flex-grow: 1; min-width: 180px;" maxlength="100">
             <button class="btn btn-outline" type="button" onclick="saveDraft()" style="padding: 10px 16px; font-size: 0.88rem;">💾 Сохранить</button>
             <select id="draft-select" class="form-input" onchange="loadDraft()" style="width: auto; min-width: 150px;"><option value="">📂 Загрузить...</option></select>
@@ -356,14 +356,14 @@
             </label>
         </div>
 
-        <div class="card fade-in" style="padding: 16px; margin-bottom: 25px;">
+        <div class="card" style="padding: 16px; margin-bottom: 25px;">
             <div class="section-selector">
                 <button id="btn-install" type="button" class="active" onclick="switchSection('install')">⚡ Install (Электромонтаж и щиты)</button>
                 <button id="btn-eng" type="button" onclick="switchSection('engineering')">🏭 Engineering (Пром. автоматика)</button>
             </div>
         </div>
 
-        <div class="card fade-in" style="margin-bottom: 25px;">
+        <div class="card" style="margin-bottom: 25px;">
             <div class="filter-toolbar">
                 <div style="flex: 1; min-width: 250px;">
                     <label for="category-select" class="form-label" style="color: var(--primary-install); font-weight: 700;">Категория работ:</label>
@@ -378,9 +378,9 @@
             </div>
         </div>
 
-        <div class="card fade-in" style="padding: 0; overflow: hidden; margin-bottom: 25px;">
+        <div class="card" style="padding: 0; overflow: hidden; margin-bottom: 25px;">
             <div class="table-responsive">
-                <table class="price-table">
+                <table class="price-table calc-table">
                     <thead><tr><th>Наименование работ</th><th>Ед.</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th>Условия</th><th></th></tr></thead>
                     <tbody id="services-body"></tbody>
                 </table>
@@ -390,25 +390,25 @@
             </div>
         </div>
 
-        <div class="purchase-toggle fade-in">
+        <div class="purchase-toggle">
             <input type="checkbox" id="master-buys-materials" checked onchange="calculateTotals()">
             <label for="master-buys-materials">Материалы закупает Мастер (входят в итоговую сумму сметы)</label>
         </div>
 
-        <div class="card fade-in" style="padding: 0; overflow: hidden; margin-bottom: 30px;">
+        <div class="card" style="padding: 0; overflow: hidden; margin-bottom: 30px;">
             <div style="padding: 14px 20px; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center;">
                 <span style="color: var(--primary-install); font-weight: 700; font-family: var(--font-heading); font-size: 0.9rem;">📦 Материалы (добавляются вручную)</span>
                 <button class="btn btn-outline" type="button" onclick="addMaterialRow()" style="padding: 6px 14px; font-size: 0.82rem;">+ Вручную</button>
             </div>
             <div class="table-responsive">
-                <table class="price-table">
+                <table class="price-table calc-table">
                     <thead><tr><th>Наименование</th><th>Ед.</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th></th></tr></thead>
                     <tbody id="materials-body"></tbody>
                 </table>
             </div>
         </div>
 
-        <div class="summary fade-in">
+        <div class="summary">
             <div class="summary-row"><span>Стоимость работ:</span><strong id="services-total-display" style="color: var(--text-main);">0 ₽</strong></div>
             <div class="discount-block">
                 <label for="discount-input" style="color: var(--text-muted); font-size: 0.9rem;">Скидка:</label>
@@ -424,7 +424,7 @@
             </div>
         </div>
 
-        <div class="actions fade-in">
+        <div class="actions">
             <button class="btn btn-primary btn-send-master" id="btn-send-estimate" type="button" onclick="sendEstimateToMaster()" style="background: linear-gradient(135deg, #10B981, #059669); color: #ffffff; font-weight: 700; box-shadow: 0 0 20px rgba(16, 185, 129, 0.35);">⚡ Передать смету мастеру</button>
             <button class="btn btn-primary" type="button" onclick="copyEstimateToClipboard()" style="background: linear-gradient(135deg, var(--primary-install), #00b4d8); color: #050914;">📋 Скопировать для мессенджера</button>
             <button class="btn btn-primary" type="button" onclick="generatePDF()">📄 Скачать смету (PDF)</button>
@@ -524,14 +524,6 @@
                 calculateTotals();
             }
         });
-
-        // Плавное появление элементов
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(e => {
-                if (e.isIntersecting) e.target.classList.add('visible');
-            });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
     });
 </script>
 </body>

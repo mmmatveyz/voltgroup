@@ -1436,17 +1436,163 @@ main>.container:first-child,
         width: 100%;
     }
 
-    .price-table th:nth-child(6),
-    .price-table td:nth-child(6) {
+    .price-table:not(.calc-table) th:nth-child(6),
+    .price-table:not(.calc-table) td:nth-child(6) {
         display: none;
     }
 
-    .price-table {
+    .price-table:not(.calc-table) {
         min-width: 380px;
     }
 
-    .price-table td {
+    .price-table:not(.calc-table) td {
         padding: 10px 8px;
+    }
+
+    /* Мобильные карточки калькулятора (.calc-table) */
+    .table-responsive {
+        overflow-x: visible;
+    }
+    .calc-table {
+        min-width: 0 !important;
+        width: 100% !important;
+        display: block !important;
+        border-collapse: separate !important;
+    }
+    .calc-table thead {
+        display: none !important;
+    }
+    .calc-table tbody {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+        padding: 12px !important;
+    }
+    .calc-table tr {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        background: rgba(255, 255, 255, 0.02) !important;
+        border: 1px solid var(--border-light) !important;
+        border-radius: var(--radius-md) !important;
+        padding: 14px 14px 12px !important;
+        position: relative !important;
+        box-sizing: border-box !important;
+        gap: 8px 10px !important;
+        transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease !important;
+    }
+    .calc-table tr.is-selected {
+        border-color: rgba(0, 229, 255, 0.45) !important;
+        background: rgba(0, 229, 255, 0.04) !important;
+        box-shadow: 0 0 15px rgba(0, 229, 255, 0.08) !important;
+    }
+
+    /* Название услуги / материала (первая колонка) */
+    .calc-table tr > td:first-child {
+        flex: 1 1 100% !important;
+        width: 100% !important;
+        padding: 0 24px 4px 0 !important;
+        border: none !important;
+        font-size: 0.95rem !important;
+        line-height: 1.35 !important;
+        color: #f8fafc !important;
+    }
+    .calc-table tr > td:first-child input.name-input,
+    .calc-table tr > td:first-child input.mat-name {
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Единица измерения и цена для каталога */
+    #services-body tr:not(.custom-work-row) > td:nth-child(2),
+    #services-body tr:not(.custom-work-row) > td:nth-child(3) {
+        padding: 0 !important;
+        border: none !important;
+        font-size: 0.85rem !important;
+        color: var(--text-muted) !important;
+        white-space: nowrap !important;
+    }
+    #services-body tr:not(.custom-work-row) > td:nth-child(3) {
+        font-weight: 600 !important;
+        color: #cbd5e1 !important;
+        order: 2 !important;
+    }
+    #services-body tr:not(.custom-work-row) > td:nth-child(2) {
+        order: 3 !important;
+    }
+    #services-body tr:not(.custom-work-row) > td:nth-child(2)::before {
+        content: " / ";
+    }
+
+    /* Поля ввода цены и единицы для кастомных работ и материалов */
+    .custom-work-row > td:nth-child(2),
+    .custom-work-row > td:nth-child(3),
+    #materials-body tr > td:nth-child(2),
+    #materials-body tr > td:nth-child(3) {
+        padding: 0 !important;
+        border: none !important;
+    }
+    .custom-work-row > td:nth-child(2) input,
+    #materials-body tr > td:nth-child(2) input {
+        width: 55px !important;
+    }
+    .custom-work-row > td:nth-child(3) input,
+    #materials-body tr > td:nth-child(3) input {
+        width: 100px !important;
+    }
+
+    /* Степпер количества */
+    .calc-table tr > td:nth-child(4) {
+        padding: 0 !important;
+        border: none !important;
+        order: 4 !important;
+    }
+
+    /* Сумма позиции */
+    .calc-table tr > td:nth-child(5) {
+        padding: 0 !important;
+        border: none !important;
+        order: 5 !important;
+        margin-left: auto !important;
+        font-size: 1.05rem !important;
+        font-weight: 700 !important;
+        color: var(--primary-install) !important;
+        text-align: right !important;
+        white-space: nowrap !important;
+    }
+    .calc-table tr > td:nth-child(5)::before {
+        content: "Сумма: ";
+        font-size: 0.78rem !important;
+        font-weight: 500 !important;
+        color: var(--text-muted) !important;
+        margin-right: 2px !important;
+    }
+
+    /* Условия (Сложность +20%) */
+    #services-body tr > td:nth-child(6) {
+        display: flex !important;
+        align-items: center !important;
+        order: 6 !important;
+        flex: 1 1 100% !important;
+        padding: 8px 0 0 0 !important;
+        border: none !important;
+        border-top: 1px dashed rgba(255, 255, 255, 0.08) !important;
+        margin-top: 4px !important;
+    }
+
+    /* Кнопка удаления */
+    .custom-work-row > td:nth-child(7),
+    #materials-body tr > td:nth-child(6) {
+        position: absolute !important;
+        top: 12px !important;
+        right: 12px !important;
+        padding: 0 !important;
+        border: none !important;
+        z-index: 2 !important;
+    }
+    #services-body tr:not(.custom-work-row) > td:nth-child(7) {
+        display: none !important;
     }
 }
 
