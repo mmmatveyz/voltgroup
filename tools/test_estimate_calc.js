@@ -439,9 +439,60 @@ console.log('\n--- Тест 9: Сборка сметы для передачи �
     assert(normalizedText.includes('ИТОГО К ОПЛАТЕ: 45 000 ₽'), 'Итоговая сумма рассчитана верно (40 000 работы + 5 000 материалы)');
 }
 
+// ==========================================
+// 10. ТЕСТ УСТОЙЧИВОСТИ ЧЕРНОВИКОВ К ИЗМЕНЕНИЮ ПРАЙСА
+// ==========================================
+console.log('\n--- Тест 10: Устойчивость черновиков к изменению prices.json ---');
+{
+    const env = createEstimateEnvironment();
+    // Исходный каталог
+    env.window.allServices = [
+        { name: 'Штробление бетона', price: 700, unit: 'п.м.', category: 'Черновые' },
+        { name: 'Прокладка кабеля в гофре', price: 130, unit: 'п.м.', category: 'Черновые' },
+        { name: 'Установка розетки', price: 450, unit: 'шт.', category: 'Чистовые' }
+    ];
+    // Выбираем штробление (10 м) и розетки (5 шт.)
+    env.window.servicesState = {
+        0: { qty: 10, isComplex: true }, // Штробление: 10 * 700 * 1.2 = 8 400
+        2: { qty: 5, isComplex: false }   // Розетка: 5 * 450 = 2 250
+    };
+
+    // Сохраняем черновик
+    const savedDraft = env.window.getFormData();
+    assert(savedDraft.namedServicesState && typeof savedDraft.namedServicesState === 'object', 'Сохранён именованный namedServicesState');
+    assert(savedDraft.namedServicesState['Штробление бетона'], 'Штробление сохранено по имени');
+    assert(savedDraft.namedServicesState['Установка розетки'], 'Розетки сохранены по имени');
+
+    // СИМУЛИРУЕМ ИЗМЕНЕНИЕ ПРАЙСА:
+    // Добавили в начало новую услугу "Выезд", в середину "Вентилятор", и изменили порядок!
+    env.window.allServices = [
+        { name: 'Выезд на замер', price: 2500, unit: 'выезд', category: 'Диагностика' },       // сдвиг +1
+        { name: 'Штробление бетона', price: 700, unit: 'п.м.', category: 'Черновые' },        // теперь индекс 1, был 0!
+        { name: 'Монтаж вентилятора', price: 1200, unit: 'шт.', category: 'Чистовые' },       // новая услуга в середине
+        { name: 'Прокладка кабеля в гофре', price: 130, unit: 'п.м.', category: 'Черновые' }, // теперь индекс 3, был 1
+        { name: 'Установка розетки', price: 450, unit: 'шт.', category: 'Чистовые' }         // теперь индекс 4, был 2!
+    ];
+
+    // Восстанавливаем черновик в новом окружении
+    env.window.servicesState = {};
+    env.window.restoreServicesState(savedDraft);
+
+    // Проверяем, что индексы перепривязались корректно:
+    assertEqual(env.window.servicesState[1]?.qty, 10, 'Штробление бетона на новом индексе 1 имеет qty=10');
+    assertEqual(env.window.servicesState[1]?.isComplex, true, 'Коэффициент сложности штробления сохранён');
+    assertEqual(env.window.servicesState[4]?.qty, 5, 'Установка розетки на новом индексе 4 имеет qty=5');
+    assert(!env.window.servicesState[0], 'Выезд на замер (индекс 0) остался пустым');
+    assert(!env.window.servicesState[2], 'Вентилятор (индекс 2) остался пустым');
+
+    // Расчёт итогов сметы после восстановления
+    const res = env.window.calculateTotals();
+    assertEqual(res.servicesTotal, 10650, 'Итоговая сумма сметы после обновления прайса осталась неизменной (8400 + 2250)');
+}
+
 console.log(`\nИТОГ ТЕСТОВ РАСЧЁТА: ${passedTests} пройдено, ${failedTests} провалено.`);
 if (failedTests > 0) {
     process.exit(1);
 } else {
     process.exit(0);
 }
+

@@ -589,10 +589,33 @@
 
     /**
      * Сбор всех данных формы для сохранения в черновик
+     * Сохраняет как числовой servicesState (для обратной совместимости),
+     * так и именованный namedServicesState (устойчивый к любым изменениям прайса).
      */
     function getFormData() {
         calculateTotals();
+
+        // Сохраняем состояние выбранных услуг по их названиям и категориям
+        const namedServicesState = {};
+        if (Array.isArray(window.allServices) && window.servicesState) {
+            Object.keys(window.servicesState).forEach(idx => {
+                const state = window.servicesState[idx];
+                const service = window.allServices[idx];
+                if (state && state.qty > 0 && service && service.name) {
+                    namedServicesState[service.name] = {
+                        qty: state.qty,
+                        isComplex: !!state.isComplex,
+                        price: service.price,
+                        unit: service.unit,
+                        category: service.category,
+                        section: service.section
+                    };
+                }
+            });
+        }
+
         return {
+            version: 2,
             clientName: document.getElementById('client-name')?.value || '',
             clientPhone: document.getElementById('client-phone')?.value || '',
             clientAddress: document.getElementById('client-address')?.value || '',
@@ -601,6 +624,7 @@
             masterBuys: document.getElementById('master-buys-materials')?.checked,
             discount: document.getElementById('discount-input')?.value || '',
             servicesState: window.servicesState,
+            namedServicesState: namedServicesState,
             currentSection: window.currentSection,
             currentCategory: window.currentCategory,
             customWorks: Array.from(document.querySelectorAll('.custom-work-row')).map(row => ({
@@ -617,6 +641,86 @@
                 qty: row.querySelector('.mat-qty')?.value || ''
             }))
         };
+    }
+
+    /**
+     * Интеллектуальное восстановление услуг из черновика.
+     * Защищает от смещения индексов при добавлении/удалении строк в prices.json.
+     * Если услуга была переименована или удалена из каталога, автоматически
+     * переносит её в кастомные работы, чтобы ни одна цифра сметы не потерялась!
+     */
+    function restoreServicesState(data) {
+        window.servicesState = {};
+        const missingServices = [];
+
+        // Быстрый поиск в актуальном прайсе по названию услуги
+        const nameToIndexMap = new Map();
+        if (Array.isArray(window.allServices)) {
+            window.allServices.forEach((s, idx) => {
+                if (s && s.name) {
+                    nameToIndexMap.set(s.name.trim().toLowerCase(), idx);
+                }
+            });
+        }
+
+        if (data.namedServicesState && typeof data.namedServicesState === 'object') {
+            // Современный формат черновика (v2) — привязка по названиям
+            Object.entries(data.namedServicesState).forEach(([srvName, state]) => {
+                if (!state || !(state.qty > 0)) return;
+                const cleanName = (srvName || '').trim().toLowerCase();
+                if (nameToIndexMap.has(cleanName)) {
+                    const actualIdx = nameToIndexMap.get(cleanName);
+                    window.servicesState[actualIdx] = {
+                        qty: parseFloat(state.qty) || 0,
+                        isComplex: !!state.isComplex
+                    };
+                } else {
+                    // Услуга не найдена в текущем прайсе (была удалена или сильно переименована)
+                    missingServices.push({
+                        name: srvName,
+                        price: state.price || 0,
+                        qty: state.qty || 1,
+                        unit: state.unit || 'шт.',
+                        complex: !!state.isComplex
+                    });
+                }
+            });
+        } else if (data.servicesState && typeof data.servicesState === 'object') {
+            // Обратная совместимость для старых черновиков (v1)
+            const entries = Object.entries(data.servicesState);
+            entries.forEach(([key, state]) => {
+                if (!state || !(state.qty > 0)) return;
+                const numIdx = parseInt(key, 10);
+                if (!isNaN(numIdx)) {
+                    window.servicesState[numIdx] = {
+                        qty: parseFloat(state.qty) || 0,
+                        isComplex: !!state.isComplex
+                    };
+                } else if (nameToIndexMap.has(key.trim().toLowerCase())) {
+                    const actualIdx = nameToIndexMap.get(key.trim().toLowerCase());
+                    window.servicesState[actualIdx] = {
+                        qty: parseFloat(state.qty) || 0,
+                        isComplex: !!state.isComplex
+                    };
+                } else {
+                    missingServices.push({
+                        name: key,
+                        price: state.price || 0,
+                        qty: state.qty || 1,
+                        unit: state.unit || 'шт.',
+                        complex: !!state.isComplex
+                    });
+                }
+            });
+        }
+
+        // Если в черновике были услуги, которых больше нет в prices.json,
+        // сохраняем их как кастомные работы, чтобы смета не уменьшилась
+        if (missingServices.length > 0) {
+            missingServices.forEach(w => {
+                addCustomWorkRow(w.name, w.price, w.qty, w.unit, w.complex, false);
+            });
+        }
     }
 
     /**
@@ -648,7 +752,8 @@
         if (document.getElementById('master-buys-materials')) document.getElementById('master-buys-materials').checked = data.masterBuys !== false;
         if (document.getElementById('discount-input')) document.getElementById('discount-input').value = data.discount || '';
 
-        window.servicesState = data.servicesState || {};
+        // Восстановление услуг с защитой от изменения номеров строк в прайсе
+        restoreServicesState(data);
         if (data.currentSection) switchSection(data.currentSection);
         if (document.getElementById('category-select')) document.getElementById('category-select').value = data.currentCategory || 'all';
         window.currentCategory = data.currentCategory || 'all';
@@ -765,7 +870,8 @@
                 if (document.getElementById('invoice-number')) document.getElementById('invoice-number').value = data.invoiceNum || '';
                 if (document.getElementById('master-buys-materials')) document.getElementById('master-buys-materials').checked = data.masterBuys !== false;
                 if (document.getElementById('discount-input')) document.getElementById('discount-input').value = data.discount || '';
-                window.servicesState = data.servicesState || {};
+                // Восстановление услуг с защитой от изменения номеров строк в прайсе
+                restoreServicesState(data);
                 if (data.currentSection) switchSection(data.currentSection);
                 if (document.getElementById('category-select')) document.getElementById('category-select').value = data.currentCategory || 'all';
                 window.currentCategory = data.currentCategory || 'all';
@@ -1332,6 +1438,7 @@
     window.handleInputKeyNav = handleInputKeyNav;
     window.calculateTotals = calculateTotals;
     window.getFormData = getFormData;
+    window.restoreServicesState = restoreServicesState;
     window.saveDraft = saveDraft;
     window.loadDraft = loadDraft;
     window.deleteDraft = deleteDraft;
