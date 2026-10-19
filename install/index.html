@@ -290,7 +290,7 @@
             </div>
 
             <!-- ИНТЕРАКТИВНЫЙ БЕГУНОК ПЛОЩАДИ -->
-            <div class="card fade-in" style="max-width: 840px; margin: 0 auto 40px; padding: 26px 28px; background: rgba(10, 16, 30, 0.7); border: 1px solid rgba(0, 229, 255, 0.25); border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);">
+            <div class="card fade-in" style="max-width: 840px; margin: 0 auto 40px; padding: 26px 28px; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(12px); border: 1px solid rgba(0, 229, 255, 0.3); border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
                 <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 10px; margin-bottom: 16px;">
                     <div>
                         <span style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); font-weight: 700;">Площадь квартиры:</span>
@@ -321,7 +321,7 @@
             <!-- ТРИ КАРТОЧКИ ТАРИФОВ -->
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; align-items: stretch; margin-bottom: 20px;">
                 <!-- 1. ТАРИФ БАЗА -->
-                <div class="card fade-in" style="display: flex; flex-direction: column; justify-content: space-between; padding: 26px; border-radius: 16px; border: 1px solid var(--border-light); background: rgba(255, 255, 255, 0.02); position: relative;">
+                <div class="card fade-in" style="display: flex; flex-direction: column; justify-content: space-between; padding: 26px; border-radius: 16px; border: 1px solid var(--border-light); background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(12px); box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45); position: relative; overflow: visible !important;">
                     <div>
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                             <span class="bento-tag tag-cyan" style="font-size: 0.75rem;">01 // МИНИМУМ</span>
@@ -334,7 +334,7 @@
                             Надёжный базовый электромонтаж по ГОСТ и ПУЭ. Идеально под сдачу в аренду, предчистовую отделку или бюджетный ремонт.
                         </p>
                         
-                        <div style="margin: 18px 0; padding: 14px; background: rgba(0, 229, 255, 0.04); border-radius: 10px; border-left: 3px solid var(--primary-install);">
+                        <div style="margin: 18px 0; padding: 14px; background: rgba(0, 229, 255, 0.05); border-radius: 10px; border-left: 3px solid var(--primary-install);">
                             <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Ориентир по смете:</div>
                             <div style="font-family: var(--font-heading); font-size: 1.7rem; color: #fff; font-weight: 800; margin-top: 2px;">
                                 ~<span id="price-base">79 800</span> ₽
@@ -358,8 +358,8 @@
                 </div>
 
                 <!-- 2. ТАРИФ СТАНДАРТ (НОРМИС) -->
-                <div class="card fade-in" style="display: flex; flex-direction: column; justify-content: space-between; padding: 26px; border-radius: 16px; border: 2px solid var(--primary-install); background: rgba(0, 229, 255, 0.03); box-shadow: 0 10px 35px rgba(0, 229, 255, 0.15); position: relative;">
-                    <div style="position: absolute; top: -13px; right: 24px; background: var(--primary-install); color: #050914; font-size: 0.75rem; font-weight: 800; padding: 3px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--font-heading);">
+                <div class="card fade-in" style="display: flex; flex-direction: column; justify-content: space-between; padding: 26px; border-radius: 16px; border: 2px solid var(--primary-install); background: rgba(13, 24, 46, 0.96); backdrop-filter: blur(12px); box-shadow: 0 14px 40px rgba(0, 229, 255, 0.22), 0 8px 24px rgba(0,0,0,0.5); position: relative; overflow: visible !important;">
+                    <div style="position: absolute; top: -14px; right: 24px; background: var(--primary-install); color: #050914; font-size: 0.75rem; font-weight: 800; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--font-heading); box-shadow: 0 4px 14px rgba(0, 229, 255, 0.45); z-index: 5; line-height: 1.2;">
                         ⭐ ХИТ ВЫБОРА
                     </div>
                     <div>
@@ -374,7 +374,7 @@
                             Продуманная эргономика для комфортной жизни. Удобное расположение розеток, защита бытовой техники от скачков напряжения.
                         </p>
 
-                        <div style="margin: 18px 0; padding: 14px; background: rgba(0, 229, 255, 0.08); border-radius: 10px; border-left: 3px solid var(--primary-install);">
+                        <div style="margin: 18px 0; padding: 14px; background: rgba(0, 229, 255, 0.12); border-radius: 10px; border-left: 3px solid var(--primary-install);">
                             <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Ориентир по смете:</div>
                             <div style="font-family: var(--font-heading); font-size: 1.7rem; color: var(--primary-install); font-weight: 900; margin-top: 2px;">
                                 ~<span id="price-standard">121 800</span> ₽
@@ -398,7 +398,7 @@
                 </div>
 
                 <!-- 3. ТАРИФ ПРЕМИУМ -->
-                <div class="card fade-in" style="display: flex; flex-direction: column; justify-content: space-between; padding: 26px; border-radius: 16px; border: 1px solid rgba(255, 214, 10, 0.35); background: rgba(255, 214, 10, 0.02); position: relative;">
+                <div class="card fade-in" style="display: flex; flex-direction: column; justify-content: space-between; padding: 26px; border-radius: 16px; border: 1px solid rgba(255, 214, 10, 0.45); background: rgba(22, 24, 38, 0.95); backdrop-filter: blur(12px); box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45); position: relative; overflow: visible !important;">
                     <div>
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                             <span class="bento-tag tag-yellow" style="font-size: 0.75rem;">03 // МАКСИМУМ</span>
@@ -411,7 +411,7 @@
                             Максимальная инженерная безопасность и дизайнерский свет: сценарии, мастер-выключатель, теплые полы и треки.
                         </p>
 
-                        <div style="margin: 18px 0; padding: 14px; background: rgba(255, 214, 10, 0.05); border-radius: 10px; border-left: 3px solid var(--volt-yellow);">
+                        <div style="margin: 18px 0; padding: 14px; background: rgba(255, 214, 10, 0.08); border-radius: 10px; border-left: 3px solid var(--volt-yellow);">
                             <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Ориентир по смете:</div>
                             <div style="font-family: var(--font-heading); font-size: 1.7rem; color: var(--volt-yellow); font-weight: 800; margin-top: 2px;">
                                 ~<span id="price-premium">172 200</span> ₽
