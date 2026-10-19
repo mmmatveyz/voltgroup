@@ -356,6 +356,33 @@
             </label>
         </div>
 
+        <div class="card" style="padding: 18px 20px; margin-bottom: 25px; background: rgba(0, 229, 255, 0.03); border: 1px solid rgba(0, 229, 255, 0.25);">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 14px;">
+                <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary-install); text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 6px;">
+                    <span>⚡</span> Готовые пакеты для квартир под ключ:
+                </span>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <label for="preset-area-input" style="font-size: 0.82rem; color: var(--text-muted); font-weight: 600;">Площадь:</label>
+                    <input type="number" id="preset-area-input" value="42" min="15" max="300" step="1" class="form-input" style="width: 75px; padding: 6px 10px; font-size: 0.88rem; text-align: center; font-weight: 700;" oninput="updatePresetButtonsArea(this.value)">
+                    <span style="font-size: 0.82rem; color: var(--text-muted); font-weight: 600;">м²</span>
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;" id="preset-buttons-bar">
+                <button type="button" class="btn btn-outline" onclick="applyCurrentApartmentPreset('base')" style="font-size: 0.82rem; padding: 8px 14px; border-radius: 8px;">
+                    🥉 База (<span class="preset-btn-sqm">42</span> м²)
+                </button>
+                <button type="button" class="btn btn-primary" onclick="applyCurrentApartmentPreset('standard')" style="font-size: 0.82rem; padding: 8px 14px; border-radius: 8px;">
+                    🥈 Стандарт (<span class="preset-btn-sqm">42</span> м²) ⭐
+                </button>
+                <button type="button" class="btn btn-volt" onclick="applyCurrentApartmentPreset('premium')" style="font-size: 0.82rem; padding: 8px 14px; border-radius: 8px;">
+                    🥇 Премиум (<span class="preset-btn-sqm">42</span> м²)
+                </button>
+                <button type="button" class="btn btn-outline" onclick="clearForm()" style="font-size: 0.82rem; padding: 8px 14px; border-radius: 8px; margin-left: auto; color: var(--text-muted); border-color: var(--border-light);">
+                    Очистить всё ✕
+                </button>
+            </div>
+        </div>
+
         <div class="card" style="padding: 16px; margin-bottom: 25px;">
             <div class="section-selector">
                 <button id="btn-install" type="button" class="active" onclick="switchSection('install')">⚡ Install (Электромонтаж и щиты)</button>
@@ -522,6 +549,9 @@
             if (success) {
                 renderServices();
                 calculateTotals();
+                if (typeof checkUrlPreset === 'function') {
+                    checkUrlPreset();
+                }
             }
         });
     });

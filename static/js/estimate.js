@@ -1443,6 +1443,165 @@
         return csv;
     }
 
+    /**
+     * Применение готового пакета квартиры под ключ
+     * @param {'base'|'standard'|'premium'} presetType
+     * @param {number} sqm Площадь в м²
+     */
+    function applyApartmentPreset(presetType, sqm) {
+        if (!window.allServices || window.allServices.length === 0) {
+            return false;
+        }
+        sqm = parseInt(sqm, 10) || 42;
+
+        // Переключаем на секцию Install
+        switchSection('install');
+
+        // Сброс предыдущего состояния услуг
+        window.servicesState = {};
+
+        // Коэффициент масштабирования относительно базовых 40 м²
+        const scale = sqm / 40;
+
+        // Базовые наборы (название услуги -> количество)
+        const presetItems = {};
+
+        if (presetType === 'base') {
+            presetItems['Сверление отверстия под подрозетник (бетон / монолит)'] = Math.round(18 * scale);
+            presetItems['Сверление отверстия под подрозетник (кирпич / газобетон)'] = Math.round(8 * scale);
+            presetItems['Установка и вклейка подрозетника в нишу (на гипсовую смесь)'] = Math.round(26 * scale);
+            presetItems['Штробление бетона / монолита (до 20х20 мм, без пыли)'] = Math.round(16 * scale);
+            presetItems['Штробление кирпича / газоблока (до 20х20 мм)'] = Math.round(10 * scale);
+            presetItems['Прокладка кабеля в гофре (с креплением к потолку/стене)'] = Math.round(140 * scale);
+            presetItems['Монтаж и коммутация распаечной коробки (опрессовка ГМЛ / сварка)'] = Math.max(3, Math.round(4 * scale));
+            presetItems['Сборка щита в мастерской (до 12 модулей)'] = 1;
+            presetItems['Монтаж корпуса накладного / встраиваемого щита в нишу'] = 1;
+            presetItems['Установка и расключение готового щита на объекте (до 24 мод.)'] = 1;
+            presetItems['Установка механизма розетки / выключателя (с рамкой)'] = Math.round(26 * scale);
+            presetItems['Монтаж люстры (простая сборка и крепеж)'] = Math.max(2, Math.round(3 * scale));
+        } else if (presetType === 'premium') {
+            presetItems['Сверление отверстия под подрозетник (бетон / монолит)'] = Math.round(44 * scale);
+            presetItems['Сверление отверстия под подрозетник (кирпич / газобетон)'] = Math.round(24 * scale);
+            presetItems['Установка и вклейка подрозетника в нишу (на гипсовую смесь)'] = Math.round(68 * scale);
+            presetItems['Штробление бетона / монолита (до 20х20 мм, без пыли)'] = Math.round(35 * scale);
+            presetItems['Штробление кирпича / газоблока (до 20х20 мм)'] = Math.round(20 * scale);
+            presetItems['Прокладка кабеля в гофре (с креплением к потолку/стене)'] = Math.round(320 * scale);
+            presetItems['Прокладка слаботочного кабеля (UTP витая пара / ТВ)'] = Math.round(60 * scale);
+            presetItems['Монтаж и коммутация распаечной коробки (опрессовка ГМЛ / сварка)'] = Math.max(6, Math.round(8 * scale));
+            presetItems['Сборка щита в мастерской (до 36 модулей)'] = 1;
+            presetItems['Монтаж корпуса накладного / встраиваемого щита в нишу'] = 1;
+            presetItems['Установка и расключение готового щита на объекте (от 36 мод.)'] = 1;
+            presetItems['Установка реле контроля напряжения (защита от скачков 380В)'] = 1;
+            presetItems['Монтаж схемы «Мастер-выключатель» (контактор + выключатель у входа)'] = 1;
+            presetItems['Установка механизма розетки / выключателя (с рамкой)'] = Math.round(64 * scale);
+            presetItems['Монтаж и расключение компьютерной розетки RJ-45 / ТВ-розетки'] = Math.max(2, Math.round(4 * scale));
+            presetItems['Установка терморегулятора теплого пола'] = Math.max(1, Math.round(2 * scale));
+            presetItems['Монтаж электрического полотенцесушителя (скрытое подключение)'] = 1;
+            presetItems['Монтаж трекового освещения (с подключением шинопровода)'] = Math.max(4, Math.round(6 * scale));
+            presetItems['Монтаж люстры (простая сборка и крепеж)'] = Math.max(2, Math.round(4 * scale));
+            presetItems['Монтаж бра / настенного светильника'] = Math.max(2, Math.round(4 * scale));
+        } else {
+            // По умолчанию: стандарт (хит)
+            presetItems['Сверление отверстия под подрозетник (бетон / монолит)'] = Math.round(30 * scale);
+            presetItems['Сверление отверстия под подрозетник (кирпич / газобетон)'] = Math.round(16 * scale);
+            presetItems['Установка и вклейка подрозетника в нишу (на гипсовую смесь)'] = Math.round(46 * scale);
+            presetItems['Штробление бетона / монолита (до 20х20 мм, без пыли)'] = Math.round(25 * scale);
+            presetItems['Штробление кирпича / газоблока (до 20х20 мм)'] = Math.round(15 * scale);
+            presetItems['Прокладка кабеля в гофре (с креплением к потолку/стене)'] = Math.round(230 * scale);
+            presetItems['Прокладка слаботочного кабеля (UTP витая пара / ТВ)'] = Math.round(30 * scale);
+            presetItems['Монтаж и коммутация распаечной коробки (опрессовка ГМЛ / сварка)'] = Math.max(4, Math.round(6 * scale));
+            presetItems['Сборка щита в мастерской (до 24 модулей)'] = 1;
+            presetItems['Монтаж корпуса накладного / встраиваемого щита в нишу'] = 1;
+            presetItems['Установка и расключение готового щита на объекте (до 24 мод.)'] = 1;
+            presetItems['Установка реле контроля напряжения (защита от скачков 380В)'] = 1;
+            presetItems['Установка механизма розетки / выключателя (с рамкой)'] = Math.round(44 * scale);
+            presetItems['Монтаж и расключение компьютерной розетки RJ-45 / ТВ-розетки'] = Math.max(1, Math.round(2 * scale));
+            presetItems['Монтаж люстры (простая сборка и крепеж)'] = Math.max(2, Math.round(4 * scale));
+            presetItems['Монтаж вытяжного вентилятора (санузел / кухня)'] = 1;
+        }
+
+        // Проставляем количества в state калькулятора по точным названиям
+        window.allServices.forEach((service, index) => {
+            if (presetItems[service.name]) {
+                window.servicesState[index] = {
+                    qty: presetItems[service.name],
+                    difficult: false
+                };
+            }
+        });
+
+        // Заполняем поле номера сметы названием пакета
+        const invoiceInput = document.getElementById('invoice-number');
+        if (invoiceInput && !invoiceInput.value) {
+            const presetLabels = { base: 'База', standard: 'Стандарт', premium: 'Премиум' };
+            invoiceInput.value = `Пакет-${presetLabels[presetType] || 'Стандарт'}-${sqm}м²`;
+        }
+
+        // Обновляем фильтр категорий и перерисовываем
+        window.currentCategory = 'all';
+        const catSelect = document.getElementById('category-select');
+        if (catSelect) catSelect.value = 'all';
+
+        renderServices();
+        calculateTotals();
+        updateSelectedBadge();
+
+        // Синхронизируем инпут площади в шапке пресетов
+        const areaInput = document.getElementById('preset-area-input');
+        if (areaInput) {
+            areaInput.value = sqm;
+            updatePresetButtonsArea(sqm);
+        }
+
+        const presetLabels = { base: '«База»', standard: '«Стандарт»', premium: '«Премиум»' };
+        showToast(`⚡ Загружен пакет ${presetLabels[presetType] || ''} для ${sqm} м²!`);
+
+        return true;
+    }
+
+    /**
+     * Обновление отображаемой площади на кнопках пресетов
+     */
+    function updatePresetButtonsArea(val) {
+        const sqm = Math.max(10, Math.min(500, parseInt(val, 10) || 42));
+        document.querySelectorAll('.preset-btn-sqm').forEach(el => {
+            el.textContent = sqm;
+        });
+    }
+
+    /**
+     * Применение пресета с текущей площадью из инпута калькулятора
+     */
+    function applyCurrentApartmentPreset(presetType) {
+        const areaInput = document.getElementById('preset-area-input');
+        const sqm = areaInput ? parseInt(areaInput.value, 10) || 42 : 42;
+        applyApartmentPreset(presetType, sqm);
+    }
+
+    /**
+     * Проверка URL-параметров preset и area при старте
+     */
+    function checkUrlPreset() {
+        if (typeof window === 'undefined' || !window.location) return;
+        try {
+            const params = new URLSearchParams(window.location.search);
+            const preset = params.get('preset');
+            const area = parseInt(params.get('area'), 10) || 42;
+            if (preset && (preset === 'base' || preset === 'standard' || preset === 'premium')) {
+                const areaInput = document.getElementById('preset-area-input');
+                if (areaInput) {
+                    areaInput.value = area;
+                    updatePresetButtonsArea(area);
+                }
+                setTimeout(() => {
+                    applyApartmentPreset(preset, area);
+                }, 100);
+            }
+        } catch (e) {
+            // Изоляция ошибок парсинга URL в тестах
+        }
+    }
+
     // Экспорт в глобальную область видимости
     window.escapeHtml = escapeHtml;
     window.csvCell = csvCell;
@@ -1476,5 +1635,9 @@
     window.sendEstimateToMaster = sendEstimateToMaster;
     window.toggleDocsMenu = toggleDocsMenu;
     window.exportToExcel = exportToExcel;
+    window.applyApartmentPreset = applyApartmentPreset;
+    window.applyCurrentApartmentPreset = applyCurrentApartmentPreset;
+    window.updatePresetButtonsArea = updatePresetButtonsArea;
+    window.checkUrlPreset = checkUrlPreset;
 
 })(window);

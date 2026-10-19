@@ -278,6 +278,169 @@
         </div>
     </section>
 
+    <!-- СЕКЦИЯ: ТАРИФЫ И КАЛЬКУЛЯТОР ПЛОЩАДИ -->
+    <section class="section" id="packages-section" style="padding-top: 20px;">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 35px;">
+                <span class="bento-tag tag-cyan fade-in">ФИКСИРОВАННЫЕ ПАКЕТЫ</span>
+                <h2 class="fade-in" style="margin-bottom: 12px;">Готовые решения для <span>квартир под ключ</span></h2>
+                <p class="fade-in" style="color: var(--text-muted); max-width: 680px; margin: 0 auto; font-size: 0.95rem; line-height: 1.6;">
+                    Выберите примерную площадь вашей квартиры, чтобы увидеть ориентировочную стоимость работ и состав сметы. Каждое решение можно открыть и детально настроить в онлайн-калькуляторе.
+                </p>
+            </div>
+
+            <!-- ИНТЕРАКТИВНЫЙ БЕГУНОК ПЛОЩАДИ -->
+            <div class="card fade-in" style="max-width: 840px; margin: 0 auto 40px; padding: 26px 28px; background: rgba(10, 16, 30, 0.7); border: 1px solid rgba(0, 229, 255, 0.25); border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 10px; margin-bottom: 16px;">
+                    <div>
+                        <span style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); font-weight: 700;">Площадь квартиры:</span>
+                        <div style="font-family: var(--font-heading); font-size: 2.1rem; color: #fff; font-weight: 900; line-height: 1.1; margin-top: 4px;">
+                            <span id="slider-area-val" style="color: var(--primary-install);">42</span> <span style="font-size: 1.2rem; color: var(--text-muted); font-weight: 600;">м²</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;" id="area-chips">
+                        <button type="button" class="btn btn-outline area-chip" data-val="30" style="padding: 6px 14px; font-size: 0.8rem; border-radius: 8px;">Студия 30 м²</button>
+                        <button type="button" class="btn btn-outline area-chip active" data-val="42" style="padding: 6px 14px; font-size: 0.8rem; border-radius: 8px; border-color: var(--primary-install); color: #fff; background: rgba(0, 229, 255, 0.12);">1-к 42 м²</button>
+                        <button type="button" class="btn btn-outline area-chip" data-val="65" style="padding: 6px 14px; font-size: 0.8rem; border-radius: 8px;">2-к 65 м²</button>
+                        <button type="button" class="btn btn-outline area-chip" data-val="85" style="padding: 6px 14px; font-size: 0.8rem; border-radius: 8px;">3-к 85 м²</button>
+                    </div>
+                </div>
+
+                <div style="position: relative; margin: 20px 0 10px; padding: 0 4px;">
+                    <input type="range" id="area-slider" min="25" max="120" step="1" value="42" style="width: 100%; accent-color: var(--primary-install); cursor: pointer; height: 8px; margin: 0; display: block;">
+                    <div style="position: relative; width: 100%; height: 20px; margin-top: 8px; font-size: 0.76rem; color: var(--text-muted); font-family: var(--font-heading);">
+                        <span style="position: absolute; left: 0%; transform: translateX(0);">25 м²</span>
+                        <span style="position: absolute; left: 26.3%; transform: translateX(-50%);">50 м²</span>
+                        <span style="position: absolute; left: 52.6%; transform: translateX(-50%);">75 м²</span>
+                        <span style="position: absolute; left: 78.9%; transform: translateX(-50%);">100 м²</span>
+                        <span style="position: absolute; right: 0%; transform: translateX(0);">120 м²</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ТРИ КАРТОЧКИ ТАРИФОВ -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; align-items: stretch; margin-bottom: 20px;">
+                <!-- 1. ТАРИФ БАЗА -->
+                <div class="card fade-in" style="display: flex; flex-direction: column; justify-content: space-between; padding: 26px; border-radius: 16px; border: 1px solid var(--border-light); background: rgba(255, 255, 255, 0.02); position: relative;">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <span class="bento-tag tag-cyan" style="font-size: 0.75rem;">01 // МИНИМУМ</span>
+                            <span style="font-size: 0.82rem; color: var(--text-muted);">~1 900 ₽ / м²</span>
+                        </div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 8px; text-transform: uppercase;">
+                            Тариф «База»
+                        </h3>
+                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 18px;">
+                            Надёжный базовый электромонтаж по ГОСТ и ПУЭ. Идеально под сдачу в аренду, предчистовую отделку или бюджетный ремонт.
+                        </p>
+                        
+                        <div style="margin: 18px 0; padding: 14px; background: rgba(0, 229, 255, 0.04); border-radius: 10px; border-left: 3px solid var(--primary-install);">
+                            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Ориентир по смете:</div>
+                            <div style="font-family: var(--font-heading); font-size: 1.7rem; color: #fff; font-weight: 800; margin-top: 2px;">
+                                ~<span id="price-base">79 800</span> ₽
+                            </div>
+                        </div>
+
+                        <ul class="bento-features" style="font-size: 0.86rem; gap: 11px; margin-bottom: 24px;">
+                            <li style="align-items: flex-start;"><i style="flex-shrink: 0; margin-top: 2px;">✓</i> <span><b>~<span id="pts-base">26</span> точек</b> (розетки + выключатели)</span></li>
+                            <li style="align-items: flex-start;"><i style="flex-shrink: 0; margin-top: 2px;">✓</i> <span>Кабель в негорючей ПВХ-гофре по потолку</span></li>
+                            <li style="align-items: flex-start;"><i style="flex-shrink: 0; margin-top: 2px;">✓</i> <span>Штробление без пыли (пылесос класса M)</span></li>
+                            <li style="align-items: flex-start;"><i style="flex-shrink: 0; margin-top: 2px;">✓</i> <span>Щит до 18 модулей + УЗО на мокрые зоны</span></li>
+                            <li style="align-items: flex-start;"><i style="flex-shrink: 0; margin-top: 2px;">✓</i> <span>Чистовой монтаж механизмов и люстр</span></li>
+                        </ul>
+                    </div>
+
+                    <div style="padding-top: 18px; border-top: 1px solid var(--border-light);">
+                        <a href="../estimate.html?preset=base&area=42" id="link-base" class="btn btn-outline" style="width: 100%; justify-content: center; font-size: 0.88rem; padding: 12px;">
+                            Настроить в калькуляторе →
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 2. ТАРИФ СТАНДАРТ (НОРМИС) -->
+                <div class="card fade-in" style="display: flex; flex-direction: column; justify-content: space-between; padding: 26px; border-radius: 16px; border: 2px solid var(--primary-install); background: rgba(0, 229, 255, 0.03); box-shadow: 0 10px 35px rgba(0, 229, 255, 0.15); position: relative;">
+                    <div style="position: absolute; top: -13px; right: 24px; background: var(--primary-install); color: #050914; font-size: 0.75rem; font-weight: 800; padding: 3px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--font-heading);">
+                        ⭐ ХИТ ВЫБОРА
+                    </div>
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <span class="bento-tag tag-cyan" style="font-size: 0.75rem; background: rgba(0, 229, 255, 0.15); color: var(--primary-install);">02 // ДЛЯ СЕБЯ</span>
+                            <span style="font-size: 0.82rem; color: var(--primary-install); font-weight: 600;">~2 900 ₽ / м²</span>
+                        </div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 8px; text-transform: uppercase; color: #fff;">
+                            Тариф «Стандарт»
+                        </h3>
+                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 18px;">
+                            Продуманная эргономика для комфортной жизни. Удобное расположение розеток, защита бытовой техники от скачков напряжения.
+                        </p>
+
+                        <div style="margin: 18px 0; padding: 14px; background: rgba(0, 229, 255, 0.08); border-radius: 10px; border-left: 3px solid var(--primary-install);">
+                            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Ориентир по смете:</div>
+                            <div style="font-family: var(--font-heading); font-size: 1.7rem; color: var(--primary-install); font-weight: 900; margin-top: 2px;">
+                                ~<span id="price-standard">121 800</span> ₽
+                            </div>
+                        </div>
+
+                        <ul class="bento-features" style="font-size: 0.86rem; gap: 11px; margin-bottom: 24px;">
+                            <li style="align-items: flex-start;"><i style="flex-shrink: 0; margin-top: 2px;">⚡</i> <span><b>~<span id="pts-standard">46</span> точек</b> (ТВ-зоны, кухня, прикроватные)</span></li>
+                            <li style="align-items: flex-start;"><i style="flex-shrink: 0; margin-top: 2px;">⚡</i> <span>Отдельные линии на духовку, ПММ, стиралку</span></li>
+                            <li style="align-items: flex-start;"><i style="flex-shrink: 0; margin-top: 2px;">⚡</i> <span><b>Реле напряжения</b> (защита техники от скачков 380В)</span></li>
+                            <li style="align-items: flex-start;"><i style="flex-shrink: 0; margin-top: 2px;">⚡</i> <span>Щит до 36 модулей + дифзащита розеток</span></li>
+                            <li style="align-items: flex-start;"><i style="flex-shrink: 0; margin-top: 2px;">⚡</i> <span>Слаботочка: интернет-розетки RJ-45 к ТВ</span></li>
+                        </ul>
+                    </div>
+
+                    <div style="padding-top: 18px; border-top: 1px solid rgba(0, 229, 255, 0.25);">
+                        <a href="../estimate.html?preset=standard&area=42" id="link-standard" class="btn btn-primary" style="width: 100%; justify-content: center; font-size: 0.88rem; padding: 12px;">
+                            Настроить в калькуляторе ⚡
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 3. ТАРИФ ПРЕМИУМ -->
+                <div class="card fade-in" style="display: flex; flex-direction: column; justify-content: space-between; padding: 26px; border-radius: 16px; border: 1px solid rgba(255, 214, 10, 0.35); background: rgba(255, 214, 10, 0.02); position: relative;">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <span class="bento-tag tag-yellow" style="font-size: 0.75rem;">03 // МАКСИМУМ</span>
+                            <span style="font-size: 0.82rem; color: var(--volt-yellow); font-weight: 600;">~4 100 ₽ / м²</span>
+                        </div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 8px; text-transform: uppercase;">
+                            Тариф «Премиум»
+                        </h3>
+                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 18px;">
+                            Максимальная инженерная безопасность и дизайнерский свет: сценарии, мастер-выключатель, теплые полы и треки.
+                        </p>
+
+                        <div style="margin: 18px 0; padding: 14px; background: rgba(255, 214, 10, 0.05); border-radius: 10px; border-left: 3px solid var(--volt-yellow);">
+                            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Ориентир по смете:</div>
+                            <div style="font-family: var(--font-heading); font-size: 1.7rem; color: var(--volt-yellow); font-weight: 800; margin-top: 2px;">
+                                ~<span id="price-premium">172 200</span> ₽
+                            </div>
+                        </div>
+
+                        <ul class="bento-features" style="font-size: 0.86rem; gap: 11px; margin-bottom: 24px;">
+                            <li style="align-items: flex-start;"><i style="flex-shrink: 0; margin-top: 2px;">✓</i> <span><b>~<span id="pts-premium">68</span> точек</b> + проходные переключатели</span></li>
+                            <li style="align-items: flex-start;"><i style="flex-shrink: 0; margin-top: 2px;">✓</i> <span><b>«Мастер-выключатель»</b> (отключение света у двери)</span></li>
+                            <li style="align-items: flex-start;"><i style="flex-shrink: 0; margin-top: 2px;">✓</i> <span>Подключение теплого пола и полотенцесушителя</span></li>
+                            <li style="align-items: flex-start;"><i style="flex-shrink: 0; margin-top: 2px;">✓</i> <span>Трековое / LED-освещение со скрытыми БП</span></li>
+                            <li style="align-items: flex-start;"><i style="flex-shrink: 0; margin-top: 2px;">✓</i> <span>Просторный щит 48–54 модуля + мультимедиа</span></li>
+                        </ul>
+                    </div>
+
+                    <div style="padding-top: 18px; border-top: 1px solid var(--border-light);">
+                        <a href="../estimate.html?preset=premium&area=42" id="link-premium" class="btn btn-volt" style="width: 100%; justify-content: center; font-size: 0.88rem; padding: 12px;">
+                            Настроить в калькуляторе →
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="fade-in" style="text-align: center; font-size: 0.82rem; color: var(--text-muted); margin-top: 15px;">
+                * Расчёт является предварительным ориентиром по работам на основе типовых объектов в Санкт-Петербурге. Точная смета формируется в калькуляторе или после осмотра объекта инженером.
+            </p>
+        </div>
+    </section>
+
     <!-- СЕКЦИЯ 2: ПРАЙС-ЛИСТ В АККОРДЕОНАХ -->
     <section class="section" id="prices-section">
         <div class="container">
@@ -821,7 +984,80 @@
         });
     }
 
-    // 6. Плавное появление элементов
+    // 6. Интерактивный бегунок тарифов
+    const areaSlider = document.getElementById('area-slider');
+    const areaValDisplay = document.getElementById('slider-area-val');
+    const priceBaseEl = document.getElementById('price-base');
+    const priceStdEl = document.getElementById('price-standard');
+    const pricePremEl = document.getElementById('price-premium');
+    const ptsBaseEl = document.getElementById('pts-base');
+    const ptsStdEl = document.getElementById('pts-standard');
+    const ptsPremEl = document.getElementById('pts-premium');
+    const linkBaseEl = document.getElementById('link-base');
+    const linkStdEl = document.getElementById('link-standard');
+    const linkPremEl = document.getElementById('link-premium');
+    const areaChipBtns = document.querySelectorAll('.area-chip');
+
+    function updateAreaPackages(sqm) {
+        if (!areaSlider || !areaValDisplay) return;
+        sqm = parseInt(sqm, 10) || 42;
+        areaValDisplay.textContent = sqm;
+
+        // Расчёт честных ориентиров
+        // База ~1900 ₽/м², Стандарт ~2900 ₽/м², Премиум ~4100 ₽/м²
+        const costBase = Math.round((sqm * 1900) / 100) * 100;
+        const costStd = Math.round((sqm * 2900) / 100) * 100;
+        const costPrem = Math.round((sqm * 4100) / 100) * 100;
+
+        // Точки: База ~0.62 т/м², Стандарт ~1.1 т/м², Премиум ~1.6 т/м²
+        const ptsBase = Math.round(sqm * 0.62);
+        const ptsStd = Math.round(sqm * 1.1);
+        const ptsPrem = Math.round(sqm * 1.62);
+
+        if (priceBaseEl) priceBaseEl.textContent = costBase.toLocaleString('ru-RU');
+        if (priceStdEl) priceStdEl.textContent = costStd.toLocaleString('ru-RU');
+        if (pricePremEl) pricePremEl.textContent = costPrem.toLocaleString('ru-RU');
+
+        if (ptsBaseEl) ptsBaseEl.textContent = ptsBase;
+        if (ptsStdEl) ptsStdEl.textContent = ptsStd;
+        if (ptsPremEl) ptsPremEl.textContent = ptsPrem;
+
+        if (linkBaseEl) linkBaseEl.href = `../estimate.html?preset=base&area=${sqm}`;
+        if (linkStdEl) linkStdEl.href = `../estimate.html?preset=standard&area=${sqm}`;
+        if (linkPremEl) linkPremEl.href = `../estimate.html?preset=premium&area=${sqm}`;
+
+        // Подсветка чипов
+        areaChipBtns.forEach(btn => {
+            const val = parseInt(btn.getAttribute('data-val'), 10);
+            if (val === sqm) {
+                btn.classList.add('active');
+                btn.style.borderColor = 'var(--primary-install)';
+                btn.style.color = '#fff';
+                btn.style.background = 'rgba(0, 229, 255, 0.12)';
+            } else {
+                btn.classList.remove('active');
+                btn.style.borderColor = '';
+                btn.style.color = '';
+                btn.style.background = '';
+            }
+        });
+    }
+
+    if (areaSlider) {
+        areaSlider.addEventListener('input', (e) => {
+            updateAreaPackages(e.target.value);
+        });
+    }
+
+    areaChipBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const val = btn.getAttribute('data-val');
+            if (areaSlider) areaSlider.value = val;
+            updateAreaPackages(val);
+        });
+    });
+
+    // 7. Плавное появление элементов
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(e => {
             if (e.isIntersecting) e.target.classList.add('visible');
