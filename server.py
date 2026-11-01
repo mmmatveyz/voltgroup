@@ -63,7 +63,8 @@ else:
 CORS(app, resources={
     r"/ping": {"origins": ALLOWED_ORIGINS},
     r"/send-message": {"origins": ALLOWED_ORIGINS},
-    r"/get-status": {"origins": ALLOWED_ORIGINS}
+    r"/get-status": {"origins": ALLOWED_ORIGINS},
+    r"/api/crm/*": {"origins": ALLOWED_ORIGINS}
 })
 
 limiter = Limiter(
@@ -585,10 +586,13 @@ def normalize_photo_urls(val):
 def build_main_menu():
     text = (
         "⚡️ <b>Панель управления VoltGroup</b>\n\n"
-        "Управляйте объектами и этапами электромонтажа в 1 клик:"
+        "Управляйте объектами и задачами в 1 клик:"
     )
     kb = {
         "inline_keyboard": [
+            [
+                {"text": "📱 Открыть CRM мастера ⚡", "web_app": {"url": "https://voltgroup-spb.ru/crm/"}}
+            ],
             [
                 {"text": "📋 Мои объекты", "callback_data": "m:list"},
                 {"text": "➕ Новый объект", "callback_data": "m:new"}
@@ -919,6 +923,52 @@ def get_status():
 # ----------------------------------------------------
 # 6. МАРШРУТ ДЛЯ ТЕЛЕГРАМ БОТА (ВЕБХУК)
 # ----------------------------------------------------
+
+
+
+# ----------------------------------------------------
+# 5.1. МАРШРУТЫ CRM МАСТЕРА (/api/crm)
+# ----------------------------------------------------
+CRM_DATA_FILE = os.environ.get('CRM_DATA_FILE', os.path.join(os.path.dirname(os.path.abspath(__file__)), 'crm_data.json'))
+CRM_MASTER_PIN = os.environ.get('CRM_MASTER_PIN', '7744')
+
+def verify_crm_auth(req):
+    auth_header = req.headers.get('X-CRM-Key') or req.args.get('key')
+    if not auth_header:
+        return False
+    return secrets.compare_digest(str(auth_header).strip(), str(CRM_MASTER_PIN).strip())
+
+@app.route('/api/crm/data', methods=['GET'])
+@limiter.limit('60 per minute')
+def crm_get_data():
+    if not verify_crm_auth(request):
+        return jsonify({'status': 'error', 'msg': 'Unauthorized'}), 401
+    try:
+        if os.path.exists(CRM_DATA_FILE):
+            with open(CRM_DATA_FILE, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+        else:
+            data = {'objects': []}
+        return jsonify({'status': 'success', 'data': data}), 200
+    except Exception as e:
+        app.logger.error(f'Ошибка чтения CRM data: {e}')
+        return jsonify({'status': 'error', 'msg': 'Ошибка чтения данных'}), 500
+
+@app.route('/api/crm/data', methods=['POST'])
+@limiter.limit('60 per minute')
+def crm_save_data():
+    if not verify_crm_auth(request):
+        return jsonify({'status': 'error', 'msg': 'Unauthorized'}), 401
+    try:
+        payload = request.get_json(silent=True)
+        if not payload or 'objects' not in payload:
+            return jsonify({'status': 'error', 'msg': 'Некорректная структура данных'}), 400
+        with open(CRM_DATA_FILE, 'w', encoding='utf-8') as f:
+            json.dump(payload, f, ensure_ascii=False, indent=2)
+        return jsonify({'status': 'success'}), 200
+    except Exception as e:
+        app.logger.error(f'Ошибка записи CRM data: {e}')
+        return jsonify({'status': 'error', 'msg': 'Ошибка сохранения данных'}), 500
 
 @app.route('/webhook', methods=['POST'])
 @limiter.limit("120 per minute")

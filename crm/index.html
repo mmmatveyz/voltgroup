@@ -17,8 +17,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Подключение Telegram WebApp SDK (если открыто внутри TG) -->
+    <!-- Telegram WebApp SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <!-- Конфигурация API -->
+    <script src="../static/js/config.js"></script>
 
     <style>
         :root {
@@ -52,7 +55,7 @@
             color: var(--text-main);
             font-family: var(--font-main);
             min-height: 100vh;
-            padding-bottom: 70px;
+            padding-bottom: 75px;
             background-image: 
                 linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
@@ -61,7 +64,7 @@
 
         /* Шапка */
         .crm-header {
-            background: rgba(10, 16, 30, 0.85);
+            background: rgba(10, 16, 30, 0.88);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-light);
             padding: 12px 18px;
@@ -98,6 +101,21 @@
             font-weight: 700;
             letter-spacing: 0.05em;
         }
+
+        .sync-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success);
+            box-shadow: 0 0 8px var(--success);
+            display: inline-block;
+        }
+        .sync-indicator.syncing {
+            background: var(--volt-yellow);
+            box-shadow: 0 0 8px var(--volt-yellow);
+            animation: pulse 1s infinite alternate;
+        }
+        @keyframes pulse { from { opacity: 0.4; } to { opacity: 1; } }
 
         /* Контейнер */
         .container {
@@ -150,11 +168,6 @@
         .btn-outline:hover {
             border-color: var(--primary-install);
             color: var(--primary-install);
-        }
-
-        .btn-success {
-            background: var(--success);
-            color: #fff;
         }
 
         .btn-danger {
@@ -264,8 +277,8 @@
         }
 
         .task-row.done {
-            border-color: rgba(16, 185, 129, 0.3);
-            background: rgba(16, 185, 129, 0.03);
+            border-color: rgba(16, 185, 129, 0.35);
+            background: rgba(16, 185, 129, 0.04);
         }
 
         .task-header {
@@ -344,7 +357,7 @@
             font-size: 0.82rem;
         }
 
-        /* Выпадающий поиск позиций */
+        /* Поиск позиций */
         .search-results {
             max-height: 240px;
             overflow-y: auto;
@@ -465,7 +478,7 @@
             <div style="font-size: 2rem; margin-bottom: 8px;">⚡</div>
             <h2 style="font-family: var(--font-heading); font-size: 1.2rem; margin-bottom: 6px;">VoltGroup CRM</h2>
             <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">
-                Вход в служебную панель мастера. Введите мастер-код:
+                Вход в панель мастера. Введите мастер-код:
             </p>
             <input type="password" id="pin-field" class="pin-input" maxlength="6" placeholder="••••" autofocus onkeyup="if(event.key==='Enter') verifyPin()">
             <button type="button" class="btn btn-primary" style="width: 100%; padding: 12px;" onclick="verifyPin()">
@@ -482,6 +495,7 @@
             <span class="crm-badge-pro">MASTER</span>
         </a>
         <div style="display: flex; gap: 8px; align-items: center;">
+            <span id="sync-status" class="sync-indicator" title="Синхронизировано с облаком"></span>
             <button type="button" class="btn btn-outline btn-sm" onclick="openNewObjectModal()">+ Объект</button>
             <button type="button" class="btn btn-outline btn-sm" onclick="exportBackupData()" title="Резервная копия">💾</button>
         </div>
@@ -535,7 +549,7 @@
             <h4 style="font-family: var(--font-heading); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">
                 📋 Задачи по объекту (<span id="tasks-count">0</span>):
             </h4>
-            <span style="font-size: 0.78rem; color: var(--text-muted);">Отметьте объём за сегодня</span>
+            <span style="font-size: 0.78rem; color: var(--text-muted);">Отметьте объём за смену</span>
         </div>
 
         <div id="tasks-list">
@@ -545,7 +559,7 @@
         <div id="empty-tasks-placeholder" style="text-align: center; padding: 40px 20px; color: var(--text-muted); display: none;">
             <div style="font-size: 2.2rem; margin-bottom: 10px;">⚡</div>
             <p style="font-size: 0.95rem;">У этого объекта пока нет задач.</p>
-            <p style="font-size: 0.82rem; margin-top: 4px;">Нажмите кнопку «+ Добавить задачу», чтобы подтянуть позиции из прайс-листа.</p>
+            <p style="font-size: 0.82rem; margin-top: 4px;">Нажмите кнопку «+ Добавить задачу», чтобы выбрать позиции из прайс-листа.</p>
         </div>
 
     </div>
@@ -672,32 +686,33 @@
         </div>
     </div>
 
-    <!-- ЛОГИКА CRM СИСТЕМЫ -->
+    <!-- ЛОГИКА CRM СИСТЕМЫ И СЕРВЕРНОЙ СИНХРОНИЗАЦИИ -->
     <script>
         const STORAGE_KEY = 'VG_CRM_DATA_V1';
         const AUTH_STORAGE_KEY = 'VG_CRM_AUTH_TOKEN';
-        const MASTER_PIN = '7744'; // Базовый мастер-код для ПК (можно изменить)
+        const MASTER_PIN = '7744';
 
         let priceCatalog = [];
         let currentObjId = null;
-        let todayCompletedWork = {}; // id задачи -> количество сделанного за сегодня
+        let todayCompletedWork = {};
+        let inFlightSync = false;
 
-        // 1. Инициализация и проверка авторизации
+        // 1. Инициализация и синхронизация
         window.addEventListener('DOMContentLoaded', async () => {
             await loadCatalog();
             checkAuth();
+            await syncWithServer();
             initApp();
         });
 
-        // Проверка входа (Telegram WebApp или сохраненная сессия браузера)
+        // Проверка входа
         function checkAuth() {
-            // Если открыто внутри Telegram
             if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData) {
                 document.getElementById('auth-overlay').style.display = 'none';
+                localStorage.setItem(AUTH_STORAGE_KEY, 'AUTHORIZED_MASTER');
                 return;
             }
 
-            // Если открыто в обычном браузере на ПК
             const savedToken = localStorage.getItem(AUTH_STORAGE_KEY);
             if (savedToken === 'AUTHORIZED_MASTER') {
                 document.getElementById('auth-overlay').style.display = 'none';
@@ -712,13 +727,14 @@
                 localStorage.setItem(AUTH_STORAGE_KEY, 'AUTHORIZED_MASTER');
                 document.getElementById('auth-overlay').style.display = 'none';
                 document.getElementById('auth-err').style.display = 'none';
+                syncWithServer().then(() => initApp());
             } else {
                 document.getElementById('auth-err').style.display = 'block';
                 document.getElementById('pin-field').value = '';
             }
         }
 
-        // Загрузка прайса из prices.json
+        // Загрузка прайса
         async function loadCatalog() {
             try {
                 const res = await fetch('../static/data/prices.json?v=' + Date.now());
@@ -741,11 +757,66 @@
             }
         }
 
-        // Загрузка и хранение данных в localStorage (с fallback)
+        // Облачная синхронизация с сервером Render
+        function getApiUrl() {
+            return (window.VG_API || 'https://voltgroup-bot.onrender.com') + '/api/crm/data';
+        }
+
+        async function syncWithServer() {
+            const ind = document.getElementById('sync-status');
+            if (ind) ind.className = 'sync-indicator syncing';
+
+            try {
+                const res = await fetch(getApiUrl(), {
+                    method: 'GET',
+                    headers: { 'X-CRM-Key': MASTER_PIN }
+                });
+
+                if (res.ok) {
+                    const json = await res.json();
+                    if (json.status === 'success' && json.data && json.data.objects && json.data.objects.length > 0) {
+                        localStorage.setItem(STORAGE_KEY, JSON.stringify(json.data));
+                    } else {
+                        const localDb = getDb();
+                        if (localDb.objects && localDb.objects.length > 0) {
+                            await pushToServer(localDb);
+                        }
+                    }
+                }
+            } catch (e) {
+                console.warn('Сервер временно недоступен, работаем с локальной базой:', e);
+            } finally {
+                if (ind) ind.className = 'sync-indicator';
+            }
+        }
+
+        async function pushToServer(db) {
+            if (inFlightSync) return;
+            inFlightSync = true;
+            const ind = document.getElementById('sync-status');
+            if (ind) ind.className = 'sync-indicator syncing';
+
+            try {
+                await fetch(getApiUrl(), {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CRM-Key': MASTER_PIN
+                    },
+                    body: JSON.stringify(db)
+                });
+            } catch (e) {
+                console.warn('Ошибка отправки данных на сервер:', e);
+            } finally {
+                inFlightSync = false;
+                if (ind) ind.className = 'sync-indicator';
+            }
+        }
+
+        // База данных
         function getDb() {
             const raw = localStorage.getItem(STORAGE_KEY);
             if (!raw) {
-                // Демонстрационный стартовый объект
                 const initial = {
                     objects: [
                         {
@@ -774,9 +845,10 @@
 
         function saveDb(db) {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+            pushToServer(db);
         }
 
-        // Инициализация интерфейса
+        // Отрисовка
         function initApp() {
             const db = getDb();
             const selector = document.getElementById('object-selector');
@@ -810,7 +882,6 @@
             renderCurrentObject();
         }
 
-        // Отрисовка текущего объекта
         function renderCurrentObject() {
             const db = getDb();
             const obj = db.objects.find(o => o.id === currentObjId);
@@ -831,7 +902,6 @@
             document.getElementById('current-obj-phone').textContent = obj.phone || '';
             document.getElementById('obj-stage-badge').textContent = obj.stage || 'В работе';
 
-            // Расчёт финансов
             let totalDoneSum = 0;
             obj.tasks.forEach(t => {
                 totalDoneSum += (t.done || 0) * t.price;
@@ -851,7 +921,6 @@
 
             document.getElementById('tasks-count').textContent = obj.tasks.length;
 
-            // Рендер задач
             tasksList.innerHTML = '';
             if (obj.tasks.length === 0) {
                 placeholder.style.display = 'block';
@@ -894,7 +963,6 @@
             recalcShiftTotal();
         }
 
-        // Изменение сделанного за смену
         function adjustTodayWork(taskId, delta) {
             const current = todayCompletedWork[taskId] || 0;
             const updated = Math.max(0, current + delta);
@@ -906,7 +974,6 @@
             recalcShiftTotal();
         }
 
-        // Пересчёт суммы "За сегодня"
         function recalcShiftTotal() {
             const db = getDb();
             const obj = db.objects.find(o => o.id === currentObjId);
@@ -921,7 +988,6 @@
             document.getElementById('shift-total-amount').textContent = shiftSum.toLocaleString('ru-RU');
         }
 
-        // Закрытие смены: перенос сегодня в постоянный done
         function commitDailyShift() {
             const db = getDb();
             const obj = db.objects.find(o => o.id === currentObjId);
@@ -937,17 +1003,16 @@
             });
 
             if (!appliedAny) {
-                alert('Вы ещё не отметили ни одной сделанной работы за сегодня.');
+                alert('Вы ещё не отметили ни одного выполненного объёма за сегодня.');
                 return;
             }
 
             saveDb(db);
             todayCompletedWork = {};
             renderCurrentObject();
-            alert('✓ Объёмы смены зафиксированы в балансе объекта!');
+            alert('✓ Объёмы смены сохранены в базу и баланс объекта обновлён!');
         }
 
-        // Скопировать готовый текстовый отчёт клиенту
         function copyDailyReport() {
             const db = getDb();
             const obj = db.objects.find(o => o.id === currentObjId);
@@ -966,7 +1031,7 @@
             });
 
             if (lines.length === 0) {
-                alert('Сначала отметьте кнопками (+), что было сделано за сегодня.');
+                alert('Сначала отметьте кнопками (+), что было сделано за смену.');
                 return;
             }
 
@@ -977,13 +1042,12 @@
                 + `\n\n💰 Итого выполнено за сегодня: ${total.toLocaleString('ru-RU')} ₽`;
 
             navigator.clipboard.writeText(report).then(() => {
-                alert('📋 Текст отчёта скопирован в буфер обмена!\n\nМожете вставить его в чат с заказчиком в Telegram или WhatsApp.');
+                alert('📋 Текст отчёта скопирован в буфер обмена!\nВставьте его в чат с клиентом в Telegram или WhatsApp.');
             }).catch(() => {
                 prompt('Скопируйте отчёт вручную:', report);
             });
         }
 
-        // Поиск по каталогу цен
         function searchPriceItem(query) {
             const box = document.getElementById('search-results-box');
             query = query.trim().toLowerCase();
@@ -1017,7 +1081,6 @@
             document.getElementById('task-search-input').value = '';
         }
 
-        // Сохранение новой задачи
         function saveNewTask() {
             const name = document.getElementById('task-name-input').value.trim();
             const price = Number(document.getElementById('task-price-input').value) || 0;
@@ -1046,12 +1109,10 @@
             closeModal('modal-add-task');
             renderCurrentObject();
 
-            // Сброс формы
             document.getElementById('task-name-input').value = '';
             document.getElementById('task-price-input').value = '';
         }
 
-        // Сохранение платежа
         function savePayment() {
             const sum = Number(document.getElementById('payment-sum-input').value) || 0;
             const note = document.getElementById('payment-note-input').value.trim() || 'Оплата';
@@ -1080,7 +1141,6 @@
             document.getElementById('payment-note-input').value = '';
         }
 
-        // Создание объекта
         function createNewObject() {
             const name = document.getElementById('new-obj-name').value.trim();
             const client = document.getElementById('new-obj-client').value.trim();
@@ -1109,7 +1169,6 @@
             initApp();
         }
 
-        // Модалки
         function openAddTaskModal() { document.getElementById('modal-add-task').classList.add('active'); }
         function openPaymentModal() { document.getElementById('modal-payment').classList.add('active'); }
         function openNewObjectModal() { document.getElementById('modal-new-object').classList.add('active'); }
