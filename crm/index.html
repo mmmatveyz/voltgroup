@@ -524,7 +524,7 @@
 
             <div class="balance-grid">
                 <div class="balance-item">
-                    <div class="lbl">Сделано</div>
+                    <div class="lbl">Выполнено</div>
                     <div class="val" id="stat-done" style="color: #fff;">0 ₽</div>
                 </div>
                 <div class="balance-item">
@@ -532,7 +532,7 @@
                     <div class="val" id="stat-paid" style="color: var(--success);">0 ₽</div>
                 </div>
                 <div class="balance-item">
-                    <div class="lbl">Остаток</div>
+                    <div class="lbl">К доплате</div>
                     <div class="val" id="stat-debt" style="color: var(--primary-install);">0 ₽</div>
                 </div>
             </div>
@@ -625,18 +625,22 @@
     <div class="modal" id="modal-payment">
         <div class="modal-sheet">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                <h3 style="font-family: var(--font-heading); font-size: 1.1rem; color: #fff;">💳 Внести оплату</h3>
+                <h3 style="font-family: var(--font-heading); font-size: 1.1rem; color: #fff;">💳 Внести оплату за работу</h3>
                 <button type="button" class="btn btn-outline btn-sm" onclick="closeModal('modal-payment')">✕</button>
             </div>
 
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.4;">
+                Фиксируйте только оплату за выполненный объём работ (без авансов на материалы).
+            </p>
+
             <div style="margin-bottom: 14px;">
-                <label style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase;">Сумма платежа (₽):</label>
-                <input type="number" id="payment-sum-input" class="form-input" style="font-size: 1.4rem; font-weight: 800; font-family: var(--font-heading); color: var(--success);" placeholder="35000">
+                <label style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase;">Сумма оплаты за работу (₽):</label>
+                <input type="number" id="payment-sum-input" class="form-input" style="font-size: 1.4rem; font-weight: 800; font-family: var(--font-heading); color: var(--success);" placeholder="25000">
             </div>
 
             <div style="margin-bottom: 18px;">
                 <label style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase;">Комментарий / Способ:</label>
-                <input type="text" id="payment-note-input" class="form-input" placeholder="Например: перевод Т-Банк за штробление">
+                <input type="text" id="payment-note-input" class="form-input" placeholder="Например: расчет за смену / перевод Т-Банк">
             </div>
 
             <button type="button" class="btn btn-volt" style="width: 100%; padding: 12px;" onclick="savePayment()">
@@ -679,7 +683,7 @@
     <div class="modal" id="modal-history">
         <div class="modal-sheet">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                <h3 style="font-family: var(--font-heading); font-size: 1.1rem; color: #fff;">История выплат</h3>
+                <h3 style="font-family: var(--font-heading); font-size: 1.1rem; color: #fff;">История оплат за работу</h3>
                 <button type="button" class="btn btn-outline btn-sm" onclick="closeModal('modal-history')">✕</button>
             </div>
             <div id="payment-history-list"></div>
@@ -816,7 +820,12 @@
         // База данных
         function getDb() {
             const raw = localStorage.getItem(STORAGE_KEY);
-            if (!raw) {
+            let db = null;
+            if (raw) {
+                try { db = JSON.parse(raw); } catch(e) {}
+            }
+
+            if (!db || !db.objects) {
                 const initial = {
                     objects: [
                         {
@@ -831,16 +840,28 @@
                                 { id: 't3', name: 'Прокладка кабеля ВВГнг-LS в гофре по потолку', price: 150, unit: 'м.п.', plan: 120, done: 0 },
                                 { id: 't4', name: 'Сборка и монтаж щита на 24 модуля', price: 9500, unit: 'компл.', plan: 1, done: 0 }
                             ],
-                            payments: [
-                                { id: 'p1', date: '01.11.2026', sum: 15000, note: 'Аванс на закупку' }
-                            ]
+                            payments: []
                         }
                     ]
                 };
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(initial));
                 return initial;
             }
-            return JSON.parse(raw);
+
+            // Автоочистка старых авансов на закупку (убираем смешивание материала и работы)
+            let modified = false;
+            db.objects.forEach(obj => {
+                if (obj.payments && obj.payments.length > 0) {
+                    const before = obj.payments.length;
+                    obj.payments = obj.payments.filter(p => !p.note || !p.note.toLowerCase().includes('аванс на закупку'));
+                    if (obj.payments.length !== before) modified = true;
+                }
+            });
+            if (modified) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+            }
+
+            return db;
         }
 
         function saveDb(db) {
@@ -917,7 +938,7 @@
             document.getElementById('stat-done').textContent = totalDoneSum.toLocaleString('ru-RU') + ' ₽';
             document.getElementById('stat-paid').textContent = totalPaid.toLocaleString('ru-RU') + ' ₽';
             document.getElementById('stat-debt').textContent = debt.toLocaleString('ru-RU') + ' ₽';
-            document.getElementById('stat-debt').style.color = debt > 0 ? 'var(--volt-yellow)' : 'var(--primary-install)';
+            document.getElementById('stat-debt').style.color = debt > 0 ? 'var(--volt-yellow)' : 'var(--success)';
 
             document.getElementById('tasks-count').textContent = obj.tasks.length;
 
@@ -936,7 +957,10 @@
                     row.innerHTML = `
                         <div class="task-header">
                             <div class="task-title">${escapeHtml(t.name)}</div>
-                            <div class="task-price-tag">${t.price} ₽ / ${t.unit}</div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div class="task-price-tag">${t.price} ₽ / ${t.unit}</div>
+                                <button type="button" onclick="deleteTask('${t.id}')" title="Удалить задачу" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.9rem; padding: 2px 4px; line-height: 1;">✕</button>
+                            </div>
                         </div>
                         <div class="task-progress-bar">
                             <div class="task-progress-fill" style="width: ${percent}%;"></div>
@@ -1174,6 +1198,28 @@
         function openNewObjectModal() { document.getElementById('modal-new-object').classList.add('active'); }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
+        function deleteTask(taskId) {
+            if (!confirm('Удалить эту задачу из объекта?')) return;
+            const db = getDb();
+            const obj = db.objects.find(o => o.id === currentObjId);
+            if (!obj) return;
+            obj.tasks = obj.tasks.filter(t => t.id !== taskId);
+            delete todayCompletedWork[taskId];
+            saveDb(db);
+            renderCurrentObject();
+        }
+
+        function deletePayment(pid) {
+            if (!confirm('Удалить эту запись об оплате?')) return;
+            const db = getDb();
+            const obj = db.objects.find(o => o.id === currentObjId);
+            if (!obj || !obj.payments) return;
+            obj.payments = obj.payments.filter(p => p.id !== pid);
+            saveDb(db);
+            renderCurrentObject();
+            openHistoryModal();
+        }
+
         function openHistoryModal() {
             const db = getDb();
             const obj = db.objects.find(o => o.id === currentObjId);
@@ -1182,8 +1228,24 @@
             const list = document.getElementById('payment-history-list');
             list.innerHTML = '';
 
+            let totalPaid = 0;
+            if (obj.payments) {
+                obj.payments.forEach(p => totalPaid += Number(p.sum) || 0);
+            }
+
+            const headerSummary = document.createElement('div');
+            headerSummary.style.cssText = 'padding:10px 14px; background:rgba(16, 185, 129, 0.1); border:1px solid rgba(16, 185, 129, 0.25); border-radius:8px; margin-bottom:14px; font-size:0.88rem; color:#fff; display:flex; justify-content:space-between; align-items:center;';
+            headerSummary.innerHTML = `
+                <span>Всего получено за работу:</span>
+                <b style="color:var(--success); font-family:var(--font-heading); font-size:1.05rem;">${totalPaid.toLocaleString('ru-RU')} ₽</b>
+            `;
+            list.appendChild(headerSummary);
+
             if (!obj.payments || obj.payments.length === 0) {
-                list.innerHTML = '<p style="color:var(--text-muted); font-size:0.85rem; text-align:center; padding:20px;">Выплат пока не зафиксировано</p>';
+                const empty = document.createElement('p');
+                empty.style.cssText = 'color:var(--text-muted); font-size:0.85rem; text-align:center; padding:20px;';
+                empty.textContent = 'Оплат за работу пока не зафиксировано';
+                list.appendChild(empty);
             } else {
                 obj.payments.slice().reverse().forEach(p => {
                     const row = document.createElement('div');
@@ -1193,7 +1255,10 @@
                             <div style="font-weight:700; color:#fff; font-size:0.95rem;">${p.sum.toLocaleString('ru-RU')} ₽</div>
                             <div style="font-size:0.75rem; color:var(--text-muted);">${escapeHtml(p.note)}</div>
                         </div>
-                        <div style="font-size:0.75rem; color:var(--primary-install);">${p.date}</div>
+                        <div style="display:flex; align-items:center; gap:12px;">
+                            <span style="font-size:0.75rem; color:var(--primary-install);">${p.date}</span>
+                            <button type="button" onclick="deletePayment('${p.id}')" title="Удалить запись" style="background:none; border:none; color:#f87171; cursor:pointer; font-size:0.9rem; padding:2px 6px;">✕</button>
+                        </div>
                     `;
                     list.appendChild(row);
                 });
