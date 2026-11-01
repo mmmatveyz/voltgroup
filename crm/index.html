@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>VoltGroup CRM | Панель мастера</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Фавиконы -->
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="shortcut icon" href="../favicon.ico">
+    <meta name="theme-color" content="#050914">
+
+    <!-- Шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Подключение Telegram WebApp SDK (если открыто внутри TG) -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <style>
+        :root {
+            --bg-dark: #050914;
+            --bg-card: rgba(15, 23, 42, 0.95);
+            --bg-card-hover: rgba(30, 41, 59, 0.85);
+            --primary-install: #00E5FF;
+            --primary-eng: #7B61FF;
+            --volt-yellow: #FFD60A;
+            --success: #10B981;
+            --danger: #EF4444;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --border-light: rgba(255, 255, 255, 0.08);
+            --border-cyan: rgba(0, 229, 255, 0.3);
+            --radius-lg: 16px;
+            --radius-md: 10px;
+            --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-heading: 'Unbounded', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            min-height: 100vh;
+            padding-bottom: 70px;
+            background-image: 
+                linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        /* Шапка */
+        .crm-header {
+            background: rgba(10, 16, 30, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-light);
+            padding: 12px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .crm-logo {
+            font-family: var(--font-heading);
+            font-weight: 900;
+            font-size: 1.15rem;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .crm-logo span {
+            color: var(--primary-install);
+        }
+
+        .crm-badge-pro {
+            font-size: 0.65rem;
+            background: rgba(0, 229, 255, 0.15);
+            color: var(--primary-install);
+            border: 1px solid var(--border-cyan);
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        /* Контейнер */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        /* Кнопки */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 16px;
+            border-radius: var(--radius-md);
+            font-family: var(--font-main);
+            font-weight: 600;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .btn-primary {
+            background: var(--primary-install);
+            color: #050914;
+            font-weight: 700;
+            box-shadow: 0 4px 14px rgba(0, 229, 255, 0.35);
+        }
+
+        .btn-volt {
+            background: var(--volt-yellow);
+            color: #050914;
+            font-weight: 700;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border-color: var(--border-light);
+            color: var(--text-main);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary-install);
+            color: var(--primary-install);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: #fff;
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+        }
+
+        .btn-sm {
+            padding: 6px 10px;
+            font-size: 0.78rem;
+            border-radius: 6px;
+        }
+
+        /* Карточка */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            margin-bottom: 16px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Экран PIN-кода (авторизация с ПК) */
+        #auth-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-dark);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .auth-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-cyan);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            max-width: 380px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .pin-input {
+            width: 100%;
+            padding: 14px;
+            font-size: 1.4rem;
+            letter-spacing: 0.3em;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            color: #fff;
+            margin: 18px 0;
+            font-family: var(--font-heading);
+            outline: none;
+        }
+
+        .pin-input:focus {
+            border-color: var(--primary-install);
+            box-shadow: 0 0 12px rgba(0, 229, 255, 0.3);
+        }
+
+        /* Сводный баланс объекта */
+        .balance-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.35);
+            padding: 12px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-light);
+            margin: 14px 0;
+            text-align: center;
+        }
+
+        .balance-item .lbl {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+
+        .balance-item .val {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        /* Список задач */
+        .task-row {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 12px;
+            margin-bottom: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .task-row.done {
+            border-color: rgba(16, 185, 129, 0.3);
+            background: rgba(16, 185, 129, 0.03);
+        }
+
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .task-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.35;
+        }
+
+        .task-price-tag {
+            font-family: var(--font-heading);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary-install);
+            white-space: nowrap;
+        }
+
+        .task-progress-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 4px 0;
+        }
+
+        .task-progress-fill {
+            height: 100%;
+            background: var(--primary-install);
+            transition: width 0.3s;
+        }
+
+        .task-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            padding-top: 6px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.06);
+        }
+
+        .stepper-mini {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .stepper-mini button {
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            width: 28px;
+            height: 26px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .stepper-mini button:active {
+            background: rgba(0, 229, 255, 0.2);
+        }
+
+        .stepper-mini span {
+            padding: 0 8px;
+            font-weight: 700;
+            color: #fff;
+            font-size: 0.82rem;
+        }
+
+        /* Выпадающий поиск позиций */
+        .search-results {
+            max-height: 240px;
+            overflow-y: auto;
+            background: #0d1527;
+            border: 1px solid var(--border-cyan);
+            border-radius: var(--radius-md);
+            margin-top: 6px;
+        }
+
+        .search-item {
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+        }
+
+        .search-item:hover, .search-item:active {
+            background: rgba(0, 229, 255, 0.1);
+        }
+
+        /* Модальные окна */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 9, 20, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 0;
+        }
+
+        @media (min-width: 640px) {
+            .modal {
+                align-items: center;
+                padding: 20px;
+            }
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-sheet {
+            background: #0e1626;
+            border: 1px solid var(--border-cyan);
+            border-radius: 20px 20px 0 0;
+            width: 100%;
+            max-width: 520px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 22px;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.7);
+        }
+
+        @media (min-width: 640px) {
+            .modal-sheet {
+                border-radius: var(--radius-lg);
+            }
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 11px 14px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+            font-family: var(--font-main);
+        }
+
+        .form-input:focus {
+            border-color: var(--primary-install);
+        }
+
+        /* Нижняя фиксированная плашка "Закрыть смену" */
+        .shift-bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 16, 30, 0.92);
+            backdrop-filter: blur(14px);
+            border-top: 1px solid var(--border-cyan);
+            padding: 12px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 40;
+        }
+
+        .shift-info .lbl {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .shift-info .val {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            color: var(--volt-yellow);
+            font-weight: 800;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ОКНО АВТОРИЗАЦИИ ДЛЯ ПК (ПО ПИН-КОДУ) -->
+    <div id="auth-overlay" style="display: none;">
+        <div class="auth-box">
+            <div style="font-size: 2rem; margin-bottom: 8px;">⚡</div>
+            <h2 style="font-family: var(--font-heading); font-size: 1.2rem; margin-bottom: 6px;">VoltGroup CRM</h2>
+            <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">
+                Вход в служебную панель мастера. Введите мастер-код:
+            </p>
+            <input type="password" id="pin-field" class="pin-input" maxlength="6" placeholder="••••" autofocus onkeyup="if(event.key==='Enter') verifyPin()">
+            <button type="button" class="btn btn-primary" style="width: 100%; padding: 12px;" onclick="verifyPin()">
+                Войти в CRM ⚡
+            </button>
+            <div id="auth-err" style="color: var(--danger); font-size: 0.82rem; margin-top: 10px; display: none;">Неверный код доступа</div>
+        </div>
+    </div>
+
+    <!-- ШАПКА -->
+    <header class="crm-header">
+        <a href="./" class="crm-logo">
+            VOLT<span>CRM</span>
+            <span class="crm-badge-pro">MASTER</span>
+        </a>
+        <div style="display: flex; gap: 8px; align-items: center;">
+            <button type="button" class="btn btn-outline btn-sm" onclick="openNewObjectModal()">+ Объект</button>
+            <button type="button" class="btn btn-outline btn-sm" onclick="exportBackupData()" title="Резервная копия">💾</button>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- СЕЛЕКТОР ОБЪЕКТА -->
+        <div class="card" style="padding: 14px 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 0.05em;">Текущий объект:</span>
+                <span id="obj-stage-badge" class="crm-badge-pro" style="background: rgba(16, 185, 129, 0.15); color: var(--success); border-color: rgba(16, 185, 129, 0.3);">В работе</span>
+            </div>
+            <select id="object-selector" class="form-input" style="font-weight: 700; font-size: 0.95rem; cursor: pointer;" onchange="switchObject(this.value)">
+                <!-- Объекты заполняются скриптом -->
+            </select>
+        </div>
+
+        <!-- ДАШБОРД БАЛАНСА ОБЪЕКТА -->
+        <div class="card" style="border-color: rgba(0, 229, 255, 0.25);">
+            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                <h3 id="current-obj-title" style="font-family: var(--font-heading); font-size: 1.15rem; color: #fff;">Загрузка объекта...</h3>
+                <span id="current-obj-phone" style="font-size: 0.82rem; color: var(--primary-install);"></span>
+            </div>
+            <div id="current-obj-address" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;"></div>
+
+            <div class="balance-grid">
+                <div class="balance-item">
+                    <div class="lbl">Сделано</div>
+                    <div class="val" id="stat-done" style="color: #fff;">0 ₽</div>
+                </div>
+                <div class="balance-item">
+                    <div class="lbl">Оплачено</div>
+                    <div class="val" id="stat-paid" style="color: var(--success);">0 ₽</div>
+                </div>
+                <div class="balance-item">
+                    <div class="lbl">Остаток</div>
+                    <div class="val" id="stat-debt" style="color: var(--primary-install);">0 ₽</div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button type="button" class="btn btn-primary btn-sm" onclick="openAddTaskModal()" style="flex: 1;">+ Добавить задачу</button>
+                <button type="button" class="btn btn-volt btn-sm" onclick="openPaymentModal()" style="flex: 1;">+ Внести оплату</button>
+                <button type="button" class="btn btn-outline btn-sm" onclick="openHistoryModal()">История оплат</button>
+            </div>
+        </div>
+
+        <!-- СПИСОК ЗАДАЧ -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin: 18px 0 10px;">
+            <h4 style="font-family: var(--font-heading); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">
+                📋 Задачи по объекту (<span id="tasks-count">0</span>):
+            </h4>
+            <span style="font-size: 0.78rem; color: var(--text-muted);">Отметьте объём за сегодня</span>
+        </div>
+
+        <div id="tasks-list">
+            <!-- Задачи генерируются динамически -->
+        </div>
+
+        <div id="empty-tasks-placeholder" style="text-align: center; padding: 40px 20px; color: var(--text-muted); display: none;">
+            <div style="font-size: 2.2rem; margin-bottom: 10px;">⚡</div>
+            <p style="font-size: 0.95rem;">У этого объекта пока нет задач.</p>
+            <p style="font-size: 0.82rem; margin-top: 4px;">Нажмите кнопку «+ Добавить задачу», чтобы подтянуть позиции из прайс-листа.</p>
+        </div>
+
+    </div>
+
+    <!-- НИЖНЯЯ ПАНЕЛЬ СМЕНЫ: "СДЕЛАНО ЗА СЕГОДНЯ" -->
+    <div class="shift-bottom-bar" id="shift-bar">
+        <div class="shift-info">
+            <div class="lbl">Выполнено за сегодня:</div>
+            <div class="val"><span id="shift-total-amount">0</span> ₽</div>
+        </div>
+        <div style="display: flex; gap: 8px;">
+            <button type="button" class="btn btn-outline btn-sm" onclick="copyDailyReport()" title="Скопировать готовое сообщение для клиента">
+                📋 Отчёт
+            </button>
+            <button type="button" class="btn btn-primary btn-sm" onclick="commitDailyShift()">
+                ✓ Закрыть смену
+            </button>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО: ДОБАВИТЬ ЗАДАЧУ (ПОИСК ПО ПРАЙСУ) -->
+    <div class="modal" id="modal-add-task">
+        <div class="modal-sheet">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h3 style="font-family: var(--font-heading); font-size: 1.1rem; color: #fff;">+ Задача из прайса</h3>
+                <button type="button" class="btn btn-outline btn-sm" onclick="closeModal('modal-add-task')">✕</button>
+            </div>
+
+            <div style="margin-bottom: 14px;">
+                <label style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase;">Поиск по прайс-листу:</label>
+                <input type="text" id="task-search-input" class="form-input" placeholder="Например: штроба, кабель, подрозетник..." oninput="searchPriceItem(this.value)">
+                <div class="search-results" id="search-results-box" style="display: none;"></div>
+            </div>
+
+            <div style="margin-bottom: 14px;">
+                <label style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase;">Наименование:</label>
+                <input type="text" id="task-name-input" class="form-input" placeholder="Название работы">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+                <div>
+                    <label style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase;">Цена (₽):</label>
+                    <input type="number" id="task-price-input" class="form-input" placeholder="450">
+                </div>
+                <div>
+                    <label style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase;">Ед. изм.:</label>
+                    <input type="text" id="task-unit-input" class="form-input" value="м.п.">
+                </div>
+            </div>
+
+            <div style="margin-bottom: 18px;">
+                <label style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase;">Общий объём по плану:</label>
+                <input type="number" id="task-plan-input" class="form-input" placeholder="Например: 15" value="1">
+            </div>
+
+            <button type="button" class="btn btn-primary" style="width: 100%; padding: 12px;" onclick="saveNewTask()">
+                Сохранить задачу в объект ⚡
+            </button>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО: ВНЕСТИ ОПЛАТУ -->
+    <div class="modal" id="modal-payment">
+        <div class="modal-sheet">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h3 style="font-family: var(--font-heading); font-size: 1.1rem; color: #fff;">💳 Внести оплату</h3>
+                <button type="button" class="btn btn-outline btn-sm" onclick="closeModal('modal-payment')">✕</button>
+            </div>
+
+            <div style="margin-bottom: 14px;">
+                <label style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase;">Сумма платежа (₽):</label>
+                <input type="number" id="payment-sum-input" class="form-input" style="font-size: 1.4rem; font-weight: 800; font-family: var(--font-heading); color: var(--success);" placeholder="35000">
+            </div>
+
+            <div style="margin-bottom: 18px;">
+                <label style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase;">Комментарий / Способ:</label>
+                <input type="text" id="payment-note-input" class="form-input" placeholder="Например: перевод Т-Банк за штробление">
+            </div>
+
+            <button type="button" class="btn btn-volt" style="width: 100%; padding: 12px;" onclick="savePayment()">
+                Зафиксировать оплату ✓
+            </button>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО: НОВЫЙ ОБЪЕКТ -->
+    <div class="modal" id="modal-new-object">
+        <div class="modal-sheet">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h3 style="font-family: var(--font-heading); font-size: 1.1rem; color: #fff;">+ Новый объект</h3>
+                <button type="button" class="btn btn-outline btn-sm" onclick="closeModal('modal-new-object')">✕</button>
+            </div>
+
+            <div style="margin-bottom: 14px;">
+                <label style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase;">Адрес / ЖК / Название:</label>
+                <input type="text" id="new-obj-name" class="form-input" placeholder="Мурино, ЖК Авиатор, кв. 42">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+                <div>
+                    <label style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase;">Имя клиента:</label>
+                    <input type="text" id="new-obj-client" class="form-input" placeholder="Иван">
+                </div>
+                <div>
+                    <label style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase;">Телефон:</label>
+                    <input type="tel" id="new-obj-phone" class="form-input" placeholder="+7 999 000-00-00">
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-primary" style="width: 100%; padding: 12px;" onclick="createNewObject()">
+                Создать объект ⚡
+            </button>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО: ИСТОРИЯ ОПЛАТ -->
+    <div class="modal" id="modal-history">
+        <div class="modal-sheet">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h3 style="font-family: var(--font-heading); font-size: 1.1rem; color: #fff;">История выплат</h3>
+                <button type="button" class="btn btn-outline btn-sm" onclick="closeModal('modal-history')">✕</button>
+            </div>
+            <div id="payment-history-list"></div>
+        </div>
+    </div>
+
+    <!-- ЛОГИКА CRM СИСТЕМЫ -->
+    <script>
+        const STORAGE_KEY = 'VG_CRM_DATA_V1';
+        const AUTH_STORAGE_KEY = 'VG_CRM_AUTH_TOKEN';
+        const MASTER_PIN = '7744'; // Базовый мастер-код для ПК (можно изменить)
+
+        let priceCatalog = [];
+        let currentObjId = null;
+        let todayCompletedWork = {}; // id задачи -> количество сделанного за сегодня
+
+        // 1. Инициализация и проверка авторизации
+        window.addEventListener('DOMContentLoaded', async () => {
+            await loadCatalog();
+            checkAuth();
+            initApp();
+        });
+
+        // Проверка входа (Telegram WebApp или сохраненная сессия браузера)
+        function checkAuth() {
+            // Если открыто внутри Telegram
+            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData) {
+                document.getElementById('auth-overlay').style.display = 'none';
+                return;
+            }
+
+            // Если открыто в обычном браузере на ПК
+            const savedToken = localStorage.getItem(AUTH_STORAGE_KEY);
+            if (savedToken === 'AUTHORIZED_MASTER') {
+                document.getElementById('auth-overlay').style.display = 'none';
+            } else {
+                document.getElementById('auth-overlay').style.display = 'flex';
+            }
+        }
+
+        function verifyPin() {
+            const entered = document.getElementById('pin-field').value.trim();
+            if (entered === MASTER_PIN) {
+                localStorage.setItem(AUTH_STORAGE_KEY, 'AUTHORIZED_MASTER');
+                document.getElementById('auth-overlay').style.display = 'none';
+                document.getElementById('auth-err').style.display = 'none';
+            } else {
+                document.getElementById('auth-err').style.display = 'block';
+                document.getElementById('pin-field').value = '';
+            }
+        }
+
+        // Загрузка прайса из prices.json
+        async function loadCatalog() {
+            try {
+                const res = await fetch('../static/data/prices.json?v=' + Date.now());
+                const data = await res.json();
+                priceCatalog = [];
+                if (data.install && data.install.categories) {
+                    data.install.categories.forEach(cat => {
+                        cat.items.forEach(it => {
+                            priceCatalog.push({
+                                title: it.service,
+                                price: it.price,
+                                unit: it.unit,
+                                cat: cat.name
+                            });
+                        });
+                    });
+                }
+            } catch (e) {
+                console.error('Ошибка загрузки каталога цен:', e);
+            }
+        }
+
+        // Загрузка и хранение данных в localStorage (с fallback)
+        function getDb() {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) {
+                // Демонстрационный стартовый объект
+                const initial = {
+                    objects: [
+                        {
+                            id: 'obj_1',
+                            name: 'Мурино, ЖК Авиатор, кв. 42',
+                            client: 'Иван Сергеевич',
+                            phone: '+7 (921) 123-45-67',
+                            stage: 'Черновой монтаж',
+                            tasks: [
+                                { id: 't1', name: 'Штробление стен под кабель (монолит)', price: 450, unit: 'м.п.', plan: 25, done: 0 },
+                                { id: 't2', name: 'Сверление коронкой под подрозетник (бетон)', price: 450, unit: 'шт.', plan: 14, done: 0 },
+                                { id: 't3', name: 'Прокладка кабеля ВВГнг-LS в гофре по потолку', price: 150, unit: 'м.п.', plan: 120, done: 0 },
+                                { id: 't4', name: 'Сборка и монтаж щита на 24 модуля', price: 9500, unit: 'компл.', plan: 1, done: 0 }
+                            ],
+                            payments: [
+                                { id: 'p1', date: '01.11.2026', sum: 15000, note: 'Аванс на закупку' }
+                            ]
+                        }
+                    ]
+                };
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(initial));
+                return initial;
+            }
+            return JSON.parse(raw);
+        }
+
+        function saveDb(db) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+        }
+
+        // Инициализация интерфейса
+        function initApp() {
+            const db = getDb();
+            const selector = document.getElementById('object-selector');
+            selector.innerHTML = '';
+
+            if (db.objects.length === 0) {
+                selector.innerHTML = '<option value="">Нет объектов</option>';
+                currentObjId = null;
+                renderCurrentObject();
+                return;
+            }
+
+            db.objects.forEach(obj => {
+                const opt = document.createElement('option');
+                opt.value = obj.id;
+                opt.textContent = `${obj.name} (${obj.client})`;
+                selector.appendChild(opt);
+            });
+
+            if (!currentObjId || !db.objects.find(o => o.id === currentObjId)) {
+                currentObjId = db.objects[0].id;
+            }
+            selector.value = currentObjId;
+            todayCompletedWork = {};
+            renderCurrentObject();
+        }
+
+        function switchObject(objId) {
+            currentObjId = objId;
+            todayCompletedWork = {};
+            renderCurrentObject();
+        }
+
+        // Отрисовка текущего объекта
+        function renderCurrentObject() {
+            const db = getDb();
+            const obj = db.objects.find(o => o.id === currentObjId);
+            const tasksList = document.getElementById('tasks-list');
+            const placeholder = document.getElementById('empty-tasks-placeholder');
+
+            if (!obj) {
+                document.getElementById('current-obj-title').textContent = 'Выберите объект';
+                document.getElementById('current-obj-address').textContent = '';
+                document.getElementById('current-obj-phone').textContent = '';
+                tasksList.innerHTML = '';
+                placeholder.style.display = 'block';
+                return;
+            }
+
+            document.getElementById('current-obj-title').textContent = obj.name;
+            document.getElementById('current-obj-address').textContent = obj.client ? `Заказчик: ${obj.client}` : '';
+            document.getElementById('current-obj-phone').textContent = obj.phone || '';
+            document.getElementById('obj-stage-badge').textContent = obj.stage || 'В работе';
+
+            // Расчёт финансов
+            let totalDoneSum = 0;
+            obj.tasks.forEach(t => {
+                totalDoneSum += (t.done || 0) * t.price;
+            });
+
+            let totalPaid = 0;
+            if (obj.payments) {
+                obj.payments.forEach(p => totalPaid += Number(p.sum) || 0);
+            }
+
+            const debt = totalDoneSum - totalPaid;
+
+            document.getElementById('stat-done').textContent = totalDoneSum.toLocaleString('ru-RU') + ' ₽';
+            document.getElementById('stat-paid').textContent = totalPaid.toLocaleString('ru-RU') + ' ₽';
+            document.getElementById('stat-debt').textContent = debt.toLocaleString('ru-RU') + ' ₽';
+            document.getElementById('stat-debt').style.color = debt > 0 ? 'var(--volt-yellow)' : 'var(--primary-install)';
+
+            document.getElementById('tasks-count').textContent = obj.tasks.length;
+
+            // Рендер задач
+            tasksList.innerHTML = '';
+            if (obj.tasks.length === 0) {
+                placeholder.style.display = 'block';
+            } else {
+                placeholder.style.display = 'none';
+                obj.tasks.forEach(t => {
+                    const todayDelta = todayCompletedWork[t.id] || 0;
+                    const percent = Math.min(100, Math.round(((t.done || 0) / t.plan) * 100));
+                    const isFullyDone = (t.done || 0) >= t.plan;
+
+                    const row = document.createElement('div');
+                    row.className = 'task-row' + (isFullyDone ? ' done' : '');
+                    row.innerHTML = `
+                        <div class="task-header">
+                            <div class="task-title">${escapeHtml(t.name)}</div>
+                            <div class="task-price-tag">${t.price} ₽ / ${t.unit}</div>
+                        </div>
+                        <div class="task-progress-bar">
+                            <div class="task-progress-fill" style="width: ${percent}%;"></div>
+                        </div>
+                        <div class="task-controls">
+                            <div>
+                                План: <b>${t.done || 0}</b> из <b>${t.plan}</b> ${t.unit}
+                                ${isFullyDone ? ' <span style="color:var(--success)">✓ Сделано</span>' : ''}
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="font-size:0.75rem; color:var(--text-muted)">Сегодня:</span>
+                                <div class="stepper-mini">
+                                    <button type="button" onclick="adjustTodayWork('${t.id}', -1)">−</button>
+                                    <span id="today-val-${t.id}">${todayDelta}</span>
+                                    <button type="button" onclick="adjustTodayWork('${t.id}', 1)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    tasksList.appendChild(row);
+                });
+            }
+
+            recalcShiftTotal();
+        }
+
+        // Изменение сделанного за смену
+        function adjustTodayWork(taskId, delta) {
+            const current = todayCompletedWork[taskId] || 0;
+            const updated = Math.max(0, current + delta);
+            todayCompletedWork[taskId] = updated;
+
+            const label = document.getElementById(`today-val-${taskId}`);
+            if (label) label.textContent = updated;
+
+            recalcShiftTotal();
+        }
+
+        // Пересчёт суммы "За сегодня"
+        function recalcShiftTotal() {
+            const db = getDb();
+            const obj = db.objects.find(o => o.id === currentObjId);
+            if (!obj) return;
+
+            let shiftSum = 0;
+            obj.tasks.forEach(t => {
+                const countToday = todayCompletedWork[t.id] || 0;
+                shiftSum += countToday * t.price;
+            });
+
+            document.getElementById('shift-total-amount').textContent = shiftSum.toLocaleString('ru-RU');
+        }
+
+        // Закрытие смены: перенос сегодня в постоянный done
+        function commitDailyShift() {
+            const db = getDb();
+            const obj = db.objects.find(o => o.id === currentObjId);
+            if (!obj) return;
+
+            let appliedAny = false;
+            obj.tasks.forEach(t => {
+                const countToday = todayCompletedWork[t.id] || 0;
+                if (countToday > 0) {
+                    t.done = (t.done || 0) + countToday;
+                    appliedAny = true;
+                }
+            });
+
+            if (!appliedAny) {
+                alert('Вы ещё не отметили ни одной сделанной работы за сегодня.');
+                return;
+            }
+
+            saveDb(db);
+            todayCompletedWork = {};
+            renderCurrentObject();
+            alert('✓ Объёмы смены зафиксированы в балансе объекта!');
+        }
+
+        // Скопировать готовый текстовый отчёт клиенту
+        function copyDailyReport() {
+            const db = getDb();
+            const obj = db.objects.find(o => o.id === currentObjId);
+            if (!obj) return;
+
+            const lines = [];
+            let total = 0;
+
+            obj.tasks.forEach(t => {
+                const cnt = todayCompletedWork[t.id] || 0;
+                if (cnt > 0) {
+                    const sum = cnt * t.price;
+                    total += sum;
+                    lines.push(`• ${t.name}: ${cnt} ${t.unit} × ${t.price} ₽ = ${sum.toLocaleString('ru-RU')} ₽`);
+                }
+            });
+
+            if (lines.length === 0) {
+                alert('Сначала отметьте кнопками (+), что было сделано за сегодня.');
+                return;
+            }
+
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('ru-RU');
+            const report = `Добрый вечер! Отчёт по работам на ${dateStr} (${obj.name}):\n\n`
+                + lines.join('\n')
+                + `\n\n💰 Итого выполнено за сегодня: ${total.toLocaleString('ru-RU')} ₽`;
+
+            navigator.clipboard.writeText(report).then(() => {
+                alert('📋 Текст отчёта скопирован в буфер обмена!\n\nМожете вставить его в чат с заказчиком в Telegram или WhatsApp.');
+            }).catch(() => {
+                prompt('Скопируйте отчёт вручную:', report);
+            });
+        }
+
+        // Поиск по каталогу цен
+        function searchPriceItem(query) {
+            const box = document.getElementById('search-results-box');
+            query = query.trim().toLowerCase();
+
+            if (query.length < 2) {
+                box.style.display = 'none';
+                return;
+            }
+
+            const matches = priceCatalog.filter(it => it.title.toLowerCase().includes(query)).slice(0, 8);
+            if (matches.length === 0) {
+                box.innerHTML = '<div style="padding:10px; color:var(--text-muted); font-size:0.8rem;">Ничего не найдено</div>';
+                box.style.display = 'block';
+                return;
+            }
+
+            box.innerHTML = matches.map(it => `
+                <div class="search-item" onclick="selectPriceItem('${escapeHtml(it.title)}', ${it.price}, '${it.unit}')">
+                    <span>${escapeHtml(it.title)}</span>
+                    <b style="color:var(--primary-install)">${it.price} ₽/${it.unit}</b>
+                </div>
+            `).join('');
+            box.style.display = 'block';
+        }
+
+        function selectPriceItem(title, price, unit) {
+            document.getElementById('task-name-input').value = title;
+            document.getElementById('task-price-input').value = price;
+            document.getElementById('task-unit-input').value = unit;
+            document.getElementById('search-results-box').style.display = 'none';
+            document.getElementById('task-search-input').value = '';
+        }
+
+        // Сохранение новой задачи
+        function saveNewTask() {
+            const name = document.getElementById('task-name-input').value.trim();
+            const price = Number(document.getElementById('task-price-input').value) || 0;
+            const unit = document.getElementById('task-unit-input').value.trim() || 'шт.';
+            const plan = Number(document.getElementById('task-plan-input').value) || 1;
+
+            if (!name) {
+                alert('Введите наименование задачи');
+                return;
+            }
+
+            const db = getDb();
+            const obj = db.objects.find(o => o.id === currentObjId);
+            if (!obj) return;
+
+            obj.tasks.push({
+                id: 't_' + Date.now(),
+                name,
+                price,
+                unit,
+                plan,
+                done: 0
+            });
+
+            saveDb(db);
+            closeModal('modal-add-task');
+            renderCurrentObject();
+
+            // Сброс формы
+            document.getElementById('task-name-input').value = '';
+            document.getElementById('task-price-input').value = '';
+        }
+
+        // Сохранение платежа
+        function savePayment() {
+            const sum = Number(document.getElementById('payment-sum-input').value) || 0;
+            const note = document.getElementById('payment-note-input').value.trim() || 'Оплата';
+
+            if (sum <= 0) {
+                alert('Введите корректную сумму оплаты');
+                return;
+            }
+
+            const db = getDb();
+            const obj = db.objects.find(o => o.id === currentObjId);
+            if (!obj) return;
+
+            if (!obj.payments) obj.payments = [];
+            obj.payments.push({
+                id: 'p_' + Date.now(),
+                date: new Date().toLocaleDateString('ru-RU'),
+                sum,
+                note
+            });
+
+            saveDb(db);
+            closeModal('modal-payment');
+            renderCurrentObject();
+            document.getElementById('payment-sum-input').value = '';
+            document.getElementById('payment-note-input').value = '';
+        }
+
+        // Создание объекта
+        function createNewObject() {
+            const name = document.getElementById('new-obj-name').value.trim();
+            const client = document.getElementById('new-obj-client').value.trim();
+            const phone = document.getElementById('new-obj-phone').value.trim();
+
+            if (!name) {
+                alert('Введите адрес или название объекта');
+                return;
+            }
+
+            const db = getDb();
+            const newObj = {
+                id: 'obj_' + Date.now(),
+                name,
+                client,
+                phone,
+                stage: 'В работе',
+                tasks: [],
+                payments: []
+            };
+
+            db.objects.push(newObj);
+            saveDb(db);
+            closeModal('modal-new-object');
+            currentObjId = newObj.id;
+            initApp();
+        }
+
+        // Модалки
+        function openAddTaskModal() { document.getElementById('modal-add-task').classList.add('active'); }
+        function openPaymentModal() { document.getElementById('modal-payment').classList.add('active'); }
+        function openNewObjectModal() { document.getElementById('modal-new-object').classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+        function openHistoryModal() {
+            const db = getDb();
+            const obj = db.objects.find(o => o.id === currentObjId);
+            if (!obj) return;
+
+            const list = document.getElementById('payment-history-list');
+            list.innerHTML = '';
+
+            if (!obj.payments || obj.payments.length === 0) {
+                list.innerHTML = '<p style="color:var(--text-muted); font-size:0.85rem; text-align:center; padding:20px;">Выплат пока не зафиксировано</p>';
+            } else {
+                obj.payments.slice().reverse().forEach(p => {
+                    const row = document.createElement('div');
+                    row.style.cssText = 'padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.08); display:flex; justify-content:space-between; align-items:center;';
+                    row.innerHTML = `
+                        <div>
+                            <div style="font-weight:700; color:#fff; font-size:0.95rem;">${p.sum.toLocaleString('ru-RU')} ₽</div>
+                            <div style="font-size:0.75rem; color:var(--text-muted);">${escapeHtml(p.note)}</div>
+                        </div>
+                        <div style="font-size:0.75rem; color:var(--primary-install);">${p.date}</div>
+                    `;
+                    list.appendChild(row);
+                });
+            }
+            document.getElementById('modal-history').classList.add('active');
+        }
+
+        function exportBackupData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(localStorage.getItem(STORAGE_KEY) || '{}');
+            const dlAnchor = document.createElement('a');
+            dlAnchor.setAttribute("href", dataStr);
+            dlAnchor.setAttribute("download", `voltgroup_crm_backup_${new Date().toISOString().slice(0,10)}.json`);
+            dlAnchor.click();
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+    </script>
+</body>
+</html>

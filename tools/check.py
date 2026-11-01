@@ -983,6 +983,52 @@ def check_reviews_sync():
                 report_fail("ratingValue в разметке не является числом", value_match.group(1))
 
 
+def check_generated_docs_in_root():
+    """Ловит сгенерированные калькулятором документы, попавшие в корень проекта.
+
+    GitHub Pages публикует всё содержимое ветки main без разбора, поэтому смета,
+    договор или акт, оставленные в корне, становятся открытой страницей сайта:
+    с ценами, составом работ и адресом объекта. Плюс такие файлы засоряют индекс.
+    В .gitignore они исключены, но проверка нужна для рабочей копии: файл может
+    появиться до коммита и уйти на сайт вместе со следующим коммитом.
+    """
+    print("\n[14/14] Проверка отсутствия сгенерированных документов в корне...")
+
+    # Шаблоны имён, под которыми калькулятор сохраняет документы.
+    # Сравнение регистронезависимое: браузер сохраняет как «Смета_VoltGroup_...»,
+    # так и «смета_...».
+    generated_markers = ("смета", "договор", "акт", "кп_")
+
+    # Страницы сайта, которые легитимно лежат в корне и не являются документами.
+    site_pages = {
+        "index.html", "estimate.html", "works.html", "404.html",
+        "privacy.html", "offer.html", "cookies.html",
+        "yandex_538e01e3a69121f3.html",
+    }
+
+    offenders = []
+    for path in ROOT_DIR.glob("*.html"):
+        name = path.name
+        if name in site_pages:
+            continue
+        lowered = name.lower().replace("ё", "е")
+        # «акт» как подстрока даёт ложные срабатывания (например, «практика»),
+        # поэтому проверяем начало имени, а не вхождение.
+        if any(lowered.startswith(marker) for marker in generated_markers):
+            offenders.append(name)
+
+    if offenders:
+        report_fail(
+            "В корне проекта лежат сгенерированные документы — они попадут на сайт",
+            "Файлы: " + ", ".join(offenders)
+            + ". Перенесите их за пределы репозитория или удалите: "
+              "GitHub Pages публикует корень без исключений, а в документах "
+              "цены и адрес объекта.",
+        )
+    else:
+        report_pass("В корне нет сгенерированных документов (смета, договор, акт, КП)")
+
+
 def main():
     print("=" * 60)
     print(" VoltGroup Project Health & Test Check (tools/check.py)")
@@ -1001,6 +1047,7 @@ def main():
     check_photo_reports_system()
     check_css_version_consistency()
     check_reviews_sync()
+    check_generated_docs_in_root()
 
 
     print("\n" + "=" * 60)

@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /client/
+Disallow: /crm/
 
 # Debug query parameter of the Yandex.Metrica counter (?_ym_debug=1).
 # Merges such URLs into the main one so they are not indexed separately.
