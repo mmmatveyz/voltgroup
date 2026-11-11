@@ -1346,7 +1346,7 @@
                 status.textContent = '⏳ Отправляем заявку...';
 
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 15000);
+                const timeoutId = setTimeout(() => controller.abort(), 60000);
 
                 try {
                     const apiUrl = window.VG_API || 'https://voltgroup-bot.onrender.com';
@@ -1360,6 +1360,9 @@
                     if (res.ok) {
                         status.textContent = '✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.';
                         status.style.color = '#10B981';
+                        if (typeof window.ym === 'function') {
+                            window.ym(108492681, 'reachGoal', 'lead_success');
+                        }
                         this.reset();
                         // Сброс чипов к первому по умолчанию
                         if (serviceChips.length > 0) {

@@ -29,10 +29,36 @@
         brandName: 'VoltGroup'
     };
 
+    /**
+     * Ранний фоновый прогрев бэкенда Render при первом взаимодействии с сайтом.
+     * Запускается при первом скролле, касании экрана или через 3 секунды после открытия.
+     * Предотвращает задержки и обрыв заявок из-за холодного старта контейнера на Render.
+     */
+    let _pingSent = false;
+    function pingBackend() {
+        if (_pingSent) return;
+        _pingSent = true;
+        try {
+            if (typeof fetch === 'function' && root.VG_API) {
+                fetch(root.VG_API + '/ping', { method: 'GET', keepalive: true }).catch(() => {});
+            }
+        } catch (e) {}
+    }
+    root.VG_PING_BACKEND = pingBackend;
+
+    if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
+        const opts = { once: true, passive: true };
+        window.addEventListener('scroll', pingBackend, opts);
+        window.addEventListener('touchstart', pingBackend, opts);
+        window.addEventListener('mousemove', pingBackend, opts);
+        setTimeout(pingBackend, 3000);
+    }
+
     if (typeof module !== 'undefined' && module.exports) {
         module.exports = {
             VG_API: root.VG_API,
-            VG_COMPANY: root.VG_COMPANY
+            VG_COMPANY: root.VG_COMPANY,
+            VG_PING_BACKEND: root.VG_PING_BACKEND
         };
     }
 })();

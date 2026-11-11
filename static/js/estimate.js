@@ -1235,7 +1235,7 @@
         const controller = (typeof AbortController !== 'undefined') ? new AbortController() : null;
         let timeoutId = null;
         if (controller) {
-            timeoutId = setTimeout(() => controller.abort(), 15000);
+            timeoutId = setTimeout(() => controller.abort(), 60000);
         }
 
         const payload = {
@@ -1268,6 +1268,9 @@
                     `позвоните <a href="tel:${compPhoneClean}" style="color:var(--primary-install);text-decoration:underline;font-weight:600;">${compPhone}</a>.`,
                     'success'
                 );
+                if (typeof window !== 'undefined' && typeof window.ym === 'function') {
+                    window.ym(108492681, 'reachGoal', 'lead_success');
+                }
             } else if (res.status === 429) {
                 const errData = await res.json().catch(() => ({}));
                 const limitMsg = errData.msg || 'Слишком много запросов. Пожалуйста, подождите минуту.';

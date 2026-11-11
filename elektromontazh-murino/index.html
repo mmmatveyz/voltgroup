@@ -999,7 +999,7 @@
             status.textContent = '⏳ Отправляем заявку...';
 
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 15000);
+            const timeoutId = setTimeout(() => controller.abort(), 60000);
 
             try {
                 const apiUrl = window.VG_API || 'https://voltgroup-bot.onrender.com';
@@ -1012,6 +1012,9 @@
                 if (res.ok) {
                     status.textContent = '✅ Заявка принята! Мастер свяжется с вами в течение 15 минут.';
                     status.style.color = '#10B981';
+                    if (typeof window.ym === 'function') {
+                        window.ym(108492681, 'reachGoal', 'lead_success');
+                    }
                     this.reset();
                     if (serviceChips.length > 0) {
                         serviceChips.forEach(c => c.classList.remove('active'));
