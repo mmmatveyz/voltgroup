@@ -87,35 +87,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../static/css/style.css?v=3.3">
-
-    <style>
-        .ticker {
-            overflow: hidden;
-            border-block: 1px solid var(--border-light);
-            background: rgba(255, 255, 255, 0.02);
-            position: relative;
-            z-index: 1;
-            margin: 20px 0 50px;
-        }
-        .ticker-track {
-            display: flex;
-            width: max-content;
-            animation: tick 26s linear infinite;
-            padding: 12px 0;
-        }
-        .ticker-track span {
-            font-family: var(--font-heading);
-            font-size: 0.78rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            padding: 0 20px;
-            white-space: nowrap;
-        }
-        .ticker-track span i { color: var(--primary-install); font-style: normal; }
-        @keyframes tick { to { transform: translateX(-50%); } }
-    </style>
+    <link rel="stylesheet" href="../static/css/style.css?v=3.8">
 
     <!-- Управление cookies и отложенная инициализация Яндекс.Метрики (152-ФЗ) -->
     <script src="../static/js/cookies.js" defer></script>
@@ -156,30 +128,17 @@
                 Фиксированная смета, беспылевое штробление, опрессовка гильзами ГМЛ и официальная гарантия 12 месяцев.
             </p>
             <div class="hero-actions">
-                <a href="../estimate.html" class="btn btn-primary">Рассчитать стоимость в калькуляторе ⚡</a>
+                <a href="../estimate.html" class="btn btn-primary">Рассчитать смету</a>
                 <a href="#contact" class="btn btn-outline">Оставить заявку</a>
             </div>
         </div>
     </section>
 
-    <div class="ticker">
-        <div class="ticker-track" id="tickTrack">
-            <span>7 лет опыта монтажа <i>⚡</i></span>
-            <span>Разводка кабеля <i>⚡</i></span>
-            <span>Монтаж щитов на объекте <i>⚡</i></span>
-            <span>Штробление без пыли <i>⚡</i></span>
-            <span>Установка розеток <i>⚡</i></span>
-            <span>Мастер-выключатель <i>⚡</i></span>
-            <span>Динамометрическая протяжка <i>⚡</i></span>
-            <span>Работа по ГОСТ и ПУЭ <i>⚡</i></span>
-        </div>
-    </div>
-
     <!-- СЕКЦИЯ 1: BENTO GRID СПЕЦИАЛИЗАЦИИ -->
     <section class="section">
         <div class="container">
             <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 40px; text-align: center;">
-                <span class="bento-tag tag-cyan fade-in">СПЕЦИАЛИЗАЦИЯ И ОБЪЕКТЫ</span>
+                <span class="bento-tag tag-cyan fade-in">Специализация и объекты</span>
                 <h2 class="fade-in" style="margin-bottom: 12px;">Комплексный <span>электромонтаж</span></h2>
                 <p class="fade-in" style="color: var(--text-muted); max-width: 620px; font-size: 0.95rem; margin: 0;">
                     От однокомнатной студии и загородного коттеджа до офисных пространств и систем дизайнерского света.
@@ -190,18 +149,18 @@
                 <!-- 1. Квартиры & новостройки (Span 7) -->
                 <div class="bento-card bento-install bento-span-7 fade-in">
                     <div>
-                        <span class="bento-tag tag-cyan">01 // ЖИЛОЙ ФОНД</span>
-                        <h3 style="font-family: var(--font-heading); font-size: 1.45rem; margin-bottom: 12px; text-transform: uppercase;">
+                        <span class="bento-tag tag-cyan">Жилой фонд</span>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.45rem; margin-bottom: 12px; font-weight: 600;">
                             Квартиры & новостройки
                         </h3>
                         <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55;">
                             Монтаж электропроводки с нуля в монолите, кирпиче и газобетоне. Перенос розеток по дизайн-проекту, замена временного щитка застройщика и полная замена старой проводки.
                         </p>
                         <ul class="bento-features">
-                            <li><i>⚡</i> Беспылевое штробление штроборезом с пылесосом класса M</li>
-                            <li><i>⚡</i> Прокладка кабелей строго по потолку в негорючей ПВХ-гофре</li>
-                            <li><i>⚡</i> Выделенные силовые линии 3х2.5 и 3х6 мм² под технику кухни</li>
-                            <li><i>⚡</i> Защита мокрых зон высокочувствительным УЗО 10 мА</li>
+                            <li><i>✓</i> Беспылевое штробление штроборезом с пылесосом класса M</li>
+                            <li><i>✓</i> Прокладка кабелей строго по потолку в негорючей ПВХ-гофре</li>
+                            <li><i>✓</i> Выделенные силовые линии 3х2.5 и 3х6 мм² под технику кухни</li>
+                            <li><i>✓</i> Защита мокрых зон высокочувствительным УЗО 10 мА</li>
                         </ul>
                     </div>
                     <div style="padding-top: 20px; border-top: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
@@ -213,8 +172,8 @@
                 <!-- 2. Коттеджи & дома (Span 5) -->
                 <div class="bento-card bento-calc bento-span-5 fade-in" style="transition-delay: 0.1s;">
                     <div>
-                        <span class="bento-tag tag-yellow">02 // ЧАСТНЫЙ СЕКТОР</span>
-                        <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 12px; text-transform: uppercase;">
+                        <span class="bento-tag tag-yellow">Частный сектор</span>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 12px; font-weight: 600;">
                             Коттеджи & дома
                         </h3>
                         <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55;">
@@ -227,7 +186,7 @@
                     </div>
                     <div style="padding-top: 15px; border-top: 1px solid rgba(255, 214, 10, 0.2); text-align: center;">
                         <a href="#contact" class="btn btn-volt" style="width: 100%; justify-content: center; padding: 12px 20px; font-size: 0.9rem;">
-                            Консультация по дому ⚡
+                            Консультация инженера
                         </a>
                     </div>
                 </div>
@@ -235,8 +194,8 @@
                 <!-- 3. Умный дом & свет (Span 5) -->
                 <div class="bento-card bento-smart bento-span-5 fade-in" style="transition-delay: 0.15s;">
                     <div>
-                        <span class="bento-tag tag-cyan">03 // ДИЗАЙН & СВЕТ</span>
-                        <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 12px; text-transform: uppercase;">
+                        <span class="bento-tag tag-cyan">Дизайн и свет</span>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 12px; font-weight: 600;">
                             Умный дом & свет
                         </h3>
                         <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55;">
@@ -257,17 +216,17 @@
                 <!-- 4. Офисы & коммерция (Span 7) -->
                 <div class="bento-card bento-eng bento-span-7 fade-in" style="transition-delay: 0.2s;">
                     <div>
-                        <span class="bento-tag tag-purple">04 // B2B & РИТЕЙЛ</span>
-                        <h3 style="font-family: var(--font-heading); font-size: 1.45rem; margin-bottom: 12px; text-transform: uppercase;">
+                        <span class="bento-tag tag-purple">Коммерческие объекты</span>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.45rem; margin-bottom: 12px; font-weight: 600;">
                             Офисы & коммерция
                         </h3>
                         <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55;">
                             Монтаж силовых и слаботочных сетей для магазинов, кафе, складов и офисных пространств в СПб и ЛО. Работа по безналичному расчету.
                         </p>
                         <ul class="bento-features">
-                            <li style="color: #cbd5e1;"><i style="color: var(--primary-eng);">⚡</i> Металлические перфорированные кабельные лотки и лючки</li>
-                            <li style="color: #cbd5e1;"><i style="color: var(--primary-eng);">⚡</i> Кабель ВВГнг-FRLS / LSLTx с сертификатами пожарной безопасности</li>
-                            <li style="color: #cbd5e1;"><i style="color: var(--primary-eng);">⚡</i> Сборка вводно-распределительных щитов (ВРУ) и учет электроэнергии</li>
+                            <li style="color: #cbd5e1;"><i style="color: var(--primary-eng);">✓</i> Металлические перфорированные кабельные лотки и лючки</li>
+                            <li style="color: #cbd5e1;"><i style="color: var(--primary-eng);">✓</i> Кабель ВВГнг-FRLS / LSLTx с сертификатами пожарной безопасности</li>
+                            <li style="color: #cbd5e1;"><i style="color: var(--primary-eng);">✓</i> Сборка вводно-распределительных щитов (ВРУ) и учет электроэнергии</li>
                         </ul>
                     </div>
                     <div style="padding-top: 20px; border-top: 1px solid rgba(123, 97, 255, 0.25); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
@@ -283,7 +242,7 @@
     <section class="section" id="packages-section" style="padding-top: 20px;">
         <div class="container">
             <div style="text-align: center; margin-bottom: 35px;">
-                <span class="bento-tag tag-cyan fade-in">ФИКСИРОВАННЫЕ ПАКЕТЫ</span>
+                <span class="bento-tag tag-cyan fade-in">Готовые комплексы</span>
                 <h2 class="fade-in" style="margin-bottom: 12px;">Готовые решения для <span>квартир под ключ</span></h2>
                 <p class="fade-in" style="color: var(--text-muted); max-width: 680px; margin: 0 auto; font-size: 0.95rem; line-height: 1.6;">
                     Выберите примерную площадь вашей квартиры, чтобы увидеть ориентировочную стоимость работ и состав сметы. Каждое решение можно открыть и детально настроить в онлайн-калькуляторе.
@@ -294,8 +253,8 @@
             <div class="card fade-in" style="max-width: 840px; margin: 0 auto 40px; padding: 26px 28px; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(12px); border: 1px solid rgba(0, 229, 255, 0.3); border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
                 <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 10px; margin-bottom: 16px;">
                     <div>
-                        <span style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); font-weight: 700;">Площадь квартиры:</span>
-                        <div style="font-family: var(--font-heading); font-size: 2.1rem; color: #fff; font-weight: 900; line-height: 1.1; margin-top: 4px;">
+                        <span style="font-size: 0.82rem; letter-spacing: 0.04em; color: var(--text-muted); font-weight: 600;">Площадь квартиры:</span>
+                        <div style="font-family: var(--font-heading); font-size: 2.1rem; color: #fff; font-weight: 700; line-height: 1.1; margin-top: 4px;">
                             <span id="slider-area-val" style="color: var(--primary-install);">42</span> <span style="font-size: 1.2rem; color: var(--text-muted); font-weight: 600;">м²</span>
                         </div>
                     </div>
@@ -325,10 +284,10 @@
                 <div class="card fade-in" style="display: flex; flex-direction: column; justify-content: space-between; padding: 26px; border-radius: 16px; border: 1px solid var(--border-light); background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(12px); box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45); position: relative; overflow: visible !important;">
                     <div>
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                            <span class="bento-tag tag-cyan" style="font-size: 0.75rem;">01 // МИНИМУМ</span>
+                            <span class="bento-tag tag-cyan" style="font-size: 0.75rem;">Базовый тариф</span>
                             <span style="font-size: 0.82rem; color: var(--text-muted);">~1 900 ₽ / м²</span>
                         </div>
-                        <h3 style="font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 8px; text-transform: uppercase;">
+                        <h3 style="font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 8px; font-weight: 600;">
                             Тариф «База»
                         </h3>
                         <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 18px;">
@@ -336,8 +295,8 @@
                         </p>
                         
                         <div style="margin: 18px 0; padding: 14px; background: rgba(0, 229, 255, 0.05); border-radius: 10px; border-left: 3px solid var(--primary-install);">
-                            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Ориентир по смете:</div>
-                            <div style="font-family: var(--font-heading); font-size: 1.7rem; color: #fff; font-weight: 800; margin-top: 2px;">
+                            <div style="font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.04em;">Ориентир по смете:</div>
+                            <div style="font-family: var(--font-heading); font-size: 1.7rem; color: #fff; font-weight: 700; margin-top: 2px;">
                                 ~<span id="price-base">79 800</span> ₽
                             </div>
                         </div>
@@ -359,16 +318,16 @@
                 </div>
 
                 <!-- 2. ТАРИФ СТАНДАРТ (НОРМИС) -->
-                <div class="card fade-in" style="display: flex; flex-direction: column; justify-content: space-between; padding: 26px; border-radius: 16px; border: 2px solid var(--primary-install); background: rgba(13, 24, 46, 0.96); backdrop-filter: blur(12px); box-shadow: 0 14px 40px rgba(0, 229, 255, 0.22), 0 8px 24px rgba(0,0,0,0.5); position: relative; overflow: visible !important;">
-                    <div style="position: absolute; top: -14px; right: 24px; background: var(--primary-install); color: #050914; font-size: 0.75rem; font-weight: 800; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--font-heading); box-shadow: 0 4px 14px rgba(0, 229, 255, 0.45); z-index: 5; line-height: 1.2;">
-                        ⭐ ХИТ ВЫБОРА
+                <div class="card fade-in" style="display: flex; flex-direction: column; justify-content: space-between; padding: 26px; border-radius: 16px; border: 1px solid var(--primary-install); background: rgba(13, 24, 46, 0.96); backdrop-filter: blur(12px); box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45); position: relative; overflow: visible !important;">
+                    <div style="position: absolute; top: -12px; right: 24px; background: var(--primary-install); color: #050914; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; letter-spacing: 0.04em; font-family: var(--font-heading); z-index: 5; line-height: 1.2;">
+                        Популярный тариф
                     </div>
                     <div>
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                            <span class="bento-tag tag-cyan" style="font-size: 0.75rem; background: rgba(0, 229, 255, 0.15); color: var(--primary-install);">02 // ДЛЯ СЕБЯ</span>
+                            <span class="bento-tag tag-cyan" style="font-size: 0.75rem; background: rgba(0, 229, 255, 0.15); color: var(--primary-install);">Стандарт</span>
                             <span style="font-size: 0.82rem; color: var(--primary-install); font-weight: 600;">~2 900 ₽ / м²</span>
                         </div>
-                        <h3 style="font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 8px; text-transform: uppercase; color: #fff;">
+                        <h3 style="font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 8px; font-weight: 600; color: #fff;">
                             Тариф «Стандарт»
                         </h3>
                         <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 18px;">
@@ -376,24 +335,24 @@
                         </p>
 
                         <div style="margin: 18px 0; padding: 14px; background: rgba(0, 229, 255, 0.12); border-radius: 10px; border-left: 3px solid var(--primary-install);">
-                            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Ориентир по смете:</div>
-                            <div style="font-family: var(--font-heading); font-size: 1.7rem; color: var(--primary-install); font-weight: 900; margin-top: 2px;">
+                            <div style="font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.04em;">Ориентир по смете:</div>
+                            <div style="font-family: var(--font-heading); font-size: 1.7rem; color: var(--primary-install); font-weight: 700; margin-top: 2px;">
                                 ~<span id="price-standard">121 800</span> ₽
                             </div>
                         </div>
 
                         <ul class="bento-features" style="font-size: 0.86rem; gap: 11px; margin-bottom: 24px;">
-                            <li style="align-items: flex-start;"><i style="flex-shrink: 0; margin-top: 2px;">⚡</i> <span><b>~<span id="pts-standard">46</span> точек</b> (ТВ-зоны, кухня, прикроватные)</span></li>
-                            <li style="align-items: flex-start;"><i style="flex-shrink: 0; margin-top: 2px;">⚡</i> <span>Отдельные линии на духовку, ПММ, стиралку</span></li>
-                            <li style="align-items: flex-start;"><i style="flex-shrink: 0; margin-top: 2px;">⚡</i> <span><b>Реле напряжения</b> (защита техники от скачков 380В)</span></li>
-                            <li style="align-items: flex-start;"><i style="flex-shrink: 0; margin-top: 2px;">⚡</i> <span>Щит до 36 модулей + дифзащита розеток</span></li>
-                            <li style="align-items: flex-start;"><i style="flex-shrink: 0; margin-top: 2px;">⚡</i> <span>Слаботочка: интернет-розетки RJ-45 к ТВ</span></li>
+                            <li style="align-items: flex-start;"><i style="flex-shrink: 0; margin-top: 2px;">✓</i> <span><b>~<span id="pts-standard">46</span> точек</b> (ТВ-зоны, кухня, прикроватные)</span></li>
+                            <li style="align-items: flex-start;"><i style="flex-shrink: 0; margin-top: 2px;">✓</i> <span>Отдельные линии на духовку, ПММ, стиралку</span></li>
+                            <li style="align-items: flex-start;"><i style="flex-shrink: 0; margin-top: 2px;">✓</i> <span><b>Реле напряжения</b> (защита техники от скачков 380В)</span></li>
+                            <li style="align-items: flex-start;"><i style="flex-shrink: 0; margin-top: 2px;">✓</i> <span>Щит до 36 модулей + дифзащита розеток</span></li>
+                            <li style="align-items: flex-start;"><i style="flex-shrink: 0; margin-top: 2px;">✓</i> <span>Слаботочка: интернет-розетки RJ-45 к ТВ</span></li>
                         </ul>
                     </div>
 
                     <div style="padding-top: 18px; border-top: 1px solid rgba(0, 229, 255, 0.25);">
                         <a href="../estimate.html?preset=standard&area=42" id="link-standard" class="btn btn-primary" style="width: 100%; justify-content: center; font-size: 0.88rem; padding: 12px;">
-                            Настроить в калькуляторе ⚡
+                            Открыть калькулятор
                         </a>
                     </div>
                 </div>
@@ -402,10 +361,10 @@
                 <div class="card fade-in" style="display: flex; flex-direction: column; justify-content: space-between; padding: 26px; border-radius: 16px; border: 1px solid rgba(255, 214, 10, 0.45); background: rgba(22, 24, 38, 0.95); backdrop-filter: blur(12px); box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45); position: relative; overflow: visible !important;">
                     <div>
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                            <span class="bento-tag tag-yellow" style="font-size: 0.75rem;">03 // МАКСИМУМ</span>
+                            <span class="bento-tag tag-yellow" style="font-size: 0.75rem;">Премиум</span>
                             <span style="font-size: 0.82rem; color: var(--volt-yellow); font-weight: 600;">~4 100 ₽ / м²</span>
                         </div>
-                        <h3 style="font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 8px; text-transform: uppercase;">
+                        <h3 style="font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 8px; font-weight: 600;">
                             Тариф «Премиум»
                         </h3>
                         <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 18px;">
@@ -413,8 +372,8 @@
                         </p>
 
                         <div style="margin: 18px 0; padding: 14px; background: rgba(255, 214, 10, 0.08); border-radius: 10px; border-left: 3px solid var(--volt-yellow);">
-                            <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Ориентир по смете:</div>
-                            <div style="font-family: var(--font-heading); font-size: 1.7rem; color: var(--volt-yellow); font-weight: 800; margin-top: 2px;">
+                            <div style="font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.04em;">Ориентир по смете:</div>
+                            <div style="font-family: var(--font-heading); font-size: 1.7rem; color: var(--volt-yellow); font-weight: 700; margin-top: 2px;">
                                 ~<span id="price-premium">172 200</span> ₽
                             </div>
                         </div>
@@ -446,7 +405,7 @@
     <section class="section" id="prices-section">
         <div class="container">
             <div style="text-align: center; margin-bottom: 30px;">
-                <span class="bento-tag tag-cyan fade-in">ПРОЗРАЧНЫЕ РАСЦЕНКИ</span>
+                <span class="bento-tag tag-cyan fade-in">Расценки на электромонтаж</span>
                 <h2 class="fade-in" style="margin-bottom: 12px;">Прайс-лист на <span>электромонтаж</span></h2>
                 <p class="fade-in" style="color: var(--text-muted); max-width: 650px; margin: 0 auto; font-size: 0.95rem;">
                     Раскройте интересующую категорию работ или выполните полный расчет объекта в онлайн-калькуляторе.
@@ -459,7 +418,7 @@
                     <button type="button" class="price-ctrl-btn" id="collapseAllPrices">Свернуть все</button>
                 </div>
                 <a href="../estimate.html" class="price-ctrl-btn highlight">
-                    <span>⚡ Рассчитать в онлайн-калькуляторе</span>
+                    <span>Рассчитать в онлайн-калькуляторе</span>
                 </a>
             </div>
 
@@ -487,7 +446,7 @@
                         Оставьте заявку на замер или расчет объекта. Выезжаем по Санкт-Петербургу и ЛО с профессиональным штроборезом и пылесосами.
                     </p>
                     <div style="padding: 16px; background: rgba(0, 229, 255, 0.04); border: 1px dashed rgba(0, 229, 255, 0.2); border-radius: 12px;">
-                        <p style="font-size: 0.88rem; color: var(--text-main); font-weight: 600;">⚡ Фиксированная смета</p>
+                        <p style="font-size: 0.88rem; color: var(--text-main); font-weight: 600;">Фиксированная смета</p>
                         <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Стоимость работ прописывается в договоре и не меняется в процессе.</p>
                     </div>
                     <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--border-light);">
@@ -535,7 +494,7 @@
                             Даю согласие на обработку <a href="../privacy.html" target="_blank" rel="noopener noreferrer" style="color: var(--primary-install); text-decoration: underline;">персональных данных</a>
                         </label>
                     </div>
-                    <button type="submit" class="btn btn-volt" style="width: 100%; justify-content: center; margin-top: 10px;">Получить расчёт ⚡</button>
+                    <button type="submit" class="btn btn-volt" style="width: 100%; justify-content: center; margin-top: 10px;">Рассчитать стоимость</button>
                     <p id="formStatus" style="margin-top: 10px; text-align: center; display: none; font-weight: 600;"></p>
                 </form>
             </div>
@@ -547,7 +506,7 @@
     <div class="container">
         <div class="footer-grid">
             <div>
-                <h4>⚡ VoltGroup</h4>
+                <h4>VoltGroup</h4>
                 <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
                     Энергия решений.<br>Электрика и автоматизация в СПб и ЛО.
                 </p>
@@ -582,9 +541,9 @@
 
             <div>
                 <h4>Контакты</h4>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;">📞 <a href="tel:+79052084284" style="color: inherit; text-decoration: none;">+7 (905) 208-42-84</a></p>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">🕒 Пн–Сб: 9:00–21:00</p>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">📍 Санкт-Петербург и ЛО</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:-2px; margin-right:6px; color:var(--primary-install);"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><a href="tel:+79052084284" style="color: inherit; text-decoration: none;">+7 (905) 208-42-84</a></p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:-2px; margin-right:6px; color:var(--text-muted);"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Пн–Сб: 9:00–21:00</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:-2px; margin-right:6px; color:var(--text-muted);"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Санкт-Петербург и ЛО</p>
             </div>
         </div>
         <div class="copyright">
@@ -671,15 +630,18 @@
                 container.textContent = ''; // Безопасная очистка
 
                 const categoryIcons = {
-                    'Черновые': '🔨',
-                    'Чистовая': '🔌',
-                    'Проектирование': '📐',
-                    'Сборка': '⚡',
-                    'Ревизия': '🔧',
-                    'Слаботочные': '📡',
-                    'Освещение': '💡',
-                    'Подключение': '🍳',
-                    'Диагностика': '🔍'
+                    'Черновые': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
+                    'Чистовые': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="12" r="1.5" fill="currentColor"/><circle cx="15.5" cy="12" r="1.5" fill="currentColor"/></svg>',
+                    'Чистовая': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="12" r="1.5" fill="currentColor"/><circle cx="15.5" cy="12" r="1.5" fill="currentColor"/></svg>',
+                    'Проектирование': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+                    'Сборка': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="7" y1="7" x2="7" y2="17"/><line x1="12" y1="7" x2="12" y2="17"/><line x1="17" y1="7" x2="17" y2="17"/></svg>',
+                    'Ревизия': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>',
+                    'Слаботочные': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="18" r="3"/><path d="M6.3 12.3a8 8 0 0 1 11.4 0"/><path d="M3.5 9.5a12 12 0 0 1 17 0"/></svg>',
+                    'Освещение': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>',
+                    'Подключение': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v6a6 6 0 0 0 12 0V3"/><line x1="9" y1="3" x2="9" y2="7"/><line x1="15" y1="3" x2="15" y2="7"/><path d="M12 15v6"/></svg>',
+                    'Диагностика': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
+                    'Ремонт': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>',
+                    'Профилактика': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>',
                 };
 
                 d.install.categories.forEach((c, index) => {
@@ -689,7 +651,7 @@
                     const summary = document.createElement('summary');
                     summary.className = 'price-accordion-summary';
 
-                    let icon = '⚡';
+                    let icon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>';
                     for (const [key, ic] of Object.entries(categoryIcons)) {
                         if (c.name.indexOf(key) !== -1) {
                             icon = ic;
@@ -702,7 +664,7 @@
 
                     const iconSpan = document.createElement('span');
                     iconSpan.className = 'price-accordion-icon-tag';
-                    iconSpan.textContent = icon;
+                    iconSpan.innerHTML = icon;
 
                     const nameSpan = document.createElement('span');
                     nameSpan.textContent = c.name;
@@ -804,7 +766,7 @@
 
             const errP = document.createElement('p');
             errP.style.cssText = "color:var(--danger); margin-bottom:15px;";
-            errP.textContent = "⚠️ Не удалось загрузить прайс-лист";
+            errP.textContent = "Не удалось загрузить прайс-лист";
 
             const errLink = document.createElement('a');
             errLink.href = "../estimate.html";
@@ -921,7 +883,7 @@
                 }
                 status.style.display = 'block';
                 status.style.color = '#EF4444';
-                status.textContent = '⚠️ Пожалуйста, введите полный номер телефона: +7 (XXX) XXX-XX-XX';
+                status.textContent = 'Пожалуйста, введите полный номер телефона: +7 (XXX) XXX-XX-XX';
                 return;
             } else if (phoneEl) {
                 phoneEl.classList.remove('is-invalid');
@@ -938,7 +900,7 @@
             btn.textContent = 'Отправка...';
             status.style.display = 'block';
             status.style.color = 'var(--text-muted)';
-            status.textContent = '⏳ Отправляем заявку...';
+            status.textContent = 'Отправка заявки...';
 
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 60000);
@@ -952,7 +914,7 @@
                     signal: controller.signal
                 });
                 if (res.ok) {
-                    status.textContent = '✅ Заявка отправлена! Свяжемся с вами в ближайшее время.';
+                    status.textContent = 'Заявка отправлена! Свяжемся с вами в ближайшее время.';
                     status.style.color = '#10B981';
                     if (typeof window.ym === 'function') {
                         window.ym(108492681, 'reachGoal', 'lead_success');
@@ -968,22 +930,22 @@
                 } else if (res.status === 429) {
                     const errData = await res.json().catch(() => ({}));
                     const limitMsg = errData.msg || 'Слишком много запросов. Пожалуйста, подождите минуту.';
-                    status.innerHTML = `⚠️ <b>${limitMsg}</b> Или свяжитесь напрямую: <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> · <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">ВКонтакте</a> или позвоните <a href="tel:+79052084284" style="color:var(--accent);text-decoration:underline;">+7 (905) 208-42-84</a>`;
+                    status.innerHTML = `<b>${limitMsg}</b> Или свяжитесь напрямую: <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> · <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">ВКонтакте</a> или позвоните <a href="tel:+79052084284" style="color:var(--accent);text-decoration:underline;">+7 (905) 208-42-84</a>`;
                     status.style.color = '#F59E0B';
                 } else {
                     throw new Error('Ошибка сервера');
                 }
             } catch (err) {
                 if (err.name === 'AbortError') {
-                    status.innerHTML = '⏳ <b>Сервер просыпается</b> (холодный старт может занять до минуты). Вы можете подождать немного или связаться напрямую: <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> · <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">ВКонтакте</a>';
+                    status.innerHTML = '<b>Сервер активируется</b> (холодный старт может занять до минуты). Вы можете подождать немного или связаться напрямую: <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> · <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">ВКонтакте</a>';
                 } else {
-                    status.innerHTML = '❌ <b>Ошибка отправки.</b> Пожалуйста, напишите напрямую: <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> · <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">ВКонтакте</a> или позвоните <a href="tel:+79052084284" style="color:var(--accent);text-decoration:underline;">+7 (905) 208-42-84</a>';
+                    status.innerHTML = '<b>Ошибка отправки.</b> Пожалуйста, напишите напрямую: <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> · <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">ВКонтакте</a> или позвоните <a href="tel:+79052084284" style="color:var(--accent);text-decoration:underline;">+7 (905) 208-42-84</a>';
                 }
                 status.style.color = '#EF4444';
             } finally {
                 clearTimeout(timeoutId);
                 btn.disabled = false;
-                btn.textContent = 'Получить расчёт ⚡';
+                btn.textContent = 'Рассчитать стоимость';
             }
         });
     }

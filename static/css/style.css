@@ -29,8 +29,8 @@
     --text-main: #F8FAFC;
     --text-muted: #94A3B8;
     --border-light: rgba(255, 255, 255, 0.08);
-    --radius-lg: 18px;
-    --radius-md: 12px;
+    --radius-lg: 14px;
+    --radius-md: 8px;
 
     /* Высота смещения первого блока от фиксированной шапки */
     --header-offset: 140px;
@@ -55,11 +55,11 @@
     --shadow-card-hover: 0 16px 36px rgba(0, 0, 0, 0.5);
     --shadow-modal: 0 20px 50px rgba(0, 0, 0, 0.65);
 
-    /* Неоновые акцентные свечения (Brand Glows) */
-    --glow-cyan: 0 0 16px rgba(0, 229, 255, 0.3);
-    --glow-cyan-lg: 0 0 25px rgba(0, 229, 255, 0.45);
-    --glow-purple: 0 0 16px rgba(123, 97, 255, 0.35);
-    --glow-yellow: 0 0 16px rgba(255, 214, 10, 0.35);
+    /* Акцентные тени без кислотного свечения */
+    --glow-cyan: 0 2px 8px rgba(0, 0, 0, 0.25);
+    --glow-cyan-lg: 0 4px 16px rgba(0, 0, 0, 0.35);
+    --glow-purple: 0 2px 8px rgba(0, 0, 0, 0.25);
+    --glow-yellow: 0 2px 8px rgba(0, 0, 0, 0.25);
 
     /* Шкала типографики (Typography Scale) */
     --fs-xs: 0.75rem;    /* 12px - бейджи, теги, статусы, мелкие подписи */
@@ -105,7 +105,7 @@ body {
     width: 100%;
 }
 
-/* Чертёжная инженерная сетка */
+/* Инженерная чертёжная миллиметровка (стиль проектных схем Visio / CAD) */
 body::before {
     content: "";
     position: fixed;
@@ -113,22 +113,17 @@ body::before {
     pointer-events: none;
     z-index: 0;
     background-image:
-        linear-gradient(rgba(0, 229, 255, 0.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 229, 255, 0.08) 1px, transparent 1px);
-    background-size: 40px 40px;
-    mask-image: radial-gradient(circle at 50% 30%, #000 50%, transparent 95%);
-    -webkit-mask-image: radial-gradient(circle at 50% 30%, #000 50%, transparent 95%);
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 20px 20px, 20px 20px, 100px 100px, 100px 100px;
+    mask-image: radial-gradient(circle at 50% 25%, #000 60%, transparent 95%);
+    -webkit-mask-image: radial-gradient(circle at 50% 25%, #000 60%, transparent 95%);
 }
 
 body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-    background:
-        radial-gradient(900px 500px at 85% -10%, rgba(0, 229, 255, 0.12), transparent 60%),
-        radial-gradient(800px 500px at 5% 20%, rgba(255, 214, 10, 0.08), transparent 60%);
+    display: none;
 }
 
 header,
@@ -223,8 +218,8 @@ h4,
 h1 {
     font-size: clamp(1.25rem, 3.6vw, 3.2rem);
     line-height: 1.15;
-    margin-bottom: 20px;
-    text-transform: uppercase;
+    margin-bottom: 24px;
+    font-weight: 600;
     /* Убираем дефисные разрывы слов */
     hyphens: none !important;
     -webkit-hyphens: none !important;
@@ -234,9 +229,9 @@ h1 {
 
 h2 {
     font-size: clamp(1.35rem, 3vw, 2.2rem);
-    margin-bottom: 35px;
+    margin-bottom: 32px;
     text-align: center;
-    text-transform: uppercase;
+    font-weight: 600;
 }
 
 h2 span {
@@ -248,6 +243,23 @@ p {
     font-size: var(--fs-base);
 }
 
+/* Моноширинные аккуратные числа для цен и инженерных параметров */
+/* Моноширинные аккуратные числа для цен и инженерных параметров */
+.price,
+.price-value,
+.table-price,
+.summary-total,
+.why-num,
+.reviews-score-val,
+.hero-stat-value,
+.rate-val,
+.din-digital-val,
+.spec-val,
+.board-footer strong,
+[data-num] {
+    font-variant-numeric: tabular-nums;
+}
+
 /* === BUTTONS === */
 .btn {
     display: inline-flex;
@@ -255,8 +267,8 @@ p {
     justify-content: center;
     gap: var(--space-sm);
     padding: 14px 28px;
-    border-radius: 14px;
-    font-weight: 700;
+    border-radius: 8px;
+    font-weight: 600;
     font-size: var(--fs-base);
     cursor: pointer;
     border: none;
@@ -269,36 +281,36 @@ p {
 .btn-primary {
     background: var(--primary-install);
     color: #050914;
-    box-shadow: 0 6px 20px rgba(0, 229, 255, 0.25);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
 }
 
 .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(0, 229, 255, 0.4);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
     background: #fff;
 }
 
 .btn-secondary {
     background: var(--primary-eng-btn);
     color: #fff;
-    box-shadow: 0 6px 20px rgba(99, 71, 224, 0.35);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
 }
 
 .btn-secondary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(99, 71, 224, 0.5);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
     background: #7357F0;
 }
 
 .btn-volt {
     background: var(--volt-yellow);
     color: #050914;
-    box-shadow: 0 6px 20px rgba(255, 214, 10, 0.25);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
 }
 
 .btn-volt:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(255, 214, 10, 0.4);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
 }
 
 .btn-outline {
@@ -308,8 +320,9 @@ p {
 }
 
 .btn-outline:hover {
-    border-color: rgba(0, 229, 255, 0.5);
-    color: var(--primary-install);
+    border-color: rgba(255, 255, 255, 0.25);
+    color: #fff;
+    background: rgba(255, 255, 255, 0.04);
 }
 
 /* === Утилиты размеров кнопок и раскладки === */
@@ -413,8 +426,8 @@ p {
 .hero {
     padding-bottom: 70px;
     display: grid;
-    grid-template-columns: 1fr 340px;
-    /* Фиксируем ширину щитка до 340px */
+    grid-template-columns: 1fr 390px;
+    /* Компоновка щитка на DIN-рейке */
     gap: var(--space-2xl);
     align-items: center;
 }
@@ -448,13 +461,12 @@ p {
     align-items: center;
     gap: var(--space-sm);
     font-size: var(--fs-xs);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    font-weight: 600;
+    letter-spacing: 0.04em;
     color: var(--primary-install);
-    border: 1px solid rgba(0, 229, 255, 0.3);
-    border-radius: 99px;
-    padding: 6px 14px;
+    border: 1px solid rgba(0, 229, 255, 0.25);
+    border-radius: 6px;
+    padding: 6px 12px;
     margin-bottom: 20px;
 }
 
@@ -463,8 +475,7 @@ p {
     height: 8px;
     border-radius: 50%;
     background: var(--primary-install);
-    box-shadow: var(--glow-cyan);
-    animation: blink 1.6s infinite;
+    box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.2);
     flex-shrink: 0;
 }
 
@@ -474,136 +485,356 @@ p {
     }
 }
 
-/* === ЩИТОК В HERO === */
+/* === ИНЖЕНЕРНЫЙ ЩИТ НА DIN-РЕЙКЕ (VISIO / HAGER / WELROK STYLE) === */
 .hero-board {
-    background: linear-gradient(180deg, #111827, #090d16);
-    border: 1px solid var(--border-light);
-    border-radius: 20px;
-    padding: var(--space-lg);
-    box-shadow: var(--shadow-modal);
+    background: #0d131f;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    padding: 16px 20px 16px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
     position: relative;
-    width: 340px;
-    /* Строгая компактная ширина */
+    width: 390px;
     max-width: 100%;
     margin-left: auto;
+    user-select: none;
 }
 
-.hero-board::before {
+.hero-board::before,
+.hero-board::after {
     content: '';
     position: absolute;
-    inset: 8px;
-    border: 1px dashed rgba(255, 255, 255, 0.08);
-    border-radius: 14px;
-    pointer-events: none;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #475569;
+    box-shadow: inset 0 1px 1px #000, 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.hero-board::before {
+    top: 8px;
+    left: 8px;
+}
+.hero-board::after {
+    top: 8px;
+    right: 8px;
 }
 
 .board-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     font-family: var(--font-heading);
-    font-size: var(--fs-sm);
-}
-
-.board-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 12px;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid var(--border-light);
-    border-radius: 12px;
-    margin-bottom: 8px;
-    font-size: var(--fs-sm);
-    font-weight: 600;
-    gap: var(--space-sm);
-}
-
-.board-row small {
-    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
     color: var(--text-muted);
-    font-size: var(--fs-xs);
-    font-weight: 400;
+}
+
+.board-header .board-title {
+    color: #e2e8f0;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.board-header .board-title::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #10B981;
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+}
+
+/* Шасси и перфорированная стальная DIN-рейка 35 мм */
+.din-chassis {
+    position: relative;
+    padding: 14px 6px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.din-rail-metal {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 28px;
+    transform: translateY(-50%);
+    background: linear-gradient(180deg, #475569 0%, #1e293b 40%, #334155 70%, #64748b 100%);
+    box-shadow: inset 0 2px 3px rgba(0,0,0,0.4), inset 0 -2px 3px rgba(255,255,255,0.15);
+    z-index: 1;
+    pointer-events: none;
+    border-radius: 2px;
+}
+
+.din-rail-metal::before {
+    content: '';
+    position: absolute;
+    inset: 7px 10px;
+    background-image: radial-gradient(ellipse at center, rgba(15, 23, 42, 0.8) 50%, transparent 60%);
+    background-size: 24px 14px;
+    background-repeat: repeat-x;
+}
+
+.din-modules {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    gap: 3px;
+    align-items: stretch;
+    justify-content: space-between;
+}
+
+.din-mod {
+    background: linear-gradient(180deg, #1e2638 0%, #131926 100%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5px 3px 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+    font-family: var(--font-heading);
+    font-size: 0.65rem;
+    text-align: center;
+}
+
+.din-tag {
+    background: rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+    padding: 2px 2px;
+    font-size: 0.58rem;
+    font-weight: 700;
+    border-radius: 2px;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.din-mod-welrok {
+    width: 68px;
+    flex-shrink: 0;
+    background: linear-gradient(180deg, #1b2234 0%, #111624 100%);
+    border-top: 2px solid #ef4444;
+}
+
+.din-digital-display {
+    background: #090c12;
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    border-radius: 3px;
+    margin: 5px 2px;
+    padding: 3px 0;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
+}
+
+.din-digital-val {
+    color: #f87171;
+    font-family: monospace, var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 0 4px rgba(239, 68, 68, 0.5);
+    display: block;
+    line-height: 1;
+}
+
+.din-digital-unit {
+    font-size: 0.52rem;
+    color: #94a3b8;
+    display: block;
+    margin-top: 1px;
+}
+
+.din-mod-uzo {
+    width: 62px;
+    flex-shrink: 0;
+    background: linear-gradient(180deg, #1e2638 0%, #131926 100%);
+    border-top: 2px solid var(--volt-yellow);
+}
+
+.din-flag-double {
+    display: flex;
+    justify-content: center;
+    gap: 3px;
+    margin: 8px 0 4px;
+}
+
+.din-lever {
+    width: 12px;
+    height: 22px;
+    background: linear-gradient(180deg, #475569 0%, #1e293b 100%);
+    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 2px 2px rgba(255,255,255,0.2), 0 2px 4px rgba(0,0,0,0.5);
+    position: relative;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.din-lever::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    height: 4px;
+    background: #64748b;
+    border-radius: 1px;
+}
+
+.din-window {
+    width: 14px;
+    height: 6px;
+    background: #ef4444;
+    border-radius: 1px;
+    margin: 3px auto;
+    border: 1px solid rgba(0,0,0,0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.5);
+    transition: background-color 0.2s ease;
+}
+
+.din-test-btn {
+    width: 14px;
+    height: 10px;
+    background: #eab308;
+    color: #0f172a;
+    font-size: 0.52rem;
+    font-weight: 800;
+    line-height: 10px;
+    border-radius: 2px;
+    margin: 3px auto 0;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
+
+.din-mod-1p {
+    width: 44px;
+    flex-shrink: 0;
+}
+
+.din-rating {
+    font-size: 0.62rem;
+    font-weight: 800;
+    color: #f1f5f9;
+    margin-top: 2px;
+}
+
+.din-mod-interactive {
+    width: 58px;
+    flex-shrink: 0;
+    cursor: pointer;
+    border-color: rgba(255, 255, 255, 0.18);
+    transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.din-mod-interactive:hover {
+    border-color: rgba(255, 255, 255, 0.35);
+    transform: translateY(-1px);
+}
+
+.din-led {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin: 4px auto 2px;
+    background: #22c55e;
+    box-shadow: 0 0 6px rgba(34, 197, 94, 0.7);
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+.din-mod-interactive.is-off .din-lever {
+    transform: translateY(8px);
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+}
+
+.din-mod-interactive.is-off .din-window {
+    background: #22c55e;
+}
+
+.din-mod-interactive.is-off .din-led {
+    background: #475569;
+    box-shadow: none;
+}
+
+.din-mod-interactive.is-off .din-rating {
+    color: #64748b;
+}
+
+
+/* Ряд подлинных фигур Visio (Welrok, Schneider Acti9, WirenBoard) */
+.din-visio-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 2px;
+    padding: 8px 2px 4px;
+    position: relative;
+    z-index: 2;
+}
+
+.din-visio-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.15s ease, opacity 0.15s ease, filter 0.15s ease;
+    user-select: none;
+}
+
+.din-visio-item:hover {
+    transform: translateY(-2px);
+}
+
+.din-visio-item img {
+    height: 148px;
+    width: auto;
+    display: block;
+    background: transparent;
+    filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.4));
+}
+
+.din-visio-item.is-off {
+    opacity: 0.45;
+    filter: grayscale(0.7);
+    transform: translateY(3px);
 }
 
 .board-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 16px;
+    margin-top: 12px;
     padding-top: 10px;
-    border-top: 1px solid var(--border-light);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
     font-family: var(--font-heading);
-    font-size: var(--fs-sm);
+    font-size: 0.72rem;
+    color: var(--text-muted);
 }
 
-/* Тумблеры */
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 44px;
-    height: 24px;
-    flex-shrink: 0;
+.board-metric {
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
+.board-metric strong {
+    color: #f8fafc;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
 }
 
-.slider {
-    position: absolute;
-    cursor: pointer;
-    inset: 0;
-    background-color: #1e293b;
-    transition: .35s;
-    border-radius: 24px;
-    border: 1px solid var(--border-light);
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 16px;
-    width: 16px;
-    left: 3px;
-    bottom: 3px;
-    background-color: #64748b;
-    transition: .35s;
-    border-radius: 50%;
-}
-
-input:checked+.slider {
-    background-color: rgba(255, 214, 10, 0.2);
-    border-color: var(--volt-yellow);
-}
-
-input:checked+.slider:before {
-    transform: translateX(20px);
-    background-color: var(--volt-yellow);
-    box-shadow: var(--glow-yellow);
-}
-
-input:checked+.slider.cyan {
-    background-color: rgba(0, 229, 255, 0.2);
-    border-color: var(--primary-install);
-}
-
-input:checked+.slider.cyan:before {
-    background-color: var(--primary-install);
-    box-shadow: var(--glow-cyan);
-}
-
-input:checked+.slider.purple {
-    background-color: rgba(123, 97, 255, 0.2);
-    border-color: var(--primary-eng);
-}
-
-input:checked+.slider.purple:before {
-    background-color: var(--primary-eng);
-    box-shadow: var(--glow-purple);
+.board-metric.power strong {
+    color: var(--volt-yellow);
+    font-size: 0.82rem;
 }
 
 /* === SECTIONS & CARDS (ДЕСКТОП) === */
@@ -672,7 +903,7 @@ input:checked+.slider.purple:before {
 .card h3 {
     font-size: var(--fs-md);
     margin-bottom: 12px;
-    text-transform: uppercase;
+    font-weight: 600;
     color: var(--text-main);
 }
 
@@ -752,7 +983,7 @@ input:checked+.slider.purple:before {
 .team-card:hover {
     border-color: rgba(0, 229, 255, 0.4);
     transform: translateY(-5px);
-    box-shadow: var(--shadow-card-hover), var(--glow-cyan);
+    box-shadow: var(--shadow-card-hover);
 }
 
 .team-avatar-wrapper {
@@ -769,14 +1000,13 @@ input:checked+.slider.purple:before {
     object-fit: cover;
     border: 2px solid var(--primary-install);
     background: #0d1527;
-    box-shadow: var(--glow-cyan);
+    /* box-shadow removed for unslop */
     display: block;
     transition: var(--transition);
 }
 
 .team-card:hover .team-avatar {
-    transform: scale(1.04);
-    box-shadow: var(--glow-cyan-lg);
+    border-color: #fff;
 }
 
 .team-badge-status {
@@ -866,7 +1096,7 @@ input:checked+.slider.purple:before {
     overflow-y: auto;
     padding: 32px 28px;
     position: relative;
-    box-shadow: var(--shadow-modal), var(--glow-cyan);
+    box-shadow: var(--shadow-modal);
     transform: scale(0.94) translateY(15px);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     overscroll-behavior: contain;
@@ -918,13 +1148,13 @@ input:checked+.slider.purple:before {
     object-fit: cover;
     border: 2px solid var(--primary-install);
     flex-shrink: 0;
-    box-shadow: var(--glow-cyan);
+    /* box-shadow removed for unslop */
     background: #0d1527;
 }
 
 .modal-master-avatar.purple {
     border-color: var(--primary-eng);
-    box-shadow: var(--glow-purple);
+    /* box-shadow removed for unslop */
 }
 
 .modal-block {
@@ -938,9 +1168,9 @@ input:checked+.slider.purple:before {
     font-family: var(--font-heading);
     font-size: var(--fs-base);
     color: var(--primary-install);
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
+    margin-bottom: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
 }
 
 .modal-block-title.purple {
@@ -1038,7 +1268,7 @@ select.form-input option {
     outline: none;
     border-color: var(--primary-install);
     background: #0b1324;
-    box-shadow: 0 0 16px rgba(0, 229, 255, 0.3), inset 0 0 8px rgba(0, 229, 255, 0.08);
+    box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.25);
 }
 
 .service-chips-grid {
@@ -1073,7 +1303,7 @@ select.form-input option {
     border-color: var(--primary-install);
     color: var(--primary-install);
     font-weight: 600;
-    box-shadow: var(--glow-cyan);
+    /* box-shadow removed for unslop */
 }
 
 .form-input::placeholder,
@@ -1264,7 +1494,7 @@ main>.container:first-child,
     }
 
     .section {
-        padding: 45px 0;
+        padding: 48px 0;
     }
 
     /* Шапка и Мобильное меню */
@@ -1329,7 +1559,7 @@ main>.container:first-child,
         font-size: var(--fs-base);
         font-weight: 600;
         color: #f1f5f9 !important;
-        padding: 13px 18px;
+        padding: 12px 18px;
         border-radius: 12px;
         background: rgba(255, 255, 255, 0.04);
         border: 1px solid rgba(255, 255, 255, 0.08);
@@ -1350,7 +1580,7 @@ main>.container:first-child,
         background: rgba(0, 229, 255, 0.14);
         border-color: var(--primary-install);
         color: var(--primary-install) !important;
-        box-shadow: var(--glow-cyan);
+        /* box-shadow removed for unslop */
     }
 
     .nav-links a.btn,
@@ -1485,7 +1715,7 @@ main>.container:first-child,
     .calc-table tr.is-selected {
         border-color: rgba(0, 229, 255, 0.45) !important;
         background: rgba(0, 229, 255, 0.04) !important;
-        box-shadow: 0 0 15px rgba(0, 229, 255, 0.08) !important;
+        
     }
 
     /* Название услуги / материала (первая колонка) */
@@ -1597,6 +1827,13 @@ main>.container:first-child,
 }
 
 @media (max-width: 480px) {
+    .din-visio-item img {
+        height: 120px !important;
+        background: transparent !important;
+    }
+    .din-visio-row {
+        gap: 3px !important;
+    }
     h1 {
         font-size: clamp(1.2rem, 6.2vw, 1.55rem) !important;
         line-height: 1.2 !important;
@@ -1746,7 +1983,7 @@ main>.container:first-child,
 .bento-card {
     background: var(--bg-card);
     border: 1px solid var(--border-light);
-    border-radius: 24px;
+    border-radius: 14px;
     padding: var(--space-xl);
     position: relative;
     overflow: hidden;
@@ -1763,50 +2000,51 @@ main>.container:first-child,
 
 .bento-install {
     grid-column: span 7;
-    border-color: rgba(0, 229, 255, 0.2);
+    border-color: var(--border-light);
 }
 .bento-install:hover {
-    border-color: rgba(0, 229, 255, 0.5);
-    box-shadow: var(--shadow-card-hover), var(--glow-cyan);
+    border-color: rgba(0, 229, 255, 0.4);
+    box-shadow: var(--shadow-card-hover);
 }
 
 .bento-smart {
     grid-column: span 5;
-    border-color: rgba(0, 229, 255, 0.15);
+    border-color: var(--border-light);
 }
 .bento-smart:hover {
-    border-color: rgba(0, 229, 255, 0.4);
+    border-color: rgba(0, 229, 255, 0.35);
+    box-shadow: var(--shadow-card-hover);
 }
 
 .bento-eng {
     grid-column: span 7;
-    background: linear-gradient(145deg, #0e1222 0%, #120d26 100%);
-    border-color: rgba(123, 97, 255, 0.3);
+    background: var(--bg-card);
+    border-color: var(--border-light);
 }
 .bento-eng:hover {
-    border-color: rgba(123, 97, 255, 0.6);
-    box-shadow: var(--shadow-card-hover), var(--glow-purple);
+    border-color: rgba(123, 97, 255, 0.45);
+    box-shadow: var(--shadow-card-hover);
 }
 
 .bento-calc {
     grid-column: span 5;
-    background: linear-gradient(145deg, #101524 0%, #17150a 100%);
-    border-color: rgba(255, 214, 10, 0.25);
+    background: var(--bg-card);
+    border-color: var(--border-light);
 }
 .bento-calc:hover {
-    border-color: rgba(255, 214, 10, 0.55);
-    box-shadow: var(--shadow-card-hover), var(--glow-yellow);
+    border-color: rgba(255, 214, 10, 0.45);
+    box-shadow: var(--shadow-card-hover);
 }
 
 .bento-tag {
     display: inline-flex;
     align-items: center;
     gap: var(--space-sm);
-    padding: 4px 12px;
-    border-radius: 99px;
+    padding: 4px 10px;
+    border-radius: 6px;
     font-size: var(--fs-xs);
-    font-weight: 700;
-    letter-spacing: 0.05em;
+    font-weight: 600;
+    letter-spacing: 0.03em;
     font-family: var(--font-heading);
     margin-bottom: 16px;
     width: fit-content;
@@ -1866,7 +2104,7 @@ main>.container:first-child,
 .showcase-card {
     background: var(--bg-card);
     border: 1px solid var(--border-light);
-    border-radius: 20px;
+    border-radius: 12px;
     overflow: hidden;
     transition: var(--transition);
     display: flex;
@@ -1900,7 +2138,7 @@ main>.container:first-child,
 }
 
 .showcase-card:hover .showcase-img-wrap img {
-    transform: scale(1.03);
+    transform: scale(1.015);
 }
 
 .showcase-badge-new {
@@ -1911,11 +2149,11 @@ main>.container:first-child,
     border: 1px solid var(--volt-yellow);
     color: var(--volt-yellow);
     font-size: var(--fs-xs);
-    font-weight: 700;
-    padding: 3px 10px;
-    border-radius: 99px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 6px;
     font-family: var(--font-heading);
-    box-shadow: var(--glow-yellow);
+    /* box-shadow removed for unslop */
     z-index: 2;
 }
 
@@ -1967,8 +2205,8 @@ main>.container:first-child,
 .why-card {
     background: var(--bg-card);
     border: 1px solid var(--border-light);
-    border-radius: 20px;
-    padding: 34px 28px;
+    border-radius: 14px;
+    padding: 32px 24px;
     position: relative;
     overflow: hidden;
     transition: var(--transition);
@@ -1989,7 +2227,7 @@ main>.container:first-child,
 .why-num {
     font-family: var(--font-heading);
     font-size: var(--fs-2xl);
-    font-weight: 800;
+    font-weight: 700;
     line-height: 1;
 }
 
@@ -1998,7 +2236,6 @@ main>.container:first-child,
 }
 .why-card-1 .why-num {
     color: var(--primary-install);
-    text-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
 }
 
 .why-card-2 {
@@ -2006,7 +2243,6 @@ main>.container:first-child,
 }
 .why-card-2 .why-num {
     color: var(--primary-eng);
-    text-shadow: 0 0 20px rgba(123, 97, 255, 0.3);
 }
 
 .why-card-3 {
@@ -2014,14 +2250,13 @@ main>.container:first-child,
 }
 .why-card-3 .why-num {
     color: var(--volt-yellow);
-    text-shadow: 0 0 20px rgba(255, 214, 10, 0.3);
 }
 
 .why-status-pill {
     font-size: var(--fs-xs);
     font-family: var(--font-heading);
-    padding: 3px 10px;
-    border-radius: 99px;
+    padding: 3px 8px;
+    border-radius: 6px;
     border: 1px solid var(--border-light);
     background: rgba(255, 255, 255, 0.03);
     color: var(--text-muted);
@@ -2040,7 +2275,7 @@ main>.container:first-child,
     right: 8%;
     height: 2px;
     background: linear-gradient(90deg, #00E5FF 0%, rgba(123, 97, 255, 0.8) 50%, #FFD60A 100%);
-    box-shadow: var(--glow-cyan);
+    /* box-shadow removed for unslop */
     z-index: 1;
 }
 
@@ -2074,12 +2309,12 @@ main>.container:first-child,
     border: 2px solid var(--primary-install);
     color: var(--primary-install);
     font-family: var(--font-heading);
-    font-weight: 800;
+    font-weight: 700;
     font-size: var(--fs-sm);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: var(--glow-cyan);
+    /* box-shadow removed for unslop */
     margin-bottom: 22px;
     transition: all 0.3s ease;
     position: relative;
@@ -2089,20 +2324,19 @@ main>.container:first-child,
 .process-track-step:hover .process-track-node {
     background: var(--primary-install);
     color: #050914;
-    box-shadow: var(--glow-cyan-lg);
-    transform: scale(1.08);
+    /* box-shadow removed for unslop */
 }
 
 .process-track-step:last-child .process-track-node {
     border-color: var(--volt-yellow);
     color: var(--volt-yellow);
-    box-shadow: var(--glow-yellow);
+    /* box-shadow removed for unslop */
 }
 
 .process-track-step:last-child:hover .process-track-node {
     background: var(--volt-yellow);
     color: #050914;
-    box-shadow: var(--glow-yellow);
+    /* box-shadow removed for unslop */
 }
 
 .process-track-title {
@@ -2131,8 +2365,8 @@ main>.container:first-child,
     color: var(--primary-install);
     background: rgba(0, 229, 255, 0.08);
     border: 1px solid rgba(0, 229, 255, 0.25);
-    padding: 5px 14px;
-    border-radius: 99px;
+    padding: 5px 12px;
+    border-radius: 6px;
     letter-spacing: 0.02em;
     display: inline-flex;
     align-items: center;
@@ -2170,8 +2404,8 @@ main>.container:first-child,
 .dossier-card {
     background: var(--bg-card);
     border: 1px solid var(--border-light);
-    border-radius: 24px;
-    padding: 28px 24px;
+    border-radius: 14px;
+    padding: 32px 24px;
     position: relative;
     overflow: hidden;
     transition: var(--transition);
@@ -2187,7 +2421,7 @@ main>.container:first-child,
 
 .dossier-master-primary {
     border-color: rgba(0, 229, 255, 0.3);
-    box-shadow: var(--glow-cyan);
+    /* box-shadow removed for unslop */
 }
 .dossier-master-primary:hover {
     border-color: rgba(0, 229, 255, 0.55);
@@ -2201,7 +2435,7 @@ main>.container:first-child,
 .dossier-join:hover {
     border-color: var(--primary-eng);
     border-style: solid;
-    box-shadow: var(--shadow-card-hover), var(--glow-purple);
+    box-shadow: var(--shadow-card-hover);
 }
 
 .dossier-header {
@@ -2222,7 +2456,7 @@ main>.container:first-child,
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: var(--glow-cyan);
+    /* box-shadow removed for unslop */
     flex-shrink: 0;
 }
 
@@ -2473,13 +2707,13 @@ main>.container:first-child,
 
 .price-accordion[open] {
     border-color: rgba(0, 229, 255, 0.4);
-    box-shadow: var(--shadow-md), var(--glow-cyan);
+    box-shadow: var(--shadow-md);
     background: rgba(15, 23, 42, 0.95);
 }
 
 .price-accordion.eng[open] {
     border-color: rgba(123, 97, 255, 0.45);
-    box-shadow: var(--shadow-md), var(--glow-purple);
+    box-shadow: var(--shadow-md);
 }
 
 .price-accordion-summary {
@@ -2609,12 +2843,12 @@ main>.container:first-child,
 .spec-card:hover {
     border-color: rgba(0, 229, 255, 0.35);
     transform: translateY(-4px);
-    box-shadow: var(--shadow-card-hover), var(--glow-cyan);
+    box-shadow: var(--shadow-card-hover);
 }
 
 .spec-card.eng:hover {
     border-color: rgba(123, 97, 255, 0.4);
-    box-shadow: var(--shadow-card-hover), var(--glow-purple);
+    box-shadow: var(--shadow-card-hover);
 }
 
 .spec-card-icon {
@@ -2691,8 +2925,7 @@ main>.container:first-child,
     background: rgba(0, 229, 255, 0.08);
     color: var(--primary-install);
     border: 1px solid rgba(0, 229, 255, 0.2);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    letter-spacing: 0.02em;
 }
 
 .spec-card.eng .spec-tag {
@@ -2725,7 +2958,6 @@ main>.container:first-child,
 }
 .why-card-4 .why-num {
     color: var(--success);
-    text-shadow: 0 0 20px rgba(16, 185, 129, 0.35);
 }
 
 .why-card-eng-1 {
@@ -2733,7 +2965,6 @@ main>.container:first-child,
 }
 .why-card-eng-1 .why-num {
     color: var(--primary-eng);
-    text-shadow: 0 0 20px rgba(123, 97, 255, 0.35);
 }
 
 .why-card-eng-2 {
@@ -2741,7 +2972,6 @@ main>.container:first-child,
 }
 .why-card-eng-2 .why-num {
     color: var(--primary-install);
-    text-shadow: 0 0 20px rgba(0, 229, 255, 0.35);
 }
 
 .why-card-eng-3 {
@@ -2749,7 +2979,6 @@ main>.container:first-child,
 }
 .why-card-eng-3 .why-num {
     color: var(--volt-yellow);
-    text-shadow: 0 0 20px rgba(255, 214, 10, 0.35);
 }
 
 .why-card-eng-4 {
@@ -2757,7 +2986,6 @@ main>.container:first-child,
 }
 .why-card-eng-4 .why-num {
     color: #a855f7;
-    text-shadow: 0 0 20px rgba(168, 85, 247, 0.35);
 }
 
 /* === BENTO GRID SPANS & HELPERS === */
@@ -2779,7 +3007,7 @@ main>.container:first-child,
 /* === PROCESS TRACK ENGINEERING THEME === */
 .process-track-container.eng .process-track-line {
     background: linear-gradient(90deg, #7B61FF 0%, rgba(0, 229, 255, 0.8) 50%, #FFD60A 100%);
-    box-shadow: var(--glow-purple);
+    /* box-shadow removed for unslop */
 }
 
 .process-track-container.eng .process-track-node {
@@ -2790,7 +3018,7 @@ main>.container:first-child,
 .process-track-container.eng .process-track-step:hover .process-track-node {
     background: var(--primary-eng);
     color: #fff;
-    box-shadow: var(--glow-purple);
+    /* box-shadow removed for unslop */
 }
 
 .process-track-container.eng .process-track-step:hover {
@@ -2982,8 +3210,7 @@ main>.container:first-child,
 /* === СЕКЦИЯ ОТЗЫВОВ КЛИЕНТОВ (ЗАДАЧА 038, SEO И ДОВЕРИЕ) === */
 .reviews-section {
     position: relative;
-    padding-top: 40px;
-    padding-bottom: 70px;
+    padding: 64px 0;
 }
 
 .reviews-grid {
@@ -3162,7 +3389,7 @@ main>.container:first-child,
 .reviews-score-val {
     font-family: var(--font-heading);
     font-size: var(--fs-2xl);
-    font-weight: 900;
+    font-weight: 700;
     color: #ffb703;
     line-height: 1;
 }

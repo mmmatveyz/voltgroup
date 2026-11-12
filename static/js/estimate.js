@@ -93,7 +93,7 @@
                 return true;
             })
             .catch(err => {
-                console.error('❌ Ошибка загрузки prices.json:', err);
+                console.error('Ошибка загрузки prices.json:', err);
                 const tbody = document.getElementById('services-body');
                 if (tbody) {
                     tbody.textContent = '';
@@ -102,9 +102,9 @@
                     td.colSpan = 7;
                     td.style.cssText = "text-align:center; padding:30px; color:var(--danger);";
                     if (window.location.protocol === 'file:') {
-                        td.innerHTML = '❌ <b>Браузер блокирует загрузку данных по протоколу file:// (CORS).</b><br><span style="color:var(--text-muted);font-size:0.9em;display:inline-block;margin-top:6px;">Запустите локальный HTTP-сервер: выполните <code>python -m http.server 8000</code> в корне проекта или используйте скрипт <code>tools/serve.cmd</code>, затем откройте <a href="http://localhost:8000/estimate.html" style="color:var(--accent);">http://localhost:8000/estimate.html</a></span>';
+                        td.innerHTML = '<b>Браузер блокирует загрузку данных по протоколу file:// (CORS).</b><br><span style="color:var(--text-muted);font-size:0.9em;display:inline-block;margin-top:6px;">Запустите локальный HTTP-сервер: выполните <code>python -m http.server 8000</code> в корне проекта или используйте скрипт <code>tools/serve.cmd</code>, затем откройте <a href="http://localhost:8000/estimate.html" style="color:var(--accent);">http://localhost:8000/estimate.html</a></span>';
                     } else {
-                        td.textContent = "❌ Не удалось загрузить прайс-лист. Проверьте файл static/data/prices.json.";
+                        td.textContent = "Не удалось загрузить прайс-лист. Проверьте файл static/data/prices.json.";
                     }
                     tr.appendChild(td);
                     tbody.appendChild(tr);
@@ -306,7 +306,7 @@
             const td = document.createElement('td');
             td.colSpan = 7;
             td.style.cssText = "text-align:center; padding:25px; color:var(--text-muted); font-size: 0.95rem;";
-            td.textContent = window.showOnlySelected ? "🔍 Пока не выбрано ни одной позиции в этом разделе" : "В этой категории пока нет работ";
+            td.textContent = window.showOnlySelected ? "Пока не выбрано ни одной позиции в этом разделе" : "В этой категории пока нет работ";
             tr.appendChild(td);
             tbody.appendChild(tr);
             calculateTotals();
@@ -826,7 +826,7 @@
 
         const optDefault = document.createElement('option');
         optDefault.value = '';
-        optDefault.textContent = '📂 Загрузить...';
+        optDefault.textContent = 'Загрузить...';
         select.appendChild(optDefault);
 
         for (let i = 0; i < localStorage.length; i++) {
@@ -915,10 +915,10 @@
                     }
                 }
                 calculateTotals();
-                alert('✅ Черновик успешно загружен!');
+                alert('Черновик успешно загружен!');
             } catch (err) {
                 console.error(err);
-                alert('❌ Ошибка при чтении файла. Убедитесь, что это корректный JSON.');
+                alert('Ошибка при чтении файла. Убедитесь, что это корректный JSON.');
             }
         };
         reader.readAsText(file);
@@ -961,13 +961,13 @@
         const masterBuys = document.getElementById('master-buys-materials')?.checked || false;
 
         let lines = [];
-        lines.push('⚡ *Смета VoltGroup*');
-        if (invoiceNum) lines.push(`📄 Номер: №${invoiceNum}`);
-        if (date) lines.push(`📅 Дата: ${date}`);
-        if (clientName) lines.push(`👤 Заказчик: ${clientName}`);
-        if (clientAddr) lines.push(`📍 Объект: ${clientAddr}`);
+        lines.push('*Смета VoltGroup*');
+        if (invoiceNum) lines.push(`Номер: №${invoiceNum}`);
+        if (date) lines.push(`Дата: ${date}`);
+        if (clientName) lines.push(`Заказчик: ${clientName}`);
+        if (clientAddr) lines.push(`Объект: ${clientAddr}`);
         lines.push('');
-        lines.push('🛠 *ВЫПОЛНЯЕМЫЕ РАБОТЫ:*');
+        lines.push('*ВЫПОЛНЯЕМЫЕ РАБОТЫ:*');
 
         let num = 1;
         window.allServices.forEach((s, index) => {
@@ -1011,18 +1011,18 @@
 
         if (hasMaterials) {
             lines.push('');
-            lines.push(`📦 *МАТЕРИАЛЫ (${masterBuys ? 'закупка мастером' : 'закупка заказчиком'}):*`);
+            lines.push(`*МАТЕРИАЛЫ (${masterBuys ? 'закупка мастером' : 'закупка заказчиком'}):*`);
             lines.push(...matLines);
         }
 
         lines.push('');
-        lines.push('💰 *ИТОГИ:*');
+        lines.push('*ИТОГИ:*');
         lines.push(`Работы: ${totals.worksFinal.toLocaleString('ru-RU')} ₽`);
         if (totals.discountAmount > 0) {
-            lines.push(`🎁 Скидка: -${totals.discountAmount.toLocaleString('ru-RU')} ₽`);
+            lines.push(`Скидка: -${totals.discountAmount.toLocaleString('ru-RU')} ₽`);
         }
         if (totals.materialsTotal > 0) {
-            lines.push(`📦 Материалы: ${totals.materialsTotal.toLocaleString('ru-RU')} ₽${!masterBuys ? ' (закупка заказчиком)' : ''}`);
+            lines.push(`Материалы: ${totals.materialsTotal.toLocaleString('ru-RU')} ₽${!masterBuys ? ' (закупка заказчиком)' : ''}`);
         }
         lines.push(`ИТОГО К ОПЛАТЕ: ${totals.grandTotal.toLocaleString('ru-RU')} ₽`);
         lines.push('');
@@ -1030,14 +1030,14 @@
         const compPhone = comp.phone || '+7 (905) 208-42-84';
         const compBrand = comp.brandName || 'VoltGroup';
         const compSite = comp.siteUrl || 'https://voltgroup-spb.ru';
-        lines.push(`📞 Контакты: ${compPhone} (Матвей, ${compBrand})`);
-        lines.push(`🌐 Сайт: ${compSite}`);
+        lines.push(`Контакты: ${compPhone} (Матвей, ${compBrand})`);
+        lines.push(`Сайт: ${compSite}`);
 
         const textToCopy = lines.join('\n');
 
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(textToCopy).then(() => {
-                showToast('📋 Смета скопирована в буфер обмена!');
+                showToast('Смета скопирована в буфер обмена!');
             }).catch(() => {
                 fallbackCopy(textToCopy);
             });
@@ -1058,7 +1058,7 @@
         ta.select();
         try {
             document.execCommand('copy');
-            showToast('📋 Смета скопирована в буфер обмена!');
+            showToast('Смета скопирована в буфер обмена!');
         } catch (err) {
             alert('Не удалось скопировать. Пожалуйста, скопируйте вручную.');
         }
@@ -1078,9 +1078,9 @@
         const masterBuys = document.getElementById('master-buys-materials')?.checked ?? true;
 
         let lines = [];
-        if (clientAddr) lines.push(`📍 Адрес: ${clientAddr}`);
-        if (invoiceNum) lines.push(`📄 Смета: №${invoiceNum}`);
-        if (date) lines.push(`📅 Дата: ${date}`);
+        if (clientAddr) lines.push(`Адрес: ${clientAddr}`);
+        if (invoiceNum) lines.push(`Смета: №${invoiceNum}`);
+        if (date) lines.push(`Дата: ${date}`);
         if (lines.length > 0) lines.push('');
 
         // Собираем все выбранные работы
@@ -1112,7 +1112,7 @@
 
         const totalWorksCount = selectedWorks.length;
         if (totalWorksCount > 0) {
-            lines.push(`🛠 Работы (${totalWorksCount} поз.):`);
+            lines.push(`Работы (${totalWorksCount} поз.):`);
             const displayedWorks = selectedWorks.slice(0, maxItems);
             displayedWorks.forEach((item, idx) => {
                 lines.push(`${idx + 1}. ${item}`);
@@ -1136,7 +1136,7 @@
         });
 
         if (materialItems.length > 0) {
-            lines.push(`📦 Материалы (${masterBuys ? 'закупка мастером' : 'закупка заказчиком'}, ${materialItems.length} поз.):`);
+            lines.push(`Материалы (${masterBuys ? 'закупка мастером' : 'закупка заказчиком'}, ${materialItems.length} поз.):`);
             if (materialItems.length <= 5) {
                 materialItems.forEach((m, idx) => lines.push(`${idx + 1}. ${m}`));
             } else {
@@ -1146,7 +1146,7 @@
             lines.push('');
         }
 
-        lines.push('💰 Итоговый расчёт:');
+        lines.push('Итоговый расчёт:');
         lines.push(`• Работы: ${totals.worksFinal.toLocaleString('ru-RU')} ₽`);
         if (totals.discountAmount > 0) {
             lines.push(`• Скидка: -${totals.discountAmount.toLocaleString('ru-RU')} ₽`);
@@ -1208,7 +1208,7 @@
 
         const summary = buildEstimateSummaryForLead({ maxItems: 15 });
         if (summary.totalWorksCount === 0 && summary.materialsCount === 0 && summary.grandTotal === 0) {
-            showStatus('⚠️ <b>Смета пуста!</b> Добавьте хотя бы одну работу или материал в калькулятор перед отправкой.', 'warning');
+            showStatus('<b>Смета пуста!</b> Добавьте хотя бы одну работу или материал в калькулятор перед отправкой.', 'warning');
             return;
         }
 
@@ -1219,7 +1219,7 @@
                 phoneEl.classList.add('is-invalid');
                 phoneEl.focus();
             }
-            showStatus('⚠️ <b>Укажите телефон для связи:</b> +7 (XXX) XXX-XX-XX, чтобы мастер мог ответить по смете.', 'warning');
+            showStatus('<b>Укажите телефон для связи:</b> +7 (XXX) XXX-XX-XX, чтобы мастер мог ответить по смете.', 'warning');
             return;
         }
         if (phoneEl) phoneEl.classList.remove('is-invalid');
@@ -1228,9 +1228,9 @@
 
         if (sendBtn) {
             sendBtn.disabled = true;
-            sendBtn.textContent = '⏳ Отправляем смету...';
+            sendBtn.textContent = 'Отправка сметы...';
         }
-        showStatus('⏳ Передаём смету мастеру VoltGroup...', 'info');
+        showStatus('Передаём смету мастеру VoltGroup...', 'info');
 
         const controller = (typeof AbortController !== 'undefined') ? new AbortController() : null;
         let timeoutId = null;
@@ -1261,7 +1261,7 @@
 
             if (res.ok) {
                 showStatus(
-                    `✅ <b>Смета успешно передана мастеру!</b><br>` +
+                    `<b>Смета успешно передана мастеру!</b><br>` +
                     `Мы изучим расчёт и свяжемся с вами в ближайшее время по номеру <b>${escapeHtml(phoneVal)}</b>.<br>` +
                     `При необходимости напишите напрямую мастеру в <a href="${compTg}" target="_blank" rel="noopener noreferrer" style="color:var(--primary-install);text-decoration:underline;font-weight:600;">Telegram</a>, ` +
                     `<a href="${compVk}" target="_blank" rel="noopener noreferrer" style="color:var(--primary-install);text-decoration:underline;font-weight:600;">ВКонтакте</a> или ` +
@@ -1275,7 +1275,7 @@
                 const errData = await res.json().catch(() => ({}));
                 const limitMsg = errData.msg || 'Слишком много запросов. Пожалуйста, подождите минуту.';
                 showStatus(
-                    `⚠️ <b>${escapeHtml(limitMsg)}</b><br>` +
+                    `<b>${escapeHtml(limitMsg)}</b><br>` +
                     `Свяжитесь с мастером напрямую: <a href="${compTg}" target="_blank" rel="noopener noreferrer" style="color:var(--primary-install);text-decoration:underline;font-weight:600;">Telegram</a> · ` +
                     `<a href="${compVk}" target="_blank" rel="noopener noreferrer" style="color:var(--primary-install);text-decoration:underline;font-weight:600;">ВКонтакте</a> · ` +
                     `<a href="tel:${compPhoneClean}" style="color:var(--primary-install);text-decoration:underline;font-weight:600;">${compPhone}</a>`,
@@ -1288,7 +1288,7 @@
             if (timeoutId) clearTimeout(timeoutId);
             if (err && err.name === 'AbortError') {
                 showStatus(
-                    `⏳ <b>Сервер просыпается</b> (холодный старт Render может занять до минуты).<br>` +
+                    `<b>Сервер активируется</b> (холодный старт Render может занять до минуты).<br>` +
                     `Вы можете подождать немного и нажать повторно, либо связаться напрямую: ` +
                     `<a href="${compTg}" target="_blank" rel="noopener noreferrer" style="color:var(--primary-install);text-decoration:underline;font-weight:600;">Telegram</a> · ` +
                     `<a href="${compVk}" target="_blank" rel="noopener noreferrer" style="color:var(--primary-install);text-decoration:underline;font-weight:600;">ВКонтакте</a> · ` +
@@ -1297,7 +1297,7 @@
                 );
             } else {
                 showStatus(
-                    `❌ <b>Не удалось отправить смету автоматически.</b><br>` +
+                    `<b>Не удалось отправить смету автоматически.</b><br>` +
                     `Пожалуйста, свяжитесь с мастером напрямую: ` +
                     `<a href="${compTg}" target="_blank" rel="noopener noreferrer" style="color:var(--primary-install);text-decoration:underline;font-weight:600;">Telegram</a> · ` +
                     `<a href="${compVk}" target="_blank" rel="noopener noreferrer" style="color:var(--primary-install);text-decoration:underline;font-weight:600;">ВКонтакте</a> · ` +
@@ -1308,7 +1308,7 @@
         } finally {
             if (sendBtn) {
                 sendBtn.disabled = false;
-                sendBtn.textContent = '⚡ Передать смету мастеру';
+                sendBtn.textContent = 'Передать смету мастеру';
             }
         }
     }
@@ -1441,7 +1441,7 @@
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(a.href);
-            showToast('📊 Смета выгружена в Excel (.csv)!');
+            showToast('Смета выгружена в Excel (.csv)!');
         }
         return csv;
     }
@@ -1557,7 +1557,7 @@
         }
 
         const presetLabels = { base: '«База»', standard: '«Стандарт»', premium: '«Премиум»' };
-        showToast(`⚡ Загружен пакет ${presetLabels[presetType] || ''} для ${sqm} м²!`);
+        showToast(`Загружен пакет ${presetLabels[presetType] || ''} для ${sqm} м²!`);
 
         return true;
     }

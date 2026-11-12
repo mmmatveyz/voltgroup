@@ -61,7 +61,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="./static/css/style.css?v=3.3">
+    <link rel="stylesheet" href="./static/css/style.css?v=3.8">
 
     <!-- Управление cookies и отложенная инициализация Яндекс.Метрики (152-ФЗ) -->
     <script src="./static/js/cookies.js" defer></script>
@@ -116,7 +116,6 @@
             font-size: 1.05rem;
             margin-bottom: 10px;
             color: var(--text-main);
-            text-transform: uppercase;
         }
         .gallery-content p {
             font-size: 0.92rem;
@@ -130,13 +129,13 @@
             gap: 8px;
         }
         .badge {
-            background: rgba(0, 229, 255, 0.1);
-            border: 1px solid rgba(0, 229, 255, 0.3);
+            background: rgba(0, 229, 255, 0.08);
+            border: 1px solid rgba(0, 229, 255, 0.2);
             color: var(--primary-install);
-            padding: 4px 12px;
-            border-radius: 99px;
+            padding: 4px 10px;
+            border-radius: 6px;
             font-size: 0.75rem;
-            font-weight: 700;
+            font-weight: 600;
         }
 
         /* Lightbox просмотрщик */
@@ -200,7 +199,6 @@
             font-size: 1.2rem;
             margin-bottom: 12px;
             color: var(--text-main);
-            text-transform: uppercase;
         }
         .lightbox-info p {
             margin-bottom: 18px;
@@ -214,7 +212,7 @@
         }
         .portfolio-cta-card {
             background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(9, 13, 22, 0.98) 100%);
-            border: 1px solid rgba(0, 229, 255, 0.25);
+            border: 1px solid var(--border-light);
             border-radius: var(--radius-lg);
             padding: 48px 32px;
             text-align: center;
@@ -230,13 +228,12 @@
             transform: translateX(-50%);
             width: 500px;
             height: 250px;
-            background: radial-gradient(ellipse, rgba(0, 229, 255, 0.15), transparent 70%);
+            background: radial-gradient(ellipse, rgba(0, 229, 255, 0.06), transparent 70%);
             pointer-events: none;
         }
         .portfolio-cta-card h2 {
             font-size: clamp(1.35rem, 3vw, 2.1rem);
             margin-bottom: 14px;
-            text-transform: uppercase;
             letter-spacing: -0.01em;
             color: var(--text-main);
         }
@@ -259,15 +256,14 @@
             align-items: center;
             gap: 8px;
             font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.04em;
             color: var(--primary-install);
             background: rgba(0, 229, 255, 0.08);
             border: 1px solid rgba(0, 229, 255, 0.25);
             padding: 6px 14px;
-            border-radius: 99px;
+            border-radius: 6px;
             margin-bottom: 18px;
-            font-weight: 700;
+            font-weight: 600;
         }
         @media (max-width: 600px) {
             .portfolio-cta-card {
@@ -341,7 +337,7 @@
         <div class="container">
             <div class="portfolio-cta-card">
                 <span class="portfolio-cta-badge">
-                    ⚡ Качественный электромонтаж под ключ
+                    Качественный электромонтаж под ключ
                 </span>
                 <h2>Хотите такой же уровень на своём объекте?</h2>
                 <p>
@@ -349,10 +345,10 @@
                 </p>
                 <div class="portfolio-cta-actions">
                     <a href="./estimate.html" class="btn btn-volt">
-                        ⚡ Рассчитать в калькуляторе
+                        Рассчитать в калькуляторе
                     </a>
                     <a href="./contacts/#leadForm" class="btn btn-primary">
-                        📞 Вызвать инженера на замер
+                        Вызвать инженера на замер
                     </a>
                 </div>
             </div>
@@ -376,7 +372,7 @@
     <div class="container">
         <div class="footer-grid">
             <div>
-                <h4>⚡ VoltGroup</h4>
+                <h4>VoltGroup</h4>
                 <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
                     Энергия решений.<br>Электрика и автоматизация в СПб и ЛО.
                 </p>
@@ -401,9 +397,9 @@
             </div>
             <div>
                 <h4>Контакты</h4>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;">📞 <a href="tel:+79052084284" style="color: inherit; text-decoration: none;">+7 (905) 208-42-84</a></p>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">🕒 Пн–Сб: 9:00–21:00</p>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">📍 Санкт-Петербург и ЛО</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:-2px; margin-right:6px; color:var(--primary-install);"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><a href="tel:+79052084284" style="color: inherit; text-decoration: none;">+7 (905) 208-42-84</a></p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:-2px; margin-right:6px; color:var(--text-muted);"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Пн–Сб: 9:00–21:00</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:-2px; margin-right:6px; color:var(--text-muted);"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Санкт-Петербург и ЛО</p>
             </div>
         </div>
         <div class="copyright">© 2026 VoltGroup. Все права защищены.</div>
@@ -534,9 +530,9 @@
         const errP = document.createElement('p');
         errP.style.cssText = "color: var(--text-muted); font-size: 1.1rem; margin-bottom: 20px;";
         if (window.location.protocol === 'file:') {
-            errP.innerHTML = "⚠️ <b>Браузер блокирует загрузку данных по протоколу file:// (CORS).</b><br><small style='color:var(--text-muted);display:block;margin-top:6px;'>Запустите локальный сервер: <code>python -m http.server 8000</code> или используйте <code>tools/serve.cmd</code></small>";
+            errP.innerHTML = "<b>Браузер блокирует загрузку данных по протоколу file:// (CORS).</b><br><small style='color:var(--text-muted);display:block;margin-top:6px;'>Запустите локальный сервер: <code>python -m http.server 8000</code> или используйте <code>tools/serve.cmd</code></small>";
         } else {
-            errP.textContent = "⚠️ Не удалось загрузить портфолио";
+            errP.textContent = "Не удалось загрузить портфолио";
         }
 
         const errBtn = document.createElement('a');

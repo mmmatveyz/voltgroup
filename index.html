@@ -207,44 +207,9 @@
         href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="./static/css/style.css?v=3.3">
+    <link rel="stylesheet" href="./static/css/style.css?v=3.8">
 
     <style>
-        .ticker {
-            overflow: hidden;
-            border-block: 1px solid var(--border-light);
-            background: rgba(255, 255, 255, 0.02);
-            position: relative;
-            z-index: 1;
-            margin: 40px 0;
-        }
-
-        .ticker-track {
-            display: flex;
-            width: max-content;
-            animation: tick 26s linear infinite;
-            padding: 14px 0;
-        }
-
-        .ticker-track span {
-            font-family: var(--font-heading);
-            font-size: 0.8rem;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            padding: 0 20px;
-            white-space: nowrap;
-        }
-
-        .ticker-track span i {
-            color: var(--volt-yellow);
-            font-style: normal;
-        }
-
-        @keyframes tick {
-            to {
-                transform: translateX(-50%);
-            }
         }
 
         /* Локальные стили адаптивности Hero под малые дисплеи */
@@ -262,9 +227,6 @@
         }
 
         @media (max-width: 768px) {
-            .ticker {
-                margin: 25px 0;
-            }
 
             .contact-grid-card {
                 padding: 20px !important;
@@ -330,60 +292,54 @@
                 </div>
             </div>
 
-            <div class="hero-board">
+            <div class="hero-board" id="dinBoard" aria-label="Интерактивный распределительный щит VoltGroup">
                 <div class="board-header">
-                    <span>ЩИТ VOLT-01</span>
-                    <span style="color: var(--text-muted); font-size: 0.78rem;">
-                        <i
-                            style="display:inline-block; width:7px; height:7px; background:#10B981; border-radius:50%; box-shadow: 0 0 8px #10B981;"></i>
-                        220 В · 50 Гц
-                    </span>
+                    <span class="board-title">ЩИТ VOLT-01</span>
+                    <span>1 ФАЗА · 230 В · TN-C-S</span>
                 </div>
 
-                <div class="board-row">
-                    <span>Освещение <small>группа 1</small></span>
-                    <label class="switch"><input type="checkbox" checked disabled><span class="slider"></span></label>
-                </div>
-                <div class="board-row">
-                    <span>Розетки <small>группа 2</small></span>
-                    <label class="switch"><input type="checkbox" checked disabled><span class="slider"></span></label>
-                </div>
-                <div class="board-row">
-                    <span>Умный дом <small>Wirenboard · Алиса</small></span>
-                    <label class="switch"><input type="checkbox" id="sw-smart" checked><span
-                            class="slider cyan"></span></label>
-                </div>
-                <div class="board-row">
-                    <span>Автоматика станка <small>пром. линия</small></span>
-                    <label class="switch"><input type="checkbox" id="sw-auto" checked><span
-                            class="slider purple"></span></label>
-                </div>
+                <div class="din-chassis">
+                    <div class="din-rail-metal" aria-hidden="true"></div>
+                    <div class="din-visio-row">
+                        <!-- 1. Реле контроля напряжения Welrok UI-1 (из библиотеки Visio) -->
+                        <div class="din-visio-item" title="Вольтамперметр / реле напряжения Welrok UI-1 red">
+                            <img src="./assets/images/din/welrok_ui1_red.svg" alt="Welrok UI-1 red" width="137" height="322">
+                        </div>
 
+                        <!-- 2. Вводное УЗО Schneider Electric Acti 9 iID 2P (из библиотеки Visio) -->
+                        <div class="din-visio-item" title="Вводное УЗО Schneider Electric Acti 9 iID 2P">
+                            <img src="./assets/images/din/schneider_iid_2p.svg" alt="УЗО Schneider iID 2P" width="140" height="331">
+                        </div>
+
+                        <!-- 3. Автомат Schneider iC60N Освещение (из библиотеки Visio) -->
+                        <div class="din-visio-item" id="visio-light" role="button" tabindex="0" title="Автоматический выключатель iC60N (Освещение). Нажмите для переключения">
+                            <img src="./assets/images/din/schneider_ic60n_1p.svg" alt="Автомат Schneider iC60N 1P" width="70" height="322">
+                        </div>
+
+                        <!-- 4. Автомат Schneider iC60N Розетки (из библиотеки Visio) -->
+                        <div class="din-visio-item" id="visio-sockets" role="button" tabindex="0" title="Автоматический выключатель iC60N (Розетки). Нажмите для переключения">
+                            <img src="./assets/images/din/schneider_ic60n_1p.svg" alt="Автомат Schneider iC60N 1P" width="70" height="322">
+                        </div>
+
+                        <!-- 5. Модуль реле умного дома WirenBoard WB-MR6C v.2 (из библиотеки Visio) -->
+                        <div class="din-visio-item" id="visio-smart" role="button" tabindex="0" title="Модуль реле умного дома WirenBoard WB-MR6C v.2. Нажмите для переключения">
+                            <img src="./assets/images/din/wirenboard_wb_mr6c.svg" alt="WirenBoard WB-MR6C v.2" width="201" height="341">
+                        </div>
+                    </div>
+                </div>
                 <div class="board-footer">
-                    <span>Текущая нагрузка:</span>
-                    <strong id="live-load" style="color: var(--volt-yellow);">3.8 кВт</strong>
+                    <span class="board-metric">Сеть: <strong>230 В</strong></span>
+                    <span class="board-metric">Ток: <strong id="din-amp">16.5 А</strong></span>
+                    <span class="board-metric power">Мощность: <strong id="live-load">3.8 кВт</strong></span>
                 </div>
             </div>
         </section>
-
-        <div class="ticker">
-            <div class="ticker-track" id="tickTrack">
-                <span>7 лет опыта <i>⚡</i></span>
-                <span>Электромонтаж <i>⚡</i></span>
-                <span>Сборка щитов <i>⚡</i></span>
-                <span>Умный дом <i>⚡</i></span>
-                <span>Замена проводки <i>⚡</i></span>
-                <span>Диагностика станков <i>⚡</i></span>
-                <span>Автоматизация <i>⚡</i></span>
-                <span>Работа по ПУЭ <i>⚡</i></span>
-            </div>
-        </div>
 
         <!-- СЕКЦИЯ 1: НАШИ УСЛУГИ (BENTO GRID) -->
         <section id="services" class="section">
             <div class="container">
                 <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 40px; text-align: center;">
-                    <span class="bento-tag tag-cyan fade-in">КОМПЕТЕНЦИИ VOLTGROUP</span>
+                    <span class="bento-tag tag-cyan fade-in">Направления работы</span>
                     <h2 class="fade-in" style="margin-bottom: 12px;">Спектр <span>услуг</span></h2>
                     <p class="fade-in" style="color: var(--text-muted); max-width: 580px; font-size: 0.95rem; margin: 0;">
                         От бытового электромонтажа до интеллектуальных систем Умного Дома, проектов ЭОМ и промышленной автоматики.
@@ -394,17 +350,17 @@
                     <!-- 1. Жилые & коммерческие объекты (Install) -->
                     <div class="bento-card bento-install fade-in">
                         <div>
-                            <span class="bento-tag tag-cyan">01 // INSTALL</span>
-                            <h3 style="font-family: var(--font-heading); font-size: 1.45rem; margin-bottom: 12px; text-transform: uppercase;">
+                            <span class="bento-tag tag-cyan">Электромонтаж</span>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.45rem; margin-bottom: 12px; font-weight: 600;">
                                 Жилые & коммерческие объекты
                             </h3>
                             <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55;">
                                 Силовой электромонтаж квартир, коттеджей, офисов и коммерческих помещений. Сборка распределительных щитов, беспылевое штробление, кабельные трассы и опрессовка соединений гильзами.
                             </p>
                             <ul class="bento-features">
-                                <li><i>⚡</i> Негорючий медный кабель ВВГнг-LS (строго по ГОСТ)</li>
-                                <li><i>⚡</i> Балансировка нагрузок фаз, щиты ВРУ/ГРЩ и защита от перепадов напряжения</li>
-                                <li><i>⚡</i> Разводка в лотках, напольные лючки, трековый свет и лазерная геометрия</li>
+                                <li><i>✓</i> Негорючий медный кабель ВВГнг-LS (строго по ГОСТ)</li>
+                                <li><i>✓</i> Балансировка нагрузок фаз, щиты ВРУ/ГРЩ и защита от перепадов напряжения</li>
+                                <li><i>✓</i> Разводка в лотках, напольные лючки, трековый свет и лазерная геометрия</li>
                             </ul>
                         </div>
                         <div style="padding-top: 20px; border-top: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center;">
@@ -416,9 +372,9 @@
                     <!-- 2. Умный дом (Smart) -->
                     <div class="bento-card bento-smart fade-in" style="transition-delay: 0.1s;">
                         <div>
-                            <span class="bento-tag tag-cyan">02 // SMART</span>
-                            <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 12px; text-transform: uppercase;">
-                                Умный дом
+                            <span class="bento-tag tag-cyan">Автоматизация</span>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 12px; font-weight: 600;">
+                                Умный дом Wirenboard
                             </h3>
                             <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55;">
                                 Автоматизация квартир и загородных домов: мастер-выключатели, сценарии освещения, климат-контроль, интеграция с Яндекс.Алисой и кранами защиты от протечек.
@@ -438,21 +394,21 @@
                     <!-- 3. Онлайн-калькулятор (Расчет стоимости) -->
                     <div class="bento-card bento-calc fade-in" style="transition-delay: 0.15s;">
                         <div>
-                            <span class="bento-tag tag-yellow">03 // СМЕТА</span>
-                            <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 12px; text-transform: uppercase;">
+                            <span class="bento-tag tag-yellow">Расчёт сметы</span>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 12px; font-weight: 600;">
                                 Онлайн-расчёт
                             </h3>
                             <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55;">
                                 Рассчитайте точную смету с детализацией по каждой электроточке, погонным метрам штробы и линиям щита без скрытых наценок.
                             </p>
-                            <div style="margin: 18px 0; padding: 14px 16px; background: rgba(255, 214, 10, 0.05); border: 1px dashed rgba(255, 214, 10, 0.3); border-radius: 14px;">
+                            <div style="margin: 18px 0; padding: 14px 16px; background: rgba(255, 214, 10, 0.05); border: 1px solid rgba(255, 214, 10, 0.2); border-radius: 8px;">
                                 <div style="font-size: 0.85rem; color: var(--volt-yellow); font-weight: 700; margin-bottom: 4px;">Фиксация цены ДО начала работ</div>
                                 <div style="font-size: 0.78rem; color: var(--text-muted);">Смета прилагается к официальному договору подряда.</div>
                             </div>
                         </div>
                         <div style="padding-top: 15px; border-top: 1px solid rgba(255, 214, 10, 0.2); text-align: center;">
                             <a href="./estimate.html" class="btn btn-volt btn-full" style="padding: 12px 20px; font-size: 0.9rem;">
-                                Открыть калькулятор сметы ⚡
+                                Открыть калькулятор сметы
                             </a>
                         </div>
                     </div>
@@ -460,16 +416,16 @@
                     <!-- 4. Промышленная автоматика & станки (Engineering) -->
                     <div class="bento-card bento-eng fade-in" style="transition-delay: 0.2s;">
                         <div>
-                            <span class="bento-tag tag-purple">04 // ENGINEERING</span>
-                            <h3 style="font-family: var(--font-heading); font-size: 1.45rem; margin-bottom: 12px; text-transform: uppercase;">
+                            <span class="bento-tag tag-purple">Промышленная автоматика</span>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.45rem; margin-bottom: 12px; font-weight: 600;">
                                 Пром. автоматика & станки
                             </h3>
                             <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55;">
                                 Ремонт станков с ЧПУ, диагностика и восстановление релейных цепей, сборка шкафов управления и настройка частотных приводов.
                             </p>
                             <ul class="bento-features">
-                                <li style="color: #cbd5e1;"><i style="color: var(--primary-eng);">⚡</i> Диагностика приводов, датчиков, концевиков и пускателей</li>
-                                <li style="color: #cbd5e1;"><i style="color: var(--primary-eng);">⚡</i> Сборка шкафов управления, подключение и настройка частотников</li>
+                                <li style="color: #cbd5e1;"><i style="color: var(--primary-eng);">✓</i> Диагностика приводов, датчиков, концевиков и пускателей</li>
+                                <li style="color: #cbd5e1;"><i style="color: var(--primary-eng);">✓</i> Сборка шкафов управления, подключение и настройка частотников</li>
                             </ul>
                         </div>
                         <div style="padding-top: 20px; border-top: 1px solid rgba(123, 97, 255, 0.25); display: flex; justify-content: space-between; align-items: center;">
@@ -486,8 +442,8 @@
             <div class="container">
                 <div class="showcase-header fade-in">
                     <div>
-                        <span class="bento-tag tag-yellow" style="margin-bottom: 8px;">РЕАЛИЗОВАННЫЕ ОБЪЕКТЫ</span>
-                        <h2 style="margin: 0; text-align: left; text-transform: uppercase;">
+                        <span class="bento-tag tag-yellow" style="margin-bottom: 8px;">Портфолио</span>
+                        <h2 style="margin: 0; text-align: left; font-weight: 600;">
                             Качество в <span style="color: var(--volt-yellow);">деталях</span>
                         </h2>
                     </div>
@@ -553,7 +509,7 @@
         <section id="team" class="section">
             <div class="container">
                 <div style="text-align: center; margin-bottom: 40px;">
-                    <span class="bento-tag tag-cyan fade-in">КВАЛИФИКАЦИЯ И ДОПУСКИ</span>
+                    <span class="bento-tag tag-cyan fade-in">Квалификация и допуски</span>
                     <h2 class="fade-in" style="margin-bottom: 12px;">Наши <span>мастера</span></h2>
                     <p class="fade-in" style="color: var(--text-muted); max-width: 620px; margin: 0 auto; font-size: 0.95rem;">
                         Профильное техническое образование, действующие группы допуска по электробезопасности и личная ответственность за каждый узел.
@@ -565,12 +521,12 @@
                     <div class="dossier-card dossier-master-primary fade-in" onclick="openTeamModal('master1')" style="cursor: pointer;">
                         <div>
                             <div class="dossier-header">
-                                <div class="dossier-avatar">⚡</div>
+                                <div class="dossier-avatar">ВГ</div>
                                 <div class="dossier-meta">
                                     <h3>Матвей Зрячих</h3>
                                     <div class="role">Инженер-электромонтажник / Инженер-электроник</div>
                                     <span class="team-badge-status" style="position: static; transform: none; display: inline-block;">
-                                        ⚡ 7 лет опыта · 6-й разряд (высший)
+                                        7 лет опыта · 6-й разряд (высший)
                                     </span>
                                 </div>
                             </div>
@@ -596,12 +552,12 @@
                     <div class="dossier-card dossier-standards fade-in" style="transition-delay: 0.1s; cursor: pointer;" onclick="openTeamModal('master2')">
                         <div>
                             <div class="dossier-header">
-                                <div class="dossier-avatar" style="border-color: rgba(255, 255, 255, 0.2); color: var(--text-muted); box-shadow: none;">👤</div>
+                                <div class="dossier-avatar" style="border-color: rgba(255, 255, 255, 0.2); color: var(--text-muted); box-shadow: none;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
                                 <div class="dossier-meta">
                                     <h3>Специалист VoltGroup</h3>
                                     <div class="role" style="color: var(--text-muted);">Инженер / Мастер</div>
                                     <span class="team-badge-status" style="position: static; transform: none; display: inline-block; border-color: var(--border-light); color: var(--text-muted);">
-                                        ⏳ На согласовании
+                                        Анкета формируется
                                     </span>
                                 </div>
                             </div>
@@ -626,12 +582,12 @@
                     <div class="dossier-card dossier-join fade-in" style="transition-delay: 0.2s;">
                         <div>
                             <div class="dossier-header">
-                                <div class="dossier-avatar" style="border-color: rgba(123, 97, 255, 0.5); color: var(--primary-eng); box-shadow: 0 0 15px rgba(123, 97, 255, 0.25);">🤝</div>
+                                <div class="dossier-avatar" style="border-color: rgba(123, 97, 255, 0.5); color: var(--primary-eng); box-shadow: none;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
                                 <div class="dossier-meta">
                                     <h3>Команда VoltGroup</h3>
                                     <div class="role" style="color: var(--primary-eng);">Ищем специалистов</div>
                                     <span class="team-badge-status purple" style="position: static; transform: none; display: inline-block;">
-                                        ⚡ Расширение штата
+                                        Расширение штата
                                     </span>
                                 </div>
                             </div>
@@ -659,7 +615,7 @@
         <section id="why" class="section">
             <div class="container">
                 <div style="text-align: center; margin-bottom: 40px;">
-                    <span class="bento-tag tag-yellow fade-in">ФУНДАМЕНТ ДОВЕРИЯ</span>
+                    <span class="bento-tag tag-yellow fade-in">Стандарты качества</span>
                     <h2 class="fade-in" style="margin-bottom: 12px;">Почему выбирают <span>VoltGroup</span></h2>
                 </div>
 
@@ -668,9 +624,9 @@
                     <div class="why-card why-card-1 fade-in">
                         <div class="why-card-top">
                             <span class="why-num">01</span>
-                            <span class="why-status-pill">ФИКСИРОВАННАЯ СМЕТА</span>
+                            <span class="why-status-pill">Фиксированная смета</span>
                         </div>
-                        <h3 style="font-size: 1.18rem; text-transform: uppercase; margin-bottom: 10px; color: var(--text-main);">
+                        <h3 style="font-size: 1.18rem; margin-bottom: 10px; color: var(--text-main); font-weight: 600;">
                             Прозрачная смета
                         </h3>
                         <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; margin: 0;">
@@ -682,9 +638,9 @@
                     <div class="why-card why-card-2 fade-in" style="transition-delay: 0.1s;">
                         <div class="why-card-top">
                             <span class="why-num">02</span>
-                            <span class="why-status-pill">АККУРАТНОСТЬ</span>
+                            <span class="why-status-pill">Чистый монтаж</span>
                         </div>
-                        <h3 style="font-size: 1.18rem; text-transform: uppercase; margin-bottom: 10px; color: var(--text-main);">
+                        <h3 style="font-size: 1.18rem; margin-bottom: 10px; color: var(--text-main); font-weight: 600;">
                             Идеальная чистота
                         </h3>
                         <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; margin: 0;">
@@ -696,9 +652,9 @@
                     <div class="why-card why-card-3 fade-in" style="transition-delay: 0.2s;">
                         <div class="why-card-top">
                             <span class="why-num">03</span>
-                            <span class="why-status-pill">ЮРИДИЧЕСКАЯ ЧИСТОТА</span>
+                            <span class="why-status-pill">Договор и гарантия</span>
                         </div>
-                        <h3 style="font-size: 1.18rem; text-transform: uppercase; margin-bottom: 10px; color: var(--text-main);">
+                        <h3 style="font-size: 1.18rem; margin-bottom: 10px; color: var(--text-main); font-weight: 600;">
                             Официальный договор
                         </h3>
                         <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; margin: 0;">
@@ -713,7 +669,7 @@
         <section id="process" class="section" style="background: rgba(255,255,255,0.01);">
             <div class="container">
                 <div style="text-align: center; margin-bottom: 45px;">
-                    <span class="bento-tag tag-cyan fade-in">ПРОЗРАЧНЫЙ ПРОЦЕСС</span>
+                    <span class="bento-tag tag-cyan fade-in">Порядок работы</span>
                     <h2 class="fade-in" style="margin-bottom: 12px;">Как мы <span>работаем</span></h2>
                     <p class="fade-in" style="color: var(--text-muted); font-size: 0.95rem; max-width: 580px; margin: 0 auto;">
                         Понятная и прозрачная цепочка взаимодействия от первого обращения до сдачи объекта.
@@ -816,7 +772,7 @@
                             </div>
                             <div class="review-stars" aria-label="Оценка: 5 из 5">★★★★★</div>
                             <p class="review-text">
-                                Нам необходимо было выполнить работу по переносу розеток. Работа выполнена качественно и быстро. Заранее прислали подробную смету и все договорённости выполнили в срок. Любые возникающие вопросы решались оперативно. Рекомендую ✅
+                                Нам необходимо было выполнить работу по переносу розеток. Работа выполнена качественно и быстро. Заранее прислали подробную смету и все договорённости выполнили в срок. Любые возникающие вопросы решались оперативно. Рекомендую.
                             </p>
                         </div>
                         <div class="review-footer">
@@ -840,7 +796,7 @@
                             </div>
                             <div class="review-stars" aria-label="Оценка: 5 из 5">★★★★★</div>
                             <p class="review-text">
-                                Работу выполнил очень быстро. И ответил на все вопросы. Обращусь и не один раз ☝️
+                                Работу выполнил очень быстро. И ответил на все вопросы. Обращусь и не один раз.
                             </p>
                         </div>
                         <div class="review-footer">
@@ -868,11 +824,11 @@
                     <div class="reviews-cta-actions">
                         <a href="https://yandex.ru/maps/org/voltgroup_elektrika_i_avtomatizatsiya_spb/98496429753/?tab=reviews"
                            target="_blank" rel="noopener noreferrer" class="btn-ya-review">
-                            ⭐ Оставить отзыв на Яндекс.Картах
+                            Оставить отзыв на Яндекс Картах
                         </a>
                         <a href="https://vk.ru/topic-237900859_57977759"
                            target="_blank" rel="noopener noreferrer" class="btn-vk-review">
-                            💬 Все отзывы во ВКонтакте
+                            Все отзывы во ВКонтакте
                         </a>
                     </div>
                 </div>
@@ -982,7 +938,7 @@
                             </label>
                         </div>
                         <button type="submit" class="btn btn-volt"
-                            style="width: 100%; justify-content: center; margin-top: 10px;">Получить расчёт ⚡</button>
+                            style="width: 100%; justify-content: center; margin-top: 10px;">Рассчитать стоимость</button>
                         <p id="formStatus"
                             style="margin-top: 10px; text-align: center; display: none; font-weight: 600;"></p>
                     </form>
@@ -995,7 +951,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div>
-                    <h4>⚡ VoltGroup</h4>
+                    <h4>VoltGroup</h4>
                     <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
                         Энергия решений.<br>Электрика и автоматизация в СПб и ЛО.
                     </p>
@@ -1022,11 +978,11 @@
                 </div>
                 <div>
                     <h4>Контакты</h4>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;">📞 <a
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;"><a
                             href="tel:+79052084284" style="color: inherit; text-decoration: none;">+7 (905)
                             208-42-84</a></p>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">🕒 Пн–Сб: 9:00–21:00</p>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">📍 Санкт-Петербург и ЛО</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:-2px; margin-right:6px; color:var(--text-muted);"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Пн–Сб: 9:00–21:00</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:-2px; margin-right:6px; color:var(--text-muted);"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Санкт-Петербург и ЛО</p>
                 </div>
             </div>
             <div class="copyright">
@@ -1132,21 +1088,52 @@
                 });
         }
 
-        // 2. Оживление нагрузки щитка
+        // 2. Интерактивное управление фигурами Visio в распределительном щите
+        const btnLight = document.getElementById('visio-light');
+        const btnSockets = document.getElementById('visio-sockets');
+        const btnSmart = document.getElementById('visio-smart');
+        const ampEl = document.getElementById('din-amp');
         const loadEl = document.getElementById('live-load');
-        const swSmart = document.getElementById('sw-smart');
-        const swAuto = document.getElementById('sw-auto');
 
-        function updateLoad() {
-            let base = 1.2;
-            if (swSmart && swSmart.checked) base += 1.4;
-            if (swAuto && swAuto.checked) base += 1.8;
-            base += Math.random() * 0.3;
-            if (loadEl) loadEl.textContent = base.toFixed(1) + ' кВт';
+        let isLightOn = true;
+        let isSocketsOn = true;
+        let isSmartOn = true;
+
+        function updateBoardMetrics() {
+            let kw = 0.4;
+            if (isLightOn) kw += 0.6;
+            if (isSocketsOn) kw += 1.4;
+            if (isSmartOn) kw += 1.4;
+            kw += (Math.random() * 0.12);
+
+            const v = 230 + Math.floor(Math.sin(Date.now() / 3000) * 2.5);
+            const amps = (kw * 1000 / v);
+            if (ampEl) ampEl.textContent = amps.toFixed(1) + ' А';
+            if (loadEl) loadEl.textContent = kw.toFixed(1) + ' кВт';
         }
-        setInterval(updateLoad, 2200);
-        if (swSmart) swSmart.addEventListener('change', updateLoad);
-        if (swAuto) swAuto.addEventListener('change', updateLoad);
+
+        function bindToggle(el, getter, setter) {
+            if (!el) return;
+            const toggle = () => {
+                setter(!getter());
+                el.classList.toggle('is-off', !getter());
+                updateBoardMetrics();
+            };
+            el.addEventListener('click', toggle);
+            el.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggle();
+                }
+            });
+        }
+
+        bindToggle(btnLight, () => isLightOn, v => isLightOn = v);
+        bindToggle(btnSockets, () => isSocketsOn, v => isSocketsOn = v);
+        bindToggle(btnSmart, () => isSmartOn, v => isSmartOn = v);
+
+        setInterval(updateBoardMetrics, 2500);
+        updateBoardMetrics();
 
         // 3. Мобильное меню с поддержкой доступности
         const mobileToggle = document.querySelector('.mobile-toggle');
@@ -1325,7 +1312,7 @@
                     }
                     status.style.display = 'block';
                     status.style.color = '#EF4444';
-                    status.textContent = '⚠️ Пожалуйста, введите полный номер телефона: +7 (XXX) XXX-XX-XX';
+                    status.textContent = 'Пожалуйста, введите полный номер телефона: +7 (XXX) XXX-XX-XX';
                     return;
                 } else if (phoneEl) {
                     phoneEl.classList.remove('is-invalid');
@@ -1343,7 +1330,7 @@
                 btn.textContent = 'Отправка...';
                 status.style.display = 'block';
                 status.style.color = 'var(--text-muted)';
-                status.textContent = '⏳ Отправляем заявку...';
+                status.textContent = 'Отправка заявки...';
 
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 60000);
@@ -1358,7 +1345,7 @@
                     });
 
                     if (res.ok) {
-                        status.textContent = '✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.';
+                        status.textContent = 'Заявка отправлена! Мы свяжемся с вами в ближайшее время.';
                         status.style.color = '#10B981';
                         if (typeof window.ym === 'function') {
                             window.ym(108492681, 'reachGoal', 'lead_success');
@@ -1374,22 +1361,22 @@
                     } else if (res.status === 429) {
                         const errData = await res.json().catch(() => ({}));
                         const limitMsg = errData.msg || 'Слишком много запросов. Пожалуйста, подождите минуту.';
-                        status.innerHTML = `⚠️ <b>${limitMsg}</b> Или свяжитесь напрямую: <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> · <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">ВКонтакте</a> или позвоните <a href="tel:+79052084284" style="color:var(--accent);text-decoration:underline;">+7 (905) 208-42-84</a>`;
+                        status.innerHTML = `<b>${limitMsg}</b> Или свяжитесь напрямую: <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> · <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">ВКонтакте</a> или позвоните <a href="tel:+79052084284" style="color:var(--accent);text-decoration:underline;">+7 (905) 208-42-84</a>`;
                         status.style.color = '#F59E0B';
                     } else {
                         throw new Error('Ошибка сервера');
                     }
                 } catch (err) {
                     if (err.name === 'AbortError') {
-                        status.innerHTML = '⏳ <b>Сервер просыпается</b> (холодный старт может занять до минуты). Вы можете подождать немного или связаться напрямую: <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> · <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">ВКонтакте</a>';
+                        status.innerHTML = '<b>Сервер активируется</b> (холодный старт может занять до минуты). Вы можете подождать немного или связаться напрямую: <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> · <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">ВКонтакте</a>';
                     } else {
-                        status.innerHTML = '❌ <b>Ошибка отправки.</b> Пожалуйста, напишите напрямую: <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> · <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">ВКонтакте</a> или позвоните <a href="tel:+79052084284" style="color:var(--accent);text-decoration:underline;">+7 (905) 208-42-84</a>';
+                        status.innerHTML = '<b>Ошибка отправки.</b> Пожалуйста, напишите напрямую: <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> · <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">ВКонтакте</a> или позвоните <a href="tel:+79052084284" style="color:var(--accent);text-decoration:underline;">+7 (905) 208-42-84</a>';
                     }
                     status.style.color = '#EF4444';
                 } finally {
                     clearTimeout(timeoutId);
                     btn.disabled = false;
-                    btn.textContent = 'Получить расчёт ⚡';
+                    btn.textContent = 'Рассчитать стоимость';
                 }
             });
         }
@@ -1399,7 +1386,7 @@
             master1: {
                 name: "Матвей Зрячих",
                 role: "Инженер-электромонтажник, электромонтёр 6 разряда",
-                badge: "⚡ 6 разряд (высший) / Инженер-электроник",
+                badge: "6 разряд (высший) / Инженер-электроник",
                 themeClass: "",
                 photo: "",
                 education: [
@@ -1427,7 +1414,7 @@
             master2: {
                 name: "Специалист VoltGroup",
                 role: "Инженер / Мастер",
-                badge: "⏳ На согласовании",
+                badge: "Анкета формируется",
                 themeClass: "",
                 photo: "",
                 education: [
@@ -1462,7 +1449,7 @@
             <li>${escapeHtml(s)}</li>
         `).join('');
 
-            const avatarIcon = masterId === 'master1' ? '⚡' : '👤';
+            const avatarIcon = masterId === 'master1' ? 'ВГ' : 'ВГ';
             const avatarHtml = master.photo
                 ? `<img src="${master.photo}" alt="${escapeHtml(master.name)}" class="modal-master-avatar ${master.themeClass}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="modal-master-avatar ${master.themeClass}" style="display: none; align-items: center; justify-content: center; font-size: 2.2rem; color: ${colorVar};">${avatarIcon}</div>`
                 : `<div class="modal-master-avatar ${master.themeClass}" style="display: flex; align-items: center; justify-content: center; font-size: 2.2rem; color: ${colorVar}; border-color: ${isPurple ? 'rgba(123, 97, 255, 0.4)' : 'rgba(0, 229, 255, 0.4)'};">${avatarIcon}</div>`;
@@ -1480,12 +1467,12 @@
             </div>
 
             <div class="modal-block">
-                <div class="modal-block-title ${master.themeClass}">🎓 Образование и квалификация</div>
+                <div class="modal-block-title ${master.themeClass}">Образование и квалификация</div>
                 ${eduHtml}
             </div>
 
             <div class="modal-block">
-                <div class="modal-block-title ${master.themeClass}">🛠 Компетенции и специализация</div>
+                <div class="modal-block-title ${master.themeClass}">Компетенции и специализация</div>
                 <ul class="modal-list">
                     ${skillsHtml}
                 </ul>
@@ -1493,7 +1480,7 @@
 
             <div style="margin-top: 25px; text-align: center;">
                 <a href="#contact" onclick="closeTeamModal()" class="btn ${isPurple ? 'btn-secondary' : 'btn-primary'}" style="width: 100%; justify-content: center;">
-                    Задать вопрос мастеру ⚡
+                    Задать вопрос инженеру
                 </a>
             </div>
         `;

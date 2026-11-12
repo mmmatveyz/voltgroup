@@ -96,7 +96,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../static/css/style.css?v=3.3">
+    <link rel="stylesheet" href="../static/css/style.css?v=3.8">
 
     <style>
         .district-hero-badge {
@@ -106,7 +106,7 @@
             padding: 6px 14px;
             background: rgba(0, 229, 255, 0.08);
             border: 1px solid rgba(0, 229, 255, 0.25);
-            border-radius: 20px;
+            border-radius: 6px;
             font-size: 0.85rem;
             color: var(--primary-install);
             font-weight: 600;
@@ -188,69 +188,16 @@
             background: #10B981;
             border-radius: 50%;
             display: inline-block;
-            position: relative;
-            box-shadow: 0 0 10px #10B981;
             margin-right: 6px;
         }
-        .live-pulse-dot::after {
-            content: '';
-            position: absolute;
-            inset: -4px;
-            border-radius: 50%;
-            border: 1px solid #10B981;
-            animation: pulse-ring 1.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
-        }
-        @keyframes pulse-ring {
-            0% { transform: scale(0.6); opacity: 0.9; }
-            80%, 100% { transform: scale(2.2); opacity: 0; }
-        }
-        .ticker {
-            overflow: hidden;
-            border-block: 1px solid var(--border-light);
-            background: rgba(255, 255, 255, 0.02);
-            position: relative;
-            z-index: 1;
-            margin: 35px 0 0;
-        }
-        .ticker-track {
-            display: flex;
-            width: max-content;
-            animation: tick 24s linear infinite;
-            padding: 13px 0;
-        }
-        .ticker-track span {
-            font-family: var(--font-heading);
-            font-size: 0.8rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            padding: 0 20px;
-            white-space: nowrap;
-        }
-        .ticker-track span i {
-            color: var(--volt-yellow);
-            font-style: normal;
-        }
-        @keyframes tick {
-            to { transform: translateX(-50%); }
-        }
-        .bento-card {
-            transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.35s ease, box-shadow 0.35s ease;
-        }
-        .bento-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(0, 229, 255, 0.45);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 229, 255, 0.12);
-        }
         .complex-chip {
-            transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+            transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
             cursor: default;
         }
         .complex-chip:hover {
             transform: translateY(-2px);
-            border-color: rgba(0, 229, 255, 0.5);
-            background: rgba(0, 229, 255, 0.06);
-            box-shadow: 0 4px 15px rgba(0, 229, 255, 0.1);
+            border-color: rgba(0, 229, 255, 0.4);
+            background: rgba(0, 229, 255, 0.05);
         }
         .gallery-mini-grid {
             display: grid;
@@ -272,7 +219,7 @@
         .gallery-mini-card:hover {
             transform: translateY(-6px);
             border-color: rgba(0, 229, 255, 0.5);
-            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55), 0 0 25px rgba(0, 229, 255, 0.15);
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55);
         }
         .gallery-mini-thumb {
             position: relative;
@@ -309,14 +256,14 @@
             background: rgba(0, 229, 255, 0.2);
             border: 1px solid var(--primary-install);
             padding: 8px 16px;
-            border-radius: 20px;
+            border-radius: 6px;
             color: #fff;
             font-size: 0.84rem;
             font-weight: 600;
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            box-shadow: 0 4px 16px rgba(0, 229, 255, 0.3);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
             transform: translateY(6px);
             transition: transform 0.3s ease;
         }
@@ -426,7 +373,7 @@
             font-size: 1.2rem;
             margin-bottom: 12px;
             color: var(--text-main);
-            text-transform: uppercase;
+            
         }
         .lightbox-info p {
             margin-bottom: 18px;
@@ -443,7 +390,7 @@
             border: 1px solid rgba(0, 229, 255, 0.3);
             color: var(--primary-install);
             padding: 4px 12px;
-            border-radius: 99px;
+            border-radius: 6px;
             font-size: 0.75rem;
             font-weight: 700;
         }
@@ -488,35 +435,17 @@
                 Профессиональная электрика в новостройках Мурино. Перенос розеток по дизайн-проекту кухни, замена щитков от застройщика, штробление монолита без пыли. Фиксированная смета до начала работ и гарантия 12 месяцев по договору.
             </p>
             <div class="hero-actions">
-                <a href="#prices-section" class="btn btn-primary">Прайс-лист на работы ⚡</a>
+                <a href="#prices-section" class="btn btn-primary">Прайс-лист на работы</a>
                 <a href="../estimate.html" class="btn btn-outline">Калькулятор сметы</a>
             </div>
         </div>
     </section>
 
-    <!-- БЕГУЩАЯ СТРОКА ПРЕИМУЩЕСТВ -->
-    <div class="ticker">
-        <div class="ticker-track">
-            <span>Штробление без пыли <i>⚡</i></span>
-            <span>Защита от обрыва нуля 380В <i>⚡</i></span>
-            <span>Тихий час 13:00–15:00 <i>⚡</i></span>
-            <span>Официальный договор и чек <i>⚡</i></span>
-            <span>Гарантия 12 месяцев <i>⚡</i></span>
-            <span>Выезд мастера сегодня <i>⚡</i></span>
-            <span>Штробление без пыли <i>⚡</i></span>
-            <span>Защита от обрыва нуля 380В <i>⚡</i></span>
-            <span>Тихий час 13:00–15:00 <i>⚡</i></span>
-            <span>Официальный договор и чек <i>⚡</i></span>
-            <span>Гарантия 12 месяцев <i>⚡</i></span>
-            <span>Выезд мастера сегодня <i>⚡</i></span>
-        </div>
-    </div>
-
     <!-- ОСОБЕННОСТИ ЭЛЕКТРОМОНТАЖА В МУРИНО -->
     <section class="section" id="features">
         <div class="container">
             <div style="text-align: center; max-width: 720px; margin: 0 auto 35px;">
-                <span class="bento-tag tag-cyan fade-in">СПЕЦИФИКА ЛОКАЦИИ</span>
+                <span class="bento-tag tag-cyan fade-in">Специфика домов Мурино</span>
                 <h2 class="fade-in" style="margin-bottom: 12px;">Электрика в новостройках <span>Мурино</span></h2>
                 <p class="fade-in" style="color: var(--text-muted); font-size: 0.95rem;">
                     Знаем конструктив домов всех основных застройщиков в Мурино (Setl City, ЦДС, Полис Групп, Мавис, Евроинвест). Решаем типичные проблемы сдаваемого жилья:
@@ -527,17 +456,17 @@
                 <!-- 1. Монолитные стены и штробление без пыли (Span 7) -->
                 <div class="bento-card bento-install bento-span-7 fade-in">
                     <div>
-                        <span class="bento-tag tag-cyan">01 // ТЕХНОЛОГИЯ</span>
-                        <h3 style="font-family: var(--font-heading); font-size: 1.35rem; margin-bottom: 12px; text-transform: uppercase;">
+                        <span class="bento-tag tag-cyan">Штробление без пыли</span>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.35rem; margin-bottom: 12px; ">
                             Штробление монолита без пыли и без повреждения арматуры
                         </h3>
                         <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55;">
                             В монолитных домах Мурино несущие пилоны запрещено штробить горизонтально. Мы прокладываем основные магистрали строго по потолку в негорючей гофре ГОСТ, а вертикальные спуски выполняем алмазным штроборезом с пылесосом класса M. Никакой строительной пыли в подъезде и воздуховодах.
                         </p>
                         <ul class="bento-features">
-                            <li><i>⚡</i> Алмазные коронки и штроборез с пылеотводом</li>
-                            <li><i>⚡</i> Соблюдение «закона о тишине» ЛО (тихий час 13:00–15:00)</li>
-                            <li><i>⚡</i> Сохранение целостности несущей арматуры монолитных стен</li>
+                            <li><i>✓</i> Алмазные коронки и штроборез с пылеотводом</li>
+                            <li><i>✓</i> Соблюдение «закона о тишине» ЛО (тихий час 13:00–15:00)</li>
+                            <li><i>✓</i> Сохранение целостности несущей арматуры монолитных стен</li>
                         </ul>
                     </div>
                 </div>
@@ -545,8 +474,8 @@
                 <!-- 2. Замена слабого щитка от застройщика (Span 5) -->
                 <div class="bento-card bento-calc bento-span-5 fade-in" style="transition-delay: 0.1s;">
                     <div>
-                        <span class="bento-tag tag-yellow">02 // БЕЗОПАСНОСТЬ</span>
-                        <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 12px; text-transform: uppercase;">
+                        <span class="bento-tag tag-yellow">Замена щита застройщика</span>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 12px; ">
                             Замена щитка застройщика
                         </h3>
                         <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55;">
@@ -561,17 +490,17 @@
                 <!-- 3. Кухонный гарнитур и перенос точек (Span 5) -->
                 <div class="bento-card bento-smart bento-span-5 fade-in" style="transition-delay: 0.15s;">
                     <div>
-                        <span class="bento-tag tag-cyan">03 // КУХНЯ & МОКРЫЕ ЗОНЫ</span>
-                        <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 12px; text-transform: uppercase;">
+                        <span class="bento-tag tag-cyan">Кухня и влажные зоны</span>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 12px; ">
                             Перенос точек под кухню
                         </h3>
                         <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55;">
                             Стандартные розетки застройщика почти никогда не подходят под кухонный гарнитур. Выводим силовые линии на варочную панель, духовой шкаф, посудомойку, вытяжку и подсветку строго по проекту кухни.
                         </p>
                         <ul class="bento-features">
-                            <li><i>⚡</i> Выделенная линия 3х6 мм² под варочную панель</li>
-                            <li><i>⚡</i> УЗО 10 мА для мокрых зон санузла и кухни</li>
-                            <li><i>⚡</i> Лазерная центровка розеток над фартуком</li>
+                            <li><i>✓</i> Выделенная линия 3х6 мм² под варочную панель</li>
+                            <li><i>✓</i> УЗО 10 мА для мокрых зон санузла и кухни</li>
+                            <li><i>✓</i> Лазерная центровка розеток над фартуком</li>
                         </ul>
                     </div>
                 </div>
@@ -579,17 +508,17 @@
                 <!-- 4. Чистовой монтаж и мастер-выключатель (Span 7) -->
                 <div class="bento-card bento-eng bento-span-7 fade-in" style="transition-delay: 0.2s;">
                     <div>
-                        <span class="bento-tag tag-purple">04 // ЧИСТОВАЯ & СЛАБОТОЧКА</span>
-                        <h3 style="font-family: var(--font-heading); font-size: 1.35rem; margin-bottom: 12px; text-transform: uppercase;">
+                        <span class="bento-tag tag-purple">Чистовая электрика</span>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.35rem; margin-bottom: 12px; ">
                             Чистовая электрика & мастер-выключатель
                         </h3>
                         <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55;">
                             Аккуратный монтаж механизмов розеток и выключателей в единый горизонт. Реализация схемы «Мастер-выключатель» у входа для отключения всего света одним нажатием, скрытый монтаж Wi-Fi роутера в слаботочном щите.
                         </p>
                         <ul class="bento-features">
-                            <li style="color: #cbd5e1;"><i style="color: var(--primary-eng);">⚡</i> Мастер-выключатель («выключить всё») у входной двери</li>
-                            <li style="color: #cbd5e1;"><i style="color: var(--primary-eng);">⚡</i> Слаботочный щит для роутера и ТВ-разводки</li>
-                            <li style="color: #cbd5e1;"><i style="color: var(--primary-eng);">⚡</i> Подключение тёплых полов и терморегуляторов</li>
+                            <li style="color: #cbd5e1;"><i style="color: var(--primary-eng);">✓</i> Мастер-выключатель («выключить всё») у входной двери</li>
+                            <li style="color: #cbd5e1;"><i style="color: var(--primary-eng);">✓</i> Слаботочный щит для роутера и ТВ-разводки</li>
+                            <li style="color: #cbd5e1;"><i style="color: var(--primary-eng);">✓</i> Подключение тёплых полов и терморегуляторов</li>
                         </ul>
                     </div>
                 </div>
@@ -601,7 +530,7 @@
     <section class="section" id="prices-section" style="background: rgba(255, 255, 255, 0.01); border-block: 1px solid var(--border-light);">
         <div class="container">
             <div style="text-align: center; margin-bottom: 30px;">
-                <span class="bento-tag tag-cyan fade-in">ПРОЗРАЧНЫЕ РАСЦЕНКИ</span>
+                <span class="bento-tag tag-cyan fade-in">Расценки на электромонтаж</span>
                 <h2 class="fade-in" style="margin-bottom: 12px;">Прайс-лист на <span>электромонтаж в Мурино</span></h2>
                 <p class="fade-in" style="color: var(--text-muted); max-width: 680px; margin: 0 auto; font-size: 0.95rem;">
                     Все расценки прозрачны и строго соответствуют онлайн-калькулятору сметы. Выберите интересующую категорию или рассчитайте точную смету под свой объект.
@@ -614,7 +543,7 @@
                     <button type="button" class="price-ctrl-btn" id="collapseAllPrices">Свернуть все</button>
                 </div>
                 <a href="../estimate.html" class="price-ctrl-btn highlight">
-                    <span>⚡ Рассчитать в онлайн-калькуляторе</span>
+                    <span>Рассчитать в онлайн-калькуляторе</span>
                 </a>
             </div>
 
@@ -634,7 +563,7 @@
     <section class="section">
         <div class="container">
             <div style="text-align: center; max-width: 680px; margin: 0 auto 30px;">
-                <span class="bento-tag tag-cyan fade-in">РЕЗУЛЬТАТЫ</span>
+                <span class="bento-tag tag-cyan fade-in">Примеры выполненных работ</span>
                 <h2 class="fade-in" style="margin-bottom: 10px;">Примеры выполненных <span>работ</span></h2>
                 <p class="fade-in" style="color: var(--text-muted); font-size: 0.95rem;">
                     Реальные кадры монтажа на объектах: аккуратность штробления, профессиональная сборка щитов и надежные соединения.
@@ -647,7 +576,7 @@
                     <div class="gallery-mini-thumb">
                         <img src="../gallery/kitchen-relocation-collage.webp" alt="Перенос розеток на кухне в новостройке" loading="lazy" decoding="async">
                         <div class="gallery-mini-overlay">
-                            <span class="gallery-mini-overlay-badge">🔍 Увеличить фото</span>
+                            <span class="gallery-mini-overlay-badge">Увеличить фото</span>
                         </div>
                     </div>
                     <div class="gallery-mini-body">
@@ -668,7 +597,7 @@
                     <div class="gallery-mini-thumb">
                         <img src="../gallery/panel-wiring-07.webp" alt="Сборка распределительного щита" loading="lazy" decoding="async">
                         <div class="gallery-mini-overlay">
-                            <span class="gallery-mini-overlay-badge">🔍 Увеличить фото</span>
+                            <span class="gallery-mini-overlay-badge">Увеличить фото</span>
                         </div>
                     </div>
                     <div class="gallery-mini-body">
@@ -689,7 +618,7 @@
                     <div class="gallery-mini-thumb">
                         <img src="../gallery/junction-box-09.webp" alt="Коммутация распределительной коробки WAGO" loading="lazy" decoding="async">
                         <div class="gallery-mini-overlay">
-                            <span class="gallery-mini-overlay-badge">🔍 Увеличить фото</span>
+                            <span class="gallery-mini-overlay-badge">Увеличить фото</span>
                         </div>
                     </div>
                     <div class="gallery-mini-body">
@@ -712,7 +641,7 @@
     <section class="section" style="padding-top: 10px;">
         <div class="container">
             <div class="card fade-in" style="padding: 30px;">
-                <h3 style="font-family: var(--font-heading); font-size: 1.25rem; margin-bottom: 12px; text-transform: uppercase;">
+                <h3 style="font-family: var(--font-heading); font-size: 1.25rem; margin-bottom: 12px; ">
                     Работаем во всех жилых комплексах Мурино и Девяткино
                 </h3>
                 <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;">
@@ -720,14 +649,14 @@
                 </p>
 
                 <div class="district-complexes-grid">
-                    <div class="complex-chip"><i>⚡</i> ЖК GreenЛандия (1 & 2)</div>
-                    <div class="complex-chip"><i>⚡</i> ЖК ID Murino (1, 2, 3)</div>
-                    <div class="complex-chip"><i>⚡</i> ЖК Авиатор</div>
-                    <div class="complex-chip"><i>⚡</i> ЖК Мой Город</div>
-                    <div class="complex-chip"><i>⚡</i> ЖК Урбанист</div>
-                    <div class="complex-chip"><i>⚡</i> ЖК Мурино Клаб</div>
-                    <div class="complex-chip"><i>⚡</i> ЖК Муринский Посад</div>
-                    <div class="complex-chip"><i>⚡</i> ЖК Ласточка & Браун</div>
+                    <div class="complex-chip"><i>✓</i> ЖК GreenЛандия (1 & 2)</div>
+                    <div class="complex-chip"><i>✓</i> ЖК ID Murino (1, 2, 3)</div>
+                    <div class="complex-chip"><i>✓</i> ЖК Авиатор</div>
+                    <div class="complex-chip"><i>✓</i> ЖК Мой Город</div>
+                    <div class="complex-chip"><i>✓</i> ЖК Урбанист</div>
+                    <div class="complex-chip"><i>✓</i> ЖК Мурино Клаб</div>
+                    <div class="complex-chip"><i>✓</i> ЖК Муринский Посад</div>
+                    <div class="complex-chip"><i>✓</i> ЖК Ласточка & Браун</div>
                 </div>
 
                 <div class="nearby-districts-bar">
@@ -735,8 +664,8 @@
                         Работаем также в соседних локациях:
                     </div>
                     <div class="nearby-districts-links">
-                        <a href="../elektromontazh-bugry/" class="nearby-link">📍 Электромонтаж в Буграх</a>
-                        <a href="../install/" class="nearby-link">⚡ Электромонтаж в Санкт-Петербурге</a>
+                        <a href="../elektromontazh-bugry/" class="nearby-link">Электромонтаж в Буграх</a>
+                        <a href="../install/" class="nearby-link">Электромонтаж в Санкт-Петербурге</a>
                     </div>
                 </div>
             </div>
@@ -756,11 +685,11 @@
                         Оставьте заявку на бесплатную консультацию и расчёт сметы. Мастер ответит в течение 15 минут, согласует удобное время выезда и зафиксирует стоимость работ.
                     </p>
                     <div style="padding: 16px; background: rgba(0, 229, 255, 0.04); border: 1px dashed rgba(0, 229, 255, 0.2); border-radius: 12px; margin-bottom: 15px;">
-                        <p style="font-size: 0.88rem; color: var(--text-main); font-weight: 600;">⚡ Выезд на замер — бесплатно</p>
+                        <p style="font-size: 0.88rem; color: var(--text-main); font-weight: 600;">Выезд на замер — бесплатно</p>
                         <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">При заключении договора выезд и составление сметы не оплачиваются.</p>
                     </div>
                     <div style="font-size: 0.85rem; color: var(--text-muted);">
-                        Прямая связь: 📞 <a href="tel:+79052084284" style="color: var(--primary-install); text-decoration: none; font-weight: 600;">+7 (905) 208-42-84</a>
+                        Прямая связь: <a href="tel:+79052084284" style="color: var(--primary-install); text-decoration: none; font-weight: 600;">+7 (905) 208-42-84</a>
                     </div>
                 </div>
 
@@ -790,7 +719,7 @@
                             Даю согласие на обработку <a href="../privacy.html" target="_blank" rel="noopener noreferrer" style="color: var(--primary-install); text-decoration: underline;">персональных данных</a>
                         </label>
                     </div>
-                    <button type="submit" class="btn btn-volt" style="width: 100%; justify-content: center; margin-top: 10px;">Вызвать мастера в Мурино ⚡</button>
+                    <button type="submit" class="btn btn-volt" style="width: 100%; justify-content: center; margin-top: 10px;">Вызвать мастера в Мурино</button>
                     <p id="formStatus" style="margin-top: 10px; text-align: center; display: none; font-weight: 600;"></p>
                 </form>
             </div>
@@ -815,7 +744,7 @@
     <div class="container">
         <div class="footer-grid">
             <div>
-                <h4>⚡ VoltGroup</h4>
+                <h4>VoltGroup</h4>
                 <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
                     Энергия решений.<br>Электромонтаж в Мурино, Буграх, СПб и ЛО.
                 </p>
@@ -843,9 +772,9 @@
 
             <div>
                 <h4>Контакты</h4>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;">📞 <a href="tel:+79052084284" style="color: inherit; text-decoration: none;">+7 (905) 208-42-84</a></p>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">🕒 Пн–Сб: 9:00–21:00</p>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">📍 г. Мурино, Всеволожский район</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:-2px; margin-right:6px; color:var(--primary-install);"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><a href="tel:+79052084284" style="color: inherit; text-decoration: none;">+7 (905) 208-42-84</a></p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:-2px; margin-right:6px; color:var(--text-muted);"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Пн–Сб: 9:00–21:00</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:-2px; margin-right:6px; color:var(--text-muted);"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>г. Мурино, Всеволожский район</p>
             </div>
         </div>
         <div class="copyright">
@@ -979,7 +908,7 @@
                 }
                 status.style.display = 'block';
                 status.style.color = '#EF4444';
-                status.textContent = '⚠️ Пожалуйста, введите полный номер телефона: +7 (XXX) XXX-XX-XX';
+                status.textContent = 'Пожалуйста, введите полный номер телефона: +7 (XXX) XXX-XX-XX';
                 return;
             } else if (phoneEl) {
                 phoneEl.classList.remove('is-invalid');
@@ -996,7 +925,7 @@
             btn.textContent = 'Отправка...';
             status.style.display = 'block';
             status.style.color = 'var(--text-muted)';
-            status.textContent = '⏳ Отправляем заявку...';
+            status.textContent = 'Отправка заявки...';
 
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 60000);
@@ -1010,7 +939,7 @@
                     signal: controller.signal
                 });
                 if (res.ok) {
-                    status.textContent = '✅ Заявка принята! Мастер свяжется с вами в течение 15 минут.';
+                    status.textContent = 'Заявка принята! Мастер свяжется с вами в течение 15 минут.';
                     status.style.color = '#10B981';
                     if (typeof window.ym === 'function') {
                         window.ym(108492681, 'reachGoal', 'lead_success');
@@ -1025,18 +954,18 @@
                 } else if (res.status === 429) {
                     const errData = await res.json().catch(() => ({}));
                     const limitMsg = errData.msg || 'Слишком много запросов. Пожалуйста, подождите минуту.';
-                    status.innerHTML = `⚠️ <b>${limitMsg}</b> Или свяжитесь напрямую: <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> · <a href="tel:+79052084284" style="color:var(--accent);text-decoration:underline;">+7 (905) 208-42-84</a>`;
+                    status.innerHTML = `<b>${limitMsg}</b> Или свяжитесь напрямую: <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> · <a href="tel:+79052084284" style="color:var(--accent);text-decoration:underline;">+7 (905) 208-42-84</a>`;
                     status.style.color = '#F59E0B';
                 } else {
                     throw new Error('Ошибка сервера');
                 }
             } catch (err) {
-                status.innerHTML = '❌ <b>Ошибка отправки.</b> Пожалуйста, напишите напрямую: <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> или позвоните <a href="tel:+79052084284" style="color:var(--accent);text-decoration:underline;">+7 (905) 208-42-84</a>';
+                status.innerHTML = '<b>Ошибка отправки.</b> Пожалуйста, напишите напрямую: <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> или позвоните <a href="tel:+79052084284" style="color:var(--accent);text-decoration:underline;">+7 (905) 208-42-84</a>';
                 status.style.color = '#EF4444';
             } finally {
                 clearTimeout(timeoutId);
                 btn.disabled = false;
-                btn.textContent = 'Вызвать мастера в Мурино ⚡';
+                btn.textContent = 'Вызвать мастера в Мурино';
             }
         });
     }
@@ -1052,22 +981,25 @@
             if (d.install && d.install.categories) {
                 container.textContent = '';
                 const categoryIcons = {
-                    'Черновые': '🔨',
-                    'Чистовая': '🔌',
-                    'Проектирование': '📐',
-                    'Сборка': '⚡',
-                    'Ревизия': '🔧',
-                    'Слаботочные': '📡',
-                    'Освещение': '💡',
-                    'Подключение': '🍳',
-                    'Диагностика': '🔍'
+                    'Черновые': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
+                    'Чистовые': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="12" r="1.5" fill="currentColor"/><circle cx="15.5" cy="12" r="1.5" fill="currentColor"/></svg>',
+                    'Чистовая': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="12" r="1.5" fill="currentColor"/><circle cx="15.5" cy="12" r="1.5" fill="currentColor"/></svg>',
+                    'Проектирование': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+                    'Сборка': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="7" y1="7" x2="7" y2="17"/><line x1="12" y1="7" x2="12" y2="17"/><line x1="17" y1="7" x2="17" y2="17"/></svg>',
+                    'Ревизия': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>',
+                    'Слаботочные': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="18" r="3"/><path d="M6.3 12.3a8 8 0 0 1 11.4 0"/><path d="M3.5 9.5a12 12 0 0 1 17 0"/></svg>',
+                    'Освещение': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>',
+                    'Подключение': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v6a6 6 0 0 0 12 0V3"/><line x1="9" y1="3" x2="9" y2="7"/><line x1="15" y1="3" x2="15" y2="7"/><path d="M12 15v6"/></svg>',
+                    'Диагностика': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
+                    'Ремонт': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>',
+                    'Профилактика': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>',
                 };
                 d.install.categories.forEach(c => {
                     const details = document.createElement('details');
                     details.className = 'price-accordion';
                     const summary = document.createElement('summary');
                     summary.className = 'price-accordion-summary';
-                    let icon = '⚡';
+                    let icon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>';
                     for (const [key, ic] of Object.entries(categoryIcons)) {
                         if (c.name.indexOf(key) !== -1) {
                             icon = ic;
@@ -1078,7 +1010,7 @@
                     titleDiv.className = 'price-accordion-title';
                     const iconSpan = document.createElement('span');
                     iconSpan.className = 'price-accordion-icon-tag';
-                    iconSpan.textContent = icon;
+                    iconSpan.innerHTML = icon;
                     const nameSpan = document.createElement('span');
                     nameSpan.textContent = c.name;
                     titleDiv.appendChild(iconSpan);
@@ -1151,7 +1083,7 @@
         .catch(err => {
             console.error('Ошибка загрузки прайса:', err);
             const container = document.getElementById('install-prices');
-            if (container) container.textContent = '⚠️ Не удалось загрузить прайс-лист.';
+            if (container) container.textContent = 'Не удалось загрузить прайс-лист.';
         });
 
     // Lightbox просмотрщик фото

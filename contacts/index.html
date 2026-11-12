@@ -68,7 +68,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../static/css/style.css?v=3.3">
+    <link rel="stylesheet" href="../static/css/style.css?v=3.8">
 
     <style>
         .contact-cards {
@@ -88,27 +88,17 @@
             position: relative;
             overflow: hidden;
         }
-        .contact-card::after {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--primary-install), transparent);
-            opacity: 0;
-            transition: var(--transition);
-        }
         .contact-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(0, 229, 255, 0.4);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45);
+            transform: translateY(-2px);
+            border-color: rgba(0, 229, 255, 0.3);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
         }
-        .contact-card:hover::after { opacity: 1; }
         .contact-icon {
             width: 56px;
             height: 56px;
-            background: rgba(0, 229, 255, 0.1);
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            border-radius: 14px;
+            background: rgba(0, 229, 255, 0.08);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -119,7 +109,6 @@
         .contact-card h3 {
             font-size: 1.2rem;
             margin-bottom: 12px;
-            text-transform: uppercase;
         }
         .contact-card a.main-link {
             color: var(--primary-install);
@@ -133,7 +122,6 @@
         }
         .contact-card a.main-link:hover {
             color: #ffffff;
-            text-shadow: 0 0 10px var(--primary-install);
         }
         .messenger-links {
             display: flex;
@@ -195,9 +183,9 @@
                 Отвечаем оперативно. Звоните для вызова мастера, присылайте фото электрощитов или проекты для быстрой оценки сметы.
             </p>
             <div class="hero-actions" style="gap: 14px; flex-wrap: wrap;">
-                <a href="tel:+79052084284" class="btn btn-primary">📞 Позвонить ⚡</a>
-                <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="btn btn-outline">✈️ Telegram</a>
-                <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="btn btn-outline">🔹 ВКонтакте</a>
+                <a href="tel:+79052084284" class="btn btn-primary">Позвонить</a>
+                <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Telegram</a>
+                <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="btn btn-outline">ВКонтакте</a>
             </div>
         </div>
     </section>
@@ -206,7 +194,7 @@
         <div class="container">
             <div class="contact-cards">
                 <div class="contact-card fade-in">
-                    <div class="contact-icon">📞</div>
+                    <div class="contact-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
                     <h3>Телефон</h3>
                     <a href="tel:+79052084284" class="main-link">+7 (905) 208-42-84</a>
                     <p style="font-size: 0.9rem; margin-top: 8px; color: var(--text-main); font-weight: 600;">Пн–Сб: 9:00–21:00</p>
@@ -214,7 +202,7 @@
                 </div>
 
                 <div class="contact-card fade-in" style="transition-delay: 0.1s;">
-                    <div class="contact-icon" style="background: rgba(255, 214, 10, 0.1); border-color: rgba(255, 214, 10, 0.3); color: var(--volt-yellow);">📍</div>
+                    <div class="contact-icon" style="background: rgba(255, 214, 10, 0.1); border-color: rgba(255, 214, 10, 0.25); color: var(--volt-yellow);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
                     <h3>Локация и Выезд</h3>
                     <p style="font-size: 1.15rem; font-family: var(--font-heading); margin-bottom: 8px; color: var(--text-main);">Санкт-Петербург и ЛО</p>
                     <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">Выезд на замер и технический осмотр объекта - <strong style="color: var(--volt-yellow);">бесплатно</strong> при заключении договора</p>
@@ -222,11 +210,11 @@
                 </div>
 
                 <div class="contact-card fade-in" style="transition-delay: 0.2s;">
-                    <div class="contact-icon" style="background: rgba(123, 97, 255, 0.1); border-color: rgba(123, 97, 255, 0.3); color: var(--primary-eng);">💬</div>
+                    <div class="contact-icon" style="background: rgba(123, 97, 255, 0.1); border-color: rgba(123, 97, 255, 0.25); color: var(--primary-eng);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
                     <h3>Мессенджеры</h3>
                     <div class="messenger-links">
-                        <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="messenger-btn">✈️ Telegram: @voltgroup_spb</a>
-                        <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="messenger-btn">🔹 ВКонтакте: @voltgroup_spb</a>
+                        <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="messenger-btn">Telegram: @voltgroup_spb</a>
+                        <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" class="messenger-btn">ВКонтакте: @voltgroup_spb</a>
                     </div>
                     <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 12px;">Присылайте фото помещений или схем для быстрого предрасчета</p>
                 </div>
@@ -247,7 +235,7 @@
                         Оставьте заявку на электромонтаж, сборку щита или ремонт автоматики. Ответим в течение 15 минут, сориентируем по стоимости и зафиксируем цену в смете.
                     </p>
                     <div style="padding: 16px; background: rgba(0, 229, 255, 0.04); border: 1px dashed rgba(0, 229, 255, 0.2); border-radius: 12px;">
-                        <p style="font-size: 0.88rem; color: var(--text-main); font-weight: 600;">⚡ Официальный договор</p>
+                        <p style="font-size: 0.88rem; color: var(--text-main); font-weight: 600;">Официальный договор</p>
                         <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Фискальный чек ФНС, акт приёмки и гарантия 12 месяцев на все работы.</p>
                     </div>
                 </div>
@@ -278,7 +266,7 @@
                             Даю согласие на обработку <a href="../privacy.html" target="_blank" rel="noopener noreferrer" style="color: var(--primary-install); text-decoration: underline;">персональных данных</a>
                         </label>
                     </div>
-                    <button type="submit" class="btn btn-volt" style="width: 100%; justify-content: center; margin-top: 10px;">Отправить заявку ⚡</button>
+                    <button type="submit" class="btn btn-volt" style="width: 100%; justify-content: center; margin-top: 10px;">Отправить заявку</button>
                     <p id="formStatus" style="margin-top: 10px; text-align: center; display: none; font-weight: 600;"></p>
                 </form>
             </div>
@@ -290,7 +278,7 @@
     <div class="container">
         <div class="footer-grid">
             <div>
-                <h4>⚡ VoltGroup</h4>
+                <h4>VoltGroup</h4>
                 <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
                     Энергия решений.<br>Электрика и автоматизация в СПб и ЛО.
                 </p>
@@ -325,9 +313,9 @@
 
             <div>
                 <h4>Контакты</h4>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;">📞 <a href="tel:+79052084284" style="color: inherit; text-decoration: none;">+7 (905) 208-42-84</a></p>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">🕒 Пн–Сб: 9:00–21:00</p>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">📍 Санкт-Петербург и ЛО</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:-2px; margin-right:6px; color:var(--primary-install);"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><a href="tel:+79052084284" style="color: inherit; text-decoration: none;">+7 (905) 208-42-84</a></p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:-2px; margin-right:6px; color:var(--text-muted);"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Пн–Сб: 9:00–21:00</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:-2px; margin-right:6px; color:var(--text-muted);"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Санкт-Петербург и ЛО</p>
             </div>
         </div>
         <div class="copyright">
@@ -495,7 +483,7 @@
                 }
                 status.style.display = 'block';
                 status.style.color = '#EF4444';
-                status.textContent = '⚠️ Пожалуйста, введите полный номер телефона: +7 (XXX) XXX-XX-XX';
+                status.textContent = 'Пожалуйста, введите полный номер телефона: +7 (XXX) XXX-XX-XX';
                 return;
             } else if (phoneEl) {
                 phoneEl.classList.remove('is-invalid');
@@ -512,7 +500,7 @@
             btn.textContent = 'Отправка...';
             status.style.display = 'block';
             status.style.color = 'var(--text-muted)';
-            status.textContent = '⏳ Отправляем заявку...';
+            status.textContent = 'Отправка заявки...';
 
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 60000);
@@ -526,7 +514,7 @@
                     signal: controller.signal
                 });
                 if (res.ok) {
-                    status.textContent = '✅ Заявка отправлена! Свяжемся с вами в ближайшее время.';
+                    status.textContent = 'Заявка отправлена! Свяжемся с вами в ближайшее время.';
                     status.style.color = '#10B981';
                     if (typeof window.ym === 'function') {
                         window.ym(108492681, 'reachGoal', 'lead_success');
@@ -544,22 +532,22 @@
                         const errData = await res.json();
                         if (errData && errData.msg) limitMsg = errData.msg;
                     } catch (_) {}
-                    status.innerHTML = `⚠️ <b>${limitMsg}</b> Или свяжитесь напрямую: <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> · <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">ВКонтакте</a> или позвоните <a href="tel:+79052084284" style="color:var(--accent);text-decoration:underline;">+7 (905) 208-42-84</a>`;
+                    status.innerHTML = `<b>${limitMsg}</b> Или свяжитесь напрямую: <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> · <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">ВКонтакте</a> или позвоните <a href="tel:+79052084284" style="color:var(--accent);text-decoration:underline;">+7 (905) 208-42-84</a>`;
                     status.style.color = '#F59E0B';
                 } else {
                     throw new Error('Ошибка сервера');
                 }
             } catch (err) {
                 if (err.name === 'AbortError') {
-                    status.innerHTML = '⏳ <b>Сервер просыпается</b> (холодный старт может занять до минуты). Вы можете подождать немного или связаться напрямую: <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> · <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">ВКонтакте</a>';
+                    status.innerHTML = '<b>Сервер активируется</b> (холодный старт может занять до минуты). Вы можете подождать немного или связаться напрямую: <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> · <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">ВКонтакте</a>';
                 } else {
-                    status.innerHTML = '❌ <b>Ошибка отправки.</b> Пожалуйста, напишите напрямую: <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> · <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">ВКонтакте</a> или позвоните <a href="tel:+79052084284" style="color:var(--accent);text-decoration:underline;">+7 (905) 208-42-84</a>';
+                    status.innerHTML = '<b>Ошибка отправки.</b> Пожалуйста, напишите напрямую: <a href="https://t.me/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Telegram</a> · <a href="https://vk.com/voltgroup_spb" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">ВКонтакте</a> или позвоните <a href="tel:+79052084284" style="color:var(--accent);text-decoration:underline;">+7 (905) 208-42-84</a>';
                 }
                 status.style.color = '#EF4444';
             } finally {
                 clearTimeout(timeoutId);
                 btn.disabled = false;
-                btn.textContent = 'Отправить заявку ⚡';
+                btn.textContent = 'Отправить заявку';
             }
         });
     }

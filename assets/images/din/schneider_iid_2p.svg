@@ -1,0 +1,739 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Создано Microsoft Visio, экспорт SVG schneider_iid_2p.svg Page-1 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events"
+		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="1.45231in" height="3.44803in"
+		viewBox="0 0 104.566 248.258" xml:space="preserve" color-interpolation-filters="sRGB" onzoom="resetCoords()"
+		onscroll="resetCoords()" onload="initCoords(evt)" class="st10">
+	<v:documentProperties v:langID="1049" v:metric="true" v:viewMarkup="false"/>
+
+	<style type="text/css">
+	<![CDATA[
+		.st1 {fill:white;font-family:'Sans Serif';font-size:14;stroke:black;stroke-width:0.75}
+		.st2 {fill:#ffffff;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st3 {fill:none}
+		.st4 {stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st5 {fill:#00b050;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st6 {fill:none;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st7 {fill:#000000;font-family:Arial;font-size:0.499992em}
+		.st8 {fill:#000000;font-family:Arial;font-size:0.833336em}
+		.st9 {fill:#262626;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st10 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+	</style>
+
+	<g v:mID="0" v:index="1" v:groupContext="foregroundPage">
+		<title>Страница-1</title>
+		<v:pageProperties v:drawingScale="0.0393701" v:pageScale="0.0393701" v:drawingUnits="24" v:shadowOffsetX="8.50394"
+				v:shadowOffsetY="-8.50394"/>
+		<a xlink:href="#xlinkMenu1" onclick="showHyperlinks(evt, 'xlinkMenu1')" onmousemove="promptHyperlinks(evt)"
+				v:hyperlinks="url(#xlinkMenu1)">
+			<g id="group1-2" transform="translate(1.2596,-3.65669)" v:mID="1" v:groupContext="group">
+				<v:custProps>
+					<v:cp v:nameU="Support" v:lbl="Поддержать проект"
+							v:prompt="Вы можете поддержать проект подпиской на ютуб канал, инстаграм или задонатив любую сумму. Спасибо за поддержку!!!"
+							v:type="1" v:format="Instagram;Youtube;Donate" v:ask="true" v:langID="1049"/>
+					<v:cp v:nameU="Type" v:lbl="Тип УЗО" v:prompt="Выберите тип УЗО." v:type="1" v:format="AC;A" v:ask="true"
+							v:langID="1049" v:val="VT4(AC)"/>
+					<v:cp v:nameU="Leakage" v:lbl="Дифференциальный ток УЗО" v:prompt="Выберите дифференциальный ток  УЗО."
+							v:type="1" v:format="10mA;30mA;100mA;300mA" v:ask="true" v:langID="1033" v:val="VT4(10mA)"/>
+					<v:cp v:nameU="Nominal" v:lbl="Номинал УЗО" v:prompt="Выберите номинал УЗО." v:type="1"
+							v:format="16A;25A;40A;63A;80A;100A" v:ask="true" v:langID="1049" v:val="VT4(16A)"/>
+					<v:cp v:nameU="Switch" v:lbl="Положение тумблера" v:prompt="Выберите положение тумблера." v:type="1"
+							v:format="On;Off" v:ask="true" v:langID="1049" v:val="VT4(Off)"/>
+				</v:custProps>
+				<v:userDefs>
+					<v:ud v:nameU="Support" v:prompt="" v:val="VT0(0):26"/>
+				</v:userDefs>
+				<title>iID 2P Schneider electric</title>
+				<g id="shape2-3" v:mID="2" v:groupContext="shape">
+					<title>Лист.2</title>
+					<rect x="0" y="7.31339" width="102.047" height="240.945" class="st2"/>
+				</g>
+				<g id="group3-5" transform="translate(0.283464,-12.1181)" v:mID="3" v:groupContext="group">
+					<title>Лист.3</title>
+					<g id="shape4-6" v:mID="4" v:groupContext="shape">
+						<title>Лист.4</title>
+						<path d="M77.67 47 L77.67 49.83 L74.83 49.83 L74.83 47 L66.33 47 L66.33 44.16 L74.83 44.16 L74.83 41.33 L77.67
+									 41.33 L77.67 44.16 L86.17 44.16 L86.17 47 L77.67 47 ZM76.25 56.92 A11.3386 11.3386 90 1 1 76.25
+									 34.24 A11.3386 11.3386 90 1 1 76.25 56.92 ZM90.43 45.58 A14.1732 14.1732 0 1 1 62.08 45.58 A14.1732
+									 14.1732 0 1 1 90.43 45.58 ZM26.65 47 L26.65 49.83 L23.81 49.83 L23.81 47 L15.31 47 L15.31 44.16
+									 L23.81 44.16 L23.81 41.33 L26.65 41.33 L26.65 44.16 L35.15 44.16 L35.15 47 L26.65 47 ZM25.23
+									 56.92 A11.3386 11.3386 90 1 1 25.23 34.24 A11.3386 11.3386 90 1 1 25.23 56.92 ZM39.4 45.58 A14.1732
+									 14.1732 0 1 1 11.06 45.58 A14.1732 14.1732 0 1 1 39.4 45.58 ZM25.94 93.38 L25.94 98.7 L24.52
+									 98.7 L24.52 93.38 L21.86 93.38 L21.86 91.96 L28.59 91.96 L28.59 93.38 L25.94 93.38 ZM11.06 101
+									 L11.06 89.66 L39.4 89.66 L39.4 101 L11.06 101 ZM16.02 137.06 L16.02 131.39 L34.44 131.39 L34.44
+									 137.06 L16.02 137.06 ZM77.62 235.5 L77.62 238.34 L74.79 238.34 L74.79 235.5 L66.28 235.5 L66.28
+									 232.67 L74.79 232.67 L74.79 229.83 L77.62 229.83 L77.62 232.67 L86.12 232.67 L86.12 235.5 L77.62
+									 235.5 ZM76.2 245.42 A11.3386 11.3386 90 1 1 76.2 222.75 A11.3386 11.3386 90 1 1 76.2 245.42
+									 ZM90.38 234.09 A14.1732 14.1732 0 1 1 62.03 234.09 A14.1732 14.1732 0 1 1 90.38 234.09 ZM26.6
+									 235.5 L26.6 238.34 L23.76 238.34 L23.76 235.5 L15.26 235.5 L15.26 232.67 L23.76 232.67 L23.76
+									 229.83 L26.6 229.83 L26.6 232.67 L35.1 232.67 L35.1 235.5 L26.6 235.5 ZM25.18 245.42 A11.3386
+									 11.3386 90 1 1 25.18 222.75 A11.3386 11.3386 90 1 1 25.18 245.42 ZM39.35 234.09 A14.1732 14.1732
+									 0 1 1 11.01 234.09 A14.1732 14.1732 0 1 1 39.35 234.09 ZM11.01 217.48 L11.01 206.14 L39.35 206.14
+									 L39.35 217.48 L11.01 217.48 ZM47.45 163.54 A22.2236 22.2236 0 1 1 3 163.54 A22.2236 22.2236
+									 0 1 1 47.45 163.54 ZM11.06 180.09 L11.06 146.98 L39.4 146.98 L39.4 180.09 L11.06 180.09 Z"
+								class="st3"/>
+						<path d="M77.67 47 L77.67 49.83 L74.83 49.83 L74.83 47 L66.33 47 L66.33 44.16 L74.83 44.16 L74.83 41.33 L77.67
+									 41.33 L77.67 44.16 L86.17 44.16 L86.17 47 L77.67 47" class="st4"/>
+						<path d="M76.25 56.92 A11.3386 11.3386 90 1 1 76.25 34.24 A11.3386 11.3386 90 1 1 76.25 56.92" class="st4"/>
+						<path d="M90.43 45.58 A14.1732 14.1732 0 1 1 62.08 45.58 A14.1732 14.1732 0 1 1 90.43 45.58" class="st4"/>
+						<path d="M26.65 47 L26.65 49.83 L23.81 49.83 L23.81 47 L15.31 47 L15.31 44.16 L23.81 44.16 L23.81 41.33 L26.65
+									 41.33 L26.65 44.16 L35.15 44.16 L35.15 47 L26.65 47" class="st4"/>
+						<path d="M25.23 56.92 A11.3386 11.3386 90 1 1 25.23 34.24 A11.3386 11.3386 90 1 1 25.23 56.92" class="st4"/>
+						<path d="M39.4 45.58 A14.1732 14.1732 0 1 1 11.06 45.58 A14.1732 14.1732 0 1 1 39.4 45.58" class="st4"/>
+						<path d="M101.48 76.12 L-0 76.12" class="st4"/>
+						<path d="M25.94 93.38 L25.94 98.7 L24.52 98.7 L24.52 93.38 L21.86 93.38 L21.86 91.96 L28.59 91.96 L28.59
+									 93.38 L25.94 93.38" class="st4"/>
+						<path d="M11.06 101 L11.06 89.66 L39.4 89.66 L39.4 101 L11.06 101" class="st4"/>
+						<path d="M101.48 131.39 L-0 131.39" class="st4"/>
+						<path d="M101.48 141.31 L-0 141.31" class="st4"/>
+						<path d="M16.02 137.06 L16.02 131.39 L34.44 131.39 L34.44 137.06 L16.02 137.06" class="st4"/>
+						<path d="M101.48 203.68 L-0 203.68" class="st4"/>
+						<path d="M77.62 235.5 L77.62 238.34 L74.79 238.34 L74.79 235.5 L66.28 235.5 L66.28 232.67 L74.79 232.67 L74.79
+									 229.83 L77.62 229.83 L77.62 232.67 L86.12 232.67 L86.12 235.5 L77.62 235.5" class="st4"/>
+						<path d="M76.2 245.42 A11.3386 11.3386 90 1 1 76.2 222.75 A11.3386 11.3386 90 1 1 76.2 245.42" class="st4"/>
+						<path d="M90.38 234.09 A14.1732 14.1732 0 1 1 62.03 234.09 A14.1732 14.1732 0 1 1 90.38 234.09" class="st4"/>
+						<path d="M26.6 235.5 L26.6 238.34 L23.76 238.34 L23.76 235.5 L15.26 235.5 L15.26 232.67 L23.76 232.67 L23.76
+									 229.83 L26.6 229.83 L26.6 232.67 L35.1 232.67 L35.1 235.5 L26.6 235.5" class="st4"/>
+						<path d="M25.18 245.42 A11.3386 11.3386 90 1 1 25.18 222.75 A11.3386 11.3386 90 1 1 25.18 245.42"
+								class="st4"/>
+						<path d="M39.35 234.09 A14.1732 14.1732 0 1 1 11.01 234.09 A14.1732 14.1732 0 1 1 39.35 234.09" class="st4"/>
+						<path d="M39.07 211.81 L11.29 211.81" class="st4"/>
+						<path d="M11.01 217.48 L11.01 206.14 L39.35 206.14 L39.35 217.48 L11.01 217.48" class="st4"/>
+						<path d="M47.45 163.54 A22.2236 22.2236 0 1 1 3 163.54 A22.2236 22.2236 0 1 1 47.45 163.54" class="st4"/>
+						<path d="M11.06 180.09 L11.06 146.98 L39.4 146.98 L39.4 180.09 L11.06 180.09" class="st4"/>
+						<path d="M39.12 155.49 L11.34 155.49" class="st4"/>
+					</g>
+					<g id="shape5-32" v:mID="5" v:groupContext="shape" transform="translate(11.0551,-92.7717)">
+						<title>1P.809</title>
+						<rect x="0" y="239.754" width="28.3465" height="8.50394" class="st5"/>
+					</g>
+				</g>
+				<g id="shape6-34" v:mID="6" v:groupContext="shape" transform="translate(-2.51919,5.07398)">
+					<title>Лист.6</title>
+					<rect v:rectContext="foreign" x="0" y="5.68434E-14" width="21.7417" height="248.258" class="st6"/>
+					<switch>
+						<foreignObject x="0" y="0" width="21.7417" height="248.258"
+								requiredExtensions="http://schemas.microsoft.com/visio/2003/SVGExtensions/">
+							<v:foreignData v:orgSize="2424" v:data="data:metafile;base64,eNrVVk1oE0EU/ibZ1ib+sEotOZQmTVv/KVFUvDl
+										JsPhTRaRXSwQvggcRkYoHFw1eClJPhR4svYjixYN48RItiIeCIB4qXvTmSSII0lN8b+ZNdrOWGqQaHPjIezNv3jd
+										v9n2bVQAuE9KELsJ2QkmhOYaSwOshIHfs9BigMJUCdtN8Aq1DdwNVin1Be1dia1OvuvFoKQlKgH2EHIHS7VVaoZ9
+										sn/P5tY9MWxFw7AyhKrEFnTBxnskYHN2jgWGyMuKHbKF9QEO5/OGoF4GH5Xb2exSzSexBQg/hFNdKKMh9cS1KEOU
+										ZIIyrX/08bM4GDa4xIFyTGkc0IjUCWZ1s8ue117QHdCo8l97QtNeqSSNTPPlpvrhaTf3rVBtzD6/BnZDao7nSMf8
+										c4YqynHW6o+iTm7GcSx668kVcxSVcML27tWKuEcvVt4UbvN8vl1ZuAcdl34T3w/i/HaPfZg/TIXeSyfHVrJc2HfM
+										s/YTnnV9obvhs4md9z9Tr1icfBNryDZqoD4E9F+7Z35TsdldYWViY4zzBO8tzf/KrOa/zgenA8qe5bRqZUdOdWE4
+										eMvP1m3cNn5L801+eG//pHeufuG1/HR/PX7xuHjlG5JnwWp/Y3D/bIvMZsXH+cWKC7zP2vuhb5X3g6huPzTVknCX
+										7jOR1Z9hMJe+K8Ma1kqPJXmW10trrtVLIUCu5fmtH4+sVsyOm3b+t5bnv8+VOaZm5/xct+6LlxaxXi2rZ+XEtk4Y
+										3sufW/1TL+mWrlp3vtLyYrbVo+YjXWS3vV+F//7/Q8nvCG7SnZe63Tmq5R8Nz98bfKTxHnzr+wYj+xkR7vtSUiKx
+										tIfSK7Yv9E3rsF0g="/>
+						</foreignObject>
+						<svg viewBox="0 0 29.002 331.01" height="248.258" preserveAspectRatio="none" width="21.7417" x="0" y="0">
+							<clipPath id="mfid65">
+								<rect width="29.002" height="331.01" id="mfid66"/>
+							</clipPath>
+							<g clip-path="url(#mfid65)">
+								<mask id="mfid67">
+									<rect width="30" height="332" fill="white" stroke="none"/>
+								</mask>
+								<mask id="mfid68" fill="white" stroke="none">
+									<g>
+										<g mask="url(#mfid67)">
+											<use xlink:href="#mfid66"/>
+										</g>
+									</g>
+								</mask>
+								<!-- GetDC -->
+								<mask id="mfid69" fill-rule="evenodd" fill="white" stroke="none">
+									<rect x="0" y="0" width="30" height="332"/>
+								</mask>
+								<!-- Released DC -->
+								<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+								<!-- GetDC -->
+								<g mask="url(#mfid69)">
+									<g transform="matrix(1, 0, 0, 1, 9.5001, 19.985)">
+										<g stroke="#000000" stroke-miterlimit="10" fill="none">
+											<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+													font-size="16">
+												<text stroke="none" fill="#005da9" x="0,12" y="0" transform="translate(0,0)"
+														xml:space="preserve">N</text>
+											</g>
+										</g>
+									</g>
+								</g>
+								<!-- Released DC -->
+								<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+								<!-- GetDC -->
+								<g mask="url(#mfid69)">
+									<g transform="matrix(1, 0, 0, 1, 9.5001, 319.91)">
+										<g stroke="#000000" stroke-miterlimit="10" fill="none">
+											<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+													font-size="16">
+												<text stroke="none" fill="#005da9" x="0,12" y="0" transform="translate(0,0)"
+														xml:space="preserve">N</text>
+											</g>
+										</g>
+									</g>
+								</g>
+								<!-- Released DC -->
+							</g>
+						</svg>
+					</switch>
+					<rect v:rectContext="foreign" x="0" y="5.68434E-14" width="21.7417" height="248.258" class="st6"/>
+				</g>
+				<g id="shape7-37" v:mID="7" v:groupContext="shape" transform="translate(44.0115,-141.165)">
+					<title>Лист.7</title>
+					<rect v:rectContext="foreign" x="0" y="204.775" width="52.4693" height="43.4835" class="st6"/>
+					<switch>
+						<foreignObject x="0" y="204.775" width="52.4693" height="43.4835"
+								requiredExtensions="http://schemas.microsoft.com/visio/2003/SVGExtensions/">
+							<v:foreignData v:orgSize="6412" v:data="data:metafile;base64,eNrtWAtQlUUU3vPfK+ArUMlQryX4gMQHY4II96f
+										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
+										nRbuv/Pd/uq+CKlbQebxZ3YvV/wSySD8v"/>
+						</foreignObject>
+						<svg viewBox="0 0 69.995 58.012" height="43.4835" preserveAspectRatio="none" width="52.4693" x="0"
+								y="204.775">
+							<clipPath id="mfid70">
+								<rect width="69.995" height="58.012" id="mfid71"/>
+							</clipPath>
+							<g clip-path="url(#mfid70)">
+								<mask id="mfid72">
+									<rect width="71" height="59" fill="white" stroke="none"/>
+								</mask>
+								<mask id="mfid73" fill="white" stroke="none">
+									<g>
+										<g mask="url(#mfid72)">
+											<use xlink:href="#mfid71"/>
+										</g>
+									</g>
+								</mask>
+								<!-- GetDC -->
+								<mask id="mfid74" fill-rule="evenodd" fill="white" stroke="none">
+									<rect x="0" y="0" width="71" height="59"/>
+								</mask>
+								<!-- Released DC -->
+								<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+								<!-- GetDC -->
+								<g mask="url(#mfid74)">
+									<g transform="matrix(1, 0, 0, 1, 8.1667, 17.529)">
+										<g stroke="#000000" stroke-miterlimit="10" fill="none">
+											<g font-family="&#39;Calibri&#39;,swiss,sans-serif" font-style="normal"
+													font-weight="700" font-size="13">
+												<text stroke="none" fill="#00b050" x="0,6,12,19,26,33,36,43,50,55" y="0"
+														transform="translate(0,0)" xml:space="preserve">Schneider</text>
+											</g>
+										</g>
+									</g>
+								</g>
+								<!-- Released DC -->
+								<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+								<!-- GetDC -->
+								<g mask="url(#mfid74)">
+									<g transform="matrix(1, 0, 0, 1, 31.037, 25.967)">
+										<g stroke="#000000" stroke-miterlimit="10" fill="none">
+											<g font-family="&#39;Calibri&#39;,swiss,sans-serif" font-style="normal"
+													font-weight="400" font-size="11">
+												<text stroke="none" fill="#00b050" x="0,5,8,13,17,21,25,27,32" y="0"
+														transform="translate(0,0)" xml:space="preserve">Electric</text>
+											</g>
+										</g>
+									</g>
+								</g>
+								<!-- Released DC -->
+								<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+								<defs>
+									<path id="mfid75"
+											d="M0.059398,-0.089197 L0.059398,-0.089783 L0.096791,-0.089783 L0.096791,-0.071087 L0.075856,-0.071087 C0.076839,-0.054043 0.067764,-0.032861 0.055586,-0.023776 C0.053737,-0.022397 0.051878,-0.021349 0.05005,-0.020656 L0.05005,-0.019672 L0.045405,-0.019672 C0.045137,-0.019663 0.044871,-0.019663 0.044607,-0.019672 L0.012658,-0.019672 L0.012658,-0.038369 L0.031745,-0.038369 C0.030834,-0.055466 0.039972,-0.076609 0.052155,-0.085594 C0.054589,-0.087389 0.057037,-0.088607 0.059398,-0.089197 Z M0.099487,-0.045376 C0.10115,-0.048223 0.10262,-0.051104 0.10389,-0.053993 L0.087755,-0.053993 L0.087755,-0.064073 L0.10747,-0.064073 C0.11552,-0.093852 0.098432,-0.11381 0.0693,-0.10864 C0.051854,-0.10555 0.033152,-0.093842 0.019344,-0.077364 L0.028557,-0.077364 L0.028557,-0.067285 L0.011927,-0.067285 C0.0092914,-0.063168 0.007048,-0.058954 0.0052418,-0.054724 L0.016585,-0.054724 L0.016585,-0.044645 L0.0017838,-0.044645 C-0.0058699,-0.014939 0.011628,0.0046304 0.040866,-0.00093619 C0.059316,-0.0044488 0.07895,-0.017468 0.092687,-0.035297 L0.081648,-0.035297 L0.081648,-0.045376 L0.099487,-0.045376 Z"/>
+								</defs>
+								<g mask="url(#mfid73)">
+									<g transform="matrix(96, 0, 0, 96, 20.441, 27.124)">
+										<g fill="#00b050">
+											<use xlink:href="#mfid75" fill-rule="evenodd" stroke="none"/>
+											<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+										</g>
+										<g fill="#00b050" stroke-width="0.0013889" stroke="#00b050" stroke-linecap="round"
+												stroke-linejoin="round">
+											<use xlink:href="#mfid75" fill="none"/>
+											<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+										</g>
+									</g>
+								</g>
+								<!-- GetDC -->
+								<g mask="url(#mfid74)">
+									<g transform="matrix(1, 0, 0, 1, 8.1357, 51.834)">
+										<g stroke="#000000" stroke-miterlimit="10" fill="none">
+											<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+													font-size="8">
+												<text stroke="none" fill="#000000" x="0,2,4,10" y="0" transform="translate(0,0)"
+														xml:space="preserve">iID</text>
+											</g>
+										</g>
+									</g>
+								</g>
+								<!-- Released DC -->
+							</g>
+						</svg>
+					</switch>
+					<rect v:rectContext="foreign" x="0" y="204.775" width="52.4693" height="43.4835" class="st6"/>
+				</g>
+				<g id="group8-40" transform="translate(70.8661,-62.4172)" v:mID="8" v:groupContext="group">
+					<title>Лист.8</title>
+					<g id="shape9-41" v:mID="9" v:groupContext="shape" transform="translate(5.9952E-14,-1.40126E-05)">
+						<title>Лист.9</title>
+						<rect v:rectContext="foreign" x="0" y="241.792" width="12.1731" height="6.46639" class="st6"/>
+						<switch>
+							<foreignObject x="0" y="241.792" width="0" height="6.46639"
+									requiredExtensions="http://schemas.microsoft.com/visio/2003/SVGExtensions/">
+								<v:foreignData v:orgSize="8736" clip="rect(0 -12.1731 0 0)" v:data="data:metafile;base64,eNrtmHl
+											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
+											tr/BudtcYQEO5mQdv2n8F83muLg=="/>
+							</foreignObject>
+							<svg viewBox="0 0 1920 1080" enable-background="new" color-interpolation-filters="sRGB"
+									clip="rect(0 -12.1731 0 0)" height="6.46639" overflow="hidden" preserveAspectRatio="none"
+									width="0" x="0" y="241.792">
+								<g transform="matrix(0.12, 0, 0, 0.16115, 0, 0)">
+									<g stroke="none" fill="#000000">
+										<path
+												d="M272,0 L15727,0 L15922,0 L16000,0 L16000,76 L16000,263 L16000,6439 L16000,6626 L16000,6702 L15922,6702 L15727,6702 L272,6702 L78,6702 L0,6702 L0,6626 L0,6439 L0,263 L0,76 L0,0 L78,0 L272,0 Z M15455,527 L545,527 L545,6176 L15455,6176 L15455,527 Z"/>
+										<polygon
+												points="5150,4520 5126,4498 5102,4477 5076,4457 5051,4437 5025,4418 4998,4400 4971,4381 4943,4364 4915,4347 4886,4331 4858,4315 4828,4300 4798,4286 4768,4273 4738,4260 4707,4248 4678,4236 4647,4226 4617,4216 4586,4207 4555,4199 4523,4191 4491,4184 4459,4178 4427,4172 4394,4167 4362,4163 4329,4160 4295,4157 4262,4155 4228,4154 4194,4153 4160,4154 4127,4155 4093,4157 4060,4160 4027,4163 3994,4167 3961,4172 3929,4178 3897,4184 3865,4191 3834,4199 3802,4207 3771,4216 3741,4226 3710,4236 3681,4248 3680,4248 3649,4260 3619,4272 3589,4286 3559,4300 3530,4315 3501,4331 3473,4347 3445,4364 3417,4381 3390,4399 3363,4418 3337,4437 3312,4457 3286,4477 3262,4498 3238,4520 3214,4542 3191,4564 3168,4587 3146,4611 3124,4635 3103,4660 3083,4685 3063,4711 3044,4737 3026,4763 3007,4790 2990,4818 2974,4846 2958,4874 2942,4903 2928,4932 2914,4960 2901,4989 2889,5018 2878,5048 2867,5078 2857,5108 2847,5139 2838,5169 2830,5200 2823,5232 2816,5263 2810,5295 2805,5327 2801,5359 2798,5392 2795,5424 2791,5485 2786,5556 2713,5556 2651,5556 2330,5556 2260,5556 2177,5556 2182,5476 2186,5407 2189,5360 2194,5313 2199,5267 2206,5220 2214,5174 2223,5129 2233,5084 2244,5039 2256,4995 2269,4951 2283,4907 2298,4864 2315,4822 2332,4780 2350,4738 2369,4697 2390,4656 2411,4614 2434,4574 2458,4533 2482,4494 2508,4455 2534,4417 2562,4379 2590,4342 2619,4305 2650,4270 2680,4235 2712,4200 2745,4167 2778,4134 2812,4102 2812,4101 2847,4070 2883,4040 2919,4010 2956,3982 2994,3954 3032,3927 3072,3901 3111,3875 3152,3851 3193,3827 3235,3804 3277,3783 3320,3762 3363,3742 3407,3723 3452,3706 3495,3689 3539,3674 3583,3660 3628,3647 3673,3634 3718,3623 3764,3613 3811,3604 3858,3595 3905,3588 3952,3582 4000,3577 4048,3573 4096,3570 4145,3569 4194,3568 4238,3568 4281,3570 4323,3572 4366,3575 4409,3579 4451,3584 4493,3590 4534,3596 4576,3603 4617,3612 4658,3620 4698,3630 4738,3641 4778,3652 4817,3664 4856,3676 4896,3690 4936,3705 4975,3721 5014,3737 5053,3755 5091,3773 5129,3791 5166,3811 5202,3831 5238,3852 5274,3874 5309,3896 5344,3919 5378,3943 5412,3967 5445,3992 5476,4017 5507,4042 5538,4068 5568,4095 5597,4122 5626,4149 5654,4178 5682,4206 5709,4236 5735,4266 5761,4296 5786,4327 5811,4358 5835,4390 5858,4422 5881,4455 5900,4485 5919,4515 5938,4545 5956,4576 5973,4607 5990,4639 6006,4671 6022,4703 6037,4735 6052,4768 6065,4801 6079,4835 6091,4868 6103,4902 6115,4936 6126,4971 9874,4971 9885,4936 9896,4902 9908,4868 9921,4834 9934,4801 9948,4768 9963,4735 9978,4703 9993,4671 10010,4639 10027,4608 10044,4576 10062,4546 10080,4515 10099,4485 10119,4456 10141,4423 10164,4391 10188,4359 10213,4327 10238,4296 10264,4266 10291,4236 10318,4207 10345,4178 10374,4149 10403,4122 10432,4095 10462,4068 10492,4042 10523,4017 10555,3992 10588,3967 10622,3943 10656,3919 10691,3896 10726,3873 10761,3852 10798,3831 10834,3811 10871,3791 10909,3772 10947,3754 10986,3737 11025,3721 11064,3705 11103,3690 11143,3676 11182,3664 11222,3652 11262,3641 11302,3630 11342,3620 11383,3612 11424,3603 11465,3596 11507,3590 11549,3584 11591,3579 11634,3575 11676,3572 11719,3570 11762,3568 11806,3568 11855,3569 11903,3570 11952,3573 12000,3577 12048,3582 12095,3588 12142,3595 12189,3604 12236,3613 12282,3623 12327,3634 12372,3647 12417,3660 12461,3674 12505,3689 12548,3706 12593,3723 12637,3742 12680,3762 12723,3783 12765,3804 12807,3827 12848,3851 12888,3875 12928,3901 12967,3927 13006,3954 13044,3982 13081,4010 13117,4040 13153,4070 13187,4101 13187,4102 13221,4134 13255,4167 13288,4200 13319,4235 13350,4269 13380,4305 13409,4342 13438,4379 13465,4416 13492,4455 13517,4494 13542,4533 13566,4573 13589,4614 13610,4655 13631,4697 13650,4738 13668,4780 13685,4822 13702,4864 13717,4908 13731,4951 13744,4995 13756,5039 13767,5084 13777,5129 13786,5175 13794,5220 13801,5267 13806,5313 13811,5360 13814,5407 13818,5476 13822,5556 13741,5556 13670,5556 13349,5556 13287,5556 13214,5556 13209,5485 13205,5424 13202,5392 13199,5359 13195,5327 13189,5295 13184,5263 13177,5232 13170,5200 13162,5169 13153,5139 13144,5108 13133,5078 13122,5048 13111,5018 13099,4989 13086,4960 13072,4932 13058,4903 13042,4874 13026,4846 13010,4818 12993,4791 12974,4764 12956,4737 12937,4711 12917,4685 12896,4660 12875,4635 12854,4611 12831,4587 12809,4564 12786,4542 12762,4520 12738,4498 12713,4477 12688,4457 12662,4437 12636,4418 12610,4399 12582,4381 12555,4364 12527,4347 12498,4331 12470,4315 12440,4300 12411,4286 12381,4273 12350,4260 12319,4248 12290,4236 12259,4226 12229,4216 12198,4207 12167,4199 12135,4191 12103,4184 12071,4178 12039,4172 12006,4167 11973,4163 11940,4160 11907,4157 11873,4155 11839,4154 11806,4153 11772,4154 11738,4155 11704,4157 11671,4160 11638,4163 11605,4167 11573,4172 11540,4178 11508,4184 11476,4191 11445,4199 11414,4207 11383,4216 11352,4226 11322,4236 11292,4248 11292,4248 11261,4260 11231,4272 11201,4286 11171,4300 11142,4315 11113,4331 11085,4347 11057,4364 11029,4381 11002,4399 10975,4418 10949,4437 10923,4457 10898,4477 10874,4498 10849,4520 10826,4542 10803,4564 10780,4587 10758,4611 10736,4635 10715,4660 10695,4685 10675,4711 10656,4737 10637,4764 10619,4791 10602,4818 10585,4846 10569,4874 10554,4903 10539,4932 10525,4960 10513,4989 10500,5018 10489,5048 10478,5078 10468,5108 10458,5139 10450,5169 10442,5200 10434,5232 10428,5263 10422,5295 10417,5327 10413,5359 10409,5392 10406,5424 10402,5485 10397,5556 10324,5556 10262,5556 9942,5556 6058,5556 5737,5556 5675,5556 5602,5556 5597,5485 5593,5424 5591,5392 5587,5359 5583,5327 5578,5295 5572,5263 5565,5232 5558,5200 5550,5169 5541,5139 5532,5108 5521,5078 5510,5048 5499,5018 5487,4989 5474,4960 5460,4932 5446,4903 5430,4874 5414,4846 5398,4818 5381,4790 5363,4763 5344,4737 5325,4711 5305,4685 5285,4660 5264,4635 5242,4611 5220,4587 5197,4564 5174,4542 5150,4520"/>
+										<polygon
+												points="9858,3042 9826,3042 9794,3041 9761,3040 9729,3038 9665,3033 9600,3026 9535,3018 9471,3007 9406,2995 9342,2981 9278,2966 9214,2950 9150,2932 9086,2912 9022,2892 8958,2870 8894,2847 8830,2823 8829,2823 8768,2799 8707,2774 8645,2748 8584,2722 8522,2694 8461,2666 8399,2638 8337,2608 8273,2578 8211,2547 8150,2517 8090,2487 8031,2458 7972,2428 7915,2399 7857,2370 7856,2369 7842,2362 7840,2361 7791,2336 7742,2311 7693,2286 7644,2262 7594,2237 7545,2212 7496,2188 7446,2163 7397,2139 7347,2116 7298,2092 7249,2069 7199,2047 7150,2025 7101,2003 7052,1982 7004,1962 6955,1942 6907,1923 6859,1904 6810,1887 6762,1870 6715,1853 6667,1838 6619,1823 6572,1809 6525,1796 6478,1785 6431,1774 6385,1764 6338,1755 6293,1748 6261,1743 6228,1739 6196,1736 6164,1734 6131,1732 6098,1731 6066,1731 6033,1731 6000,1732 5967,1733 5934,1735 5901,1738 5868,1741 5835,1745 5802,1749 5769,1754 5769,1754 5731,1760 5693,1767 5656,1774 5618,1783 5580,1792 5542,1801 5505,1811 5467,1822 5430,1833 5392,1845 5355,1857 5318,1870 5244,1897 5172,1925 5103,1953 5036,1983 4969,2014 4904,2045 4840,2077 4777,2110 4715,2144 4655,2178 4596,2211 4539,2246 4483,2280 4429,2314 4377,2347 4327,2380 4279,2413 4233,2445 4148,2505 4072,2561 4005,2612 3949,2656 3904,2693 3870,2721 3848,2739 3839,2747 3839,2748 3793,2789 3740,2836 3688,2788 3642,2747 3403,2531 3351,2483 3289,2428 3351,2373 3404,2326 3404,2326 3413,2319 3427,2306 3448,2289 3474,2266 3506,2240 3543,2210 3585,2177 3633,2140 3685,2100 3741,2058 3802,2014 3867,1968 3936,1920 4009,1872 4086,1822 4166,1773 4209,1746 4254,1720 4299,1694 4345,1667 4392,1641 4440,1615 4489,1589 4538,1564 4589,1538 4639,1514 4691,1489 4743,1465 4796,1442 4850,1419 4904,1396 4958,1375 5003,1358 5048,1341 5093,1325 5138,1309 5184,1294 5230,1279 5277,1266 5324,1252 5370,1240 5418,1228 5465,1217 5513,1206 5561,1196 5609,1187 5657,1179 5705,1172 5748,1166 5790,1161 5833,1157 5876,1153 5919,1150 5962,1148 6005,1147 6048,1146 6092,1146 6135,1147 6178,1149 6222,1152 6265,1155 6308,1159 6352,1165 6395,1171 6451,1180 6507,1191 6564,1202 6620,1215 6677,1229 6733,1244 6789,1260 6845,1277 6901,1295 6957,1313 7012,1332 7068,1353 7124,1373 7179,1395 7234,1417 7289,1440 7345,1464 7400,1488 7455,1513 7510,1537 7563,1562 7616,1587 7669,1612 7721,1638 7775,1664 7828,1690 7881,1716 7934,1743 7986,1769 8039,1796 8091,1822 8143,1849 8146,1850 8151,1853 8153,1855 8286,1922 8417,1988 8547,2052 8676,2114 8740,2144 8804,2173 8867,2201 8930,2228 8992,2254 9055,2278 9116,2302 9178,2324 9239,2345 9299,2364 9360,2382 9419,2398 9479,2412 9538,2425 9596,2435 9654,2444 9711,2451 9768,2455 9825,2458 9880,2458 9936,2455 9991,2451 10045,2443 10099,2434 10103,2432 10171,2418 10238,2401 10305,2384 10372,2365 10438,2345 10503,2324 10569,2302 10633,2279 10697,2255 10760,2230 10823,2204 10885,2177 10947,2150 11007,2122 11066,2094 11125,2066 11201,2027 11276,1989 11348,1950 11418,1911 11486,1872 11551,1834 11614,1796 11673,1759 11727,1725 11778,1692 11826,1660 11872,1629 11955,1571 12026,1520 12084,1477 12129,1443 12160,1419 12175,1407 12177,1405 12222,1367 12277,1322 12329,1372 12373,1415 12602,1639 12652,1689 12710,1747 12647,1798 12592,1844 12575,1858 12541,1885 12491,1923 12426,1972 12347,2029 12254,2094 12203,2129 12149,2165 12092,2202 12032,2240 11966,2282 11896,2324 11823,2367 11747,2411 11669,2454 11588,2498 11505,2541 11420,2584 11350,2618 11278,2651 11205,2684 11130,2717 11054,2749 10977,2780 10899,2810 10820,2839 10750,2863 10679,2886 10607,2909 10534,2930 10460,2950 10386,2969 10311,2987 10236,3004 10235,3004 10145,3021 10140,3022 10048,3033 10044,3033 9953,3040 9950,3040 9860,3042 9858,3042"/>
+									</g>
+								</g>
+								<mask id="mfid76" fill-rule="evenodd" fill="white" stroke="none"/>
+							</svg>
+						</switch>
+						<rect v:rectContext="foreign" x="0" y="241.792" width="12.1731" height="6.46639" class="st6"/>
+					</g>
+					<g id="shape10-44" v:mID="10" v:groupContext="shape" transform="translate(3.83007E-05,-2.80252E-05)">
+						<title>Лист.10</title>
+						<rect v:rectContext="foreign" x="0" y="241.792" width="12.173" height="6.46637" class="st6"/>
+						<switch>
+							<foreignObject x="0" y="241.792" width="12.173" height="6.46637"
+									requiredExtensions="http://schemas.microsoft.com/visio/2003/SVGExtensions/">
+								<v:foreignData v:orgSize="3280" v:data="data:metafile;base64,eNrtlntsFEUcx+fueqX7mNmdu729vUffe++
+											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
+											ZAxEJoTw+ZP8O07CYtw=="/>
+							</foreignObject>
+							<svg viewBox="0 0 1920 1080" enable-background="new" color-interpolation-filters="sRGB"
+									height="6.46637" preserveAspectRatio="none" width="12.173" x="0" y="241.792">
+								<defs>
+									<clipPath id="mfid77">
+										<rect id="mfid78" x="0" y="0" width="1920" height="1080"/>
+									</clipPath>
+								</defs>
+								<g clip-path="url(#mfid77)">
+									<g transform="matrix(0.12, 0, 0, 0.1558, 0, 0)">
+										<g stroke-width="985.79" stroke="none" fill="#000000">
+											<polygon
+													points="6095,2492 6137,2492 6180,2494 6225,2496 6271,2500 6318,2504 6367,2509 6417,2515 6469,2522 6522,2531 6577,2540 6633,2550 6690,2561 6749,2573 6809,2586 6870,2599 6933,2614 6997,2630 7063,2647 7130,2664 7198,2683 7268,2703 7339,2723 7412,2745 7485,2767 7561,2791 7638,2815 7716,2840 7795,2867 7958,2922 8127,2981 8295,3041 8456,3096 8610,3148 8756,3196 8895,3240 9027,3280 9152,3316 9269,3349 9325,3364 9379,3377 9432,3390 9482,3402 9531,3413 9578,3423 9623,3432 9666,3441 9708,3448 9748,3454 9786,3459 9822,3464 9856,3467 9888,3469 9919,3471 9948,3471 10006,3470 10064,3467 10122,3461 10180,3453 10237,3443 10294,3430 10350,3416 10407,3399 10463,3379 10518,3358 10574,3334 10629,3308 10684,3280 10739,3249 10793,3216 10847,3181 10900,3143 10954,3104 11007,3062 11060,3018 11112,2971 11165,2922 11217,2871 11268,2818 11320,2762 11371,2705 11422,2644 11472,2582 11522,2518 11572,2451 11622,2381 11671,2310 12395,2968 12330,3063 12263,3156 12196,3245 12129,3331 12060,3415 11991,3495 11921,3572 11850,3647 11779,3718 11706,3786 11633,3852 11560,3914 11485,3973 11410,4029 11334,4082 11257,4132 11179,4179 11101,4223 11022,4264 10942,4302 10862,4337 10781,4369 10699,4398 10616,4423 10532,4446 10448,4466 10363,4483 10277,4496 10191,4507 10103,4514 10015,4519 9926,4520 9892,4520 9855,4518 9815,4515 9773,4511 9728,4505 9681,4499 9631,4491 9579,4482 9524,4472 9467,4460 9407,4448 9344,4434 9279,4419 9212,4403 9142,4385 9069,4366 8994,4347 8917,4325 8836,4303 8754,4280 8581,4229 8398,4174 8204,4114 8001,4049 7787,3979 7564,3904 7436,3862 7312,3822 7194,3785 7081,3751 6972,3720 6868,3691 6769,3665 6675,3642 6585,3622 6501,3604 6421,3589 6346,3576 6311,3571 6276,3567 6243,3563 6211,3560 6180,3558 6151,3556 6122,3555 6095,3555 6058,3555 6021,3556 5984,3558 5948,3561 5912,3565 5876,3569 5840,3575 5804,3581 5769,3588 5733,3596 5698,3604 5663,3614 5629,3624 5594,3635 5560,3647 5526,3660 5492,3673 5458,3688 5425,3703 5392,3719 5359,3736 5326,3753 5293,3772 5261,3791 5229,3811 5197,3832 5165,3854 5133,3876 5102,3900 5071,3924 5040,3949 5009,3975 4974,4006 4938,4040 4901,4076 4863,4116 4824,4159 4784,4204 4743,4252 4701,4303 4658,4357 4614,4414 4568,4473 4522,4536 4475,4601 4427,4669 4378,4740 4328,4813 3604,4142 3675,4041 3746,3942 3818,3847 3890,3756 3962,3667 4035,3581 4109,3499 4183,3420 4257,3344 4332,3272 4407,3203 4483,3137 4559,3074 4636,3014 4713,2958 4791,2904 4869,2855 4947,2808 5026,2764 5106,2724 5186,2687 5266,2653 5347,2622 5428,2595 5510,2571 5592,2550 5675,2532 5758,2518 5841,2506 5926,2498 6010,2493 6095,2492"/>
+											<path
+													d="M272,0 L15727,0 L15922,0 L16000,0 L16000,78 L16000,272 L16000,6660 L16000,6854 L16000,6932 L15922,6932 L15727,6932 L272,6932 L78,6932 L0,6932 L0,6854 L0,6660 L0,272 L0,78 L0,0 L78,0 L272,0 Z M15455,545 L545,545 L545,6388 L15455,6388 L15455,545 Z"/>
+										</g>
+									</g>
+									<mask id="mfid79" fill-rule="evenodd" fill="white" stroke="none"/>
+								</g>
+							</svg>
+						</switch>
+						<rect v:rectContext="foreign" x="0" y="241.792" width="12.173" height="6.46637" class="st6"/>
+					</g>
+				</g>
+				<g id="shape11-47" v:mID="11" v:groupContext="shape" transform="translate(12.7701,-102.813)">
+					<title>Лист.11</title>
+					<rect v:rectContext="foreign" x="0" y="236.268" width="25.4835" height="11.9906" class="st6"/>
+					<switch>
+						<foreignObject x="0" y="236.268" width="25.4835" height="11.9906"
+								requiredExtensions="http://schemas.microsoft.com/visio/2003/SVGExtensions/">
+							<v:foreignData v:orgSize="3408" v:data="data:metafile;base64,eNrdl01oE0EUgN/sbta2JrKVIIFW3cRWxGoJooI
+										IdRIxVFQsklMPJYIIgoKIqMWDiwYRClpPRilCb4KIVsSLIKn24KHgxYPiQbx5knrS9hLfzL7Jzi6xrbUl1AmPmff
+										m5817+75NwgDgLIqNYqJsRIlD0J6g8RUDcA8dKwAwGEgA7EO7AeHG8YAyrZ2NzF15Y8OjaRPwANiB4qLgcT2MM+j
+										EsSPOc6qfcSuUSMTaUZQyrc1yQ66z5Inege0coAtHKdIDb8F4Fwemzg9aPA9wK7eY/RYPcpFGaUE5ImJFyaLEKBZ
+										GovvZgtLeQM9QfmvYRIweykWKsZuDFiPAZm7W/We4VR9v4q3Bvfia+ni+mLzaU37uS0+uUUydyxRbF8mffBsUu35
+										WW0Q/gXKe+T5/YY70JzfKZDdtQSyTgwtwBk7K2m0vyTTCx/L77LDY7xzMz14D6Kd9Reun1BdsvT/u7TX8O4r1b9P
+										WhDDPvGh7LOxKz9Y3fJXrE651X2hqfuihx31/abnqk+ffC277fSvtZtSXxscfiHP4a9/P3aHv8r5KBxjxfP8Tomx
+										qqV5ZnVCx9kj7zNWb0h+j80e+vZT6sxu+fvi63yt/wn7qknzk0E3PRMxtoLGon/WaPRW8E4yiyKf2vlhLc0aDdIq
+										9RyO2GrUBHB+Hy8O2dgd8tXjbNL9RVlw0JpnPSrjWq/nAQzWv6m0xjC/Xmq0RdleS5eqd/blmsax8rxaWk8RypcP
+										q01lWepRlZPi50NT8klmeirA8FWa50tEXYhns5rEcJ5bX/QPLO2EwZa4Ay6re/leWefZ001hWvlcLyw6xjN+3Yzr
+										LSo+yjAzLeNX8klmejLA8GWY54Y6FWO43m8NyiRjWf8c3Ytmch+Wi/F4u4GduzqZ6i/0F1x9Q3sHCXKvaaybXLRw
+										slUPx/4Ny4+zWWCwQhw7FZGhzItdJGjs0/g1ocJF2"/>
+						</foreignObject>
+						<svg viewBox="0 0 33.986 16.012" height="11.9906" preserveAspectRatio="none" width="25.4835" x="0"
+								y="236.268">
+							<clipPath id="mfid80">
+								<rect width="33.986" height="16.012" id="mfid81"/>
+							</clipPath>
+							<g clip-path="url(#mfid80)">
+								<mask id="mfid82">
+									<rect width="35" height="17" fill="white" stroke="none"/>
+								</mask>
+								<mask id="mfid83" fill="white" stroke="none">
+									<g>
+										<g mask="url(#mfid82)">
+											<use xlink:href="#mfid81"/>
+										</g>
+									</g>
+								</mask>
+								<!-- GetDC -->
+								<mask id="mfid84" fill-rule="evenodd" fill="white" stroke="none">
+									<rect x="0" y="0" width="35" height="17"/>
+								</mask>
+								<!-- Released DC -->
+								<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+								<!-- GetDC -->
+								<g mask="url(#mfid84)">
+									<g transform="matrix(1, 0, 0, 1, 5.4999, 10.742)">
+										<g stroke="#000000" stroke-miterlimit="10" fill="none">
+											<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+													font-size="8">
+												<text stroke="none" fill="#000000" x="0,6" y="0" transform="translate(0,0)"
+														xml:space="preserve">O</text>
+											</g>
+										</g>
+									</g>
+								</g>
+								<!-- Released DC -->
+								<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+								<!-- GetDC -->
+								<g mask="url(#mfid84)">
+									<g transform="matrix(1, 0, 0, 1, 11.723, 10.742)">
+										<g stroke="#000000" stroke-miterlimit="10" fill="none">
+											<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+													font-size="8">
+												<text stroke="none" fill="#000000" x="0,3" y="0" transform="translate(0,0)"
+														xml:space="preserve">-</text>
+											</g>
+										</g>
+									</g>
+								</g>
+								<!-- Released DC -->
+								<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+								<!-- GetDC -->
+								<g mask="url(#mfid84)">
+									<g transform="matrix(1, 0, 0, 1, 14.387, 10.742)">
+										<g stroke="#000000" stroke-miterlimit="10" fill="none">
+											<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+													font-size="8">
+												<text stroke="none" fill="#000000" x="0,6,11,16" y="0" transform="translate(0,0)"
+														xml:space="preserve">OFF</text>
+											</g>
+										</g>
+									</g>
+								</g>
+								<!-- Released DC -->
+							</g>
+						</svg>
+					</switch>
+					<rect v:rectContext="foreign" x="0" y="236.268" width="25.4835" height="11.9906" class="st6"/>
+				</g>
+				<g id="shape12-50" v:mID="12" v:groupContext="shape" transform="translate(15.7607,-78.2362)">
+					<title>Лист.12</title>
+					<rect v:rectContext="foreign" x="0" y="236.268" width="19.5024" height="11.9906" class="st6"/>
+					<switch>
+						<foreignObject x="0" y="236.268" width="0" height="11.9906"
+								requiredExtensions="http://schemas.microsoft.com/visio/2003/SVGExtensions/">
+							<v:foreignData v:orgSize="3400" clip="rect(0 -19.5024 0 0)" v:data="data:metafile;base64,eNrdl01oE0E
+										Ux9/sbpM0VLvVKgFLTdIPxGoNohFPTiKWip9ID+KhRPAiKIiIWjy4aBChIBUhQg9ib4IHPYiHegn24qFQKx4qHsS
+										bJ4mn2lN8M/MmO7tEU2tLqAN/9r35eG/e7Pw2LQOAS6gIykZtQbWB395bAG8YQPLIiSEABsMbAA5ivwXBxjFA0VZ
+										zl0JjN99G4NmsDRgAdqGSKAw3wDiDLrRdEc8tf8alUCCJuROoIs3NcEvOc2RE79BODtCLVoJ8P5tv7+XAdHy/LeQ
+										A7ueWs97h/lmkUDHUMVErKoNqoVoYycyzDdVRx0/T+VaxiRo91DWqsY+DUSPAdm7X8qe5U7O7eau/Lx6t2X+qyau
+										+4Je/DOTq1dS1SrX1kn6X26LazVjxkH8GdYWpnD/xjMw3N8HkY9aBlnQOrsJFOC/vbkdBHiMsFOcyY2K9ezi/dBt
+										gmNaNOIvSb9gGfzzO4iZ70BTzJ9ucrOiuvIo/F/3az9QWfJXz23ucR8LT46NPPK7ypeSsT57aFzxQz1ZazehZmJq
+										aFHG8OZXn4eh3uV/tA4x7Kn9WXJtqYlDeTsjY+2V/5dY9mY9R/PFvr6X/8q7yj95RT51P9F+4Ll859NE7EWNbyRb
+										3Z5PRn/C/CdaIOE/jexGlMavOcYq1x0N9VWqnxb7gxphl7AE/Ld4OI2+YlSR2djLFSvCul/N+hnJe37flML5ac/p
+										D7K4py92LzWOZcq8XljcTy6WUM2+yrP0wy8jwAeHp8RWzPBNieSbIcik1H2C50kSWY8Ry/B9Y3g3nEvZasEz37X9
+										lubynP9cslnXu9cJylFjG39uSybL2wywjwx+Ep8dXzPJ0iOXpIMvtPaUAy0+t5rB8lt6b+Xd8PZatBiyfgpPy9z3
+										yFzx/RL2DxjzrO9dMnmMcHH124v8OUGfm7jMYHCL+XKrJMsY2ojrJdsn+BQQUklQ="/>
+						</foreignObject>
+						<svg viewBox="0 0 26.005 16.012" clip="rect(0 -19.5024 0 0)" height="11.9906" overflow="hidden"
+								preserveAspectRatio="none" width="0" x="0" y="236.268">
+							<mask id="mfid85">
+								<rect width="27" height="17" fill="white" stroke="none"/>
+							</mask>
+							<mask id="mfid86" fill="white" stroke="none">
+								<g>
+									<g mask="url(#mfid85)">
+										<rect width="26.005" height="16.012" id="mfid87"/>
+									</g>
+								</g>
+							</mask>
+							<!-- GetDC -->
+							<mask id="mfid88" fill-rule="evenodd" fill="white" stroke="none">
+								<rect x="0" y="0" width="27" height="17"/>
+							</mask>
+							<!-- Released DC -->
+							<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+							<!-- GetDC -->
+							<g mask="url(#mfid88)">
+								<g transform="matrix(1, 0, 0, 1, 5.4999, 10.742)">
+									<g stroke="#000000" stroke-miterlimit="10" fill="none">
+										<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+												font-size="8">
+											<text stroke="none" fill="#000000" x="0,2" y="0" transform="translate(0,0)"
+													xml:space="preserve">I</text>
+										</g>
+									</g>
+								</g>
+							</g>
+							<!-- Released DC -->
+							<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+							<!-- GetDC -->
+							<g mask="url(#mfid88)">
+								<g transform="matrix(1, 0, 0, 1, 7.7225, 10.742)">
+									<g stroke="#000000" stroke-miterlimit="10" fill="none">
+										<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+												font-size="8">
+											<text stroke="none" fill="#000000" x="0,3" y="0" transform="translate(0,0)"
+													xml:space="preserve">-</text>
+										</g>
+									</g>
+								</g>
+							</g>
+							<!-- Released DC -->
+							<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+							<!-- GetDC -->
+							<g mask="url(#mfid88)">
+								<g transform="matrix(1, 0, 0, 1, 10.387, 10.742)">
+									<g stroke="#000000" stroke-miterlimit="10" fill="none">
+										<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+												font-size="8">
+											<text stroke="none" fill="#000000" x="0,6,12" y="0" transform="translate(0,0)"
+													xml:space="preserve">ON</text>
+										</g>
+									</g>
+								</g>
+							</g>
+							<!-- Released DC -->
+						</svg>
+					</switch>
+					<rect v:rectContext="foreign" x="0" y="236.268" width="19.5024" height="11.9906" class="st6"/>
+				</g>
+				<g id="shape13-53" v:mID="13" v:groupContext="shape" transform="translate(56.693,-137.685)">
+					<title>1P.938</title>
+					<v:userDefs>
+						<v:ud v:nameU="Row_1" v:prompt="" v:val="VT4(16A)"/>
+					</v:userDefs>
+					<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+					<v:textRect cx="15.5906" cy="238.258" width="31.19" height="20"/>
+					<rect x="0" y="228.258" width="31.1811" height="20" class="st6"/>
+					<text x="10.25" y="240.06" class="st7" v:langID="1049"><v:paragraph v:horizAlign="1"/><v:tabList/>16A</text>				</g>
+				<g id="shape14-56" v:mID="14" v:groupContext="shape" transform="translate(-1.70075,-55.6504)">
+					<title>1P.941</title>
+					<v:userDefs>
+						<v:ud v:nameU="Row_1" v:prompt="" v:val="VT4(16A)"/>
+					</v:userDefs>
+					<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+					<v:textRect cx="18.5671" cy="238.258" width="37.14" height="20"/>
+					<rect x="0" y="228.258" width="37.1341" height="20" class="st6"/>
+					<text x="9.67" y="241.26" class="st8" v:langID="1049"><v:paragraph v:horizAlign="1"/><v:tabList/>16A</text>				</g>
+				<g id="group15-59" transform="translate(2.83465,-64.6866)" v:mID="15" v:groupContext="group">
+					<title>iC60N,H,L 1P Schneider electric.906</title>
+					<g id="shape16-60" v:mID="16" v:groupContext="shape" transform="translate(11.3386,-13.2661)">
+						<title>Лист.16</title>
+						<path d="M0 248.26 L0 239.75 L22.68 239.75 L22.68 248.26 L0 248.26 Z" class="st2"/>
+					</g>
+					<g id="shape17-62" v:mID="17" v:groupContext="shape">
+						<title>Лист.17</title>
+						<path d="M0 248.26 L0 231.25 L45.35 231.25 L45.35 248.26 L0 248.26 Z" class="st9"/>
+					</g>
+				</g>
+				<g id="shape18-64" v:mID="18" v:groupContext="shape" transform="translate(43.9372,-55.6504)">
+					<title>1P.922</title>
+					<v:userDefs>
+						<v:ud v:nameU="Row_1" v:prompt="" v:val="VT4(10mA)"/>
+					</v:userDefs>
+					<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+					<v:textRect cx="15.5906" cy="238.258" width="31.19" height="20"/>
+					<rect x="0" y="228.258" width="31.1811" height="20" class="st6"/>
+					<text x="7.75" y="240.06" class="st7" v:langID="1049"><v:paragraph v:horizAlign="1"/><v:tabList/>10mA</text>				</g>
+			</g>
+		</a>
+	</g>
+	<g id="LocalMenus" v:groupContext="localMenu" transform="scale(0.75)" class="st1">
+		<g>
+			<svg id="xlinkMenu1" x="0" y="0" width="150" height="59" style="visibility:hidden" overflow="visible">
+				<g style="fill:black;fill-opacity:1.0;stroke:none">
+					<a xlink:href="https://yoomoney.ru/to/4100111902821908" xlink:title="Поддержать автора">
+						<text x="4" y="17">Поддержать автора</text>
+						<rect x="2" y="2" width="146" height="19" fill="#004" opacity="0">
+							<set begin="mouseover" end="mouseout" attributeType="CSS" attributeName="opacity" to="0.3"
+									fill="remove"/>
+						</rect>
+					</a>
+					<a xlink:href="https://www.youtube.com/channel/UCUBH16dvktRmQHLWxHKe6nA" xlink:title="Канал автора">
+						<text x="4" y="34">Канал автора</text>
+						<rect x="2" y="19" width="146" height="19" fill="#004" opacity="0">
+							<set begin="mouseover" end="mouseout" attributeType="CSS" attributeName="opacity" to="0.3"
+									fill="remove"/>
+						</rect>
+					</a>
+					<a xlink:href="https://www.instagram.com/timvisio/" xlink:title="Инстаграм автора">
+						<text x="4" y="51">Инстаграм автора</text>
+						<rect x="2" y="36" width="146" height="19" fill="#004" opacity="0">
+							<set begin="mouseover" end="mouseout" attributeType="CSS" attributeName="opacity" to="0.3"
+									fill="remove"/>
+						</rect>
+					</a>
+				</g>
+			</svg>
+		</g>
+	</g>
+	<script type="text/ecmascript"><![CDATA[
+// Global Variables
+var scale;
+var transX;
+var transY;
+var svgDoc;
+var svgSVGObj;
+
+// initializeVariables
+function initCoords(evt) {
+	var directTarget = evt.getTarget();
+	if( directTarget.getNodeType() != 9 ) // if not DOCUMENT_NODE
+		svgDoc = directTarget.getOwnerDocument();
+	else
+		svgDoc = directTarget;
+	
+	svgSVGObj = svgDoc.getDocumentElement();
+	resetCoords();
+}
+
+//get current zoom and pan values
+function resetCoords() {
+	scale = svgSVGObj.getCurrentScale();
+	var trans = svgSVGObj.getCurrentTranslate();
+	transX = trans.getX();
+	transY = trans.getY();
+}
+
+// Position and show hyperlinks menu
+function showHyperlinks(evt, MenuID){
+	var menu = svgDoc.getElementById(MenuID);
+	menu.setAttribute('style', 'visibility:visible');
+	var	menuParent = menu.getParentNode();
+	var newScale = 1 / parseFloat(scale);
+	var newTranslateX = (evt.clientX - 4 - transX) * newScale;
+	var newTranslateY = (evt.clientY - 4 - transY) * newScale;
+	newtransform = "translate(" + newTranslateX + " " + newTranslateY + ") " + "scale(" + newScale + ")";
+	menuParent.setAttribute('transform', newtransform);
+}
+
+// Hide hyperlinks menu
+function hideHyperlinks(evt, MenuID){
+	var menu = svgDoc.getElementById(MenuID);
+	menu.setAttribute('style', 'visibility:hidden');
+}
+
+// Update status line for hyperlinks
+function promptHyperlinks(evt){
+	status="Multiple hyperlinks";
+}
+
+]]>	</script>
+</svg>

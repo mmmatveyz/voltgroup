@@ -274,14 +274,14 @@
 </head>
 <body>
     <div class="controls no-print">
-        <h3 style="margin: 0 0 6px 0;">📄 Смета готова к печати</h3>
-        <button class="btn" onclick="window.print()">🖨 Печать / Сохранить в PDF</button>
+        <h3 style="margin: 0 0 6px 0;">Смета готова к печати</h3>
+        <button class="btn" onclick="window.print()">Печать / Сохранить в PDF</button>
         <button class="btn btn-close" onclick="window.close()">Закрыть</button>
     </div>
 
     <div class="header">
         <div>
-            <div class="logo-box">⚡ Volt<span>Group</span></div>
+            <div class="logo-box">Volt<span>Group</span></div>
             <div class="tagline">Профессиональный электромонтаж в Санкт-Петербурге и ЛО</div>
         </div>
         <div class="contractor-info">
@@ -440,14 +440,14 @@
 </head>
 <body>
     <div class="controls no-print">
-        <h3 style="margin: 0 0 6px 0;">📄 Коммерческое предложение готово</h3>
-        <button class="btn" onclick="window.print()">🖨 Распечатать / Сохранить в PDF</button>
+        <h3 style="margin: 0 0 6px 0;">Коммерческое предложение готово</h3>
+        <button class="btn" onclick="window.print()">Распечатать / Сохранить в PDF</button>
         <button class="btn btn-close" onclick="window.close()">Закрыть</button>
     </div>
 
     <div class="header">
         <div>
-            <div class="logo">⚡ Volt<span>Group</span></div>
+            <div class="logo">Volt<span>Group</span></div>
             <div class="tagline">Комплексный электромонтаж квартир, домов и коммерческих объектов</div>
         </div>
         <div class="company-info">
@@ -521,19 +521,19 @@
 
     <div class="features-grid">
         <div class="feature-card">
-            <strong>🛡 Гарантия 12 месяцев</strong>
+            <strong>Гарантия 12 месяцев</strong>
             Официальная гарантия по договору на качество всех электромонтажных соединений и монтаж щита.
         </div>
         <div class="feature-card">
-            <strong>💨 Штробление без пыли</strong>
+            <strong>Штробление без пыли</strong>
             Работаем мощным штроборезом с подключением строительного пылесоса — чистота на вашем объекте.
         </div>
         <div class="feature-card">
-            <strong>⚡ Надежность по ГОСТ и ПУЭ</strong>
+            <strong>Надежность по ГОСТ и ПУЭ</strong>
             Правильный подбор сечений кабеля, негорючий ГОСТ-кабель (ВВГнг-LS), опрессовка гильзами ГМЛ.
         </div>
         <div class="feature-card">
-            <strong>📱 Прозрачность и чек НПД</strong>
+            <strong>Прозрачность и чек НПД</strong>
             Официальный договор самозанятого, поэтапная оплата, фискальный чек из приложения «Мой налог».
         </div>
     </div>
@@ -622,8 +622,8 @@
 </head>
 <body>
     <div class="controls no-print">
-        <h3 style="margin: 0 0 6px 0;">📝 Акт сдачи-приёмки сформирован</h3>
-        <button class="btn" onclick="window.print()">🖨 Распечатать / Сохранить в PDF</button>
+        <h3 style="margin: 0 0 6px 0;">Акт сдачи-приёмки сформирован</h3>
+        <button class="btn" onclick="window.print()">Распечатать / Сохранить в PDF</button>
         <button class="btn btn-close" onclick="window.close()">Закрыть</button>
     </div>
 
@@ -777,8 +777,8 @@
 </head>
 <body>
     <div class="controls no-print">
-        <h3 style="margin: 0 0 6px 0; font-family: sans-serif;">📄 Договор подряда готов к печати</h3>
-        <button class="btn" onclick="window.print()">🖨 Печать / Сохранить в PDF</button>
+        <h3 style="margin: 0 0 6px 0; font-family: sans-serif;">Договор подряда готов к печати</h3>
+        <button class="btn" onclick="window.print()">Печать / Сохранить в PDF</button>
         <button class="btn btn-close" onclick="window.close()">Закрыть</button>
     </div>
 
