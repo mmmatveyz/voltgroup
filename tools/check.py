@@ -153,6 +153,21 @@ def check_gallery_assets():
 
         if missing_count == 0:
             report_pass(f"Все {valid_webp_count} файлов галереи физически существуют на диске")
+
+        # Проверка валидности всех SVG-файлов (DIN-рейка и модули щита)
+        din_svgs = list((ROOT_DIR / "assets" / "images" / "din").glob("*.svg"))
+        if din_svgs:
+            svg_errors = []
+            for svg_path in din_svgs:
+                try:
+                    import xml.etree.ElementTree as ET
+                    ET.parse(svg_path)
+                except Exception as ex:
+                    svg_errors.append(f"{svg_path.name}: {ex}")
+            if not svg_errors:
+                report_pass(f"Все {len(din_svgs)} файлов SVG модулей щита (DIN) являются валидным XML без ошибок синтаксиса")
+            else:
+                report_fail(f"Ошибки XML в SVG-файлах ({len(svg_errors)}): " + "; ".join(svg_errors))
     except Exception as e:
         report_fail("Ошибка проверки медиа галереи", str(e))
 

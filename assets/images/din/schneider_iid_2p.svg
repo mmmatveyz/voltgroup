@@ -2,8 +2,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Создано Microsoft Visio, экспорт SVG schneider_iid_2p.svg Page-1 -->
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events"
-		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="1.45231in" height="3.44803in"
-		viewBox="0 0 104.566 248.258" xml:space="preserve" color-interpolation-filters="sRGB" onzoom="resetCoords()"
+		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="1.41732in" height="3.34646in" viewBox="1.2596 3.6567 102.047 240.945" xml:space="preserve" color-interpolation-filters="sRGB" onzoom="resetCoords()"
 		onscroll="resetCoords()" onload="initCoords(evt)" class="st10">
 	<v:documentProperties v:langID="1049" v:metric="true" v:viewMarkup="false"/>
 
@@ -532,7 +531,7 @@
 					</switch>
 					<rect v:rectContext="foreign" x="0" y="236.268" width="25.4835" height="11.9906" class="st6"/>
 				</g>
-				<g id="shape12-50" v:mID="12" v:groupContext="shape" transform="translate(15.7607,-78.2362)">
+				<g id="shape12-50" v:mID="12" v:groupContext="shape" transform="translate(15.7607,-78.2362)" style="display:none;">
 					<title>Лист.12</title>
 					<rect v:rectContext="foreign" x="0" y="236.268" width="19.5024" height="11.9906" class="st6"/>
 					<switch>

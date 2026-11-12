@@ -556,38 +556,20 @@ p {
     box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
 }
 
-/* Шасси и перфорированная стальная DIN-рейка 35 мм */
+/* Окно пластрона щита (модульный ряд) */
 .din-chassis {
     position: relative;
-    padding: 14px 6px;
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 10px;
+    padding: 6px 6px;
+    background: #080c14;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6);
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
 }
 
 .din-rail-metal {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 28px;
-    transform: translateY(-50%);
-    background: linear-gradient(180deg, #475569 0%, #1e293b 40%, #334155 70%, #64748b 100%);
-    box-shadow: inset 0 2px 3px rgba(0,0,0,0.4), inset 0 -2px 3px rgba(255,255,255,0.15);
-    z-index: 1;
-    pointer-events: none;
-    border-radius: 2px;
-}
-
-.din-rail-metal::before {
-    content: '';
-    position: absolute;
-    inset: 7px 10px;
-    background-image: radial-gradient(ellipse at center, rgba(15, 23, 42, 0.8) 50%, transparent 60%);
-    background-size: 24px 14px;
-    background-repeat: repeat-x;
+    display: none;
 }
 
 .din-modules {
@@ -780,10 +762,10 @@ p {
 /* Ряд подлинных фигур Visio (Welrok, Schneider Acti9, WirenBoard) */
 .din-visio-row {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
     gap: 2px;
-    padding: 8px 2px 4px;
+    padding: 0;
     position: relative;
     z-index: 2;
 }
@@ -793,26 +775,75 @@ p {
     flex-direction: column;
     align-items: center;
     cursor: pointer;
-    transition: transform 0.15s ease, opacity 0.15s ease, filter 0.15s ease;
+    transition: transform 0.12s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease, filter 0.2s ease;
     user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+#visio-welrok {
+    position: relative;
+}
+
+.welrok-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.welrok-overlay .seg-on {
+    fill: #ff0000;
+    filter: drop-shadow(0 0 1.2px rgba(255, 0, 0, 0.85));
+    transition: fill 0.08s ease;
+}
+
+.welrok-overlay .seg-off {
+    fill: rgba(255, 0, 0, 0.07);
+    transition: fill 0.08s ease;
+}
+
+.welrok-overlay .dot-on {
+    fill: #ff0000;
+    filter: drop-shadow(0 0 1.2px rgba(255, 0, 0, 0.85));
+}
+
+.welrok-overlay .dot-off {
+    fill: rgba(255, 0, 0, 0.07);
 }
 
 .din-visio-item:hover {
     transform: translateY(-2px);
 }
 
+.din-visio-item:active {
+    transform: translateY(1px) scale(0.985);
+}
+
 .din-visio-item img {
-    height: 148px;
+    height: 175px;
     width: auto;
     display: block;
     background: transparent;
-    filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.4));
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+    transition: filter 0.2s ease, opacity 0.2s ease;
 }
 
-.din-visio-item.is-off {
-    opacity: 0.45;
-    filter: grayscale(0.7);
-    transform: translateY(3px);
+.din-visio-item.is-relay-off img {
+    opacity: 0.55;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3)) grayscale(0.5);
+}
+
+/* При отключении вводного УЗО — обесточивание отходящих линий */
+.hero-board.board-power-cut .din-downstream img {
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3)) brightness(0.75);
+}
+
+.hero-board.board-power-cut .board-metric.power strong,
+.hero-board.board-power-cut .board-metric strong#din-amp {
+    color: #ef4444;
 }
 
 .board-footer {
@@ -1835,7 +1866,7 @@ main>.container:first-child,
 
 @media (max-width: 480px) {
     .din-visio-item img {
-        height: 120px !important;
+        height: 135px !important;
         background: transparent !important;
     }
     .din-visio-row {

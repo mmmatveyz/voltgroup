@@ -1,0 +1,874 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Создано Microsoft Visio, экспорт SVG schneider_ic60n_1p.svg Page-1 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events"
+		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="0.751968in" height="3.34646in"
+		viewBox="0 0 54.1417 240.945" xml:space="preserve" color-interpolation-filters="sRGB" onzoom="resetCoords()"
+		onscroll="resetCoords()" onload="initCoords(evt)" class="st10">
+	<v:documentProperties v:langID="1049" v:metric="true" v:viewMarkup="false"/>
+
+	<style type="text/css">
+	<![CDATA[
+		.st1 {fill:white;font-family:'Sans Serif';font-size:14;stroke:black;stroke-width:0.75}
+		.st2 {fill:#ffffff;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st3 {fill:none;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st4 {fill:#000000;font-family:Arial;font-size:0.499992em}
+		.st5 {fill:#000000;font-family:Arial;font-size:0.833336em}
+		.st6 {fill:none}
+		.st7 {stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st8 {fill:#00b050;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st9 {fill:#262626;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st10 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+	</style>
+
+	<g v:mID="0" v:index="1" v:groupContext="foregroundPage">
+		<title>Страница-1</title>
+		<v:pageProperties v:drawingScale="0.0393701" v:pageScale="0.0393701" v:drawingUnits="24" v:shadowOffsetX="8.50394"
+				v:shadowOffsetY="-8.50394"/>
+		<a xlink:href="#xlinkMenu1" onclick="showHyperlinks(evt, 'xlinkMenu1')" onmousemove="promptHyperlinks(evt)"
+				v:hyperlinks="url(#xlinkMenu1)">
+			<g id="group1-2" transform="translate(1.55904,2.84217E-14)" v:mID="1" v:groupContext="group">
+				<v:custProps>
+					<v:cp v:nameU="Support" v:lbl="Поддержать проект"
+							v:prompt="Вы можете поддержать проект подпиской на ютуб канал, инстаграм или задонатив любую сумму. Спасибо за поддержку!!!"
+							v:type="1" v:format="Instagram;Youtube;Donate" v:sortKey="1" v:ask="true" v:langID="1049"/>
+					<v:cp v:nameU="Nominal" v:lbl="Номинал АВ" v:prompt="Выберите номинал автоматического выключателя." v:type="1"
+							v:format="0,5;1;2;3;4;6;10;13;16;20;25;32;40;50;63" v:sortKey="4" v:ask="true" v:langID="1033"
+							v:val="VT4(16)"/>
+					<v:cp v:nameU="Switch" v:lbl="Положение тумблера" v:prompt="Выберите положение тумблера." v:type="1"
+							v:format="On;Off" v:sortKey="5" v:ask="true" v:langID="1049" v:val="VT4(Off)"/>
+					<v:cp v:nameU="Curve" v:lbl="Кривая АВ" v:prompt="Выберите токовую характеристику." v:type="1"
+							v:format="B ;C ;D " v:sortKey="3" v:ask="true" v:langID="1049" v:val="VT4(C )"/>
+					<v:cp v:nameU="Series" v:lbl="Серия АВ" v:prompt="Выберите сери. автоматического выключателя." v:type="1"
+							v:format="iC60N;iC60H;iC60L" v:sortKey="2" v:ask="true" v:langID="1033" v:val="VT4(iC60N)"/>
+				</v:custProps>
+				<v:userDefs>
+					<v:ud v:nameU="Support" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="CurveNH" v:prompt="B ;C ;D " v:val="VT0(0):26"/>
+					<v:ud v:nameU="CurveL" v:prompt="B ;C ;K ;Z " v:val="VT4(B;C;K;Z;)"/>
+					<v:ud v:nameU="NominalNH" v:prompt="0,5;1;2;3;4;6;10;13;16;20;25;32;40;50;63" v:val="VT0(0):26"/>
+					<v:ud v:nameU="NominalL" v:prompt="0,5;1;1,6;2;3;4;6;10;13;16;20;25;32;40;50;63" v:val="VT0(0):26"/>
+				</v:userDefs>
+				<title>iC60N,H,L 1P Schneider electric</title>
+				<g id="shape2-3" v:mID="2" v:groupContext="shape">
+					<title>Лист.2</title>
+					<rect x="0" y="0" width="51.0236" height="240.945" class="st2"/>
+				</g>
+				<g id="shape3-5" v:mID="3" v:groupContext="shape" transform="translate(15.7606,-78.2362)">
+					<title>Лист.3</title>
+					<rect v:rectContext="foreign" x="0" y="228.954" width="19.5024" height="11.9906" class="st3"/>
+					<switch>
+						<foreignObject x="0" y="228.954" width="0" height="11.9906"
+								requiredExtensions="http://schemas.microsoft.com/visio/2003/SVGExtensions/">
+							<v:foreignData v:orgSize="3400" clip="rect(0 -19.5024 0 0)" v:data="data:metafile;base64,eNrdl01oE0E
+										Ux99sNh8tardSJWDTfNAWsRWDEcRenBSs9VukBykqFbwIKiFKVATNoUjVS0EQhSIehQoGT4KXxVMPPYgIih689OD
+										BQw8F9aDxzcyb7OwSTdWGUAf+2Xnz8d68mfltEgYA51ARVAi1AbUGvPLKAnjBAFJ7Do0AMBhdC7AL2y3wF44OJkN
+										q7LdA35WXEXg8HwJ0AIOoFArdDTDOoBvrjvDnuB9wKkyQxNhp1CSNzXJLjrOlx/LuLRygF2txsr1oXn07B6b9e+V
+										dHmAqv5z5Nvf2Io2KoQ6IXFFZVJhyYSQzziZUZx07Q/tbxSJyLKMuUY59HIwcAZI8VIuf4Xat3sPbvHXxaK3+u5z
+										K1af8/MeBfL2culcot17Sr2JblLvpqz1gH0MVmIr5FffIPLlpJh/zNoQzeSjCWTgt727nhNxGuH/7+Q+x7oKzVKn
+										eABileQvf3z8TdqPy6MTehUGmGBDjkwm7Q7RXLuyX7drO1mbkZHspae+U50X9px7eq6h4aTnqwU21LveuerbRbKb
+										zmrm4JPy411Wc9MnXcr3axtW8VfE7xLWpLsbk7YRU9LNsX7w2I+Mx8n/n07i0C7co3pR66nii/UxJHjn00ZmIvo1
+										UF/dnvdEe994J1hh+jBnviyj1WXX2U8w9GGirUjmK9X1w+aplrAFfLeXNRtwgKyls7GKKFf9dd4e9CO6wvm/LYXy
+										lxvQH2G0qyz1fWscyxV5tLOcS9qzJsraDLCPDMgXd3yyWc4lZH8tzLWQ5Riy3/wPLW2E8HmoGy3Tf/leW3W39+Va
+										xrGOvFpbDxDJ+3w6ZLGs7yDIy/ERYuv+vWS4GWC76WS4lh/ws261h+Tidm/k7vh7LVgOWj8Bh+f0e+QOe36DmoDH
+										P+s61kucYB1vvnfjfAWrPnB0GgyPEn0M5WUbfOlQX1R2q/wTG0KlZ"/>
+						</foreignObject>
+						<svg viewBox="0 0 26.005 16.012" clip="rect(0 -19.5024 0 0)" height="11.9906" overflow="hidden"
+								preserveAspectRatio="none" width="0" x="0" y="228.954">
+							<mask id="mfid89">
+								<rect width="27" height="17" fill="white" stroke="none"/>
+							</mask>
+							<mask id="mfid90" fill="white" stroke="none">
+								<g>
+									<g mask="url(#mfid89)">
+										<rect width="26.005" height="16.012" id="mfid91"/>
+									</g>
+								</g>
+							</mask>
+							<!-- GetDC -->
+							<mask id="mfid92" fill-rule="evenodd" fill="white" stroke="none">
+								<rect x="0" y="0" width="27" height="17"/>
+							</mask>
+							<!-- Released DC -->
+							<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+							<!-- GetDC -->
+							<g mask="url(#mfid92)">
+								<g transform="matrix(1, 0, 0, 1, 5.4999, 10.742)">
+									<g stroke="#000000" stroke-miterlimit="10" fill="none">
+										<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+												font-size="8">
+											<text stroke="none" fill="#000000" x="0,2" y="0" transform="translate(0,0)"
+													xml:space="preserve">I</text>
+										</g>
+									</g>
+								</g>
+							</g>
+							<!-- Released DC -->
+							<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+							<!-- GetDC -->
+							<g mask="url(#mfid92)">
+								<g transform="matrix(1, 0, 0, 1, 7.7225, 10.742)">
+									<g stroke="#000000" stroke-miterlimit="10" fill="none">
+										<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+												font-size="8">
+											<text stroke="none" fill="#000000" x="0,3" y="0" transform="translate(0,0)"
+													xml:space="preserve">-</text>
+										</g>
+									</g>
+								</g>
+							</g>
+							<!-- Released DC -->
+							<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+							<!-- GetDC -->
+							<g mask="url(#mfid92)">
+								<g transform="matrix(1, 0, 0, 1, 10.387, 10.742)">
+									<g stroke="#000000" stroke-miterlimit="10" fill="none">
+										<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+												font-size="8">
+											<text stroke="none" fill="#000000" x="0,6,12" y="0" transform="translate(0,0)"
+													xml:space="preserve">ON</text>
+										</g>
+									</g>
+								</g>
+							</g>
+							<!-- Released DC -->
+						</svg>
+					</switch>
+					<rect v:rectContext="foreign" x="0" y="228.954" width="19.5024" height="11.9906" class="st3"/>
+				</g>
+				<g id="shape4-8" v:mID="4" v:groupContext="shape" transform="translate(-0.722816,-155.905)">
+					<title>Лист.4</title>
+					<rect v:rectContext="foreign" x="0" y="212.216" width="52.4693" height="28.7292" class="st3"/>
+					<switch>
+						<foreignObject x="0" y="212.216" width="52.4693" height="43.4835"
+								requiredExtensions="http://schemas.microsoft.com/visio/2003/SVGExtensions/">
+							<v:foreignData v:orgSize="8360" clip="rect(5.68434E-14 0 14.7543 0)" v:data="data:metafile;base64,eN
+										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"/>
+						</foreignObject>
+						<svg viewBox="0 0 69.995 58.012" clip="rect(5.68434E-14 0 14.7543 0)" height="43.4835" overflow="hidden"
+								preserveAspectRatio="none" width="52.4693" x="0" y="212.216">
+							<mask id="mfid93">
+								<rect width="71" height="59" fill="white" stroke="none"/>
+							</mask>
+							<mask id="mfid94" fill="white" stroke="none">
+								<g>
+									<g mask="url(#mfid93)">
+										<rect width="69.995" height="58.012" id="mfid95"/>
+									</g>
+								</g>
+							</mask>
+							<!-- GetDC -->
+							<mask id="mfid96" fill-rule="evenodd" fill="white" stroke="none">
+								<rect x="0" y="0" width="71" height="59"/>
+							</mask>
+							<!-- Released DC -->
+							<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+							<!-- GetDC -->
+							<g mask="url(#mfid96)">
+								<g transform="matrix(1, 0, 0, 1, 8.1667, 17.529)">
+									<g stroke="#000000" stroke-miterlimit="10" fill="none">
+										<g font-family="&#39;Calibri&#39;,swiss,sans-serif" font-style="normal" font-weight="700"
+												font-size="13">
+											<text stroke="none" fill="#00b050" x="0,6,12,19,26,33,36,43,50,55" y="0"
+													transform="translate(0,0)" xml:space="preserve">Schneider</text>
+										</g>
+									</g>
+								</g>
+							</g>
+							<!-- Released DC -->
+							<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+							<!-- GetDC -->
+							<g mask="url(#mfid96)">
+								<g transform="matrix(1, 0, 0, 1, 31.037, 25.967)">
+									<g stroke="#000000" stroke-miterlimit="10" fill="none">
+										<g font-family="&#39;Calibri&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+												font-size="11">
+											<text stroke="none" fill="#00b050" x="0,5,8,13,17,21,25,27,32" y="0"
+													transform="translate(0,0)" xml:space="preserve">Electric</text>
+										</g>
+									</g>
+								</g>
+							</g>
+							<!-- Released DC -->
+							<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+							<defs>
+								<path id="mfid97"
+										d="M0.059398,-0.089197 L0.059398,-0.089783 L0.096791,-0.089783 L0.096791,-0.071087 L0.075856,-0.071087 C0.076839,-0.054043 0.067764,-0.032861 0.055586,-0.023776 C0.053737,-0.022397 0.051878,-0.021349 0.05005,-0.020656 L0.05005,-0.019672 L0.045405,-0.019672 C0.045137,-0.019663 0.044871,-0.019663 0.044607,-0.019672 L0.012658,-0.019672 L0.012658,-0.038369 L0.031745,-0.038369 C0.030834,-0.055466 0.039972,-0.076609 0.052155,-0.085594 C0.054589,-0.087389 0.057037,-0.088607 0.059398,-0.089197 Z M0.099487,-0.045376 C0.10115,-0.048223 0.10262,-0.051104 0.10389,-0.053993 L0.087755,-0.053993 L0.087755,-0.064073 L0.10747,-0.064073 C0.11552,-0.093852 0.098432,-0.11381 0.0693,-0.10864 C0.051854,-0.10555 0.033152,-0.093842 0.019344,-0.077364 L0.028557,-0.077364 L0.028557,-0.067285 L0.011927,-0.067285 C0.0092914,-0.063168 0.007048,-0.058954 0.0052418,-0.054724 L0.016585,-0.054724 L0.016585,-0.044645 L0.0017838,-0.044645 C-0.0058699,-0.014939 0.011628,0.0046304 0.040866,-0.00093619 C0.059316,-0.0044488 0.07895,-0.017468 0.092687,-0.035297 L0.081648,-0.035297 L0.081648,-0.045376 L0.099487,-0.045376 Z"/>
+							</defs>
+							<g mask="url(#mfid94)">
+								<g transform="matrix(96, 0, 0, 96, 20.441, 27.124)">
+									<g fill="#00b050">
+										<use xlink:href="#mfid97" fill-rule="evenodd" stroke="none"/>
+										<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+									</g>
+									<g fill="#00b050" stroke-width="0.0013889" stroke="#00b050" stroke-linecap="round"
+											stroke-linejoin="round">
+										<use xlink:href="#mfid97" fill="none"/>
+										<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+									</g>
+								</g>
+							</g>
+							<!-- GetDC -->
+							<g mask="url(#mfid96)">
+								<g transform="matrix(1, 0, 0, 1, 7.7118, 51.834)">
+									<g stroke="#000000" stroke-miterlimit="10" fill="none">
+										<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+												font-size="8">
+											<text stroke="none" fill="#000000" x="0,2,7,12,16" y="0" transform="translate(0,0)"
+													xml:space="preserve">iK60</text>
+										</g>
+									</g>
+								</g>
+							</g>
+							<!-- Released DC -->
+							<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+							<!-- GetDC -->
+							<g mask="url(#mfid96)">
+								<g transform="matrix(1, 0, 0, 1, 23.723, 51.834)">
+									<g stroke="#000000" stroke-miterlimit="10" fill="none">
+										<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+												font-size="8">
+											<text stroke="none" fill="#000000" x="0,2" y="0" transform="translate(0,0)"
+													xml:space="preserve"> </text>
+										</g>
+									</g>
+								</g>
+							</g>
+							<!-- Released DC -->
+							<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+							<!-- GetDC -->
+							<g mask="url(#mfid96)">
+								<g transform="matrix(1, 0, 0, 1, 24.167, 51.834)">
+									<g stroke="#000000" stroke-miterlimit="10" fill="none">
+										<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+												font-size="8">
+											<text stroke="none" fill="#000000" x="0,6" y="0" transform="translate(0,0)"
+													xml:space="preserve">N</text>
+										</g>
+									</g>
+								</g>
+							</g>
+							<!-- Released DC -->
+						</svg>
+					</switch>
+					<rect v:rectContext="foreign" x="0" y="212.216" width="52.4693" height="28.7292" class="st3"/>
+				</g>
+				<g id="shape5-11" v:mID="5" v:groupContext="shape" transform="translate(21.2598,-137.685)">
+					<title>1P.938</title>
+					<v:userDefs>
+						<v:ud v:nameU="Row_1" v:prompt="" v:val="VT4(C 16A)"/>
+					</v:userDefs>
+					<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+					<v:textRect cx="15.5906" cy="230.945" width="31.19" height="20"/>
+					<rect x="0" y="220.945" width="31.1811" height="20" class="st3"/>
+					<text x="7.25" y="232.75" class="st4" v:langID="1049"><v:paragraph v:horizAlign="1"/><v:tabList/>C 16A</text>				</g>
+				<g id="shape6-14" v:mID="6" v:groupContext="shape" transform="translate(-1.70075,-55.6504)">
+					<title>1P.941</title>
+					<v:userDefs>
+						<v:ud v:nameU="Row_1" v:prompt="" v:val="VT4(C16)"/>
+					</v:userDefs>
+					<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+					<v:textRect cx="15.5906" cy="230.945" width="31.19" height="20"/>
+					<rect x="0" y="220.945" width="31.1811" height="20" class="st3"/>
+					<text x="6.42" y="233.95" class="st5" v:langID="1049"><v:paragraph v:horizAlign="1"/><v:tabList/>C16</text>				</g>
+				<g id="shape7-17" v:mID="7" v:groupContext="shape" transform="translate(0.283494,-12.1102)">
+					<title>Лист.7</title>
+					<path d="M26.6 228.19 L26.6 231.02 L23.76 231.02 L23.76 228.19 L15.26 228.19 L15.26 225.35 L23.76 225.35 L23.76
+								 222.52 L26.6 222.52 L26.6 225.35 L35.1 225.35 L35.1 228.19 L26.6 228.19 ZM25.18 238.11 A11.3386
+								 11.3386 90 1 1 25.18 215.43 A11.3386 11.3386 90 1 1 25.18 238.11 ZM39.35 226.77 A14.1732 14.1732
+								 0 1 1 11.01 226.77 A14.1732 14.1732 0 1 1 39.35 226.77 ZM11.06 172.78 L11.06 139.67 L39.4 139.67
+								 L39.4 172.78 L11.06 172.78 ZM47.45 156.22 A22.2236 22.2236 0 1 1 3 156.22 A22.2236 22.2236 0 1 1
+								 47.45 156.22 ZM26.65 39.69 L26.65 42.52 L23.81 42.52 L23.81 39.69 L15.31 39.69 L15.31 36.85 L23.81
+								 36.85 L23.81 34.02 L26.65 34.02 L26.65 36.85 L35.15 36.85 L35.15 39.69 L26.65 39.69 ZM25.23 49.61
+								 A11.3386 11.3386 90 1 1 25.23 26.93 A11.3386 11.3386 90 1 1 25.23 49.61 ZM39.4 38.27 A14.1732 14.1732
+								 0 1 1 11.06 38.27 A14.1732 14.1732 0 1 1 39.4 38.27 Z" class="st6"/>
+					<path d="M50.46 178.45 L-0 178.45" class="st7"/>
+					<path d="M26.6 228.19 L26.6 231.02 L23.76 231.02 L23.76 228.19 L15.26 228.19 L15.26 225.35 L23.76 225.35 L23.76
+								 222.52 L26.6 222.52 L26.6 225.35 L35.1 225.35 L35.1 228.19 L26.6 228.19" class="st7"/>
+					<path d="M25.18 238.11 A11.3386 11.3386 90 1 1 25.18 215.43 A11.3386 11.3386 90 1 1 25.18 238.11" class="st7"/>
+					<path d="M39.35 226.77 A14.1732 14.1732 0 1 1 11.01 226.77 A14.1732 14.1732 0 1 1 39.35 226.77" class="st7"/>
+					<path d="M50.46 196.36 L-0 196.36" class="st7"/>
+					<path d="M39.12 148.17 L11.34 148.17" class="st7"/>
+					<path d="M11.06 172.78 L11.06 139.67 L39.4 139.67 L39.4 172.78 L11.06 172.78" class="st7"/>
+					<path d="M47.45 156.22 A22.2236 22.2236 0 1 1 3 156.22 A22.2236 22.2236 0 1 1 47.45 156.22" class="st7"/>
+					<path d="M50.46 134 L-0 134" class="st7"/>
+					<path d="M50.46 124.08 L-0 124.08" class="st7"/>
+					<path d="M50.46 95.73 L-0 95.73" class="st7"/>
+					<path d="M50.46 68.8 L-0 68.8" class="st7"/>
+					<path d="M26.65 39.69 L26.65 42.52 L23.81 42.52 L23.81 39.69 L15.31 39.69 L15.31 36.85 L23.81 36.85 L23.81 34.02
+								 L26.65 34.02 L26.65 36.85 L35.15 36.85 L35.15 39.69 L26.65 39.69" class="st7"/>
+					<path d="M25.23 49.61 A11.3386 11.3386 90 1 1 25.23 26.93 A11.3386 11.3386 90 1 1 25.23 49.61" class="st7"/>
+					<path d="M39.4 38.27 A14.1732 14.1732 0 1 1 11.06 38.27 A14.1732 14.1732 0 1 1 39.4 38.27" class="st7"/>
+				</g>
+				<g id="shape8-34" v:mID="8" v:groupContext="shape" transform="translate(11.3386,-42.8741)">
+					<title>Лист.8</title>
+					<path d="M0 240.94 L0 229.61 L28.35 229.61 L28.35 240.94 L0 240.94 ZM4.96 160.51 L4.96 154.84 L23.39 154.84 L23.39
+								 160.51 L4.96 160.51 Z" class="st6"/>
+					<path d="M28.06 235.28 L0.28 235.28" class="st7"/>
+					<path d="M0 240.94 L0 229.61 L28.35 229.61 L28.35 240.94 L0 240.94" class="st7"/>
+					<path d="M4.96 160.51 L4.96 154.84 L23.39 154.84 L23.39 160.51 L4.96 160.51" class="st7"/>
+				</g>
+				<g id="shape9-39" v:mID="9" v:groupContext="shape" transform="translate(11.3386,-104.882)" style="display:none;">
+					<title>1P.145</title>
+					<rect x="0" y="232.441" width="28.3465" height="8.50394" class="st8"/>
+				</g>
+				<g id="shape10-41" v:mID="10" v:groupContext="shape" transform="translate(-1.7006,-137.685)">
+					<title>1P.165</title>
+					<v:userDefs>
+						<v:ud v:nameU="Row_1" v:prompt="" v:val="VT4(iC60N)"/>
+					</v:userDefs>
+					<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+					<v:textRect cx="15.5906" cy="230.945" width="31.19" height="20"/>
+					<rect x="0" y="220.945" width="31.1811" height="20" class="st3"/>
+					<text x="7.25" y="232.75" class="st4" v:langID="1049"><v:paragraph v:horizAlign="1"/><v:tabList/>iC60N</text>				</g>
+				<g id="group11-44" transform="translate(2.83465,-85.954)" v:mID="11" v:groupContext="group">
+					<title>Лист.11</title>
+					<g id="shape12-45" v:mID="12" v:groupContext="shape" transform="translate(11.3386,-13.2661)">
+						<title>Лист.12</title>
+						<path d="M0 240.94 L0 232.44 L22.68 232.44 L22.68 240.94 L0 240.94 Z" class="st2"/>
+					</g>
+					<g id="shape13-47" v:mID="13" v:groupContext="shape">
+						<title>Лист.13</title>
+						<path d="M0 240.94 L0 223.94 L45.35 223.94 L45.35 240.94 L0 240.94 Z" class="st9"/>
+					</g>
+				</g>
+				<g id="shape14-49" v:mID="14" v:groupContext="shape" transform="translate(12.7559,-102.813)" style="display:none;">
+					<title>Лист.14</title>
+					<rect v:rectContext="foreign" x="0" y="228.954" width="25.4835" height="11.9906" class="st3"/>
+					<switch>
+						<foreignObject x="0" y="228.954" width="25.4835" height="11.9906"
+								requiredExtensions="http://schemas.microsoft.com/visio/2003/SVGExtensions/">
+							<v:foreignData v:orgSize="3408" v:data="data:metafile;base64,eNrdV0FoE0EU/bPZpIlG2UqRHFo3ia2UtmKIHhQ
+										PTgJGqYpFchKVCCIUVEIUETyYQ5GqiAVBFIoIvXgRg81B8LJ4aQ89iSDowUsPHjz00IMeNP6Z/ZOdLLGtmrLUgZf
+										9/8/M//Nn/tvZMAC4hIggQog+RBy89gKNbxhA8vCJAgCDsS0AB9BuQGvj6GCCxn739d14G4HnCyFABzCCSCLQ3TD
+										jDHpRtoQ/y/mEU6FEEGOnEBM0NsMNOc6UHquHhjhAP0oJ0r1onpzlwJR/r8XzAJO5tcw3ubcXKUQUcUzkisggwpQ
+										LI+hxdiK62+hp2t8GNpFjFXGNchzgoOUIYPNQM36am015B4956+JdTXmlnKqNl/zy5+Fcu5x6O5RbP+F3sQ3KXfe
+										1yaefQpSZG/Mb7pF+clNMPhZMCKdzUIFxOC9rt7sktxEe3339U6y7bC3XGrcAjtK8xR8fXwl9tfbszJHFEYwxKM4
+										Hx4/2mbPCXrsyKu1KzzRn7JX2um3uEZrqP/f0Uc2Nl5Kjntx21+U8dJ8xms1UXtNXl4UfuO/GSZ19566XdFzNBzf
+										+rCibxlJUVickYl+lfenmtIzHyP+9L6elXr5D8Sbdp4on7BeuyyOHAToT0bedZFE/2zR7wnsnGEX8KWrvi83UZ7T
+										ZTzH3uM/WoDaG8knyo9aAr5bqoBbXz5UkGnuYy5XWWnfyXgQnr+ptLRzv1JhdPu6uJ5edBwdzQXFZxd4oXDaJyzO
+										2OadzWel+LiOH60JT/X/N5YqPy5VWLs/Ycy1c3t8VHJfjxOWt/8Dl3eSj01xW9fa/cplnLgbGZRV7o93LeN9mdS4
+										r3c9l5PC80FT/et3LdTvbwuVyOBgul4jD+nd8Oy6HVuByUd7LBfn9HaF6C/8Br98j5mF1XqvaC5LXUQ6m2kPx/4P
+										2xtqncbFAPLQoJ0PrE3vdQ7JF8i8HtanD"/>
+						</foreignObject>
+						<svg viewBox="0 0 33.986 16.012" height="11.9906" preserveAspectRatio="none" width="25.4835" x="0"
+								y="228.954">
+							<clipPath id="mfid98">
+								<rect width="33.986" height="16.012" id="mfid99"/>
+							</clipPath>
+							<g clip-path="url(#mfid98)">
+								<mask id="mfid100">
+									<rect width="35" height="17" fill="white" stroke="none"/>
+								</mask>
+								<mask id="mfid101" fill="white" stroke="none">
+									<g>
+										<g mask="url(#mfid100)">
+											<use xlink:href="#mfid99"/>
+										</g>
+									</g>
+								</mask>
+								<!-- GetDC -->
+								<mask id="mfid102" fill-rule="evenodd" fill="white" stroke="none">
+									<rect x="0" y="0" width="35" height="17"/>
+								</mask>
+								<!-- Released DC -->
+								<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+								<!-- GetDC -->
+								<g mask="url(#mfid102)">
+									<g transform="matrix(1, 0, 0, 1, 5.4999, 10.742)">
+										<g stroke="#000000" stroke-miterlimit="10" fill="none">
+											<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+													font-size="8">
+												<text stroke="none" fill="#000000" x="0,6" y="0" transform="translate(0,0)"
+														xml:space="preserve">O</text>
+											</g>
+										</g>
+									</g>
+								</g>
+								<!-- Released DC -->
+								<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+								<!-- GetDC -->
+								<g mask="url(#mfid102)">
+									<g transform="matrix(1, 0, 0, 1, 11.723, 10.742)">
+										<g stroke="#000000" stroke-miterlimit="10" fill="none">
+											<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+													font-size="8">
+												<text stroke="none" fill="#000000" x="0,3" y="0" transform="translate(0,0)"
+														xml:space="preserve">-</text>
+											</g>
+										</g>
+									</g>
+								</g>
+								<!-- Released DC -->
+								<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+								<!-- GetDC -->
+								<g mask="url(#mfid102)">
+									<g transform="matrix(1, 0, 0, 1, 14.387, 10.742)">
+										<g stroke="#000000" stroke-miterlimit="10" fill="none">
+											<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+													font-size="8">
+												<text stroke="none" fill="#000000" x="0,6,11,16" y="0" transform="translate(0,0)"
+														xml:space="preserve">OFF</text>
+											</g>
+										</g>
+									</g>
+								</g>
+								<!-- Released DC -->
+							</g>
+						</svg>
+					</switch>
+					<rect v:rectContext="foreign" x="0" y="228.954" width="25.4835" height="11.9906" class="st3"/>
+				</g>
+				<g id="shape15-52" v:mID="15" v:groupContext="shape" transform="translate(25.4284,-120.681)">
+					<title>Лист.15</title>
+					<switch>
+						<foreignObject x="0" y="240.945" width="0" height="0"
+								requiredExtensions="http://schemas.microsoft.com/visio/2003/SVGExtensions/">
+							<v:foreignData v:orgSize="20340" v:data="data:metafile;base64,eNrtXHtwVNUZ/+4jD/IgIdls3iTZbDBAEhZCag
+										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
+										/oK8579lxpPCKdx4izW+f/ijn9o3V2+z/MVT6P"/>
+						</foreignObject>
+						<svg viewBox="0 0 1068 910.01" height="0" preserveAspectRatio="none" width="0" x="0" y="240.945">
+							<clipPath id="mfid103">
+								<rect width="1068" height="910.01" id="mfid104"/>
+							</clipPath>
+							<g clip-path="url(#mfid103)">
+								<mask id="mfid105">
+									<rect width="1069" height="911" fill="white" stroke="none"/>
+								</mask>
+								<mask id="mfid106" fill="white" stroke="none">
+									<g>
+										<g mask="url(#mfid105)">
+											<use xlink:href="#mfid104"/>
+										</g>
+									</g>
+								</mask>
+								<!-- GetDC -->
+								<mask id="mfid107" fill-rule="evenodd" fill="white" stroke="none">
+									<rect x="0" y="0" width="1069" height="911"/>
+								</mask>
+								<!-- Released DC -->
+								<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+								<g mask="url(#mfid106)">
+									<g transform="matrix(96, 0, 0, 96, 2, 909.09)">
+										<g fill="#ffffff">
+											<rect y="-9.4488" width="11.102" height="9.4488" stroke="none"/>
+											<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+											<defs>
+												<path id="mfid108" d="M0,0 L11.102,0 L11.102,-9.4488 L0,-9.4488 L0,0 Z"/>
+											</defs>
+										</g>
+										<g fill="#ffffff" stroke-width="0.010417" stroke="#000000" stroke-linecap="round"
+												stroke-linejoin="round">
+											<use xlink:href="#mfid108" fill="none"/>
+											<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+										</g>
+									</g>
+								</g>
+								<!-- GetDC -->
+								<g mask="url(#mfid107)">
+									<g transform="matrix(1, 0, 0, 1, 400.95, 464.58)">
+										<g stroke="#000000" stroke-miterlimit="10" fill="none">
+											<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+													font-size="40">
+												<text stroke="none" fill="#000000"
+														x="0,27,48,66,88,111,131,148,170,193,204,226,248,270,291,313,325" y="0"
+														transform="translate(0,0)" xml:space="preserve">Авторское право:</text>
+											</g>
+										</g>
+									</g>
+								</g>
+								<!-- Released DC -->
+								<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+								<!-- GetDC -->
+								<g mask="url(#mfid107)">
+									<g transform="matrix(1, 0, 0, 1, 99.932, 560.58)">
+										<g stroke="#000000" stroke-miterlimit="10" fill="none">
+											<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+													font-size="40">
+												<text stroke="none" fill="#000000" x="0,29,41" y="0" transform="translate(0,0)"
+														xml:space="preserve">© </text>
+											</g>
+										</g>
+									</g>
+								</g>
+								<!-- Released DC -->
+								<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+								<!-- GetDC -->
+								<g mask="url(#mfid107)">
+									<g transform="matrix(1, 0, 0, 1, 140.52, 560.58)">
+										<g stroke="#000000" stroke-miterlimit="10" fill="none">
+											<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+													font-size="40">
+												<text stroke="none" fill="#000000"
+														x="0,24,47,74,94,117,128,156,179,193,215,235,258,279,290" y="0"
+														transform="translate(0,0)" xml:space="preserve">Тимур Погосов.</text>
+											</g>
+										</g>
+									</g>
+								</g>
+								<!-- Released DC -->
+								<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+								<!-- GetDC -->
+								<g mask="url(#mfid107)">
+									<g transform="matrix(1, 0, 0, 1, 99.932, 608.58)">
+										<g stroke="#000000" stroke-miterlimit="10" fill="none">
+											<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+													font-size="40">
+												<text stroke="none" fill="#000000"
+														x="0,22,33,44,67,87,98,109,120,140,160,171,191,213,247,258,278,287,307,316,338,349,371,385,407,416,438,458,469,482,491,511,520,542,565"
+														y="0" transform="translate(0,0)" xml:space="preserve">https://vk.com/visioforelectrician</text>
+											</g>
+										</g>
+									</g>
+								</g>
+								<!-- Released DC -->
+								<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+								<!-- GetDC -->
+								<g mask="url(#mfid107)">
+									<g transform="matrix(1, 0, 0, 1, 99.932, 656.58)">
+										<g stroke="#000000" stroke-miterlimit="10" fill="none">
+											<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+													font-size="40">
+												<text stroke="none" fill="#000000"
+														x="0,11,33,56,78,100,120,142,162,203,223,245,267,290,312,332,343,356,379"
+														y="0" transform="translate(0,0)" xml:space="preserve">tpogosov@yandex.ru</text>
+											</g>
+										</g>
+									</g>
+								</g>
+								<!-- Released DC -->
+								<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+								<!-- GetDC -->
+								<g mask="url(#mfid107)">
+									<g transform="matrix(1, 0, 0, 1, 99.932, 704.58)">
+										<g stroke="#000000" stroke-miterlimit="10" fill="none">
+											<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+													font-size="40">
+												<text stroke="none" fill="#000000"
+														x="0,30,53,67,87,110,138,149,171,192,216,237,267,286,306,327,338,358,381,404,424,442,463,485,508,530,552,572,590,611,622,644,666,684,706,728,751,762,773"
+														y="0" transform="translate(0,0)" xml:space="preserve">Фигуры являются собственность автора. </text>
+											</g>
+										</g>
+									</g>
+								</g>
+								<!-- Released DC -->
+								<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+								<!-- GetDC -->
+								<g mask="url(#mfid107)">
+									<g transform="matrix(1, 0, 0, 1, 99.932, 752.58)">
+										<g stroke="#000000" stroke-miterlimit="10" fill="none">
+											<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+													font-size="40">
+												<text stroke="none" fill="#000000"
+														x="0,29,51,74,96,119,141,152,174,198,220,231,252,274,294,313,335,356,378,400,422,433,456,476,497,520,543,564,582,604,626,648,670,692,715,726,759,781,796,816,838,849"
+														y="0" transform="translate(0,0)" xml:space="preserve">Полное или частичное использование фигур </text>
+											</g>
+										</g>
+									</g>
+								</g>
+								<!-- Released DC -->
+								<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+								<!-- GetDC -->
+								<g mask="url(#mfid107)">
+									<g transform="matrix(1, 0, 0, 1, 99.932, 800.58)">
+										<g stroke="#000000" stroke-miterlimit="10" fill="none">
+											<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+													font-size="40">
+												<text stroke="none" fill="#000000"
+														x="0,23,45,63,75,95,117,131,155,177,197,219,241,263,285,307,329,340,360,371,393,415,433,455,477,500,527,538,560,581,605,626,648,667,687,708,720"
+														y="0" transform="translate(0,0)" xml:space="preserve">без согласования с автором является </text>
+											</g>
+										</g>
+									</g>
+								</g>
+								<!-- Released DC -->
+								<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+								<!-- GetDC -->
+								<g mask="url(#mfid107)">
+									<g transform="matrix(1, 0, 0, 1, 99.932, 848.58)">
+										<g stroke="#000000" stroke-miterlimit="10" fill="none">
+											<g font-family="&#39;Arial&#39;,swiss,sans-serif" font-style="normal" font-weight="400"
+													font-size="40">
+												<text stroke="none" fill="#000000"
+														x="0,22,44,67,87,119,141,163,185,208,235,246,268,290,308,330,353,373,390,412,427,449,460,482,504,526,548,570,581"
+														y="0" transform="translate(0,0)" xml:space="preserve">нарушением авторского права.</text>
+											</g>
+										</g>
+									</g>
+								</g>
+								<!-- Released DC -->
+								<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+								<defs>
+									<path id="mfid109" d="M0,0 L3546000,0 L3546000,-3545800 L-0.070114,-3545800 Z"/>
+								</defs>
+								<mask id="mfid110">
+									<use xlink:href="#mfid109" fill-rule="evenodd" fill="white" stroke="none"
+											transform="matrix(0.00010499, 0, 0, 0.00010499, 348.77, 406.77)"/>
+								</mask>
+								<mask id="mfid111" fill="white" stroke="none">
+									<g mask="url(#mfid106)">
+										<g mask="url(#mfid110)">
+											<use xlink:href="#mfid104"/>
+										</g>
+									</g>
+								</mask>
+								<defs>
+									<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+									<!-- Unsupported Record: EmfPlusRecordTypeSetPixelOffsetMode  -->
+									<svg viewBox="0 0 725.96 726.47" height="726" id="mfid112" width="725">
+										<clipPath id="mfid113">
+											<rect width="725.96" height="726.47" id="mfid114"/>
+										</clipPath>
+										<g clip-path="url(#mfid113)">
+											<defs>
+												<path id="mfid115"
+														d="M10050,50 C15573,50 20050,4527 20050,10050 C20050,15573 15573,20050 10050,20050 C4527,20050 50,15573 50,10050 C50,4527 4527,50 10050,50 Z"/>
+											</defs>
+											<g>
+												<g transform="matrix(0.036117, 0, 0, 0.036144, 0, 0)">
+													<g fill="#fd9c18">
+														<use xlink:href="#mfid115" fill-rule="evenodd" stroke="none"/>
+														<defs>
+															<path id="mfid116"
+																	d="M10050,50 C15573,50 20050,4527 20050,10050 C20050,15573 15573,20050 10050,20050 C4527,20050 50,15573 50,10050 C50,4527 4527,50 10050,50 Z"/>
+														</defs>
+													</g>
+												</g>
+											</g>
+											<mask id="mfid117">
+												<use xlink:href="#mfid116" fill-rule="evenodd" fill="white" stroke="none"
+														transform="matrix(0.036117, 0, 0, 0.036144, 0, 0)"/>
+											</mask>
+											<defs>
+												<path id="mfid118"
+														d="M10916,-381 L19796,15000 C19980,15318 19980,15683 19796,16000 C19613,16318 19297,16500 18930,16500 L1170,16500 C803,16500 487,16318 304,16000 C120,15683 120,15318 304,15000 L9184,-381 C9368,-699 9683,-881 10050,-881 C10417,-881 10732,-699 10916,-381 Z"/>
+											</defs>
+											<g mask="url(#mfid117)">
+												<g transform="matrix(0.036117, 0, 0, 0.036144, 0, 0)">
+													<g fill="#000000">
+														<use xlink:href="#mfid118" fill-rule="evenodd" stroke="none"/>
+													</g>
+													<g fill="#000000" stroke-width="20" stroke="#000000" stroke-miterlimit="10">
+														<use xlink:href="#mfid118" fill="none"/>
+														<defs>
+															<path id="mfid119"
+																	d="M10050,119 L14490,7810 L18930,15500 L10050,15500 L1170,15500 L5610,7810 Z"/>
+														</defs>
+													</g>
+													<g fill="#1c3e96" stroke-width="20" stroke="#000000" stroke-miterlimit="10">
+														<use xlink:href="#mfid119" fill-rule="evenodd" stroke="none"/>
+														<use xlink:href="#mfid119" fill="none"/>
+														<defs>
+															<path id="mfid120"
+																	d="M11842,13078 C12036,12495 12243,11909 12465,11316 L13487,8573 L14141,8573 L12116,13907 L11550,13907 L9748,9161 L8396,9161 L8396,13907 L7743,13907 L7743,9161 L5959,9161 L5959,8573 L9525,8573 L10179,8573 L10180,8573 L10180,8577 L11201,11316 C11426,11909 11634,12495 11827,13078 Z"/>
+														</defs>
+													</g>
+													<g fill="#ffffff" stroke-width="20" stroke="#000000" stroke-miterlimit="10">
+														<use xlink:href="#mfid120" fill-rule="nonzero" stroke="none"/>
+													</g>
+													<g fill="#ffffff" stroke-width="150" stroke="#ffffff" stroke-miterlimit="10">
+														<use xlink:href="#mfid120" fill="none"/>
+														<defs>
+															<path id="mfid121"
+																	d="M10050,50 C15573,50 20050,4527 20050,10050 C20050,15573 15573,20050 10050,20050 C4527,20050 50,15573 50,10050 C50,4527 4527,50 10050,50 Z"/>
+														</defs>
+													</g>
+												</g>
+											</g>
+											<g>
+												<g transform="matrix(0.036117, 0, 0, 0.036144, 0, 0)">
+													<g fill="#ffffff" stroke-width="100" stroke="#000000" stroke-miterlimit="10">
+														<use xlink:href="#mfid121" fill="none"/>
+													</g>
+												</g>
+											</g>
+										</g>
+									</svg>
+								</defs>
+								<!-- Unsupported Record: EmfPlusRecordTypeSetObject Obj_ImageAttributes -->
+								<g mask="url(#mfid111)">
+									<g transform="matrix(0.51211, 0, 0, 0.51173, 348.77, 34.502)">
+										<g fill="#ffffff" stroke-width="0.010417" stroke="#000000" stroke-linecap="round"
+												stroke-linejoin="round">
+											<clipPath id="mfid122">
+												<rect width="726.96" height="727.47"/>
+											</clipPath>
+											<use xlink:href="#mfid112" clip-path="url(#mfid122)"
+													transform="matrix(1, 0, 0, 1, 0, 0)"/>
+										</g>
+									</g>
+								</g>
+								<mask id="mfid123">
+									<rect x="0.5" y="0.5" width="1069" height="911" fill="white" stroke="none"/>
+								</mask>
+							</g>
+						</svg>
+					</switch>
+				</g>
+			</g>
+		</a>
+	</g>
+	<g id="LocalMenus" v:groupContext="localMenu" transform="scale(0.75)" class="st1">
+		<g>
+			<svg id="xlinkMenu1" x="0" y="0" width="150" height="59" style="visibility:hidden" overflow="visible">
+				<g style="fill:black;fill-opacity:1.0;stroke:none">
+					<a xlink:href="https://yoomoney.ru/to/4100111902821908" xlink:title="Поддержать автора">
+						<text x="4" y="17">Поддержать автора</text>
+						<rect x="2" y="2" width="146" height="19" fill="#004" opacity="0">
+							<set begin="mouseover" end="mouseout" attributeType="CSS" attributeName="opacity" to="0.3"
+									fill="remove"/>
+						</rect>
+					</a>
+					<a xlink:href="https://www.youtube.com/channel/UCUBH16dvktRmQHLWxHKe6nA" xlink:title="Канал автора">
+						<text x="4" y="34">Канал автора</text>
+						<rect x="2" y="19" width="146" height="19" fill="#004" opacity="0">
+							<set begin="mouseover" end="mouseout" attributeType="CSS" attributeName="opacity" to="0.3"
+									fill="remove"/>
+						</rect>
+					</a>
+					<a xlink:href="https://www.instagram.com/timvisio/" xlink:title="Инстаграм автора">
+						<text x="4" y="51">Инстаграм автора</text>
+						<rect x="2" y="36" width="146" height="19" fill="#004" opacity="0">
+							<set begin="mouseover" end="mouseout" attributeType="CSS" attributeName="opacity" to="0.3"
+									fill="remove"/>
+						</rect>
+					</a>
+				</g>
+			</svg>
+		</g>
+	</g>
+	<script type="text/ecmascript"><![CDATA[
+// Global Variables
+var scale;
+var transX;
+var transY;
+var svgDoc;
+var svgSVGObj;
+
+// initializeVariables
+function initCoords(evt) {
+	var directTarget = evt.getTarget();
+	if( directTarget.getNodeType() != 9 ) // if not DOCUMENT_NODE
+		svgDoc = directTarget.getOwnerDocument();
+	else
+		svgDoc = directTarget;
+	
+	svgSVGObj = svgDoc.getDocumentElement();
+	resetCoords();
+}
+
+//get current zoom and pan values
+function resetCoords() {
+	scale = svgSVGObj.getCurrentScale();
+	var trans = svgSVGObj.getCurrentTranslate();
+	transX = trans.getX();
+	transY = trans.getY();
+}
+
+// Position and show hyperlinks menu
+function showHyperlinks(evt, MenuID){
+	var menu = svgDoc.getElementById(MenuID);
+	menu.setAttribute('style', 'visibility:visible');
+	var	menuParent = menu.getParentNode();
+	var newScale = 1 / parseFloat(scale);
+	var newTranslateX = (evt.clientX - 4 - transX) * newScale;
+	var newTranslateY = (evt.clientY - 4 - transY) * newScale;
+	newtransform = "translate(" + newTranslateX + " " + newTranslateY + ") " + "scale(" + newScale + ")";
+	menuParent.setAttribute('transform', newtransform);
+}
+
+// Hide hyperlinks menu
+function hideHyperlinks(evt, MenuID){
+	var menu = svgDoc.getElementById(MenuID);
+	menu.setAttribute('style', 'visibility:hidden');
+}
+
+// Update status line for hyperlinks
+function promptHyperlinks(evt){
+	status="Multiple hyperlinks";
+}
+
+]]>	</script>
+</svg>

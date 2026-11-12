@@ -209,7 +209,7 @@
         href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="./static/css/style.css?v=3.9">
+    <link rel="stylesheet" href="./static/css/style.css?v=4.2">
 
     <style>
         }
@@ -301,36 +301,39 @@
                 </div>
 
                 <div class="din-chassis">
-                    <div class="din-rail-metal" aria-hidden="true"></div>
                     <div class="din-visio-row">
                         <!-- 1. Реле контроля напряжения Welrok UI-1 (из библиотеки Visio) -->
-                        <div class="din-visio-item" title="Вольтамперметр / реле напряжения Welrok UI-1 red">
-                            <img src="./assets/images/din/welrok_ui1_red.svg" alt="Welrok UI-1 red" width="137" height="322">
+                        <div class="din-visio-item" id="visio-welrok" role="button" tabindex="0" title="Реле напряжения и вольтамперметр Welrok UI-1 red. Нажмите для проверки порогов защиты">
+                            <img src="./assets/images/din/welrok_ui1_red.svg" alt="Welrok UI-1 red" width="102" height="241">
+                            <svg class="welrok-overlay" viewBox="0 0 102.047 240.945" aria-hidden="true">
+                                <g id="welrok-v-display"></g>
+                                <g id="welrok-a-display"></g>
+                            </svg>
                         </div>
 
-                        <!-- 2. Вводное УЗО Schneider Electric Acti 9 iID 2P (из библиотеки Visio) -->
-                        <div class="din-visio-item" title="Вводное УЗО Schneider Electric Acti 9 iID 2P">
-                            <img src="./assets/images/din/schneider_iid_2p.svg" alt="УЗО Schneider iID 2P" width="140" height="331">
+                        <!-- 2. Вводное УЗО Schneider Electric Acti 9 iID 2P (Вводной модуль) -->
+                        <div class="din-visio-item" id="visio-rcd" role="button" tabindex="0" title="Вводное УЗО Schneider Acti9 iID 2P: ВКЛЮЧЕНО. Нажмите для отключения ввода" aria-pressed="true">
+                            <img id="img-rcd" src="./assets/images/din/schneider_iid_2p_on.svg" alt="Вводное УЗО Schneider iID 2P" width="102" height="241">
                         </div>
 
-                        <!-- 3. Автомат Schneider iC60N Освещение (из библиотеки Visio) -->
-                        <div class="din-visio-item" id="visio-light" role="button" tabindex="0" title="Автоматический выключатель iC60N (Освещение). Нажмите для переключения">
-                            <img src="./assets/images/din/schneider_ic60n_1p.svg" alt="Автомат Schneider iC60N 1P" width="70" height="322">
+                        <!-- 3. Автомат Schneider iC60N Освещение (Линия 1) -->
+                        <div class="din-visio-item din-downstream" id="visio-light" role="button" tabindex="0" title="Автоматический выключатель iC60N (Освещение, 16А): ВКЛЮЧЕН. Нажмите для переключения" aria-pressed="true">
+                            <img id="img-light" src="./assets/images/din/schneider_ic60n_1p_on.svg" alt="Автомат Schneider iC60N 1P Освещение" width="51" height="241">
                         </div>
 
-                        <!-- 4. Автомат Schneider iC60N Розетки (из библиотеки Visio) -->
-                        <div class="din-visio-item" id="visio-sockets" role="button" tabindex="0" title="Автоматический выключатель iC60N (Розетки). Нажмите для переключения">
-                            <img src="./assets/images/din/schneider_ic60n_1p.svg" alt="Автомат Schneider iC60N 1P" width="70" height="322">
+                        <!-- 4. Автомат Schneider iC60N Розетки (Линия 2) -->
+                        <div class="din-visio-item din-downstream" id="visio-sockets" role="button" tabindex="0" title="Автоматический выключатель iC60N (Розетки, 16А): ВКЛЮЧЕН. Нажмите для переключения" aria-pressed="true">
+                            <img id="img-sockets" src="./assets/images/din/schneider_ic60n_1p_on.svg" alt="Автомат Schneider iC60N 1P Розетки" width="51" height="241">
                         </div>
 
-                        <!-- 5. Модуль реле умного дома WirenBoard WB-MR6C v.2 (из библиотеки Visio) -->
-                        <div class="din-visio-item" id="visio-smart" role="button" tabindex="0" title="Модуль реле умного дома WirenBoard WB-MR6C v.2. Нажмите для переключения">
-                            <img src="./assets/images/din/wirenboard_wb_mr6c.svg" alt="WirenBoard WB-MR6C v.2" width="201" height="341">
+                        <!-- 5. Модуль реле умного дома WirenBoard WB-MR6C v.2 (Автоматизация) -->
+                        <div class="din-visio-item din-downstream" id="visio-smart" role="button" tabindex="0" title="Модуль реле умного дома WirenBoard WB-MR6C v.2: ВКЛЮЧЕН. Нажмите для переключения" aria-pressed="true">
+                            <img id="img-smart" src="./assets/images/din/wirenboard_wb_mr6c.svg" alt="WirenBoard WB-MR6C v.2" width="150" height="255">
                         </div>
                     </div>
                 </div>
                 <div class="board-footer">
-                    <span class="board-metric">Сеть: <strong>230 В</strong></span>
+                    <span class="board-metric">Сеть: <strong id="din-volt">230 В</strong></span>
                     <span class="board-metric">Ток: <strong id="din-amp">16.5 А</strong></span>
                     <span class="board-metric power">Мощность: <strong id="live-load">3.8 кВт</strong></span>
                 </div>
@@ -1097,50 +1100,261 @@
         }
 
         // 2. Интерактивное управление фигурами Visio в распределительном щите
+        const boardEl = document.getElementById('dinBoard');
+        const btnWelrok = document.getElementById('visio-welrok');
+        const welrokVEl = document.getElementById('welrok-v-display');
+        const welrokAEl = document.getElementById('welrok-a-display');
+        const voltEl = document.getElementById('din-volt');
+        const btnRcd = document.getElementById('visio-rcd');
+        const imgRcd = document.getElementById('img-rcd');
         const btnLight = document.getElementById('visio-light');
+        const imgLight = document.getElementById('img-light');
         const btnSockets = document.getElementById('visio-sockets');
+        const imgSockets = document.getElementById('img-sockets');
         const btnSmart = document.getElementById('visio-smart');
         const ampEl = document.getElementById('din-amp');
         const loadEl = document.getElementById('live-load');
 
+        let isRcdOn = true;
         let isLightOn = true;
         let isSocketsOn = true;
         let isSmartOn = true;
 
-        function updateBoardMetrics() {
-            let kw = 0.4;
-            if (isLightOn) kw += 0.6;
-            if (isSocketsOn) kw += 1.4;
-            if (isSmartOn) kw += 1.4;
-            kw += (Math.random() * 0.12);
+        let liveVoltage = 230;
+        let isWelrokThresholdMode = false;
+        let welrokThresholdTimer = null;
 
-            const v = 230 + Math.floor(Math.sin(Date.now() / 3000) * 2.5);
-            const amps = (kw * 1000 / v);
-            if (ampEl) ampEl.textContent = amps.toFixed(1) + ' А';
-            if (loadEl) loadEl.textContent = kw.toFixed(1) + ' кВт';
+        // 7-сегментный декодер для аутентичного светодиодного табло Welrok UI-1
+        const SEG_MASKS = {
+            '0': [1,1,1,1,1,1,0],
+            '1': [0,1,1,0,0,0,0],
+            '2': [1,1,0,1,1,0,1],
+            '3': [1,1,1,1,0,0,1],
+            '4': [0,1,1,0,0,1,1],
+            '5': [1,0,1,1,0,1,1],
+            '6': [1,0,1,1,1,1,1],
+            '7': [1,1,1,0,0,0,0],
+            '8': [1,1,1,1,1,1,1],
+            '9': [1,1,1,1,0,1,1],
+            '-': [0,0,0,0,0,0,1],
+            ' ': [0,0,0,0,0,0,0]
+        };
+
+        function getDigitPolys(x, y, w, h, t, gap) {
+            const h2 = h / 2.0;
+            const t2 = t / 2.0;
+            return [
+                `${(x+gap).toFixed(2)},${y.toFixed(2)} ${(x+w-gap).toFixed(2)},${y.toFixed(2)} ${(x+w-gap-t).toFixed(2)},${(y+t).toFixed(2)} ${(x+gap+t).toFixed(2)},${(y+t).toFixed(2)}`,
+                `${(x+w).toFixed(2)},${(y+gap).toFixed(2)} ${(x+w).toFixed(2)},${(y+h2-gap).toFixed(2)} ${(x+w-t).toFixed(2)},${(y+h2-gap-t2).toFixed(2)} ${(x+w-t).toFixed(2)},${(y+gap+t).toFixed(2)}`,
+                `${(x+w).toFixed(2)},${(y+h2+gap).toFixed(2)} ${(x+w).toFixed(2)},${(y+h-gap).toFixed(2)} ${(x+w-t).toFixed(2)},${(y+h-gap-t).toFixed(2)} ${(x+w-t).toFixed(2)},${(y+h2+gap+t2).toFixed(2)}`,
+                `${(x+gap).toFixed(2)},${(y+h).toFixed(2)} ${(x+w-gap).toFixed(2)},${(y+h).toFixed(2)} ${(x+w-gap-t).toFixed(2)},${(y+h-t).toFixed(2)} ${(x+gap+t).toFixed(2)},${(y+h-t).toFixed(2)}`,
+                `${x.toFixed(2)},${(y+h2+gap).toFixed(2)} ${x.toFixed(2)},${(y+h-gap).toFixed(2)} ${(x+t).toFixed(2)},${(y+h-gap-t).toFixed(2)} ${(x+t).toFixed(2)},${(y+h2+gap+t2).toFixed(2)}`,
+                `${x.toFixed(2)},${(y+gap).toFixed(2)} ${x.toFixed(2)},${(y+h2-gap).toFixed(2)} ${(x+t).toFixed(2)},${(y+h2-gap-t2).toFixed(2)} ${(x+t).toFixed(2)},${(y+gap+t).toFixed(2)}`,
+                `${(x+gap).toFixed(2)},${(y+h2).toFixed(2)} ${(x+gap+t2).toFixed(2)},${(y+h2-t2).toFixed(2)} ${(x+w-gap-t2).toFixed(2)},${(y+h2-t2).toFixed(2)} ${(x+w-gap).toFixed(2)},${(y+h2).toFixed(2)} ${(x+w-gap-t2).toFixed(2)},${(y+h2+t2).toFixed(2)} ${(x+gap+t2).toFixed(2)},${(y+h2+t2).toFixed(2)}`
+            ];
         }
 
-        function bindToggle(el, getter, setter) {
-            if (!el) return;
-            const toggle = () => {
-                setter(!getter());
-                el.classList.toggle('is-off', !getter());
-                updateBoardMetrics();
-            };
-            el.addEventListener('click', toggle);
-            el.addEventListener('keydown', e => {
+        function renderWelrokDigit(char, x, y, w, h, t, gap) {
+            const mask = SEG_MASKS[char] || SEG_MASKS[' '];
+            const polys = getDigitPolys(x, y, w, h, t, gap);
+            let s = '';
+            for (let i = 0; i < 7; i++) {
+                s += `<polygon points="${polys[i]}" class="${mask[i] ? 'seg-on' : 'seg-off'}" />`;
+            }
+            return s;
+        }
+
+        function updateWelrokDisplay(volts, amps) {
+            if (welrokVEl) {
+                const str = String(Math.round(volts)).padStart(3, ' ');
+                const xs = [22.4, 43.1, 65.4];
+                let out = '';
+                for (let i = 0; i < 3; i++) {
+                    out += renderWelrokDigit(str[i] || ' ', xs[i], 65.1, 14.2, 25.6, 2.3, 0.5);
+                }
+                welrokVEl.innerHTML = out;
+            }
+
+            if (welrokAEl) {
+                const num = Math.max(0, amps);
+                const str = num >= 10 ? num.toFixed(1) : (' ' + num.toFixed(1));
+                const d1 = str[0];
+                const d2 = str[1];
+                const d3 = str[3] || '0';
+                let out = '';
+                out += renderWelrokDigit(d1, 22.4, 96.3, 14.2, 25.6, 2.3, 0.5);
+                out += renderWelrokDigit(d2, 43.1, 96.3, 14.2, 25.6, 2.3, 0.5);
+                out += `<circle cx="61.8" cy="120.5" r="1.5" class="dot-on" />`;
+                out += renderWelrokDigit(d3, 65.4, 96.3, 14.2, 25.6, 2.3, 0.5);
+                welrokAEl.innerHTML = out;
+            }
+        }
+
+        // Реалистичный синтез щелчка тумблера через Web Audio API
+        function playBreakerSound(isOn) {
+            try {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (!AudioCtx) return;
+                const ctx = new AudioCtx();
+                const now = ctx.currentTime;
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(isOn ? 210 : 140, now);
+                osc.frequency.exponentialRampToValueAtTime(40, now + 0.035);
+                gain.gain.setValueAtTime(0.25, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.035);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.04);
+            } catch (e) {}
+        }
+
+        function updateBoardMetrics() {
+            // Естественные колебания напряжения сети ±5 В вокруг 230 В (диапазон 226..234 В)
+            const delta = (Math.random() > 0.5 ? 1 : -1) * (Math.random() < 0.65 ? 1 : 2);
+            liveVoltage = Math.min(235, Math.max(225, liveVoltage + delta));
+
+            let kw = 0;
+            let amps = 0;
+
+            if (!isRcdOn) {
+                // Вводное УЗО выключено: вся отходящая нагрузка полностью обесточена!
+                if (boardEl) boardEl.classList.add('board-power-cut');
+                kw = 0;
+                amps = 0;
+            } else {
+                if (boardEl) boardEl.classList.remove('board-power-cut');
+                if (isLightOn) kw += 0.35;
+                if (isSocketsOn) kw += 2.45;
+                if (isSmartOn) kw += 1.05;
+
+                // Естественная микрофлуктуация потребления нагрузки
+                if (kw > 0) {
+                    kw += (Math.sin(Date.now() / 2200) * 0.03);
+                    amps = (kw * 1000 / liveVoltage);
+                }
+            }
+
+            if (ampEl) ampEl.textContent = amps.toFixed(1) + ' А';
+            if (loadEl) loadEl.textContent = kw.toFixed(1) + ' кВт';
+            if (voltEl) voltEl.textContent = Math.round(liveVoltage) + ' В';
+
+            // Обновление живых цифр на экране Welrok UI-1
+            if (!isWelrokThresholdMode) {
+                updateWelrokDisplay(liveVoltage, amps);
+            }
+        }
+
+        // 1. Клик по реле напряжения Welrok (проверка порогов защиты U_max / U_min)
+        if (btnWelrok) {
+            btnWelrok.addEventListener('click', () => {
+                if (welrokThresholdTimer) clearTimeout(welrokThresholdTimer);
+                isWelrokThresholdMode = true;
+                playBreakerSound(true);
+                // Показ верхнего порога 253В и нижнего 198В
+                updateWelrokDisplay(253, 19.8);
+                btnWelrok.title = 'Пороги защиты Welrok UI-1: U_max = 253 В, U_min = 198 В. Возврат к сети через 2.5 с...';
+                welrokThresholdTimer = setTimeout(() => {
+                    isWelrokThresholdMode = false;
+                    btnWelrok.title = 'Реле напряжения и вольтамперметр Welrok UI-1 red. Нажмите для проверки порогов защиты';
+                    updateBoardMetrics();
+                }, 2500);
+            });
+            btnWelrok.addEventListener('keydown', e => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    toggle();
+                    btnWelrok.click();
                 }
             });
         }
 
-        bindToggle(btnLight, () => isLightOn, v => isLightOn = v);
-        bindToggle(btnSockets, () => isSocketsOn, v => isSocketsOn = v);
-        bindToggle(btnSmart, () => isSmartOn, v => isSmartOn = v);
+        // 2. Переключение вводного УЗО (Schneider Acti 9 iID 2P)
+        if (btnRcd && imgRcd) {
+            const toggleRcd = () => {
+                isRcdOn = !isRcdOn;
+                imgRcd.src = isRcdOn ? './assets/images/din/schneider_iid_2p_on.svg' : './assets/images/din/schneider_iid_2p_off.svg';
+                btnRcd.setAttribute('aria-pressed', isRcdOn ? 'true' : 'false');
+                btnRcd.title = isRcdOn 
+                    ? 'Вводное УЗО Schneider Acti9 iID 2P: ВКЛЮЧЕНО. Нажмите для отключения ввода' 
+                    : 'Вводное УЗО Schneider Acti9 iID 2P: ВЫКЛЮЧЕНО. Нажмите для включения ввода';
+                playBreakerSound(isRcdOn);
+                updateBoardMetrics();
+            };
+            btnRcd.addEventListener('click', toggleRcd);
+            btnRcd.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleRcd();
+                }
+            });
+        }
 
-        setInterval(updateBoardMetrics, 2500);
+        // 3. Переключение автомата Освещение (Schneider iC60N 1P)
+        if (btnLight && imgLight) {
+            const toggleLight = () => {
+                isLightOn = !isLightOn;
+                imgLight.src = isLightOn ? './assets/images/din/schneider_ic60n_1p_on.svg' : './assets/images/din/schneider_ic60n_1p_off.svg';
+                btnLight.setAttribute('aria-pressed', isLightOn ? 'true' : 'false');
+                btnLight.title = isLightOn 
+                    ? 'Автоматический выключатель iC60N (Освещение, 16А): ВКЛЮЧЕН. Нажмите для переключения' 
+                    : 'Автоматический выключатель iC60N (Освещение, 16А): ВЫКЛЮЧЕН. Нажмите для переключения';
+                playBreakerSound(isLightOn);
+                updateBoardMetrics();
+            };
+            btnLight.addEventListener('click', toggleLight);
+            btnLight.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleLight();
+                }
+            });
+        }
+
+        // 4. Переключение автомата Розетки (Schneider iC60N 1P)
+        if (btnSockets && imgSockets) {
+            const toggleSockets = () => {
+                isSocketsOn = !isSocketsOn;
+                imgSockets.src = isSocketsOn ? './assets/images/din/schneider_ic60n_1p_on.svg' : './assets/images/din/schneider_ic60n_1p_off.svg';
+                btnSockets.setAttribute('aria-pressed', isSocketsOn ? 'true' : 'false');
+                btnSockets.title = isSocketsOn 
+                    ? 'Автоматический выключатель iC60N (Розетки, 16А): ВКЛЮЧЕН. Нажмите для переключения' 
+                    : 'Автоматический выключатель iC60N (Розетки, 16А): ВЫКЛЮЧЕН. Нажмите для переключения';
+                playBreakerSound(isSocketsOn);
+                updateBoardMetrics();
+            };
+            btnSockets.addEventListener('click', toggleSockets);
+            btnSockets.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleSockets();
+                }
+            });
+        }
+
+        // 5. Переключение модуля умного дома (WirenBoard WB-MR6C v.2)
+        if (btnSmart) {
+            const toggleSmart = () => {
+                isSmartOn = !isSmartOn;
+                btnSmart.classList.toggle('is-relay-off', !isSmartOn);
+                btnSmart.setAttribute('aria-pressed', isSmartOn ? 'true' : 'false');
+                btnSmart.title = isSmartOn 
+                    ? 'Модуль реле умного дома WirenBoard WB-MR6C v.2: ВКЛЮЧЕН. Нажмите для переключения' 
+                    : 'Модуль реле умного дома WirenBoard WB-MR6C v.2: ВЫКЛЮЧЕН. Нажмите для переключения';
+                playBreakerSound(isSmartOn);
+                updateBoardMetrics();
+            };
+            btnSmart.addEventListener('click', toggleSmart);
+            btnSmart.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleSmart();
+                }
+            });
+        }
+
+        setInterval(updateBoardMetrics, 2000);
         updateBoardMetrics();
 
         // 3. Мобильное меню с поддержкой доступности

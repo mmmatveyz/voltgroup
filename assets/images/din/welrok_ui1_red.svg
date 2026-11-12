@@ -103,7 +103,7 @@
 					<title>Лист.7</title>
 					<rect x="0" y="240.689" width="0.340157" height="0.255758" class="st7"/>
 				</g>
-				<g id="shape8-22" v:mID="8" v:groupContext="shape" transform="translate(22.3862,-118.989)">
+				<g id="shape8-22" v:mID="8" v:groupContext="shape" transform="translate(22.3862,-118.989)" style="display:none;">
 					<title>Лист.8</title>
 					<path d="M55.72 239.22 L57.27 237.65 L57.27 229.81 L55.72 228.29 L54.17 229.81 L54.17 237.65 L55.72 239.22 ZM44.75
 								 239.38 L46.3 240.94 L54.01 240.94 L55.57 239.38 L54.01 237.81 L46.3 237.81 L44.75 239.38 ZM55.72
