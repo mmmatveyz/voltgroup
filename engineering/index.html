@@ -89,7 +89,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../static/css/style.css?v=4.3">
+    <link rel="stylesheet" href="../static/css/style.css?v=4.4">
 
     <!-- Управление cookies и отложенная инициализация Яндекс.Метрики (152-ФЗ) -->
     <script src="../static/js/cookies.js" defer></script>
@@ -116,27 +116,58 @@
 </header>
 
 <main>
-    <section class="hero hero-single container fade-in">
-        <div class="hero-left">
-            <span class="badge-status" style="color: var(--primary-eng); border-color: rgba(123, 97, 255, 0.3);">
-                <span class="dot" style="background: var(--primary-eng); box-shadow: 0 0 10px var(--primary-eng);"></span> Промышленная автоматизация & ЧПУ · СПб и ЛО
-            </span>
-            <h1 class="hero-title">
+    <section class="hero hero-centered hero-theme-eng container fade-in">
+        <div class="hero-center-content">
+            <div class="hero-badge-wrap">
+                <span class="badge-status" style="color: var(--primary-eng); border-color: rgba(123, 97, 255, 0.3);">
+                    <span class="dot" style="background: var(--primary-eng); box-shadow: 0 0 10px var(--primary-eng);"></span> Промышленная автоматизация & ЧПУ · СПб и ЛО
+                </span>
+            </div>
+            <h1 class="hero-title hero-title-centered">
                 <span class="title-fit">VOLTGROUP</span><br>
                 <span style="color: var(--primary-eng);">ENGINEERING</span>
             </h1>
-            <p class="hero-subtitle">
+            <p class="hero-subtitle hero-subtitle-centered">
                 Диагностика, обслуживание и ремонт металлорежущих станков и промышленного оборудования. Восстановление релейных схем, наладка приводов и сборка шкафов автоматики.
             </p>
-            <div class="hero-actions">
+            <div class="hero-actions hero-actions-centered">
                 <a href="#contact" class="btn btn-secondary">Заказать диагностику</a>
                 <a href="../estimate.html" class="btn btn-outline">Калькулятор работ</a>
             </div>
         </div>
+
+        <div class="hero-stats-bar">
+            <div class="hero-stat-item">
+                <span class="hero-stat-num">5 лет</span>
+                <span class="hero-stat-label">Опыт в автоматике & ЧПУ</span>
+            </div>
+            <div class="hero-stat-divider" aria-hidden="true"></div>
+            <div class="hero-stat-item">
+                <span class="hero-stat-num">3Ф · 400 В</span>
+                <span class="hero-stat-label">Силовое оборудование</span>
+            </div>
+            <div class="hero-stat-divider" aria-hidden="true"></div>
+            <div class="hero-stat-item">
+                <span class="hero-stat-num">СПб и ЛО</span>
+                <span class="hero-stat-label">Выезд на производство</span>
+            </div>
+            <div class="hero-stat-divider" aria-hidden="true"></div>
+            <div class="hero-stat-item">
+                <span class="hero-stat-num">от 4 500 ₽</span>
+                <span class="hero-stat-label">Выездная диагностика</span>
+            </div>
+        </div>
+
+        <a href="#services" class="hero-scroll-cue" aria-label="Листать к направлениям">
+            <span class="scroll-cue-text">Листайте вниз</span>
+            <svg class="scroll-cue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M6 9l6 6 6-6"/>
+            </svg>
+        </a>
     </section>
 
     <!-- СЕКЦИЯ 1: BENTO GRID ИНЖЕНЕРНЫХ НАПРАВЛЕНИЙ -->
-    <section class="section">
+    <section class="section" id="services">
         <div class="container">
             <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 40px; text-align: center;">
                 <span class="bento-tag tag-purple fade-in">Промышленный сервис</span>

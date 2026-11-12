@@ -96,7 +96,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../static/css/style.css?v=4.3">
+    <link rel="stylesheet" href="../static/css/style.css?v=4.4">
 
     <style>
         .district-hero-badge {
@@ -422,23 +422,54 @@
 
 <main>
     <!-- HERO СЕКЦИЯ -->
-    <section class="hero hero-single container fade-in">
-        <div class="hero-left">
-            <span class="district-hero-badge">
-                <span class="live-pulse-dot"></span> Посёлок Бугры · ЖК Энфилд & Новые Горизонты · Выезд мастера сегодня
-            </span>
-            <h1 class="hero-title">
+    <section class="hero hero-centered container fade-in">
+        <div class="hero-center-content">
+            <div class="hero-badge-wrap">
+                <span class="district-hero-badge">
+                    <span class="live-pulse-dot"></span> Посёлок Бугры · ЖК Энфилд & Новые Горизонты · Выезд мастера сегодня
+                </span>
+            </div>
+            <h1 class="hero-title hero-title-centered">
                 Электромонтаж <br>
                 в Буграх <span style="color: var(--primary-install);">под ключ</span>
             </h1>
-            <p class="hero-subtitle">
+            <p class="hero-subtitle hero-subtitle-centered">
                 Качественная электрика для квартир и коттеджей в Буграх. Доработка предчистовой отделки white-box, перенос розеток под кухонную технику, монтаж слаботочных щитов и защита от перепадов напряжения. Фиксированная смета и официальный договор с гарантией 12 месяцев.
             </p>
-            <div class="hero-actions">
+            <div class="hero-actions hero-actions-centered">
                 <a href="#prices-section" class="btn btn-primary">Прайс-лист на работы</a>
                 <a href="../estimate.html" class="btn btn-outline">Калькулятор сметы</a>
             </div>
         </div>
+
+        <div class="hero-stats-bar">
+            <div class="hero-stat-item">
+                <span class="hero-stat-num">Бугры & Энфилд</span>
+                <span class="hero-stat-label">Мастер в районе</span>
+            </div>
+            <div class="hero-stat-divider" aria-hidden="true"></div>
+            <div class="hero-stat-item">
+                <span class="hero-stat-num">от 30 мин</span>
+                <span class="hero-stat-label">Время выезда на замер</span>
+            </div>
+            <div class="hero-stat-divider" aria-hidden="true"></div>
+            <div class="hero-stat-item">
+                <span class="hero-stat-num">1–2 дня</span>
+                <span class="hero-stat-label">Монтаж кухни и розеток</span>
+            </div>
+            <div class="hero-stat-divider" aria-hidden="true"></div>
+            <div class="hero-stat-item">
+                <span class="hero-stat-num">12 месяцев</span>
+                <span class="hero-stat-label">Гарантия по договору</span>
+            </div>
+        </div>
+
+        <a href="#features" class="hero-scroll-cue" aria-label="Листать к специфике">
+            <span class="scroll-cue-text">Листайте вниз</span>
+            <svg class="scroll-cue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M6 9l6 6 6-6"/>
+            </svg>
+        </a>
     </section>
 
     <!-- ОСОБЕННОСТИ ЭЛЕКТРОМОНТАЖА В БУГРАХ -->

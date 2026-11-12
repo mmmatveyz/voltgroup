@@ -546,6 +546,121 @@ p {
     }
 }
 
+/* === ЦЕНТРИРОВАННЫЙ ЭКРАН (HERO CENTERED) ДЛЯ ВНУТРЕННИХ СТРАНИЦ === */
+.hero.hero-centered {
+    min-height: 100vh;
+    min-height: 100dvh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: calc(75px + clamp(16px, 3vh, 44px)) !important;
+    padding-bottom: clamp(24px, 4.5vh, 60px);
+    position: relative;
+    max-width: 1080px;
+    margin: 0 auto;
+}
+
+.hero-center-content {
+    max-width: 860px;
+    width: 100%;
+    margin: auto 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-badge-wrap {
+    margin-bottom: 20px;
+}
+
+.hero-title-centered {
+    font-size: clamp(2.15rem, 4.2vw, 3.85rem) !important;
+    line-height: 1.12 !important;
+    margin-bottom: 22px !important;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+    max-width: 840px;
+}
+
+.hero-subtitle-centered {
+    font-size: clamp(1rem, 1.12vw, 1.15rem) !important;
+    line-height: 1.6 !important;
+    color: var(--text-muted);
+    max-width: 680px;
+    margin: 0 auto 34px !important;
+}
+
+.hero-actions-centered {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: clamp(28px, 4vh, 48px);
+}
+
+/* Полоса ключевых параметров / преимуществ */
+.hero-stats-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(16px, 3vw, 40px);
+    background: rgba(13, 19, 31, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 16px;
+    padding: 16px 30px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    width: 100%;
+    max-width: 960px;
+    box-sizing: border-box;
+}
+
+.hero-stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.hero-stat-num {
+    font-family: var(--font-heading);
+    font-size: clamp(1.15rem, 1.4vw, 1.45rem);
+    font-weight: 700;
+    color: var(--primary-install);
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+}
+
+.hero-theme-eng .hero-stat-num {
+    color: var(--primary-eng);
+}
+
+.hero-theme-eng .hero-scroll-cue:hover {
+    color: var(--primary-eng);
+    border-color: rgba(123, 97, 255, 0.35);
+    background: rgba(123, 97, 255, 0.08);
+}
+
+.hero-stat-label {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.hero-stat-divider {
+    width: 1px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+}
+
 .hero.hero-single,
 .hero.hero-page {
     display: block !important;
@@ -1621,6 +1736,28 @@ main>.container:first-child,
         gap: var(--space-xl);
     }
 
+    .hero.hero-centered {
+        min-height: auto;
+        padding-top: var(--header-offset) !important;
+        padding-bottom: 60px;
+    }
+
+    .hero-stats-bar {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px 20px;
+        padding: 16px 18px;
+        max-width: 500px;
+    }
+
+    .hero-stat-divider {
+        display: none;
+    }
+
+    .hero-stat-label {
+        white-space: normal;
+    }
+
     .hero.hero-home .hero-board {
         width: 100%;
         max-width: 380px;
@@ -1677,6 +1814,29 @@ main>.container:first-child,
 
     .hero.hero-home .din-visio-item img {
         height: 180px;
+    }
+
+    .hero.hero-centered {
+        padding-top: calc(75px + 12px) !important;
+        padding-bottom: 20px;
+    }
+
+    .hero-title-centered {
+        font-size: 2.6rem !important;
+        margin-bottom: 16px !important;
+    }
+
+    .hero-subtitle-centered {
+        margin-bottom: 22px !important;
+        font-size: 0.95rem !important;
+    }
+
+    .hero-actions-centered {
+        margin-bottom: 24px;
+    }
+
+    .hero-stats-bar {
+        padding: 12px 24px;
     }
 
     .hero-scroll-cue {

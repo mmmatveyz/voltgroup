@@ -89,7 +89,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../static/css/style.css?v=4.3">
+    <link rel="stylesheet" href="../static/css/style.css?v=4.4">
 
     <!-- Управление cookies и отложенная инициализация Яндекс.Метрики (152-ФЗ) -->
     <script src="../static/js/cookies.js" defer></script>
@@ -116,28 +116,59 @@
 </header>
 
 <main>
-    <section class="hero hero-single container fade-in">
-        <div class="hero-left">
-            <span class="badge-status">
-                <span class="dot"></span> 7 лет опыта · Электромонтаж по ПУЭ-7 · СПб и ЛО
-            </span>
-            <h1 class="hero-title">
-                <span class="title-fit">Электромонтаж</span><br>
-                квартир и домов <span style="color: var(--primary-install);">под ключ</span>
+    <section class="hero hero-centered container fade-in">
+        <div class="hero-center-content">
+            <div class="hero-badge-wrap">
+                <span class="badge-status">
+                    <span class="dot"></span> 7 лет опыта · Электромонтаж по ПУЭ-7 · СПб и ЛО
+                </span>
+            </div>
+            <h1 class="hero-title hero-title-centered">
+                <span class="title-fit">Электромонтаж квартир</span><br>
+                и домов <span style="color: var(--primary-install);">под ключ</span>
             </h1>
-            <p class="hero-subtitle">
+            <p class="hero-subtitle hero-subtitle-centered">
                 Инженерный электромонтаж по стандартам ПУЭ и ГОСТ в Санкт-Петербурге и ЛО.
                 Фиксированная смета, беспылевое штробление, опрессовка гильзами ГМЛ и официальная гарантия 12 месяцев.
             </p>
-            <div class="hero-actions">
+            <div class="hero-actions hero-actions-centered">
                 <a href="../estimate.html" class="btn btn-primary">Рассчитать смету</a>
                 <a href="#contact" class="btn btn-outline">Оставить заявку</a>
             </div>
         </div>
+
+        <div class="hero-stats-bar">
+            <div class="hero-stat-item">
+                <span class="hero-stat-num">7+ лет</span>
+                <span class="hero-stat-label">Опыт монтажа в СПб</span>
+            </div>
+            <div class="hero-stat-divider" aria-hidden="true"></div>
+            <div class="hero-stat-item">
+                <span class="hero-stat-num">ПУЭ-7 & ГОСТ</span>
+                <span class="hero-stat-label">Негорючий кабель LS</span>
+            </div>
+            <div class="hero-stat-divider" aria-hidden="true"></div>
+            <div class="hero-stat-item">
+                <span class="hero-stat-num">100% без пыли</span>
+                <span class="hero-stat-label">Штроборез с пылесосом</span>
+            </div>
+            <div class="hero-stat-divider" aria-hidden="true"></div>
+            <div class="hero-stat-item">
+                <span class="hero-stat-num">12 месяцев</span>
+                <span class="hero-stat-label">Гарантия по договору</span>
+            </div>
+        </div>
+
+        <a href="#specialization" class="hero-scroll-cue" aria-label="Листать к услугам">
+            <span class="scroll-cue-text">Листайте вниз</span>
+            <svg class="scroll-cue-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M6 9l6 6 6-6"/>
+            </svg>
+        </a>
     </section>
 
     <!-- СЕКЦИЯ 1: BENTO GRID СПЕЦИАЛИЗАЦИИ -->
-    <section class="section">
+    <section class="section" id="specialization">
         <div class="container">
             <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 40px; text-align: center;">
                 <span class="bento-tag tag-cyan fade-in">Специализация и объекты</span>
