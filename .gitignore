@@ -37,6 +37,7 @@ new-layout-dark.html
 logs/
 *.log
 debug.log
+.taste-skill/
 
 # OS metadata
 .DS_Store

@@ -16,6 +16,7 @@
 
 /* === 1. GLOBAL VARIABLES & THEME === */
 :root {
+    color-scheme: dark;
     --bg-dark: #050914;
     --bg-card: rgba(15, 23, 42, 0.88);
     --bg-panel: #0e141b;
@@ -73,7 +74,7 @@
     --font-main: 'Inter', system-ui, -apple-system, sans-serif;
     --font-heading: 'Unbounded', sans-serif;
 
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
     --danger: #EF4444;
     --success: #10B981;
 }
@@ -213,6 +214,12 @@ h4,
 .logo {
     font-family: var(--font-heading);
     letter-spacing: -0.02em;
+    text-wrap: balance;
+}
+
+section[id],
+[id] {
+    scroll-margin-top: 80px;
 }
 
 h1 {
@@ -2316,7 +2323,7 @@ main>.container:first-child,
     justify-content: center;
     /* box-shadow removed for unslop */
     margin-bottom: 22px;
-    transition: all 0.3s ease;
+    transition: color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
     position: relative;
     z-index: 3;
 }
@@ -3455,7 +3462,7 @@ main>.container:first-child,
     display: inline-flex;
     align-items: center;
     gap: var(--space-sm);
-    transition: all var(--transition-fast);
+    transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
 }
 
 .btn-vk-review:hover {

@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-type="service">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="page-type" content="service">
+    <meta name="site-kind" content="tech">
 
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'self';
@@ -207,7 +209,7 @@
         href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="./static/css/style.css?v=3.8">
+    <link rel="stylesheet" href="./static/css/style.css?v=3.9">
 
     <style>
         }
@@ -623,7 +625,9 @@
                     <!-- Преимущество 1 -->
                     <div class="why-card why-card-1 fade-in">
                         <div class="why-card-top">
-                            <span class="why-num">01</span>
+                            <span class="why-num" style="display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:6px; background:rgba(0, 229, 255, 0.08);">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                            </span>
                             <span class="why-status-pill">Фиксированная смета</span>
                         </div>
                         <h3 style="font-size: 1.18rem; margin-bottom: 10px; color: var(--text-main); font-weight: 600;">
@@ -637,7 +641,9 @@
                     <!-- Преимущество 2 -->
                     <div class="why-card why-card-2 fade-in" style="transition-delay: 0.1s;">
                         <div class="why-card-top">
-                            <span class="why-num">02</span>
+                            <span class="why-num" style="display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:6px; background:rgba(123, 97, 255, 0.08);">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            </span>
                             <span class="why-status-pill">Чистый монтаж</span>
                         </div>
                         <h3 style="font-size: 1.18rem; margin-bottom: 10px; color: var(--text-main); font-weight: 600;">
@@ -651,7 +657,9 @@
                     <!-- Преимущество 3 -->
                     <div class="why-card why-card-3 fade-in" style="transition-delay: 0.2s;">
                         <div class="why-card-top">
-                            <span class="why-num">03</span>
+                            <span class="why-num" style="display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:6px; background:rgba(255, 179, 0, 0.08);">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            </span>
                             <span class="why-status-pill">Договор и гарантия</span>
                         </div>
                         <h3 style="font-size: 1.18rem; margin-bottom: 10px; color: var(--text-main); font-weight: 600;">
@@ -906,13 +914,13 @@
 
                     <form id="leadForm" style="display: grid; gap: 16px;">
                         <div class="form-group" style="margin: 0;">
-                            <label class="form-label">Ваше имя</label>
-                            <input type="text" name="name" class="form-input" placeholder="Иван" required
-                                maxlength="100">
+                            <label class="form-label" for="lead-name">Ваше имя</label>
+                            <input type="text" id="lead-name" name="name" class="form-input" placeholder="Иван" required
+                                autocomplete="name" spellcheck="false" maxlength="100">
                         </div>
                         <div class="form-group" style="margin: 0;">
-                            <label class="form-label">Телефон</label>
-                            <input type="tel" name="phone" class="form-input" placeholder="+7 (___) ___-__-__" required
+                            <label class="form-label" for="lead-phone">Телефон</label>
+                            <input type="tel" id="lead-phone" name="phone" class="form-input" placeholder="+7 (___) ___-__-__" required
                                 autocomplete="tel" pattern="(\+7|8)[\s\-]?[0-9\(\)\s\-]{10,18}"
                                 title="Формат: +7 (999) 000-00-00">
                         </div>
