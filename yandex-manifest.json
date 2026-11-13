@@ -2,7 +2,7 @@
   "version": "1.0",
   "api_version": 1,
   "layout": {
-    "logo": "/assets/images/yandex-tableau-logo.png",
+    "logo": "https://voltgroup-spb.ru/assets/images/yandex-tableau-logo.png",
     "color": "#050914",
     "show_title": false
   }
